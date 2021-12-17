@@ -1,0 +1,10 @@
+com/mygdx/gigabiteconomy/MainScreen.java
+ com.mygdx.gigabiteconomy.MainScreen
+com/mygdx/gigabiteconomy/ISprite.java
+ com.mygdx.gigabiteconomy.ISprite
+com/mygdx/gigabiteconomy/Player.java
+ com.mygdx.gigabiteconomy.Player
+com/mygdx/gigabiteconomy/MySprite.java
+ com.mygdx.gigabiteconomy.MySprite
+com/mygdx/gigabiteconomy/GigabitEconomy.java
+ com.mygdx.gigabiteconomy.GigabitEconomy
