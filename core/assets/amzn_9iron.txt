@@ -1,0 +1,47 @@
+amzn_9iron.png
+size: 740, 1473
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ninr iron sprite
+  rotate: false
+  xy: 0, 0
+  size: 370, 491
+  orig: 370, 491
+  offset: 0, 0
+  index: -1
+ninr iron sprite1
+  rotate: false
+  xy: 370, 0
+  size: 370, 491
+  orig: 370, 491
+  offset: 0, 0
+  index: -1
+ninr iron sprite2
+  rotate: false
+  xy: 0, 491
+  size: 370, 491
+  orig: 370, 491
+  offset: 0, 0
+  index: -1
+ninr iron sprite3
+  rotate: false
+  xy: 370, 491
+  size: 370, 491
+  orig: 370, 491
+  offset: 0, 0
+  index: -1
+ninr iron sprite4
+  rotate: false
+  xy: 0, 982
+  size: 370, 491
+  orig: 370, 491
+  offset: 0, 0
+  index: -1
+ninr iron sprite5
+  rotate: false
+  xy: 370, 982
+  size: 370, 491
+  orig: 370, 491
+  offset: 0, 0
+  index: -1
