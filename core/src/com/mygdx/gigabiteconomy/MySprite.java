@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.Array;
  */
 public class MySprite implements ISprite {
     //Rectangle which holds the texture
-    Rectangle rect;
+    private Rectangle rect;
 
     TextureAtlas ta;
     //Coordinates of sprite on screen
@@ -35,16 +35,14 @@ public class MySprite implements ISprite {
      */
     public MySprite(String config, int x, int y) {
         ta = new TextureAtlas(config);
-
         regions = ta.getRegions();
-        System.out.println(regions.get(0));
 
         current = regions.get(0); //Change to more general name to fit with all sprites
                                                               //See about exceptions and error handling here
         coords[0] = x; coords[1] = y;
 
         //Creating rectangle to cover texture
-        rect = new Rectangle(x, y, current.getRegionWidth(), current.getRegionHeight()); //Consider changing texture sizes
+        rect = new Rectangle(x, y, current.getRegionWidth(), current.getRegionHeight()); //What happens to rectangle when texture changes size (e.g. in an animation)?
     }
 
 
@@ -61,6 +59,11 @@ public class MySprite implements ISprite {
     @Override
     public int getY() {
         return coords[1];
+    }
+
+    @Override
+    public Rectangle getRectangle() {
+        return rect;
     }
 
 

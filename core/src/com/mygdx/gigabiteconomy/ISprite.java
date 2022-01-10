@@ -3,6 +3,7 @@ package com.mygdx.gigabiteconomy;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 
 /**
  * Interface for controlling sprite
@@ -37,4 +38,6 @@ public interface ISprite {
 
     int getX();
     int getY();
+
+    Rectangle getRectangle();
 }

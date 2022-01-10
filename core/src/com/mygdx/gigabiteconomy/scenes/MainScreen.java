@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.mygdx.gigabiteconomy.Enemy;
 import com.mygdx.gigabiteconomy.ISprite;
 import com.mygdx.gigabiteconomy.MySprite;
 import com.mygdx.gigabiteconomy.Player;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
  * Class from which the game is played from. Contains game loop and other important stuff
  */
 public class MainScreen implements Screen, ApplicationListener, InputProcessor {
-    ISprite player;
+    ISprite player; ISprite testEnemy;
 
     TextureAtlas textureAtlas;
     SpriteBatch batch;
@@ -32,6 +33,10 @@ public class MainScreen implements Screen, ApplicationListener, InputProcessor {
 
         player = new Player("amzn_9iron.txt",0 , 0);
         sprites.add(player); //Creating player sprite
+
+        //Adding enemy to screen to test collision detection
+        testEnemy = new Enemy("amzn_9iron.txt", 500, 500);
+        sprites.add(testEnemy);
 
         Gdx.input.setInputProcessor(this);
 
@@ -63,7 +68,13 @@ public class MainScreen implements Screen, ApplicationListener, InputProcessor {
 
 
         batch.end();
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) System.out.println("A pressed");
+        playerCollisionCheck();
+    }
+
+    public void playerCollisionCheck() {
+        if (player.getRectangle().overlaps(testEnemy.getRectangle())) {
+            System.out.println("Enemy collision detected");
+        }
     }
 
     @Override
