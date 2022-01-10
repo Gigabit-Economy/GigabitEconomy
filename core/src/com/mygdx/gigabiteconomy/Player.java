@@ -5,20 +5,20 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 
+/**
+ * Class for separating Player functionality from general Sprite functionality
+ * Such as:
+ *  > Attacking (detecting collisions for certain sprites only)
+ */
 public class Player extends MySprite {
-    private SpriteBatch batch;
-    private TiledMap map;
-    private Texture ptexture;
 
-    public Player(Texture ptexture) {
-        super(ptexture);
 
-        this.ptexture = ptexture;
+    public Player(String config, int x, int y) {
+        super(config, x, y);
+
+
         //this.setSize(100, 100);
     }
 
-    @Override
-    public Texture getTex() {
-        return ptexture;
-    }
+
 }

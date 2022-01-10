@@ -7,9 +7,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.mygdx.gigabiteconomy.ISprite;
 import com.mygdx.gigabiteconomy.MySprite;
+import com.mygdx.gigabiteconomy.Player;
 
 import java.util.ArrayList;
 
+/**
+ * Class from which the game is played from. Contains game loop and other important stuff
+ */
 public class MainScreen implements Screen, ApplicationListener, InputProcessor {
     ISprite player;
 
@@ -26,7 +30,7 @@ public class MainScreen implements Screen, ApplicationListener, InputProcessor {
         batch = new SpriteBatch();
         //p = new Texture("playeramazon.png");
 
-        player = new MySprite("amzn_9iron.txt",0 , 0);
+        player = new Player("amzn_9iron.txt",0 , 0);
         sprites.add(player); //Creating player sprite
 
         Gdx.input.setInputProcessor(this);

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
 /**
@@ -11,6 +12,9 @@ import com.badlogic.gdx.utils.Array;
  * MainScreen interfaces with this class through ISprite
  */
 public class MySprite implements ISprite {
+    //Rectangle which holds the texture
+    Rectangle rect;
+
     TextureAtlas ta;
     //Coordinates of sprite on screen
     private int[] coords = new int[2];
@@ -20,6 +24,7 @@ public class MySprite implements ISprite {
     private TextureRegion current;
 
     boolean moving; //Can use for paused? Also useful for player (holding down keys)
+
     private int[] dcoords = new int[2]; //Increment of each x, y if moving is true
 
     /**
@@ -37,6 +42,9 @@ public class MySprite implements ISprite {
         current = regions.get(0); //Change to more general name to fit with all sprites
                                                               //See about exceptions and error handling here
         coords[0] = x; coords[1] = y;
+
+        //Creating rectangle to cover texture
+        rect = new Rectangle(x, y, current.getRegionWidth(), current.getRegionHeight()); //Consider changing texture sizes
     }
 
 
@@ -73,6 +81,7 @@ public class MySprite implements ISprite {
 
     public void move() {
         coords[0] += dcoords[0]; coords[1] += dcoords[1];
+        rect.setX(coords[0]); rect.setY(coords[1]); //Instead of using MySprite x,y we use Rectangle x,y to define position
         //Changing current sprite
         //current = regions.get(regions.indexOf((TextureAtlas.AtlasRegion) current, true)+1);
         current = regions.get((regions.indexOf((TextureAtlas.AtlasRegion) current, true) + 1) % regions.size);
