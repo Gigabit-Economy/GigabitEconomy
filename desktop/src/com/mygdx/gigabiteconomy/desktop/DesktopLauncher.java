@@ -1,16 +1,15 @@
 package com.mygdx.gigabiteconomy.desktop;
 
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
-		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.title = "Gigabit Economy";
-		config.width = 1920;
-		config.height = 1080;
+		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+		config.setTitle("Gigabit Economy");
+		config.setWindowSizeLimits(-1, -1, 1920, 1080);
 		System.out.println("Creating new GBit");
-		new LwjglApplication(new GigabitEconomy(), config);
+		new Lwjgl3Application(new GigabitEconomy(), config);
 	}
 }
