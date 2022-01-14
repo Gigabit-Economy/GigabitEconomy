@@ -2,7 +2,9 @@ package com.mygdx.gigabiteconomy.scenes;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.mygdx.gigabiteconomy.Enemy;
@@ -18,9 +20,13 @@ import java.util.ArrayList;
 public class MainScreen implements Screen, ApplicationListener, InputProcessor {
     ISprite player; ISprite testEnemy;
 
+    OrthographicCamera camera;
+
     TextureAtlas textureAtlas;
     SpriteBatch batch;
+    Sprite backgroundSprite;
     Texture p;
+    Texture backgroundTexture;
     int i=0;
 
     //final HashMap<String, ISprite> sprites = new HashMap<String, ISprite>();
@@ -40,6 +46,10 @@ public class MainScreen implements Screen, ApplicationListener, InputProcessor {
 
         Gdx.input.setInputProcessor(this);
 
+        backgroundTexture = new Texture("core/assets/test3.png");
+        backgroundSprite = new Sprite(backgroundTexture);
+        
+        camera = new OrthographicCamera(1920, 1080);
     }
 
     public void render(float delta) {
@@ -48,6 +58,18 @@ public class MainScreen implements Screen, ApplicationListener, InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
+
+        // drawing the background
+        backgroundSprite.draw(batch);
+
+        // this thing makes the camera work XD
+        batch.setProjectionMatrix(camera.combined);
+        
+        // update camera position
+        camera.position.set(player.getX(), player.getY(), 0);
+        camera.update();
+
+
 //
 //        for (ISprite sprite : sprites) {
 //            //sprite.getCurrSprite().draw(batch);
