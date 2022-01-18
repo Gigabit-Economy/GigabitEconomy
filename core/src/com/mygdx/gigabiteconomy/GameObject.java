@@ -1,14 +1,12 @@
 package com.mygdx.gigabiteconomy;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
  * Interface for controlling sprite
  */
-public interface ISprite {
+public interface GameObject {
 
     /**
      * Set sprite to be moving or not
@@ -36,8 +34,8 @@ public interface ISprite {
      */
     TextureRegion getCurrRegion();
 
-    int getX();
-    int getY();
+    int getActorX();
+    int getActorY();
 
     Rectangle getRectangle();
 }

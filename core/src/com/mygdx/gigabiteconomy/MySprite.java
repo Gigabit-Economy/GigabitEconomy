@@ -1,17 +1,20 @@
 package com.mygdx.gigabiteconomy;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Array;
 
 /**
  * Class represents a sprite shown on screen, ready to be drawn with batch.draw(); in MainScreen class
- * MainScreen interfaces with this class through ISprite
+ * MainScreen interfaces with this class through GameObject
  */
-public class MySprite implements ISprite {
+public abstract class MySprite extends Actor implements GameObject {
+
     //Rectangle which holds the texture
     private Rectangle rect;
 
@@ -39,12 +42,20 @@ public class MySprite implements ISprite {
 
         current = regions.get(0); //Change to more general name to fit with all sprites
                                                               //See about exceptions and error handling here
+
+        setBounds(x, y, current.getRegionWidth(), current.getRegionHeight());
+
         coords[0] = x; coords[1] = y;
 
         //Creating rectangle to cover texture
         rect = new Rectangle(x, y, current.getRegionWidth(), current.getRegionHeight()); //What happens to rectangle when texture changes size (e.g. in an animation)?
+
     }
 
+    @Override
+    public void draw(Batch batch, float alpha) {
+        batch.draw(current, this.getActorX(), this.getActorY());
+    }
 
     @Override
     public TextureRegion getCurrRegion() {
@@ -52,12 +63,12 @@ public class MySprite implements ISprite {
     }
 
     @Override
-    public int getX() {
+    public int getActorX() {
         return coords[0];
     }
 
     @Override
-    public int getY() {
+    public int getActorY() {
         return coords[1];
     }
 
