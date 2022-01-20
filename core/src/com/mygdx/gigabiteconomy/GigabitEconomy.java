@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.gigabiteconomy.scenes.MainScreen;
 import com.mygdx.gigabiteconomy.scenes.MenuScreen;
 import jdk.tools.jmod.Main;
@@ -15,15 +16,15 @@ import java.util.HashMap;
 
 public class GigabitEconomy extends Game {
 
-    OrthographicCamera camera;
-    FillViewport vp;
+    private OrthographicCamera camera;
+    private ScreenViewport vp;
 
-    HashMap<String, Screen> screens = new HashMap<>();
+    private final static HashMap<String, Screen> screens = new HashMap<>();
 
     @Override
     public void create() {
         camera = new OrthographicCamera(1920, 1080);
-        vp = new FillViewport(5760, 1080, camera);
+        vp = new ScreenViewport(camera);
 
 
         System.out.println("Creating screen");
@@ -68,5 +69,9 @@ public class GigabitEconomy extends Game {
     public Matrix4 getCombined() {
         //So batch can use camera coords
         return camera.combined;
+    }
+
+    public ScreenViewport getViewport () {
+        return vp;
     }
 }
