@@ -52,13 +52,10 @@ public class MainScreen implements Screen, ApplicationListener {
         testEnemy = new Enemy("amzn_9iron.txt", 500, 500);
         sprites.add(testEnemy);
 
-
-
-        backgroundTexture = new Texture("core/assets/test3.png");
+        backgroundTexture = new Texture("finished_assets/levels/level1.png");
         backgroundSprite = new Sprite(backgroundTexture);
 
-        
-
+        camera = new OrthographicCamera(1920, 1080);
     }
 
     public void render(float delta) {
