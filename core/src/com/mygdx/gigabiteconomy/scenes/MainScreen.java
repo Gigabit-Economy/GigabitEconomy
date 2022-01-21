@@ -24,6 +24,7 @@ public class MainScreen implements Screen, ApplicationListener {
     GigabitEconomy director;
     GameObject player; GameObject testEnemy;
 
+    OrthographicCamera camera;
 
     TextureAtlas textureAtlas;
     SpriteBatch batch;
@@ -55,7 +56,7 @@ public class MainScreen implements Screen, ApplicationListener {
         backgroundTexture = new Texture("finished_assets/levels/level1.png");
         backgroundSprite = new Sprite(backgroundTexture);
 
-        camera = new OrthographicCamera(1920, 1080);
+        camera = (OrthographicCamera) director.getViewport().getCamera();
     }
 
     public void render(float delta) {
