@@ -31,7 +31,7 @@ public class MenuScreen implements Screen {
         table.top();
 
         //Add proper skin/TextButton Style below!
-        TextButton play = new TextButton("Play", );
+        //TextButton play = new TextButton("Play", );
 
         play.addListener(new ClickListener() {
             @Override
@@ -42,7 +42,6 @@ public class MenuScreen implements Screen {
 
         table.add(play);
         stage.addActor(table);
-
     }
 
     @Override
