@@ -4,9 +4,12 @@ com/mygdx/gigabiteconomy/Enemy.java
  com.mygdx.gigabiteconomy.Enemy
 com/mygdx/gigabiteconomy/GameObject.java
  com.mygdx.gigabiteconomy.GameObject
-com/mygdx/gigabiteconomy/MySprite.java
- com.mygdx.gigabiteconomy.MySprite
-com/mygdx/gigabiteconomy/GigabitEconomy.java
- com.mygdx.gigabiteconomy.GigabitEconomy
 com/mygdx/gigabiteconomy/scenes/MainScreen.java
  com.mygdx.gigabiteconomy.scenes.MainScreen
+com/mygdx/gigabiteconomy/MySprite.java
+ com.mygdx.gigabiteconomy.MySprite
+com/mygdx/gigabiteconomy/scenes/MenuScreen.java
+ com.mygdx.gigabiteconomy.scenes.MenuScreen
+ com.mygdx.gigabiteconomy.scenes.MenuScreen$1
+com/mygdx/gigabiteconomy/GigabitEconomy.java
+ com.mygdx.gigabiteconomy.GigabitEconomy

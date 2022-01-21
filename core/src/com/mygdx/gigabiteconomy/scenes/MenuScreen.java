@@ -4,6 +4,7 @@ package com.mygdx.gigabiteconomy.scenes;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -25,21 +26,27 @@ public class MenuScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
+        //Guessing this is one of the Scene2D.ui 'groups' which hold actors
         Table table = new Table();
 
+        //Methods to errr make it work haha
         table.setFillParent(true);
         table.top();
-
-        //Add proper skin/TextButton Style below!
-        //TextButton play = new TextButton("Play", );
+        
+        //Skin defined in UI skin (commodore - hopefully we can use, looks really cool)
+        Skin style = new Skin(Gdx.files.internal("uiskin.json"));
+        //Creating a new button is as easy as this
+        TextButton play = new TextButton("Play", style);
 
         play.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 //Ask director for playing screen
+                director.switchScreen("main");
             }
         });
 
+        //Add it to the table, where you can reorganise it
         table.add(play);
         stage.addActor(table);
     }
