@@ -1,2 +1,0 @@
-com/mygdx/gigabiteconomy/desktop/DesktopLauncher.java
- com.mygdx.gigabiteconomy.desktop.DesktopLauncher
