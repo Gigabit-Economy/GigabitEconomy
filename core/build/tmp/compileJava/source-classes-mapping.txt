@@ -1,7 +1,11 @@
-com/mygdx/gigabiteconomy/ISprite.java
- com.mygdx.gigabiteconomy.ISprite
 com/mygdx/gigabiteconomy/Player.java
  com.mygdx.gigabiteconomy.Player
+com/mygdx/gigabiteconomy/Enemy.java
+ com.mygdx.gigabiteconomy.Enemy
+com/mygdx/gigabiteconomy/GameObject.java
+ com.mygdx.gigabiteconomy.GameObject
+com/mygdx/gigabiteconomy/scenes/MenuScreen.java
+ com.mygdx.gigabiteconomy.scenes.MenuScreen
 com/mygdx/gigabiteconomy/MySprite.java
  com.mygdx.gigabiteconomy.MySprite
 com/mygdx/gigabiteconomy/GigabitEconomy.java

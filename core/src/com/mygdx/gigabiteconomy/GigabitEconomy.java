@@ -33,7 +33,7 @@ public class GigabitEconomy extends Game {
         screens.put("menu", new MenuScreen(this));
         screens.put("main", new MainScreen(this));
 
-        setScreen(screens.get("main"));
+        setScreen(screens.get("menu"));
     }
 
     @Override
