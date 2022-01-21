@@ -71,6 +71,16 @@ public class GigabitEconomy extends Game {
         return camera.combined;
     }
 
+    public void switchScreen(String name) {
+        Screen toSwitch = screens.get(name);
+        if (toSwitch == null) {
+            //Maybe we can get a fancy exception going here?
+            System.out.println(">>> SCREEN NOT FOUND <<<");
+            return;
+        }
+        setScreen(toSwitch);
+    }
+
     public ScreenViewport getViewport () {
         return vp;
     }
