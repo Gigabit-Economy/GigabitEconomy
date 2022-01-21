@@ -55,7 +55,7 @@ public class MainScreen implements Screen, ApplicationListener {
         backgroundTexture = new Texture("finished_assets/levels/level1.png");
         backgroundSprite = new Sprite(backgroundTexture);
 
-        OrthographicCamera camera = new OrthographicCamera(1920, 1080);
+        camera = new OrthographicCamera(1920, 1080);
     }
 
     public void render(float delta) {
