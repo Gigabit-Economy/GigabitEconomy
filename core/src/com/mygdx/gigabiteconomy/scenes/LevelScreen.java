@@ -25,10 +25,10 @@ abstract class LevelScreen implements Screen, ApplicationListener {
 
     private ArrayList<GameObject> sprites = new ArrayList<GameObject>(); //First sprite is ALWAYS player
     private SpriteBatch batch;
-    private GameObject player;
+    private Player player;
     private ArrayList<GameObject> enemies;
 
-    public LevelScreen(GigabitEconomy director, GameObject player, ArrayList<GameObject> enemies, Texture backgroundTexture) {
+    public LevelScreen(GigabitEconomy director, Player player, ArrayList<GameObject> enemies, Texture backgroundTexture) {
         this.director = director;
         this.player = player;
         this.enemies = enemies;
@@ -36,6 +36,8 @@ abstract class LevelScreen implements Screen, ApplicationListener {
     }
 
     public void show() {
+        Gdx.input.setInputProcessor(this.player);
+
         batch = new SpriteBatch();
 
         // Add background
