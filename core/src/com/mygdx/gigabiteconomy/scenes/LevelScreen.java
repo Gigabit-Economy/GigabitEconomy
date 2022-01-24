@@ -25,16 +25,15 @@ abstract class LevelScreen implements Screen, ApplicationListener {
     private Texture backgroundTexture;
     private Sprite backgroundSprite;
 
-    private OrthographicCamera camera;
-
     private ArrayList<GameObject> sprites = new ArrayList<GameObject>(); //First sprite is ALWAYS player
     private SpriteBatch batch;
-    private GameObject player;
-    private GameObject testEnemy;
+    private Player player;
+    private ArrayList<Enemy> enemies;
 
-    public LevelScreen(GigabitEconomy director, GameObject player, Texture backgroundTexture) {
+    public LevelScreen(GigabitEconomy director, Player player, ArrayList<Enemy> enemies, Texture backgroundTexture) {
         this.director = director;
         this.player = player;
+        this.enemies = enemies;
         this.backgroundTexture = backgroundTexture;
     }
 
@@ -44,15 +43,13 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         // Add background
         backgroundSprite = new Sprite(backgroundTexture);
 
-        // Add orthographic camera
-        camera = (OrthographicCamera) director.getViewport().getCamera();
-
         // Add player
         sprites.add(player);
 
-        // Add enemy
-        testEnemy = new Enemy("amzn_9iron.txt", 500, 500);
-        sprites.add(testEnemy);
+        // Add enemies
+        for (Enemy enemy : enemies) {
+            sprites.add(enemy);
+        }
     }
 
     public void render(float delta) {
@@ -71,27 +68,20 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         // update camera position
         director.updateCameraPos(player.getActorX(), player.getActorY());
 
-//
-//        for (GameObject sprite : sprites) {
-//            //sprite.getCurrSprite().draw(batch);
-//            batch.draw(sprite.getTex(), 0, 0, 200f, 0);
-//        }
-
-        //batch.draw(new TextureRegion(new Texture("spritesheet.png"), 1, 1, 128, 128),0 ,0);
         for (GameObject sprite : sprites) {
             if (sprite.isMoving()) sprite.move();
             batch.draw(sprite.getCurrRegion(), sprite.getActorX(), sprite.getActorY());
-
         }
-
         batch.end();
 
         playerCollisionCheck();
     }
 
     public void playerCollisionCheck() {
-        if (player.getRectangle().overlaps(testEnemy.getRectangle())) {
-            System.out.println("Enemy collision detected");
+        for (Enemy enemy : enemies) {
+            if (player.getRectangle().overlaps(enemy.getRectangle())) {
+                System.out.println("Enemy collision detected");
+            }
         }
     }
 
