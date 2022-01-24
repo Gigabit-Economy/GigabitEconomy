@@ -55,18 +55,17 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        batch.begin();
-
         // drawing the background
         backgroundSprite.draw(batch);
 
         // this thing makes the camera work XD
-        batch.setProjectionMatrix(director.getCombined());
+        batch.setProjectionMatrix(director.getCamCombined());
 
-        //This should only take place when player gets to a certain position in camera view
+        // This should only take place when player gets to a certain position in camera view
         // update camera position
-        director.updateCameraPos(player.getActorX(), player.getActorY());
+        // director.updateCameraPos(player.getActorX(), player.getActorY());
 
+        batch.begin();
         for (GameObject sprite : sprites) {
             if (sprite.isMoving()) sprite.move();
             batch.draw(sprite.getCurrRegion(), sprite.getActorX(), sprite.getActorY());

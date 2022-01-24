@@ -61,8 +61,8 @@ public class GigabitEconomy extends Game {
 
     }
 
-    public Matrix4 getCombined() {
-        //So batch can use camera coords
+    public Matrix4 getCamCombined() {
+        // So batch can use camera coords
         return camera.combined;
     }
 
