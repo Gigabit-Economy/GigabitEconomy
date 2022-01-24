@@ -34,9 +34,11 @@ public class MenuScreen implements Screen {
         buttons.setFillParent(true);
         buttons.center();
 
-        buttons.add(new TextButton("Level 1", style));
+        TextButton level1Button = new TextButton("Level 1", style);
+        buttons.add(level1Button);
 
-        buttons.addListener(new ClickListener() {
+        // Add click listener for buttons
+        ClickListener buttonsListener = new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 String buttonName = event.getRelatedActor().getName().toLowerCase().trim();
@@ -50,7 +52,8 @@ public class MenuScreen implements Screen {
                     System.exit(-1);
                 }
             }
-        });
+        };
+        level1Button.addListener(buttonsListener);
 
         stage.addActor(buttons);
     }
