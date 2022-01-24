@@ -77,7 +77,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         playerCollisionCheck();
     }
 
-    public void playerCollisionCheck() {
+    private void playerCollisionCheck() {
         for (Enemy enemy : enemies) {
             if (player.getRectangle().overlaps(enemy.getRectangle())) {
                 System.out.println("Enemy collision detected");
