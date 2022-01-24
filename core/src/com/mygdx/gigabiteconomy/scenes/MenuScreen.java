@@ -38,8 +38,13 @@ public class MenuScreen implements Screen {
         play.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //Ask director for playing screen
-                director.switchScreen("main");
+                // Switch to level screen via. director
+                try {
+                    director.switchScreen("level1");
+                } catch (Exception ex) {
+                    System.out.println(String.format("An unexpected error occurred: %s", ex.getMessage()));
+                    System.exit(-1);
+                }
             }
         });
 

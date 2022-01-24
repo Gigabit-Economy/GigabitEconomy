@@ -9,17 +9,18 @@ import com.mygdx.gigabiteconomy.scenes.MenuScreen;
 import com.mygdx.gigabiteconomy.scenes.LevelOneScreen;
 
 import java.util.HashMap;
+import java.lang.Exception;
 
 public class GigabitEconomy extends Game {
     private OrthographicCamera camera;
-    private ScreenViewport vp;
+    private ScreenViewport viewport;
 
-    private final static HashMap<String, Screen> screens = new HashMap<>();
+    private static HashMap<String, Screen> screens = new HashMap<>();
 
     @Override
     public void create() {
         camera = new OrthographicCamera(1920, 1080);
-        vp = new ScreenViewport(camera);
+        viewport = new ScreenViewport(camera);
 
         // Define screens
         screens.put("menu", new MenuScreen(this));
@@ -64,17 +65,16 @@ public class GigabitEconomy extends Game {
         return camera.combined;
     }
 
-    public void switchScreen(String name) {
+    public void switchScreen(String name) throws Exception {
         Screen toSwitch = screens.get(name);
         if (toSwitch == null) {
-            //Maybe we can get a fancy exception going here?
-            System.out.println(">>> SCREEN NOT FOUND <<<");
-            return;
+            throw new Exception(String.format("Tried to switch to invalid screen %s", name));
         }
+
         setScreen(toSwitch);
     }
 
     public ScreenViewport getViewport () {
-        return vp;
+        return viewport;
     }
 }
