@@ -1,15 +1,14 @@
 package com.mygdx.gigabiteconomy.scenes;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gigabiteconomy.Enemy;
 import com.mygdx.gigabiteconomy.GameObject;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
@@ -18,51 +17,47 @@ import com.mygdx.gigabiteconomy.Player;
 import java.util.ArrayList;
 
 /**
- * Class from which the game is played from. Contains game loop and other important stuff
+ * Base class for all level screens.
  */
-public class MainScreen implements Screen, ApplicationListener {
-    GigabitEconomy director;
-    GameObject player; GameObject testEnemy;
+abstract class LevelScreen implements Screen, ApplicationListener {
+    private GigabitEconomy director;
 
-    OrthographicCamera camera;
+    private Texture backgroundTexture;
+    private Sprite backgroundSprite;
 
-    TextureAtlas textureAtlas;
-    SpriteBatch batch;
-    Sprite backgroundSprite;
-    Texture p;
-    Texture backgroundTexture;
-    int i=0;
+    private OrthographicCamera camera;
 
-    //final HashMap<String, GameObject> sprites = new HashMap<String, GameObject>();
-    final ArrayList<GameObject> sprites = new ArrayList<GameObject>(); //First sprite is ALWAYS player
+    private ArrayList<GameObject> sprites = new ArrayList<GameObject>(); //First sprite is ALWAYS player
+    private SpriteBatch batch;
+    private GameObject player;
+    private GameObject testEnemy;
 
-    public MainScreen(GigabitEconomy director) {
+    public LevelScreen(GigabitEconomy director, GameObject player, Texture backgroundTexture) {
         this.director = director;
+        this.player = player;
+        this.backgroundTexture = backgroundTexture;
     }
 
-
     public void show() {
-
         batch = new SpriteBatch();
-        //p = new Texture("playeramazon.png");
 
-        player = new Player("amzn_9iron.txt",0 , 0);
-        sprites.add(player); //Creating player sprite
-
-        //Adding enemy to screen to test collision detection
-        testEnemy = new Enemy("amzn_9iron.txt", 500, 500);
-        sprites.add(testEnemy);
-
-        backgroundTexture = new Texture("finished_assets/levels/level1.png");
+        // Add background
         backgroundSprite = new Sprite(backgroundTexture);
 
+        // Add orthographic camera
         camera = (OrthographicCamera) director.getViewport().getCamera();
+
+        // Add player
+        sprites.add(player);
+
+        // Add enemy
+        testEnemy = new Enemy("amzn_9iron.txt", 500, 500);
+        sprites.add(testEnemy);
     }
 
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 
         batch.begin();
 
@@ -75,7 +70,6 @@ public class MainScreen implements Screen, ApplicationListener {
         //This should only take place when player gets to a certain position in camera view
         // update camera position
         director.updateCameraPos(player.getActorX(), player.getActorY());
-
 
 //
 //        for (GameObject sprite : sprites) {
@@ -90,12 +84,7 @@ public class MainScreen implements Screen, ApplicationListener {
 
         }
 
-
-
         batch.end();
-
-
-
 
         playerCollisionCheck();
     }
@@ -136,5 +125,4 @@ public class MainScreen implements Screen, ApplicationListener {
     public void dispose() {
         p.dispose();
     }
-
 }
