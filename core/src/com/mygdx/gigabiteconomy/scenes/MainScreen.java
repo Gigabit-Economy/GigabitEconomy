@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gigabiteconomy.Enemy;
 import com.mygdx.gigabiteconomy.GameObject;
+import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.Player;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
  * Class from which the game is played from. Contains game loop and other important stuff
  */
 public class MainScreen implements Screen, ApplicationListener {
+    GigabitEconomy director;
     GameObject player; GameObject testEnemy;
 
     OrthographicCamera camera;
@@ -33,6 +35,10 @@ public class MainScreen implements Screen, ApplicationListener {
 
     //final HashMap<String, GameObject> sprites = new HashMap<String, GameObject>();
     final ArrayList<GameObject> sprites = new ArrayList<GameObject>(); //First sprite is ALWAYS player
+
+    public MainScreen(GigabitEconomy director) {
+        this.director = director;
+    }
 
 
     public void show() {
@@ -50,7 +56,7 @@ public class MainScreen implements Screen, ApplicationListener {
         backgroundTexture = new Texture("finished_assets/levels/level1.png");
         backgroundSprite = new Sprite(backgroundTexture);
 
-        camera = new OrthographicCamera(1920, 1080);
+        camera = (OrthographicCamera) director.getViewport().getCamera();
     }
 
     public void render(float delta) {
@@ -64,11 +70,11 @@ public class MainScreen implements Screen, ApplicationListener {
         backgroundSprite.draw(batch);
 
         // this thing makes the camera work XD
-        batch.setProjectionMatrix(camera.combined);
+        batch.setProjectionMatrix(director.getCombined());
 
+        //This should only take place when player gets to a certain position in camera view
         // update camera position
-        camera.position.set(player.getActorX(), player.getActorY(), 0);
-        camera.update();
+        director.updateCameraPos(player.getActorX(), player.getActorY());
 
 
 //
