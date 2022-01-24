@@ -43,7 +43,7 @@ public class MenuScreen implements Screen {
                 try {
                     director.switchScreen("level1");
                 } catch (Exception ex) {
-                    System.out.println(String.format("An unexpected error occurred: %s", ex.getMessage()));
+                    Gdx.app.error("Exception", "Error switching screen to Level 1", ex);
                     System.exit(-1);
                 }
             }
