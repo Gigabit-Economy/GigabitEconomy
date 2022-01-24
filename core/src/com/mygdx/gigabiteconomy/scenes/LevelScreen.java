@@ -123,6 +123,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
 
     @Override
     public void dispose() {
-        p.dispose();
+        backgroundTexture.dispose();
+        batch.dispose();
     }
 }
