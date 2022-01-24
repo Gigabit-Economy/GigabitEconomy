@@ -10,6 +10,7 @@ import com.mygdx.gigabiteconomy.scenes.LevelOneScreen;
 
 import java.util.HashMap;
 import java.lang.Exception;
+import java.lang.String;
 
 public class GigabitEconomy extends Game {
     private OrthographicCamera camera;
