@@ -55,9 +55,6 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // drawing the background
-        backgroundSprite.draw(batch);
-
         // this thing makes the camera work XD
         batch.setProjectionMatrix(director.getCamCombined());
 
@@ -66,10 +63,16 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         // director.updateCameraPos(player.getActorX(), player.getActorY());
 
         batch.begin();
+
+        // draw the background
+        backgroundSprite.draw(batch);
+
+        // draw sprites
         for (GameObject sprite : sprites) {
             if (sprite.isMoving()) sprite.move();
             batch.draw(sprite.getCurrRegion(), sprite.getActorX(), sprite.getActorY());
         }
+        
         batch.end();
 
         playerCollisionCheck();
