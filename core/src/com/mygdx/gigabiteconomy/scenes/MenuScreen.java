@@ -1,10 +1,8 @@
 package com.mygdx.gigabiteconomy.scenes;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -14,18 +12,17 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 
 public class MenuScreen implements Screen {
-
-    GigabitEconomy director;
-    private Stage stage;
+    private GigabitEconomy director;
+    private Stage stage = new Stage(director.getViewport());
 
     public MenuScreen(GigabitEconomy director) {
         this.director = director;
-        stage = new Stage(director.getViewport());
     }
 
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
+
         //Guessing this is one of the Scene2D.ui 'groups' which hold actors
         Table table = new Table();
 
@@ -82,6 +79,5 @@ public class MenuScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-
     }
 }

@@ -3,19 +3,14 @@ package com.mygdx.gigabiteconomy;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.gigabiteconomy.scenes.MainScreen;
 import com.mygdx.gigabiteconomy.scenes.MenuScreen;
-import jdk.tools.jmod.Main;
-import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
+import com.mygdx.gigabiteconomy.scenes.LevelOneScreen;
 
 import java.util.HashMap;
 
 public class GigabitEconomy extends Game {
-
     private OrthographicCamera camera;
     private ScreenViewport vp;
 
@@ -26,13 +21,11 @@ public class GigabitEconomy extends Game {
         camera = new OrthographicCamera(1920, 1080);
         vp = new ScreenViewport(camera);
 
-
-        System.out.println("Creating screen");
-        //Change to MenuScreen()
-        //Passing director (this class) to menu screen so we can call swap screen method
+        // Define screens
         screens.put("menu", new MenuScreen(this));
-        screens.put("main", new MainScreen(this));
+        screens.put("level1", new LevelOneScreen(this));
 
+        // Set active screen to main menu
         setScreen(screens.get("menu"));
     }
 
