@@ -31,37 +31,12 @@ public class GigabitEconomy extends Game {
         setScreen(screens.get("menu"));
     }
 
-    @Override
-    public void render() {
-        super.render();
-    }
-    public void resize(int width, int height) {
-        super.resize(width, height);
-    }
-
-    @Override
-    public void pause() {
-        super.pause();
-    }
-
-    @Override
-    public void resume() {
-        super.resume();
-    }
-
-
-    @Override
-    public void dispose() {
-
-    }
-
     public void updateCameraPos(int x, int y) {
         camera.position.set(x, y, 0);
         camera.update();
-
     }
 
-    public Matrix4 getCamCombined() {
+    public Matrix4 getCameraCombined() {
         // So batch can use camera coords
         return camera.combined;
     }
