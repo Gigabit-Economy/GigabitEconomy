@@ -1,8 +1,8 @@
 package com.mygdx.gigabiteconomy.scenes;
 
 import com.mygdx.gigabiteconomy.GigabitEconomy;
-import com.mygdx.gigabiteconomy.Player;
-import com.mygdx.gigabiteconomy.Enemy;
+import com.mygdx.gigabiteconomy.sprites.Player;
+import com.mygdx.gigabiteconomy.sprites.Enemy;
 import com.badlogic.gdx.graphics.Texture;
 
 import java.util.Arrays;
