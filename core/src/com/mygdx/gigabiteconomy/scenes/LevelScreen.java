@@ -107,6 +107,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
 
     @Override
     public void hide() {
+        Gdx.input.setInputProcessor(null);
     }
 
     @Override
