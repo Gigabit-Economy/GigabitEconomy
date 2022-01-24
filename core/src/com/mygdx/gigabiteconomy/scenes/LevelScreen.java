@@ -25,10 +25,10 @@ abstract class LevelScreen implements Screen, ApplicationListener {
 
     private ArrayList<GameObject> sprites = new ArrayList<GameObject>(); //First sprite is ALWAYS player
     private SpriteBatch batch;
-    private Player player;
-    private ArrayList<Enemy> enemies;
+    private GameObject player;
+    private ArrayList<GameObject> enemies;
 
-    public LevelScreen(GigabitEconomy director, Player player, ArrayList<Enemy> enemies, Texture backgroundTexture) {
+    public LevelScreen(GigabitEconomy director, GameObject player, ArrayList<GameObject> enemies, Texture backgroundTexture) {
         this.director = director;
         this.player = player;
         this.enemies = enemies;
@@ -45,7 +45,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         sprites.add(player);
 
         // Add enemies
-        for (Enemy enemy : enemies) {
+        for (GameObject enemy : enemies) {
             sprites.add(enemy);
         }
     }
@@ -76,7 +76,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
     }
 
     private void playerCollisionCheck() {
-        for (Enemy enemy : enemies) {
+        for (GameObject enemy : enemies) {
             if (player.getRectangle().overlaps(enemy.getRectangle())) {
                 System.out.println("Enemy collision detected");
             }

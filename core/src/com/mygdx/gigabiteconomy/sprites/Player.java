@@ -11,16 +11,12 @@ import com.badlogic.gdx.InputProcessor;
  *  > Attacking (detecting collisions for certain sprites only)
  */
 public class Player extends MySprite implements ApplicationListener, InputProcessor {
-
-
     public Player(String config, int x, int y) {
         super(config, x, y);
         Gdx.input.setInputProcessor(this);
 
-
         //this.setSize(100, 100);
     }
-
 
     @Override
     public boolean keyDown(int keycode) {
