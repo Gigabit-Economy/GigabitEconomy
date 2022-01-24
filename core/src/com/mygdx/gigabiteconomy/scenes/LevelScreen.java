@@ -36,8 +36,6 @@ abstract class LevelScreen implements Screen, ApplicationListener {
     }
 
     public void show() {
-        Gdx.input.setInputProcessor(this.player);
-
         batch = new SpriteBatch();
 
         // Add background
@@ -45,6 +43,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
 
         // Add player
         sprites.add(player);
+        Gdx.input.setInputProcessor(this.player);
 
         // Add enemies
         for (GameObject enemy : enemies) {
