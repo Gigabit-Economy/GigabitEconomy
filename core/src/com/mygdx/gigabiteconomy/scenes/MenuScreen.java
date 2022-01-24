@@ -13,10 +13,11 @@ import com.mygdx.gigabiteconomy.GigabitEconomy;
 
 public class MenuScreen implements Screen {
     private GigabitEconomy director;
-    private Stage stage = new Stage(director.getViewport());
+    private Stage stage;
 
     public MenuScreen(GigabitEconomy director) {
         this.director = director;
+        this.stage = new Stage(director.getViewport());
     }
 
     @Override
