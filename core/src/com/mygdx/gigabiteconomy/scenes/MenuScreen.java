@@ -11,6 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 
+import java.util.Locale;
+
 public class MenuScreen implements Screen {
     private GigabitEconomy director;
     private Stage stage;
@@ -23,35 +25,34 @@ public class MenuScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-
-        //Guessing this is one of the Scene2D.ui 'groups' which hold actors
-        Table table = new Table();
-
-        //Methods to errr make it work haha
-        table.setFillParent(true);
-        table.top();
         
-        //Skin defined in UI skin (commodore - hopefully we can use, looks really cool)
+        // Skin defined in UI skin (commodore - hopefully we can use, looks really cool)
         Skin style = new Skin(Gdx.files.internal("uiskin.json"));
-        //Creating a new button is as easy as this
-        TextButton play = new TextButton("Play", style);
 
-        play.addListener(new ClickListener() {
+        // Buttons
+        Table buttons = new Table();
+        buttons.setFillParent(true);
+        buttons.center();
+
+        buttons.add(new TextButton("Level 1", style));
+
+        buttons.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // Switch to level screen via. director
+                String buttonName = event.getRelatedActor().getName().toLowerCase().trim();
+                System.out.println(buttonName);
+
+                // Switch to selected level screen via. director
                 try {
-                    director.switchScreen("level1");
+                    director.switchScreen(buttonName);
                 } catch (Exception ex) {
-                    Gdx.app.error("Exception", "Error switching screen to Level 1", ex);
+                    Gdx.app.error("Exception", String.format("Error switching screen to %s", buttonName), ex);
                     System.exit(-1);
                 }
             }
         });
 
-        //Add it to the table, where you can reorganise it
-        table.add(play);
-        stage.addActor(table);
+        stage.addActor(buttons);
     }
 
     @Override
