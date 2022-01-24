@@ -1,6 +1,4 @@
-package com.mygdx.gigabiteconomy;
-
-import com.badlogic.gdx.scenes.scene2d.Stage;
+package com.mygdx.gigabiteconomy.sprites;
 
 /**
  * Class to create a new enemy. Will have the ability to:

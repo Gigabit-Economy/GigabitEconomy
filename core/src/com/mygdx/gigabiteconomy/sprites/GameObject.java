@@ -1,4 +1,4 @@
-package com.mygdx.gigabiteconomy;
+package com.mygdx.gigabiteconomy.sprites;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;

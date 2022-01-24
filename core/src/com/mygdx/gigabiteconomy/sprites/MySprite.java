@@ -1,13 +1,12 @@
-package com.mygdx.gigabiteconomy;
+package com.mygdx.gigabiteconomy.sprites;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.gigabiteconomy.sprites.GameObject;
 
 /**
  * Class represents a sprite shown on screen, ready to be drawn with batch.draw(); in MainScreen class

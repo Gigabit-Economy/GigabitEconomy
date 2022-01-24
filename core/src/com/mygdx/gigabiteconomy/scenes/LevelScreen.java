@@ -4,15 +4,13 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.mygdx.gigabiteconomy.Enemy;
-import com.mygdx.gigabiteconomy.GameObject;
+import com.mygdx.gigabiteconomy.sprites.Enemy;
+import com.mygdx.gigabiteconomy.sprites.GameObject;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
-import com.mygdx.gigabiteconomy.Player;
+import com.mygdx.gigabiteconomy.sprites.Player;
 
 import java.util.ArrayList;
 
@@ -28,9 +26,9 @@ abstract class LevelScreen implements Screen, ApplicationListener {
     private ArrayList<GameObject> sprites = new ArrayList<GameObject>(); //First sprite is ALWAYS player
     private SpriteBatch batch;
     private Player player;
-    private ArrayList<Enemy> enemies;
+    private ArrayList<GameObject> enemies;
 
-    public LevelScreen(GigabitEconomy director, Player player, ArrayList<Enemy> enemies, Texture backgroundTexture) {
+    public LevelScreen(GigabitEconomy director, Player player, ArrayList<GameObject> enemies, Texture backgroundTexture) {
         this.director = director;
         this.player = player;
         this.enemies = enemies;
@@ -45,9 +43,10 @@ abstract class LevelScreen implements Screen, ApplicationListener {
 
         // Add player
         sprites.add(player);
+        Gdx.input.setInputProcessor(this.player);
 
         // Add enemies
-        for (Enemy enemy : enemies) {
+        for (GameObject enemy : enemies) {
             sprites.add(enemy);
         }
     }
@@ -78,7 +77,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
     }
 
     private void playerCollisionCheck() {
-        for (Enemy enemy : enemies) {
+        for (GameObject enemy : enemies) {
             if (player.getRectangle().overlaps(enemy.getRectangle())) {
                 System.out.println("Enemy collision detected");
             }
@@ -109,6 +108,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
 
     @Override
     public void hide() {
+        Gdx.input.setInputProcessor(null);
     }
 
     @Override

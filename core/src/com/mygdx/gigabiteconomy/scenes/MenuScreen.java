@@ -13,10 +13,11 @@ import com.mygdx.gigabiteconomy.GigabitEconomy;
 
 public class MenuScreen implements Screen {
     private GigabitEconomy director;
-    private Stage stage = new Stage(director.getViewport());
+    private Stage stage;
 
     public MenuScreen(GigabitEconomy director) {
         this.director = director;
+        this.stage = new Stage(director.getViewport());
     }
 
     @Override
@@ -38,8 +39,13 @@ public class MenuScreen implements Screen {
         play.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //Ask director for playing screen
-                director.switchScreen("main");
+                // Switch to level screen via. director
+                try {
+                    director.switchScreen("level1");
+                } catch (Exception ex) {
+                    System.out.println(String.format("An unexpected error occurred: %s", ex.getMessage()));
+                    System.exit(-1);
+                }
             }
         });
 
@@ -73,7 +79,7 @@ public class MenuScreen implements Screen {
 
     @Override
     public void hide() {
-
+        Gdx.input.setInputProcessor(null);
     }
 
     @Override
