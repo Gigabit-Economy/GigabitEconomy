@@ -1,9 +1,6 @@
 package com.mygdx.gigabiteconomy.scenes;
 
-import com.mygdx.gigabiteconomy.Tile;
-
-import java.util.ArrayList;
-
+import com.mygdx.gigabiteconomy.scenes.Tile;
 /**
  * Class to hold and manage Tiles.
  */
@@ -19,7 +16,7 @@ public class TileManager {
      * @param x Position of first tile on screen (bottom left)
      * @param y Position of first tile on screen (bottom left)
      */
-    public TileManager(int sideLength, int maxHeight, int maxWidth, float x, float y) {
+    public TileManager(int sideLength, int maxHeight, int maxWidth, int x, int y) {
         //Basic checking
         if (!(maxHeight%sideLength!=0 || maxWidth%sideLength!=0)) {
             System.out.println(">>> WARNING: maxHeight/maxWidth must be divisible by sideLength <<<"); //Throw exception here

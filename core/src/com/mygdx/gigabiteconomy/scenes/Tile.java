@@ -1,5 +1,7 @@
 package com.mygdx.gigabiteconomy.scenes;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.gigabiteconomy.sprites.GameObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -13,9 +15,8 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class Tile implements GameObject {
 
-    //Maybe we can start representing positions as Vector2Ds instead of int[2]?
     //Might help with collisons later on if things with Tile is harder than expected... only issue is x/y is float
-    private Vector2 position;
+    private int[] position = new int[2];
     private int sideLength;
     private boolean occupied; //Makes tile impassible
     private GameObject occupiedBy;
@@ -26,8 +27,8 @@ public class Tile implements GameObject {
      * @param y Float value y of bottom left of Tile
      * @param sideLength
      */
-    public Tile(float x, float y, int sideLength) {
-        position = new Vector2(x, y);
+    public Tile(int x, int y, int sideLength) {
+        position[0] = x; position[1] = y;
         this.sideLength = sideLength;
     }
 
@@ -37,13 +38,33 @@ public class Tile implements GameObject {
     }
 
     @Override
-    public float getActorX() {
-        return position.x;
+    public boolean isMoving() {
+        return false;
     }
 
     @Override
-    public float getActorY() {
-        return position.y;
+    public void move() {
+
+    }
+
+    @Override
+    public void setDCoords(int dx, int dy) {
+
+    }
+
+    @Override
+    public TextureRegion getCurrRegion() {
+        return null;
+    }
+
+    @Override
+    public int getActorX() {
+        return position[0];
+    }
+
+    @Override
+    public int getActorY() {
+        return position[1];
     }
 
     @Override

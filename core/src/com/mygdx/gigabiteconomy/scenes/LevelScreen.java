@@ -65,7 +65,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
 
         //This should only take place when player gets to a certain position in camera view
         // update camera position
-        director.updateCameraPos(player.getActorX(), player.getActorY());
+        director.updateCameraPos((int)player.getActorX(), (int)player.getActorY());
 
         for (GameObject sprite : sprites) {
             if (sprite.isMoving()) sprite.move();
