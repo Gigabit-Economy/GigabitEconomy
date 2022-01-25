@@ -19,6 +19,7 @@ import java.util.ArrayList;
  */
 abstract class LevelScreen implements Screen, ApplicationListener {
     private GigabitEconomy director;
+    private TileManager tileManager;
 
     private Texture backgroundTexture;
     private Sprite backgroundSprite;
@@ -40,7 +41,9 @@ abstract class LevelScreen implements Screen, ApplicationListener {
 
         // Add background
         backgroundSprite = new Sprite(backgroundTexture);
-
+        System.out.println("Texture dimensions: h:" + backgroundTexture.getHeight() + " w:" + backgroundTexture.getWidth());
+        tileManager = new TileManager(135, backgroundTexture.getHeight()/2, backgroundTexture.getWidth(), 0, 0);
+        
         // Add player
         sprites.add(player);
         Gdx.input.setInputProcessor(this.player);

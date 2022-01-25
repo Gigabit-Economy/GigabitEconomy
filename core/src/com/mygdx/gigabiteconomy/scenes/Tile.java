@@ -16,9 +16,11 @@ import com.badlogic.gdx.math.Vector2;
 public class Tile implements GameObject {
 
     //Might help with collisons later on if things with Tile is harder than expected... only issue is x/y is float
-    private int[] position = new int[2];
+    private int[] position = new int[2]; //x,y coords of tile on screen
+    private int[] positionTile = new int[2];
     private int sideLength;
     private boolean occupied; //Makes tile impassible
+    private GameObject ownedBy; //Owned by entity (for homeowners)
     private GameObject occupiedBy;
 
     /**
@@ -27,7 +29,8 @@ public class Tile implements GameObject {
      * @param y Float value y of bottom left of Tile
      * @param sideLength
      */
-    public Tile(int x, int y, int sideLength) {
+    public Tile(int x, int y, int sideLength, int tileX, int tileY) {
+        positionTile[0] = tileX; positionTile[1] = tileY;
         position[0] = x; position[1] = y;
         this.sideLength = sideLength;
     }
@@ -59,12 +62,12 @@ public class Tile implements GameObject {
 
     @Override
     public int getActorX() {
-        return position[0];
+        return position[0]+sideLength/2;
     }
 
     @Override
     public int getActorY() {
-        return position[1];
+        return position[1]+sideLength/2;
     }
 
     @Override
@@ -79,4 +82,9 @@ public class Tile implements GameObject {
     public void removeOccupied() {
         this.occupiedBy = null;
     }
+
+    public int[] getPositionTile() {
+        return positionTile;
+    }
+
 }
