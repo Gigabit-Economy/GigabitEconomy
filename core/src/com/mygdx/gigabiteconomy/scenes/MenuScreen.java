@@ -35,14 +35,14 @@ public class MenuScreen implements Screen {
         buttons.center();
 
         TextButton level1Button = new TextButton("Level 1", style);
+        level1Button.setName("level1");
         buttons.add(level1Button);
 
         // Add click listener for buttons
         ClickListener buttonsListener = new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println(event.getButton());
-                String buttonName = event.getListenerActor().getName().toLowerCase().trim();
+                String buttonName = event.getListenerActor().getName();
                 System.out.println(buttonName);
 
                 // Switch to selected level screen via. director
