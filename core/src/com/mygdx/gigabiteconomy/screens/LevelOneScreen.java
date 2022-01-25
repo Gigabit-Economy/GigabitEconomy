@@ -1,4 +1,4 @@
-package com.mygdx.gigabiteconomy.scenes;
+package com.mygdx.gigabiteconomy.screens;
 
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.sprites.GameObject;

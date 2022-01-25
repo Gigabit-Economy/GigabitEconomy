@@ -5,8 +5,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.gigabiteconomy.scenes.MenuScreen;
-import com.mygdx.gigabiteconomy.scenes.LevelOneScreen;
+import com.mygdx.gigabiteconomy.screens.MenuScreen;
+import com.mygdx.gigabiteconomy.screens.LevelOneScreen;
 import com.badlogic.gdx.math.Vector3;
 
 import java.util.HashMap;
