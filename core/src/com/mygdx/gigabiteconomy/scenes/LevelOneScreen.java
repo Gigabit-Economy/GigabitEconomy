@@ -1,7 +1,5 @@
 package com.mygdx.gigabiteconomy.scenes;
 
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Screen;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.sprites.GameObject;
 import com.mygdx.gigabiteconomy.sprites.Player;

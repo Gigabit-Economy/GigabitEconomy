@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.gigabiteconomy.scenes.MenuScreen;
 import com.mygdx.gigabiteconomy.scenes.LevelOneScreen;
+import com.badlogic.gdx.math.Vector3;
 
 import java.util.HashMap;
 import java.lang.Exception;
@@ -31,7 +32,11 @@ public class GigabitEconomy extends Game {
         setScreen(screens.get("menu"));
     }
 
-    public void updateCameraPos(int x, int y) {
+    public Vector3 getCameraPos() {
+        return camera.position;
+    }
+
+    public void updateCameraPos(float x, float y) {
         camera.position.set(x, y, 0);
         camera.update();
     }
