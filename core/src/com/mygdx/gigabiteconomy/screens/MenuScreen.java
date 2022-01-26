@@ -14,6 +14,7 @@ import com.mygdx.gigabiteconomy.GigabitEconomy;
 public class MenuScreen implements Screen {
     private GigabitEconomy director;
     private Stage stage;
+    private Table buttons;
 
     public MenuScreen(GigabitEconomy director) {
         this.director = director;
@@ -28,7 +29,7 @@ public class MenuScreen implements Screen {
         Skin style = new Skin(Gdx.files.internal("uiskin.json"));
 
         // Buttons
-        Table buttons = new Table();
+        buttons = new Table();
         buttons.setFillParent(true);
         buttons.center();
 
