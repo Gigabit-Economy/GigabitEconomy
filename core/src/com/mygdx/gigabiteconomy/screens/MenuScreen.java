@@ -67,7 +67,7 @@ public class MenuScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        //True since camera position with UI is rarely changed
+        // True since camera position with UI is rarely changed
         stage.getViewport().update(width, height, true);
     }
 

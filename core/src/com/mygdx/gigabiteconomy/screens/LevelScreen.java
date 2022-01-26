@@ -22,7 +22,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
     private Texture backgroundTexture;
     private Sprite backgroundSprite;
 
-    private ArrayList<GameObject> sprites = new ArrayList<GameObject>(); //First sprite is ALWAYS player
+    private ArrayList<GameObject> sprites = new ArrayList<GameObject>(); // First sprite is ALWAYS player
     private SpriteBatch batch;
     private Player player;
     private ArrayList<GameObject> enemies;
@@ -45,16 +45,14 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         Gdx.input.setInputProcessor(this.player);
 
         // Add enemies
-        for (GameObject enemy : enemies) {
-            sprites.add(enemy);
-        }
+        sprites.addAll(enemies);
     }
 
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // this thing makes the camera work XD
+        // Set screen's projection matrix to director's ortho camera
         batch.setProjectionMatrix(director.getCameraCombined());
 
         // This should only take place when player gets to a certain position in camera view
@@ -63,10 +61,10 @@ abstract class LevelScreen implements Screen, ApplicationListener {
 
         batch.begin();
 
-        // draw the background
+        // Draw the background
         backgroundSprite.draw(batch);
 
-        // draw sprites
+        // Draw sprites
         for (GameObject sprite : sprites) {
             if (sprite.isMoving()) sprite.move();
             batch.draw(sprite.getCurrRegion(), sprite.getActorX(), sprite.getActorY());
