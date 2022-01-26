@@ -1,6 +1,8 @@
 package com.mygdx.gigabiteconomy.scenes;
 
 import com.mygdx.gigabiteconomy.scenes.Tile;
+import com.mygdx.gigabiteconomy.sprites.GameObject;
+
 /**
  * Class to hold and manage Tiles.
  */
@@ -36,6 +38,11 @@ public class TileManager {
 
     }
 
+    /**
+     * @param x of tile to get
+     * @param y of tile to get
+     * @return Tile at specific coordinate
+     */
     public Tile getTile(int x, int y) {
         if (x<tileArray.length && y<tileArray[0].length) {
             return tileArray[x][y];
@@ -45,7 +52,8 @@ public class TileManager {
     }
 
     /**
-     *
+     * Method to get list of adjacent tiles to given Tile
+     * Returns Tiles clockwise from given Tile starting with Northernmost
      * @return Always returns Tile[4] with unavailable spaces as null
      */
     public Tile[] getAdjecentTiles(Tile tile) {
@@ -58,6 +66,45 @@ public class TileManager {
         adjecentTiles[3] = getTile(pos[0]-1, pos[1]);
 
         return adjecentTiles;
+    }
+
+    /**
+     * Method to move an entity from one tile to another
+     * @param tileFrom Tile from which to move the GameObject
+     * @param direction New direction to place the GameObject
+     * @param distance How far to move the GameObject
+     */
+    public void moveTile(Tile tileFrom, String direction, int distance) {
+        direction = direction.toUpperCase();
+        int[] pos = tileFrom.getPositionTile();
+        GameObject occupier = tileFrom.getOccupiedBy();
+        try {
+            switch (direction) {
+                case "LEFT":
+                    tileArray[pos[0]-distance][pos[1]].setOccupied(occupier);
+                    break;
+                case "RIGHT":
+                    tileArray[pos[0]+distance][pos[1]].setOccupied(occupier);
+                    break;
+                case "UP":
+                    tileArray[pos[0]][pos[1]+distance].setOccupied(occupier);
+                    break;
+                case "DOWN":
+                    tileArray[pos[0]][pos[1]-distance].setOccupied(occupier);
+                    break;
+                default:
+                    System.out.println("Direction: " + direction + " not recognised");
+                    throw new ArrayIndexOutOfBoundsException();
+            }
+            tileFrom.setOccupied(null);
+        } catch (ArrayIndexOutOfBoundsException e) {}
+    }
+
+    /**
+     * Method to move an entity by only one space
+     */
+    public void moveTile(Tile tileFrom, String direction) {
+        moveTile(tileFrom, direction, 1);
     }
 
 }

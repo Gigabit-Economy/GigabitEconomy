@@ -13,7 +13,7 @@ import com.badlogic.gdx.math.Vector2;
  * --> Occupied boolean
  * --> Associated methods to provide encapsulation
  */
-public class Tile implements GameObject {
+public class Tile {
 
     //Might help with collisons later on if things with Tile is harder than expected... only issue is x/y is float
     private int[] position = new int[2]; //x,y coords of tile on screen
@@ -21,7 +21,7 @@ public class Tile implements GameObject {
     private int sideLength;
     private boolean occupied; //Makes tile impassible
     private GameObject ownedBy; //Owned by entity (for homeowners)
-    private GameObject occupiedBy;
+    private GameObject occupiedBy; //Impassible or delivery spot!
 
     /**
      *
@@ -35,56 +35,26 @@ public class Tile implements GameObject {
         this.sideLength = sideLength;
     }
 
-    @Override
-    public void setMoving(boolean moving) {
-
-    }
-
-    @Override
-    public boolean isMoving() {
-        return false;
-    }
-
-    @Override
-    public void move() {
-
-    }
-
-    @Override
-    public void setDCoords(int dx, int dy) {
-
-    }
-
-    @Override
-    public TextureRegion getCurrRegion() {
-        return null;
-    }
-
-    @Override
-    public int getActorX() {
-        return position[0]+sideLength/2;
-    }
-
-    @Override
-    public int getActorY() {
-        return position[1]+sideLength/2;
-    }
-
-    @Override
-    public Rectangle getRectangle() {
-        return null;
-    }
-
+    /**
+     * Sets current Tile to occupied
+     * @param occupying GameObject to occupy current Tile
+     */
     public void setOccupied(GameObject occupying) {
         this.occupiedBy = occupying;
     }
 
-    public void removeOccupied() {
-        this.occupiedBy = null;
-    }
-
+    /**
+     * @return The position of the Tile on the game board
+     */
     public int[] getPositionTile() {
         return positionTile;
+    }
+
+    /**
+     * @return GameObject occupying current Tile
+     */
+    public GameObject getOccupiedBy() {
+        return occupiedBy;
     }
 
 }
