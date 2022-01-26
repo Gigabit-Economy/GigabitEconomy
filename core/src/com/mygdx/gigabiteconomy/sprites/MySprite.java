@@ -75,11 +75,9 @@ abstract class MySprite extends Actor implements GameObject {
         return rect;
     }
 
-
     public void setDCoords(int dx, int dy) {
         dcoords[0] += dx; dcoords[1] += dy;
     }
-
 
     public void setMoving(boolean moving) {
         this.moving = moving;
@@ -89,7 +87,6 @@ abstract class MySprite extends Actor implements GameObject {
     public boolean isMoving() {
         return moving;
     }
-
 
     public void move() {
         coords[0] += dcoords[0]; coords[1] += dcoords[1];
