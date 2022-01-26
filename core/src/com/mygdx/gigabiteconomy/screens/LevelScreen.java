@@ -133,7 +133,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
 
     /**
      * Sets the input processor to null to prevent the LevelScreen's application listener from listening to user
-     * inputs; then calls dispose() to remove screen assets from memory.
+     * inputs; then calls dispose() to remove the screen's assets from memory.
      * Called by LibGDX when the screen is made inactive.
      */
     @Override
@@ -143,7 +143,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
     }
 
     /**
-     * Removes the screens assets (background texture and sprite batch) from memory when the screen is made inactive
+     * Removes the screen's assets (background texture and sprite batch) from memory when the screen is made inactive
      * and they're therefore no longer needed.
      * Called by hide().
      */
