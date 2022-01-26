@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.gigabiteconomy.screens.MenuScreen;
 import com.mygdx.gigabiteconomy.screens.LevelOneScreen;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.Gdx;
 
 import java.util.HashMap;
 import java.lang.Exception;
@@ -21,7 +22,7 @@ public class GigabitEconomy extends Game {
 
     @Override
     public void create() {
-        camera = new OrthographicCamera(1920, 1080);
+        camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         viewport = new ScreenViewport(camera);
 
         // Define screens
