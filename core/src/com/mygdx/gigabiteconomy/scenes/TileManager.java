@@ -5,10 +5,13 @@ import com.mygdx.gigabiteconomy.sprites.GameObject;
 
 /**
  * Class to hold and manage Tiles.
+ * - Each MySprite instance is passed the TileManager it belongs to and sets a Tile to occupy
+ * - Then Player position can be retrieved from the Tile it's on (or the bottom leftmost if multiple -- Rat King)
  */
 public class TileManager {
 
-    Tile[][] tileArray;
+    private Tile[][] tileArray;
+    private int sideLength;
 
     /**
      * Constructor to create a number of tiles for the game screen
@@ -19,6 +22,7 @@ public class TileManager {
      * @param y Position of first tile on screen (bottom left)
      */
     public TileManager(int sideLength, int maxHeight, int maxWidth, int x, int y) {
+        this.sideLength = sideLength;
         //Basic checking
         if (!(maxHeight%sideLength!=0 || maxWidth%sideLength!=0)) {
             System.out.println(">>> WARNING: maxHeight/maxWidth must be divisible by sideLength <<<"); //Throw exception here
@@ -39,31 +43,63 @@ public class TileManager {
     }
 
     /**
-     * @param x of tile to get
-     * @param y of tile to get
-     * @return Tile at specific coordinate
+     * Get certain in a direction "distance" from given Tile, not strictly adjacent but doesn't matter :p
+     * @param tileFrom Tile from which to calculate distance from
+     * @param direction Direction to retrieve the next tile in
+     * @param distance Distance from Tile given to get new Tile
+     * @return Tile satisfying conditions, or null if impossible
      */
-    public Tile getTile(int x, int y) {
-        if (x<tileArray.length && y<tileArray[0].length) {
-            return tileArray[x][y];
-        } else {
-            return null;
+    private Tile getAdjecentTile(Tile tileFrom, String direction, int distance) {
+        if (tileFrom == null) return null;
+        direction = direction.toUpperCase();
+        int[] pos = tileFrom.getPositionTile();
+        Tile ret;
+        try {
+            switch (direction) {
+                case "LEFT":
+                    ret = tileArray[pos[0]-distance][pos[1]];
+                    break;
+                case "RIGHT":
+                    ret = tileArray[pos[0]+distance][pos[1]];
+                    break;
+                case "UP":
+                    ret = tileArray[pos[0]][pos[1]+distance];
+                    break;
+                case "DOWN":
+                    ret = tileArray[pos[0]][pos[1]-distance];
+                    break;
+                default:
+                    System.out.println("Direction: " + direction + " not recognised");
+                    return null;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) { return null; }
+        return ret;
+    }
+
+    /**
+     * Place given object on given Tile
+     * @param toTile Tile to place given object on
+     * @param objectToPlace Object to place on given Tile
+     */
+    public void placeObject(Tile toTile, GameObject objectToPlace) {
+        if (toTile.getOccupiedBy() != null) {
+            toTile.setOccupied(objectToPlace);
         }
     }
 
     /**
      * Method to get list of adjacent tiles to given Tile
      * Returns Tiles clockwise from given Tile starting with Northernmost
-     * @return Always returns Tile[4] with unavailable spaces as null
+     * @return Always returns Tile[4] of adjacent Tiles
      */
     public Tile[] getAdjecentTiles(Tile tile) {
         int[] pos = tile.getPositionTile();
 
         Tile[] adjecentTiles = new Tile[4];
-        adjecentTiles[0] = getTile(pos[0], pos[1]+1);
-        adjecentTiles[1] = getTile(pos[0]+1, pos[1]);
-        adjecentTiles[2] = getTile(pos[0], pos[1]-1);
-        adjecentTiles[3] = getTile(pos[0]-1, pos[1]);
+        adjecentTiles[0] = getAdjecentTile(tile, "UP", 1);
+        adjecentTiles[1] = getAdjecentTile(tile, "RIGHT", 1);
+        adjecentTiles[2] = getAdjecentTile(tile, "DOWN", 1);
+        adjecentTiles[3] = getAdjecentTile(tile, "LEFT", 1);
 
         return adjecentTiles;
     }
@@ -74,37 +110,33 @@ public class TileManager {
      * @param direction New direction to place the GameObject
      * @param distance How far to move the GameObject
      */
-    public void moveTile(Tile tileFrom, String direction, int distance) {
+    public void moveFromTile(Tile tileFrom, String direction, int distance) {
         direction = direction.toUpperCase();
-        int[] pos = tileFrom.getPositionTile();
         GameObject occupier = tileFrom.getOccupiedBy();
-        try {
-            switch (direction) {
-                case "LEFT":
-                    tileArray[pos[0]-distance][pos[1]].setOccupied(occupier);
-                    break;
-                case "RIGHT":
-                    tileArray[pos[0]+distance][pos[1]].setOccupied(occupier);
-                    break;
-                case "UP":
-                    tileArray[pos[0]][pos[1]+distance].setOccupied(occupier);
-                    break;
-                case "DOWN":
-                    tileArray[pos[0]][pos[1]-distance].setOccupied(occupier);
-                    break;
-                default:
-                    System.out.println("Direction: " + direction + " not recognised");
-                    throw new ArrayIndexOutOfBoundsException();
-            }
-            tileFrom.setOccupied(null);
-        } catch (ArrayIndexOutOfBoundsException e) {}
+        Tile nextTile = getAdjecentTile(tileFrom, direction, distance);
+
+        if (nextTile != null) {
+            placeObject(tileFrom, null);
+            placeObject(nextTile, occupier);
+        }
     }
 
     /**
      * Method to move an entity by only one space
      */
-    public void moveTile(Tile tileFrom, String direction) {
-        moveTile(tileFrom, direction, 1);
+    public void moveFromTile(Tile tileFrom, String direction) {
+        moveFromTile(tileFrom, direction, 1);
+    }
+
+    /**
+     * Method to return screen coordinates of given tile (bottom left)
+     * @param tileOccupied Tile to return coordinates of
+     * @return int[2] of form [screen coord x, screen coord y]
+     */
+    public int[] getTileCoords(Tile tileOccupied) {
+        int[] pos = tileOccupied.getPositionTile().clone();
+        pos[0] = pos[0]*sideLength; pos[1] = pos[1]*sideLength;
+        return pos;
     }
 
 }
