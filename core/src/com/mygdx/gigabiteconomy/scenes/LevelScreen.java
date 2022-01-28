@@ -13,6 +13,7 @@ import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.sprites.Player;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Base class for all level screens.
@@ -34,6 +35,8 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         this.player = player;
         this.enemies = enemies;
         this.backgroundTexture = backgroundTexture;
+
+        //Add players to TileManager
     }
 
     public void show() {
@@ -68,7 +71,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
 
         //This should only take place when player gets to a certain position in camera view
         // update camera position
-        director.updateCameraPos((int)player.getActorX(), (int)player.getActorY());
+        director.updateCameraPos(player.getActorX(), player.getActorY());
 
         for (GameObject sprite : sprites) {
             if (sprite.isMoving()) sprite.move();
@@ -76,15 +79,6 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         }
         batch.end();
 
-        playerCollisionCheck();
-    }
-
-    private void playerCollisionCheck() {
-        for (GameObject enemy : enemies) {
-            if (player.getRectangle().overlaps(enemy.getRectangle())) {
-                System.out.println("Enemy collision detected");
-            }
-        }
     }
 
     @Override
