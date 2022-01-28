@@ -1,5 +1,6 @@
 package com.mygdx.gigabiteconomy.scenes;
 
+import com.badlogic.gdx.Game;
 import com.mygdx.gigabiteconomy.scenes.Tile;
 import com.mygdx.gigabiteconomy.sprites.GameObject;
 
@@ -42,6 +43,10 @@ public class TileManager {
 
     }
 
+    private Tile getTile(int x, int y) {
+        return tileArray[x][y];
+    }
+
     /**
      * Get certain in a direction "distance" from given Tile, not strictly adjacent but doesn't matter :p
      * @param tileFrom Tile from which to calculate distance from
@@ -57,16 +62,16 @@ public class TileManager {
         try {
             switch (direction) {
                 case "LEFT":
-                    ret = tileArray[pos[0]-distance][pos[1]];
+                    ret = getTile(pos[0]-distance, pos[1]);
                     break;
                 case "RIGHT":
-                    ret = tileArray[pos[0]+distance][pos[1]];
+                    ret = getTile(pos[0]+distance, pos[1]);
                     break;
                 case "UP":
-                    ret = tileArray[pos[0]][pos[1]+distance];
+                    ret = getTile(pos[0], pos[1]+distance);
                     break;
                 case "DOWN":
-                    ret = tileArray[pos[0]][pos[1]-distance];
+                    ret = getTile(pos[0], pos[1]-distance);
                     break;
                 default:
                     System.out.println("Direction: " + direction + " not recognised");
@@ -85,6 +90,10 @@ public class TileManager {
         if (toTile.getOccupiedBy() != null) {
             toTile.setOccupied(objectToPlace);
         }
+    }
+
+    public void placeObject(int x, int y, GameObject objectToPlace) {
+        placeObject(getTile(x, y), objectToPlace);
     }
 
     /**
