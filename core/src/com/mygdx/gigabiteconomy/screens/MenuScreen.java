@@ -1,4 +1,4 @@
-package com.mygdx.gigabiteconomy.scenes;
+package com.mygdx.gigabiteconomy.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -14,6 +14,7 @@ import com.mygdx.gigabiteconomy.GigabitEconomy;
 public class MenuScreen implements Screen {
     private GigabitEconomy director;
     private Stage stage;
+    private Table buttons;
 
     public MenuScreen(GigabitEconomy director) {
         this.director = director;
@@ -23,35 +24,38 @@ public class MenuScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-
-        //Guessing this is one of the Scene2D.ui 'groups' which hold actors
-        Table table = new Table();
-
-        //Methods to errr make it work haha
-        table.setFillParent(true);
-        table.top();
         
-        //Skin defined in UI skin (commodore - hopefully we can use, looks really cool)
+        // Skin defined in UI skin (commodore - hopefully we can use, looks really cool)
         Skin style = new Skin(Gdx.files.internal("uiskin.json"));
-        //Creating a new button is as easy as this
-        TextButton play = new TextButton("Play", style);
 
-        play.addListener(new ClickListener() {
+        // Buttons
+        buttons = new Table();
+        buttons.setFillParent(true);
+        buttons.center();
+
+        TextButton level1Button = new TextButton("Level 1", style);
+        level1Button.setName("level1");
+        buttons.add(level1Button);
+
+        // Add click listener for buttons
+        ClickListener buttonsListener = new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // Switch to level screen via. director
+                String buttonName = event.getListenerActor().getName();
+                System.out.println(buttonName);
+
+                // Switch to selected level screen via. director
                 try {
-                    director.switchScreen("level1");
+                    director.switchScreen(buttonName);
                 } catch (Exception ex) {
-                    System.out.println(String.format("An unexpected error occurred: %s", ex.getMessage()));
+                    Gdx.app.error("Exception", String.format("Error switching screen to %s", buttonName), ex);
                     System.exit(-1);
                 }
             }
-        });
+        };
+        level1Button.addListener(buttonsListener);
 
-        //Add it to the table, where you can reorganise it
-        table.add(play);
-        stage.addActor(table);
+        stage.addActor(buttons);
     }
 
     @Override
@@ -63,7 +67,7 @@ public class MenuScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        //True since camera position with UI is rarely changed
+        // True since camera position with UI is rarely changed
         stage.getViewport().update(width, height, true);
     }
 

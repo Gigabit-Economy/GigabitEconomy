@@ -12,8 +12,7 @@ import com.mygdx.gigabiteconomy.sprites.GameObject;
  * Class represents a sprite shown on screen, ready to be drawn with batch.draw(); in MainScreen class
  * MainScreen interfaces with this class through GameObject
  */
-public abstract class MySprite extends Actor implements GameObject {
-
+abstract class MySprite extends Actor implements GameObject {
     //Rectangle which holds the texture
     private Rectangle rect;
 
@@ -76,11 +75,9 @@ public abstract class MySprite extends Actor implements GameObject {
         return rect;
     }
 
-
     public void setDCoords(int dx, int dy) {
         dcoords[0] += dx; dcoords[1] += dy;
     }
-
 
     public void setMoving(boolean moving) {
         this.moving = moving;
@@ -90,7 +87,6 @@ public abstract class MySprite extends Actor implements GameObject {
     public boolean isMoving() {
         return moving;
     }
-
 
     public void move() {
         coords[0] += dcoords[0]; coords[1] += dcoords[1];

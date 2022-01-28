@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.mygdx.gigabiteconomy.GigabitEconomy;
 
 /**
  * Class for separating Player functionality from general Sprite functionality
@@ -13,9 +14,8 @@ import com.badlogic.gdx.InputProcessor;
 public class Player extends MySprite implements ApplicationListener, InputProcessor {
     public Player(String config, int x, int y) {
         super(config, x, y);
-        Gdx.input.setInputProcessor(this);
 
-        //this.setSize(100, 100);
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override
@@ -23,26 +23,21 @@ public class Player extends MySprite implements ApplicationListener, InputProces
         System.out.println("Key pressed");
 
         //Handles player movement on key press. Everything handled inside Sprite class
-        if (keycode == Input.Keys.D || keycode == Input.Keys.RIGHT) {
-            //Find x,y of right tile and move
-            setMoving(true);
-            setDCoords(10, 0);
-        }
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT) {
-            //Find x,y of left tile and move
-            setMoving(true);
-            //Need to flip
-            setDCoords(-10, 0);
+            // Move left
+            move(MoveDirection.LEFT);
         }
-        if (keycode == Input.Keys.W || keycode == Input.Keys.UP) {
-            //Find x,y of top tile and move
-            setMoving(true);
-            setDCoords(0, 10);
+        else if (keycode == Input.Keys.D || keycode == Input.Keys.RIGHT) {
+            // Move right
+            move(MoveDirection.RIGHT);
         }
-        if (keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
-            //Find x,y of bottom tile and move
-            setMoving(true);
-            setDCoords(0, -10);
+        else if (keycode == Input.Keys.W || keycode == Input.Keys.UP) {
+            // Move up
+            move(MoveDirection.UP);
+        }
+        else if (keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
+            // Move down
+            move(MoveDirection.DOWN);
         }
 
         return false;
@@ -52,6 +47,30 @@ public class Player extends MySprite implements ApplicationListener, InputProces
     public boolean keyUp(int keycode) {
         setMoving(false);
         return false;
+    }
+
+    /**
+     * Move the player by the passed direction (left/right/up/down).
+     *
+     * @param direction the direction to move the player (MoveDirection.LEFT/RIGHT/UP/DOWN)
+     */
+    private void move(MoveDirection direction) {
+        setMoving(true);
+
+        switch (direction) {
+            case LEFT:
+                setDCoords(-10, 0);
+                break;
+            case RIGHT:
+                setDCoords(10, 0);
+                break;
+            case UP:
+                setDCoords(0, 10);
+                break;
+            case DOWN:
+                setDCoords(0, -10);
+                break;
+        }
     }
 
     @Override
@@ -112,5 +131,12 @@ public class Player extends MySprite implements ApplicationListener, InputProces
     @Override
     public void dispose() {
 
+    }
+
+    private enum MoveDirection {
+        LEFT,
+        RIGHT,
+        UP,
+        DOWN
     }
 }

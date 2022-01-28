@@ -5,8 +5,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.gigabiteconomy.scenes.MenuScreen;
-import com.mygdx.gigabiteconomy.scenes.LevelOneScreen;
+import com.mygdx.gigabiteconomy.screens.MenuScreen;
+import com.mygdx.gigabiteconomy.screens.LevelOneScreen;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.Gdx;
 
 import java.util.HashMap;
 import java.lang.Exception;
@@ -20,7 +22,7 @@ public class GigabitEconomy extends Game {
 
     @Override
     public void create() {
-        camera = new OrthographicCamera(1920, 1080);
+        camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         viewport = new ScreenViewport(camera);
 
         // Define screens
@@ -31,38 +33,17 @@ public class GigabitEconomy extends Game {
         setScreen(screens.get("menu"));
     }
 
-    @Override
-    public void render() {
-        super.render();
-    }
-    public void resize(int width, int height) {
-        super.resize(width, height);
+    public Vector3 getCameraPos() {
+        return camera.position;
     }
 
-    @Override
-    public void pause() {
-        super.pause();
-    }
-
-    @Override
-    public void resume() {
-        super.resume();
-    }
-
-
-    @Override
-    public void dispose() {
-
-    }
-
-    public void updateCameraPos(int x, int y) {
+    public void updateCameraPos(float x, float y) {
         camera.position.set(x, y, 0);
         camera.update();
-
     }
 
-    public Matrix4 getCombined() {
-        //So batch can use camera coords
+    public Matrix4 getCameraCombined() {
+        // So batch can use camera coords
         return camera.combined;
     }
 
