@@ -1,7 +1,7 @@
-package com.mygdx.gigabiteconomy.scenes;
+package com.mygdx.gigabiteconomy.screens;
 
 import com.badlogic.gdx.Game;
-import com.mygdx.gigabiteconomy.scenes.Tile;
+import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.sprites.GameObject;
 
 /**

@@ -1,4 +1,4 @@
-package com.mygdx.gigabiteconomy.scenes;
+package com.mygdx.gigabiteconomy.screens;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.gigabiteconomy.sprites.GameObject;

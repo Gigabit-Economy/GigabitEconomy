@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.gigabiteconomy.sprites.GameObject;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.sprites.Player;
+import com.mygdx.gigabiteconomy.screens.TileManager;
 
 import java.util.ArrayList;
 import java.util.Collection;
