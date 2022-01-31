@@ -44,7 +44,11 @@ public class TileManager {
     }
 
     private Tile getTile(int x, int y) {
-        return tileArray[x][y];
+        try {
+            return tileArray[x][y];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
     /**
@@ -92,8 +96,12 @@ public class TileManager {
         }
     }
 
-    public void placeObject(int x, int y, GameObject objectToPlace) {
-        placeObject(getTile(x, y), objectToPlace);
+    public Tile placeObject(int x, int y, GameObject objectToPlace) {
+        Tile toPlace;
+        if ((toPlace = getTile(x, y)) != null) {
+            placeObject(toPlace, objectToPlace);
+        }
+        return toPlace;
     }
 
     /**
