@@ -10,4 +10,6 @@ public class Enemy extends MySprite {
     public Enemy(String config, int x, int y) {
         super(config, x, y);
     }
+
+
 }

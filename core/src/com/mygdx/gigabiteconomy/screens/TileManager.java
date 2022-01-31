@@ -13,6 +13,7 @@ public class TileManager {
 
     private Tile[][] tileArray;
     private int sideLength;
+    int initialX, initialY; //Where the Tiles begin (bottom left) - don't really need to worry about this since all ours start at 0,0 for the time being
 
     /**
      * Constructor to create a number of tiles for the game screen
@@ -23,6 +24,8 @@ public class TileManager {
      * @param y Position of first tile on screen (bottom left)
      */
     public TileManager(int sideLength, int maxHeight, int maxWidth, int x, int y) {
+        initialX=x; initialY=y;
+
         this.sideLength = sideLength;
         //Basic checking
         if (!(maxHeight%sideLength!=0 || maxWidth%sideLength!=0)) {
@@ -37,7 +40,7 @@ public class TileManager {
         for (int i=0; i<tileMapX; i++) {
             for (int ii=0; ii<tileMapY; ii++) {
                 tileArray[i][ii] = new Tile((x+(sideLength*i)), (y+(sideLength*ii)), sideLength, i, ii);
-                System.out.println("Tile created at " + (x+(sideLength*i)) + " " + (y+(sideLength*ii)));
+                System.out.println("Tile created at " + (i) + " " + (ii));
             }
         }
 
@@ -127,7 +130,8 @@ public class TileManager {
      * @param direction New direction to place the GameObject
      * @param distance How far to move the GameObject
      */
-    public void moveFromTile(Tile tileFrom, String direction, int distance) {
+    public Tile moveFromTile(Tile tileFrom, String direction, int distance) {
+        System.out.println("Moving " + direction);
         direction = direction.toUpperCase();
         GameObject occupier = tileFrom.getOccupiedBy();
         Tile nextTile = getAdjecentTile(tileFrom, direction, distance);
@@ -136,24 +140,15 @@ public class TileManager {
             placeObject(tileFrom, null);
             placeObject(nextTile, occupier);
         }
+        return nextTile!=null ? nextTile : tileFrom;
     }
 
     /**
      * Method to move an entity by only one space
      */
-    public void moveFromTile(Tile tileFrom, String direction) {
-        moveFromTile(tileFrom, direction, 1);
+    public Tile moveFromTile(Tile tileFrom, String direction) {
+        return moveFromTile(tileFrom, direction, 1);
     }
 
-    /**
-     * Method to return screen coordinates of given tile (bottom left)
-     * @param tileOccupied Tile to return coordinates of
-     * @return int[2] of form [screen coord x, screen coord y]
-     */
-    public int[] getTileCoords(Tile tileOccupied) {
-        int[] pos = tileOccupied.getPositionTile().clone();
-        pos[0] = pos[0]*sideLength; pos[1] = pos[1]*sideLength;
-        return pos;
-    }
 
 }

@@ -45,6 +45,7 @@ public class Player extends MySprite implements ApplicationListener, InputProces
 
     @Override
     public boolean keyUp(int keycode) {
+        //setMoving just handles the animation
         setMoving(false);
         return false;
     }
@@ -71,10 +72,12 @@ public class Player extends MySprite implements ApplicationListener, InputProces
                 setDCoords(0, -10);
                 break;
         }
+        currentTile = tm.moveFromTile(currentTile, direction.name());
     }
 
     @Override
     public boolean keyTyped(char character) {
+        keyDown(character);
         return false;
     }
 
@@ -132,6 +135,7 @@ public class Player extends MySprite implements ApplicationListener, InputProces
     public void dispose() {
 
     }
+
 
     private enum MoveDirection {
         LEFT,

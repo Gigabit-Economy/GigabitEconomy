@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.gigabiteconomy.screens.Tile;
+import com.mygdx.gigabiteconomy.screens.TileManager;
 import com.mygdx.gigabiteconomy.sprites.GameObject;
 
 /**
@@ -15,6 +17,9 @@ import com.mygdx.gigabiteconomy.sprites.GameObject;
 abstract class MySprite extends Actor implements GameObject {
     //Rectangle which holds the texture
     private Rectangle rect;
+
+    TileManager tm;
+    Tile currentTile;
 
     TextureAtlas ta;
     //Coordinates of sprite on screen
@@ -51,6 +56,14 @@ abstract class MySprite extends Actor implements GameObject {
     }
 
     @Override
+    public int initTile(TileManager tm) {
+        this.tm = tm;
+        currentTile = tm.placeObject(coords[0], coords[1], this);
+        //Success
+        return 0;
+    }
+
+    @Override
     public void draw(Batch batch, float alpha) {
         batch.draw(current, this.getActorX(), this.getActorY());
     }
@@ -61,15 +74,24 @@ abstract class MySprite extends Actor implements GameObject {
     }
 
     @Override
-    public int getActorX() {
-        return coords[0];
+    public float getActorX() {
+        return currentTile.getTileCoords()[0];
     }
 
     @Override
-    public int getActorY() {
-        return coords[1];
+    public float getActorY() {
+        return currentTile.getTileCoords()[1];
     }
 
+    @Override
+    public void setActorX() {
+
+    }
+
+    @Override
+    public void setActorY() {
+
+    }
     @Override
     public Rectangle getRectangle() {
         return rect;
@@ -89,6 +111,8 @@ abstract class MySprite extends Actor implements GameObject {
     }
 
     public void move() {
+
+
         coords[0] += dcoords[0]; coords[1] += dcoords[1];
         rect.setX(coords[0]); rect.setY(coords[1]); //Instead of using MySprite x,y we use Rectangle x,y to define position
         //Changing current sprite

@@ -50,9 +50,13 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         //-> One TileManager per level sounds like the cleanest option
         int backgroundTextureHeight = backgroundTexture.getHeight();
         int backgroundTextureWidth = backgroundTexture.getWidth();
-        int numberOfTilesHigh = 4;
+        int numberOfTilesHigh = 12;
         //Add players to TileManager
-        tileManager = new TileManager(backgroundTextureHeight/numberOfTilesHigh, backgroundTextureHeight, backgroundTextureHeight, 0, 0);
+        tileManager = new TileManager(backgroundTextureHeight/numberOfTilesHigh, backgroundTextureHeight/2, backgroundTextureWidth, 0, 0);
+        for ( GameObject go : enemies ) {
+            go.initTile(tileManager);
+        }
+        player.initTile(tileManager);
     }
 
     /**
