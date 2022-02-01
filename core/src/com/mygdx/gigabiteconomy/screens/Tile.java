@@ -74,4 +74,8 @@ public class Tile {
         return occupiedBy;
     }
 
+    public int getSideLength() {
+        return sideLength;
+    }
+
 }

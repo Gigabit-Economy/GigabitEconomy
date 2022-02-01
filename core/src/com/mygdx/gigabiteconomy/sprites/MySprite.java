@@ -30,6 +30,7 @@ abstract class MySprite extends Actor implements GameObject {
     private TextureRegion current;
 
     boolean moving; //Can use for paused? Also useful for player (holding down keys)
+    MoveDirection direction;
 
     private int[] dcoords = new int[2]; //Increment of each x, y if moving is true
 
@@ -75,12 +76,12 @@ abstract class MySprite extends Actor implements GameObject {
 
     @Override
     public float getActorX() {
-        return currentTile.getTileCoords()[0];
+        return coords[0];
     }
 
     @Override
     public float getActorY() {
-        return currentTile.getTileCoords()[1];
+        return coords[1];
     }
 
     @Override
@@ -110,15 +111,41 @@ abstract class MySprite extends Actor implements GameObject {
         return moving;
     }
 
-    public void move() {
+    public int[] movingFrom() {
+        int[] ret = new int[2];
+        switch (direction) {
+            case LEFT: //[x, y] = [1, 0]
+            case RIGHT:
+                ret[0] = 1; ret[1] = 0;
+                break;
+            case UP:
+            case DOWN:
+                ret[1] = 1; ret[0] = 0;
+                break;
+        }
+        return ret;
+    }
+
+    public void move(float delta) {
 
 
-        coords[0] += dcoords[0]; coords[1] += dcoords[1];
+        //coords[0] += dcoords[0]; coords[1] += dcoords[1];
         rect.setX(coords[0]); rect.setY(coords[1]); //Instead of using MySprite x,y we use Rectangle x,y to define position
         //Changing current sprite
         //current = regions.get(regions.indexOf((TextureAtlas.AtlasRegion) current, true)+1);
         current = regions.get((regions.indexOf((TextureAtlas.AtlasRegion) current, true) + 1) % regions.size);
 
+        //If moving is true, move delta*distance until at new tile
+        if (isMoving()) {
+            coords[movingFrom()[0]] += (movingFrom()[1])*(delta*currentTile.getSideLength());
+        }
+    }
+
+    public enum MoveDirection {
+        LEFT,
+        RIGHT,
+        UP,
+        DOWN
     }
 
 }

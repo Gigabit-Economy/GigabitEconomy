@@ -106,7 +106,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
 
         // Draw sprites
         for (GameObject sprite : sprites) {
-            if (sprite.isMoving()) sprite.move();
+            if (sprite.isMoving()) sprite.move(delta);
             batch.draw(sprite.getCurrRegion(), sprite.getActorX(), sprite.getActorY());
         }
 

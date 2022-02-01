@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
+import org.graalvm.compiler.lir.aarch64.AArch64Move;
 
 /**
  * Class for separating Player functionality from general Sprite functionality
@@ -21,58 +22,35 @@ public class Player extends MySprite implements ApplicationListener, InputProces
     @Override
     public boolean keyDown(int keycode) {
         System.out.println("Key pressed");
+        setMoving(true); //Run animation
 
         //Handles player movement on key press. Everything handled inside Sprite class
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT) {
             // Move left
-            move(MoveDirection.LEFT);
+            direction = MoveDirection.LEFT;
         }
         else if (keycode == Input.Keys.D || keycode == Input.Keys.RIGHT) {
             // Move right
-            move(MoveDirection.RIGHT);
+            direction = MoveDirection.RIGHT;
         }
         else if (keycode == Input.Keys.W || keycode == Input.Keys.UP) {
             // Move up
-            move(MoveDirection.UP);
+            direction = MoveDirection.UP;
         }
         else if (keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
             // Move down
-            move(MoveDirection.DOWN);
+            direction = MoveDirection.DOWN;
         }
 
+        if (direction != null) currentTile = tm.moveFromTile(currentTile, direction.name());
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
         //setMoving just handles the animation
-        setMoving(false);
+        //setMoving(false);
         return false;
-    }
-
-    /**
-     * Move the player by the passed direction (left/right/up/down).
-     *
-     * @param direction the direction to move the player (MoveDirection.LEFT/RIGHT/UP/DOWN)
-     */
-    private void move(MoveDirection direction) {
-        setMoving(true);
-
-        switch (direction) {
-            case LEFT:
-                setDCoords(-10, 0);
-                break;
-            case RIGHT:
-                setDCoords(10, 0);
-                break;
-            case UP:
-                setDCoords(0, 10);
-                break;
-            case DOWN:
-                setDCoords(0, -10);
-                break;
-        }
-        currentTile = tm.moveFromTile(currentTile, direction.name());
     }
 
     @Override
@@ -137,10 +115,5 @@ public class Player extends MySprite implements ApplicationListener, InputProces
     }
 
 
-    private enum MoveDirection {
-        LEFT,
-        RIGHT,
-        UP,
-        DOWN
-    }
+
 }
