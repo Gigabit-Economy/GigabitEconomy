@@ -29,6 +29,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
     private SpriteBatch batch;
     private Player player;
     private ArrayList<GameObject> enemies;
+    private ArrayList<GameObject> houses;
 
     /**
      * A template constructor for use by all level screen subclasses. Sets properties that differ between levels
@@ -39,10 +40,11 @@ abstract class LevelScreen implements Screen, ApplicationListener {
      * @param enemies an ArrayList containing all enemy characters for the level
      * @param backgroundTexture the background graphic of the level
      */
-    public LevelScreen(GigabitEconomy director, Player player, ArrayList<GameObject> enemies, Texture backgroundTexture) {
+    public LevelScreen(GigabitEconomy director, Player player, ArrayList<GameObject> enemies, ArrayList<GameObject> houses, Texture backgroundTexture) {
         this.director = director;
         this.player = player;
         this.enemies = enemies;
+        this.houses = houses;
         this.backgroundTexture = backgroundTexture;
 
         //Add players to TileManager
@@ -60,13 +62,17 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         backgroundSprite = new Sprite(backgroundTexture);
         System.out.println("Texture dimensions: h:" + backgroundTexture.getHeight() + " w:" + backgroundTexture.getWidth());
         tileManager = new TileManager(135, backgroundTexture.getHeight()/2, backgroundTexture.getWidth(), 0, 0);
-
+        
+        // Add houses
+        sprites.addAll(houses);
+        
         // Add player
         sprites.add(player);
         Gdx.input.setInputProcessor(this.player);
 
         // Add enemies
         sprites.addAll(enemies);
+
     }
 
     /**
