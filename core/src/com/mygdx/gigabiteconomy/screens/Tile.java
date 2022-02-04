@@ -83,7 +83,8 @@ public class Tile {
      * @return position of Tile on screen if success ; null if failure
      */
     public float[] isOnTile(float spriteX, float spriteY) {
-        if ((Math.abs(spriteX-position[0]) < 5) || (Math.abs(spriteY-position[1]) < 5)) {
+        int offset = 5;
+        if ((Math.abs(spriteX-position[0]) < offset) && (Math.abs(spriteY-position[1]) < offset)) {
             return position;
         }
         return null;

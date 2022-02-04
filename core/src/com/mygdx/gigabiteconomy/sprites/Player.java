@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
+import com.mygdx.gigabiteconomy.screens.Tile;
 import org.graalvm.compiler.lir.aarch64.AArch64Move;
 
 /**
@@ -23,7 +24,7 @@ public class Player extends MySprite implements ApplicationListener, InputProces
     public boolean keyDown(int keycode) {
         if (isMoving()) return false;
 
-        setMoving(true); //Run animation
+
 
         //Handles player movement on key press. Everything handled inside Sprite class
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT) {
@@ -44,7 +45,16 @@ public class Player extends MySprite implements ApplicationListener, InputProces
         }
         System.out.println("Key press detected, moving sprite: " + direction);
 
-        if (direction != null) currentTile = tm.moveFromTile(currentTile, direction.name());
+        if (direction != null) {
+            Tile newCurrentTile = tm.moveFromTile(currentTile, direction.name());
+
+            if (newCurrentTile != currentTile) {
+                currentTile = newCurrentTile;
+                setMoving(true); //Run animation
+            } else {
+                System.out.println("Not running since new direction is unavailable");
+            }
+        }
         return false;
     }
 
