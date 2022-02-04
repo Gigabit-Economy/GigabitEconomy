@@ -1,0 +1,54 @@
+golfRightMove.png
+size: 1288, 240
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+NineIronRightWalk1
+  rotate: false
+  xy: 0, 0
+  size: 184, 240
+  orig: 184, 240
+  offset: 0, 0
+  index: -1
+NineIronRightWalk2
+  rotate: false
+  xy: 184, 0
+  size: 184, 240
+  orig: 184, 240
+  offset: 0, 0
+  index: -1
+NineIronRightWalk3
+  rotate: false
+  xy: 368, 0
+  size: 184, 240
+  orig: 184, 240
+  offset: 0, 0
+  index: -1
+NineIronRightWalk4
+  rotate: false
+  xy: 552, 0
+  size: 184, 240
+  orig: 184, 240
+  offset: 0, 0
+  index: -1
+NineIronRightWalk5
+  rotate: false
+  xy: 736, 0
+  size: 184, 240
+  orig: 184, 240
+  offset: 0, 0
+  index: -1
+NineIronRightWalk6
+  rotate: false
+  xy: 920, 0
+  size: 184, 240
+  orig: 184, 240
+  offset: 0, 0
+  index: -1
+NineIronRightWalk7
+  rotate: false
+  xy: 1104, 0
+  size: 184, 240
+  orig: 184, 240
+  offset: 0, 0
+  index: -1

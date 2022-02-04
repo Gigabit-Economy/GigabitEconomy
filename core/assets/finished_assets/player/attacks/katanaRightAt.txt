@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 katanaRightAt.png
 size: 1680, 240
 format: RGBA8888
@@ -52,3 +53,59 @@ katanaRightAttack7
   orig: 240, 240
   offset: 0, 0
   index: -1
+=======
+katanaRight.png
+size: 1680, 240
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+katanaRightAttack1
+  rotate: false
+  xy: 0, 0
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+katanaRightAttack2
+  rotate: false
+  xy: 240, 0
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+katanaRightAttack3
+  rotate: false
+  xy: 480, 0
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+katanaRightAttack4
+  rotate: false
+  xy: 720, 0
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+katanaRightAttack5
+  rotate: false
+  xy: 960, 0
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+katanaRightAttack6
+  rotate: false
+  xy: 1200, 0
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+katanaRightAttack7
+  rotate: false
+  xy: 1440, 0
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+>>>>>>> 90348a187867dfc5e82a944555ec0174e568afc0
