@@ -63,7 +63,6 @@ public class Tile {
 //        coords[0] = (pos[0]*sideLength)+(sideLength/2); coords[1] = (pos[1]*sideLength)+(sideLength/2);
 //        return coords;
         coords[0] = pos[0]*sideLength; coords[1] = pos[1]*sideLength;
-        System.out.println(coords[0] + " " + coords[1]);
         return coords;
     }
 
@@ -76,6 +75,18 @@ public class Tile {
 
     public int getSideLength() {
         return sideLength;
+    }
+
+    /**
+     * Method to check if sprite passed is within range to be placed in the centre of an object
+     *
+     * @return position of Tile on screen if success ; null if failure
+     */
+    public float[] isOnTile(float spriteX, float spriteY) {
+        if ((Math.abs(spriteX-position[0]) < 5) || (Math.abs(spriteY-position[1]) < 5)) {
+            return position;
+        }
+        return null;
     }
 
 }

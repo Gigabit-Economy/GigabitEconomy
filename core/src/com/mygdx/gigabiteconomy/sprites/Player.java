@@ -21,7 +21,8 @@ public class Player extends MySprite implements ApplicationListener, InputProces
 
     @Override
     public boolean keyDown(int keycode) {
-        System.out.println("Key pressed");
+        if (isMoving()) return false;
+
         setMoving(true); //Run animation
 
         //Handles player movement on key press. Everything handled inside Sprite class
@@ -41,6 +42,7 @@ public class Player extends MySprite implements ApplicationListener, InputProces
             // Move down
             direction = MoveDirection.DOWN;
         }
+        System.out.println("Key press detected, moving sprite: " + direction);
 
         if (direction != null) currentTile = tm.moveFromTile(currentTile, direction.name());
         return false;

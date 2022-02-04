@@ -53,6 +53,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         int numberOfTilesHigh = 12;
         //Add players to TileManager
         tileManager = new TileManager(backgroundTextureHeight/numberOfTilesHigh, backgroundTextureHeight/2, backgroundTextureWidth, 0, 0);
+      //BELOW NOW DONE IN SPRITE CONSTRUCTOR
         for ( GameObject go : enemies ) {
             go.initTile(tileManager);
         }
@@ -106,7 +107,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
 
         // Draw sprites
         for (GameObject sprite : sprites) {
-            if (sprite.isMoving()) sprite.move(delta);
+            sprite.move(delta);
             batch.draw(sprite.getCurrRegion(), sprite.getActorX(), sprite.getActorY());
         }
 

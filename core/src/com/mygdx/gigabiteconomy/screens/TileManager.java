@@ -131,7 +131,6 @@ public class TileManager {
      * @param distance How far to move the GameObject
      */
     public Tile moveFromTile(Tile tileFrom, String direction, int distance) {
-        System.out.println("Moving " + direction);
         direction = direction.toUpperCase();
         GameObject occupier = tileFrom.getOccupiedBy();
         Tile nextTile = getAdjecentTile(tileFrom, direction, distance);

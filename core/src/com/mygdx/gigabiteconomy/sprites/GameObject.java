@@ -14,7 +14,7 @@ public interface GameObject {
      * @param moving true: moving; false: still
      */
     void setMoving(boolean moving);
-    boolean isMoving();
+    //boolean isMoving();
 
     /**
      * Method to change coords by values in delta coords
