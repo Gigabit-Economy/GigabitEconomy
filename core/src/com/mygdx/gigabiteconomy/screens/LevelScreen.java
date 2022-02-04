@@ -50,7 +50,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         //-> One TileManager per level sounds like the cleanest option
         int backgroundTextureHeight = backgroundTexture.getHeight();
         int backgroundTextureWidth = backgroundTexture.getWidth();
-        int numberOfTilesHigh = 12;
+        int numberOfTilesHigh = 36;
         //Add players to TileManager
         tileManager = new TileManager(backgroundTextureHeight/numberOfTilesHigh, backgroundTextureHeight/2, backgroundTextureWidth, 0, 0);
       //BELOW NOW DONE IN SPRITE CONSTRUCTOR

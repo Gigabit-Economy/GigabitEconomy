@@ -1,5 +1,7 @@
 package com.mygdx.gigabiteconomy.sprites;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -161,8 +163,8 @@ abstract class MySprite extends Actor implements GameObject {
 
             System.out.println("Diff " + diff[0] + " " + diff[1]);
             //If diff[0] is negative, we're moving left, if diff[1] is pos
-            float deltaX = (diff[0]/(Math.abs(diff[0])==0?1:Math.abs(diff[0])))*(delta*currentTile.getSideLength());
-            float deltaY = (diff[1]/(Math.abs(diff[1])==0?1:Math.abs(diff[1])))*(delta*currentTile.getSideLength());
+            float deltaX = (diff[0]/(Math.abs(diff[0])==0?1:Math.abs(diff[0])))*(delta*8*currentTile.getSideLength());
+            float deltaY = (diff[1]/(Math.abs(diff[1])==0?1:Math.abs(diff[1])))*(delta*8*currentTile.getSideLength());
             coords[0] += deltaX;
             coords[1] += deltaY;
             System.out.println("Changed by " + deltaX + " " + deltaY);

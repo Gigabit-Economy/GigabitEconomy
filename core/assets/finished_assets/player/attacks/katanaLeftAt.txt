@@ -1,0 +1,54 @@
+katanaLeftAt.png
+size: 1680, 240
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+katanaLeftAttack1
+  rotate: false
+  xy: 0, 0
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+katanaLeftAttack2
+  rotate: false
+  xy: 240, 0
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+katanaLeftAttack3
+  rotate: false
+  xy: 480, 0
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+katanaLeftAttack4
+  rotate: false
+  xy: 720, 0
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+katanaLeftAttack5
+  rotate: false
+  xy: 960, 0
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+katanaLeftAttack6
+  rotate: false
+  xy: 1200, 0
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+katanaLeftAttack7
+  rotate: false
+  xy: 1440, 0
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1

@@ -41,11 +41,14 @@ public class Player extends MySprite implements ApplicationListener, InputProces
         else if (keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
             // Move down
             direction = MoveDirection.DOWN;
+        } else {
+            direction = null;
+            return false;
         }
-        System.out.println("Key press detected, moving sprite: " + direction);
+        System.out.println("Key press detected, moving sprite: " + direction + " " + keycode);
 
         if (direction != null) {
-            Tile newCurrentTile = tm.moveFromTile(currentTile, direction.name());
+            Tile newCurrentTile = tm.moveFromTile(currentTile, direction.name(), 2);
 
             if (newCurrentTile != currentTile) {
                 currentTile = newCurrentTile;
