@@ -1,0 +1,82 @@
+golfRightAt.png
+size: 480, 1440
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+nineIronRightAttack1
+  rotate: false
+  xy: 0, 0
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+nineIronRightAttack2
+  rotate: false
+  xy: 240, 0
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+nineIronRightAttack3
+  rotate: false
+  xy: 0, 240
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+nineIronRightAttack4
+  rotate: false
+  xy: 240, 240
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+nineIronRightAttack5
+  rotate: false
+  xy: 0, 480
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+nineIronRightAttack6
+  rotate: false
+  xy: 240, 480
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+nineIronRightAttack7
+  rotate: false
+  xy: 0, 720
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+nineIronRightAttack8
+  rotate: false
+  xy: 240, 720
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+nineIronRightAttack9
+  rotate: false
+  xy: 0, 960
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+nineIronRightAttack10
+  rotate: false
+  xy: 240, 960
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+nineIronRightAttack11
+  rotate: false
+  xy: 0, 1200
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
