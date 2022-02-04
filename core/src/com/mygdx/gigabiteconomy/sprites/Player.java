@@ -6,7 +6,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.screens.Tile;
-import org.graalvm.compiler.lir.aarch64.AArch64Move;
 
 /**
  * Class for separating Player functionality from general Sprite functionality
