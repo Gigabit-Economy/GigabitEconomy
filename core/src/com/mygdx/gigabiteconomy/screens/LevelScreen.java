@@ -45,7 +45,19 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         this.enemies = enemies;
         this.backgroundTexture = backgroundTexture;
 
+        //Variables used for creating tileManager, stated them explicitly here in case we want to mess about with them
+        //-> Might need to move creating tileManager to other method (after we add level switching)
+        //-> One TileManager per level sounds like the cleanest option
+        int backgroundTextureHeight = backgroundTexture.getHeight();
+        int backgroundTextureWidth = backgroundTexture.getWidth();
+        int numberOfTilesHigh = 12;
         //Add players to TileManager
+        tileManager = new TileManager(backgroundTextureHeight/numberOfTilesHigh, backgroundTextureHeight/2, backgroundTextureWidth, 0, 0);
+      //BELOW NOW DONE IN SPRITE CONSTRUCTOR
+        for ( GameObject go : enemies ) {
+            go.initTile(tileManager);
+        }
+        player.initTile(tileManager);
     }
 
     /**
@@ -95,7 +107,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
 
         // Draw sprites
         for (GameObject sprite : sprites) {
-            if (sprite.isMoving()) sprite.move();
+            sprite.move(delta);
             batch.draw(sprite.getCurrRegion(), sprite.getActorX(), sprite.getActorY());
         }
 

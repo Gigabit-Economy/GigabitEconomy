@@ -16,7 +16,7 @@ public class LevelOneScreen extends LevelScreen {
     // Player character
     private static final Player PLAYER = new Player("amzn_9iron.txt",0 , 0);
     // Enemy 1 character
-    private static final Enemy ENEMY_ONE = new Enemy("amzn_9iron.txt", 500, 500);
+    private static final Enemy ENEMY_ONE = new Enemy("amzn_9iron.txt", 2, 2);
     // ArrayList of all enemy characters
     private static final ArrayList<GameObject> ENEMIES = new ArrayList<GameObject>(Arrays.asList(ENEMY_ONE));
     // Level screen background texture
