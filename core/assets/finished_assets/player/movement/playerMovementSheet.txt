@@ -1,0 +1,397 @@
+playerMovementSheet.png
+size: 992, 1504
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+katanaLeftWalk1
+  rotate: true
+  xy: 417, 185
+  size: 94, 206
+  orig: 240, 240
+  offset: 59, 15
+  index: -1
+katanaLeftWalk2
+  rotate: true
+  xy: 1, 1
+  size: 90, 206
+  orig: 240, 240
+  offset: 59, 15
+  index: -1
+katanaLeftWalk3
+  rotate: true
+  xy: 625, 185
+  size: 94, 206
+  orig: 240, 240
+  offset: 59, 15
+  index: -1
+katanaLeftWalk4
+  rotate: true
+  xy: 209, 1
+  size: 90, 206
+  orig: 240, 240
+  offset: 63, 15
+  index: -1
+katanaLeftWalk5
+  rotate: true
+  xy: 417, 1
+  size: 90, 206
+  orig: 240, 240
+  offset: 63, 15
+  index: -1
+katanaLeftWalk6
+  rotate: true
+  xy: 625, 1
+  size: 90, 206
+  orig: 240, 240
+  offset: 63, 15
+  index: -1
+katanaLeftWalk7
+  rotate: true
+  xy: 1, 93
+  size: 90, 206
+  orig: 240, 240
+  offset: 63, 15
+  index: -1
+katanaRightWalk1
+  rotate: true
+  xy: 1, 277
+  size: 94, 206
+  orig: 240, 240
+  offset: 87, 15
+  index: -1
+katanaRightWalk2
+  rotate: true
+  xy: 209, 93
+  size: 90, 206
+  orig: 240, 240
+  offset: 91, 15
+  index: -1
+katanaRightWalk3
+  rotate: true
+  xy: 209, 277
+  size: 94, 206
+  orig: 240, 240
+  offset: 87, 15
+  index: -1
+katanaRightWalk4
+  rotate: true
+  xy: 417, 93
+  size: 90, 206
+  orig: 240, 240
+  offset: 87, 15
+  index: -1
+katanaRightWalk5
+  rotate: true
+  xy: 625, 93
+  size: 90, 206
+  orig: 240, 240
+  offset: 87, 15
+  index: -1
+katanaRightWalk6
+  rotate: true
+  xy: 1, 185
+  size: 90, 206
+  orig: 240, 240
+  offset: 87, 15
+  index: -1
+katanaRightWalk7
+  rotate: true
+  xy: 209, 185
+  size: 90, 206
+  orig: 240, 240
+  offset: 87, 15
+  index: -1
+knifeLeftWalk1
+  rotate: true
+  xy: 417, 281
+  size: 98, 206
+  orig: 240, 240
+  offset: 59, 15
+  index: -1
+knifeLeftWalk2
+  rotate: true
+  xy: 625, 281
+  size: 98, 206
+  orig: 240, 240
+  offset: 59, 15
+  index: -1
+knifeLeftWalk3
+  rotate: true
+  xy: 1, 373
+  size: 98, 206
+  orig: 240, 240
+  offset: 59, 15
+  index: -1
+knifeLeftWalk4
+  rotate: true
+  xy: 209, 373
+  size: 98, 206
+  orig: 240, 240
+  offset: 63, 15
+  index: -1
+knifeLeftWalk5
+  rotate: true
+  xy: 417, 381
+  size: 98, 206
+  orig: 240, 240
+  offset: 63, 15
+  index: -1
+knifeLeftWalk6
+  rotate: true
+  xy: 625, 381
+  size: 98, 206
+  orig: 240, 240
+  offset: 63, 15
+  index: -1
+knifeLeftWalk7
+  rotate: true
+  xy: 1, 473
+  size: 98, 206
+  orig: 240, 240
+  offset: 63, 15
+  index: -1
+knifeRightWalk1
+  rotate: true
+  xy: 209, 473
+  size: 98, 206
+  orig: 240, 240
+  offset: 83, 15
+  index: -1
+knifeRightWalk2
+  rotate: true
+  xy: 417, 481
+  size: 98, 206
+  orig: 240, 240
+  offset: 83, 15
+  index: -1
+knifeRightWalk3
+  rotate: true
+  xy: 625, 481
+  size: 98, 206
+  orig: 240, 240
+  offset: 83, 15
+  index: -1
+knifeRightWalk4
+  rotate: true
+  xy: 1, 573
+  size: 98, 206
+  orig: 240, 240
+  offset: 79, 15
+  index: -1
+knifeRightWalk5
+  rotate: true
+  xy: 209, 573
+  size: 98, 206
+  orig: 240, 240
+  offset: 79, 15
+  index: -1
+knifeRightWalk6
+  rotate: true
+  xy: 417, 581
+  size: 98, 206
+  orig: 240, 240
+  offset: 79, 15
+  index: -1
+knifeRightWalk7
+  rotate: true
+  xy: 625, 581
+  size: 98, 206
+  orig: 240, 240
+  offset: 79, 15
+  index: -1
+NineIronLeftWalk1
+  rotate: false
+  xy: 833, 1
+  size: 158, 206
+  orig: 184, 240
+  offset: 15, 15
+  index: -1
+NineIronLeftWalk2
+  rotate: false
+  xy: 833, 209
+  size: 158, 206
+  orig: 184, 240
+  offset: 15, 15
+  index: -1
+NineIronLeftWalk3
+  rotate: false
+  xy: 833, 417
+  size: 158, 206
+  orig: 184, 240
+  offset: 15, 15
+  index: -1
+NineIronLeftWalk4
+  rotate: false
+  xy: 833, 625
+  size: 158, 206
+  orig: 184, 240
+  offset: 15, 15
+  index: -1
+NineIronLeftWalk5
+  rotate: false
+  xy: 833, 833
+  size: 158, 206
+  orig: 184, 240
+  offset: 15, 15
+  index: -1
+NineIronLeftWalk6
+  rotate: true
+  xy: 417, 1065
+  size: 158, 206
+  orig: 184, 240
+  offset: 15, 15
+  index: -1
+NineIronLeftWalk7
+  rotate: true
+  xy: 625, 1065
+  size: 158, 206
+  orig: 184, 240
+  offset: 15, 15
+  index: -1
+NineIronRightWalk1
+  rotate: false
+  xy: 833, 1041
+  size: 158, 206
+  orig: 184, 240
+  offset: 11, 15
+  index: -1
+NineIronRightWalk2
+  rotate: true
+  xy: 1, 1185
+  size: 158, 206
+  orig: 184, 240
+  offset: 11, 15
+  index: -1
+NineIronRightWalk3
+  rotate: true
+  xy: 209, 1185
+  size: 158, 206
+  orig: 184, 240
+  offset: 11, 15
+  index: -1
+NineIronRightWalk4
+  rotate: true
+  xy: 417, 1225
+  size: 158, 206
+  orig: 184, 240
+  offset: 11, 15
+  index: -1
+NineIronRightWalk5
+  rotate: true
+  xy: 625, 1225
+  size: 158, 206
+  orig: 184, 240
+  offset: 11, 15
+  index: -1
+NineIronRightWalk6
+  rotate: false
+  xy: 833, 1249
+  size: 158, 206
+  orig: 184, 240
+  offset: 11, 15
+  index: -1
+NineIronRightWalk7
+  rotate: true
+  xy: 1, 1345
+  size: 158, 206
+  orig: 184, 240
+  offset: 11, 15
+  index: -1
+PipeLeftWalk1
+  rotate: true
+  xy: 1, 673
+  size: 126, 206
+  orig: 240, 240
+  offset: 59, 15
+  index: -1
+PipeLeftWalk2
+  rotate: true
+  xy: 209, 673
+  size: 126, 206
+  orig: 240, 240
+  offset: 59, 15
+  index: -1
+PipeLeftWalk3
+  rotate: true
+  xy: 417, 681
+  size: 126, 206
+  orig: 240, 240
+  offset: 59, 15
+  index: -1
+PipeLeftWalk4
+  rotate: true
+  xy: 625, 681
+  size: 126, 206
+  orig: 240, 240
+  offset: 63, 15
+  index: -1
+PipeLeftWalk5
+  rotate: true
+  xy: 1, 801
+  size: 126, 206
+  orig: 240, 240
+  offset: 63, 15
+  index: -1
+PipeLeftWalk6
+  rotate: true
+  xy: 209, 801
+  size: 126, 206
+  orig: 240, 240
+  offset: 63, 15
+  index: -1
+PipeLeftWalk7
+  rotate: true
+  xy: 417, 809
+  size: 126, 206
+  orig: 240, 240
+  offset: 63, 15
+  index: -1
+PipeRightWalk1
+  rotate: true
+  xy: 625, 809
+  size: 126, 206
+  orig: 240, 240
+  offset: 55, 15
+  index: -1
+PipeRightWalk2
+  rotate: true
+  xy: 1, 929
+  size: 126, 206
+  orig: 240, 240
+  offset: 55, 15
+  index: -1
+PipeRightWalk3
+  rotate: true
+  xy: 209, 929
+  size: 126, 206
+  orig: 240, 240
+  offset: 55, 15
+  index: -1
+PipeRightWalk4
+  rotate: true
+  xy: 417, 937
+  size: 126, 206
+  orig: 240, 240
+  offset: 51, 15
+  index: -1
+PipeRightWalk5
+  rotate: true
+  xy: 625, 937
+  size: 126, 206
+  orig: 240, 240
+  offset: 51, 15
+  index: -1
+PipeRightWalk6
+  rotate: true
+  xy: 1, 1057
+  size: 126, 206
+  orig: 240, 240
+  offset: 51, 15
+  index: -1
+PipeRightWalk7
+  rotate: true
+  xy: 209, 1057
+  size: 126, 206
+  orig: 240, 240
+  offset: 51, 15
+  index: -1
