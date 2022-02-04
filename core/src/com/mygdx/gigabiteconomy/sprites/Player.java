@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
+import com.mygdx.gigabiteconomy.screens.Tile;
 
 /**
  * Class for separating Player functionality from general Sprite functionality
@@ -20,61 +21,52 @@ public class Player extends MySprite implements ApplicationListener, InputProces
 
     @Override
     public boolean keyDown(int keycode) {
-        System.out.println("Key pressed");
+        if (isMoving()) return false;
+
+
 
         //Handles player movement on key press. Everything handled inside Sprite class
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT) {
             // Move left
-            move(MoveDirection.LEFT);
+            direction = MoveDirection.LEFT;
         }
         else if (keycode == Input.Keys.D || keycode == Input.Keys.RIGHT) {
             // Move right
-            move(MoveDirection.RIGHT);
+            direction = MoveDirection.RIGHT;
         }
         else if (keycode == Input.Keys.W || keycode == Input.Keys.UP) {
             // Move up
-            move(MoveDirection.UP);
+            direction = MoveDirection.UP;
         }
         else if (keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
             // Move down
-            move(MoveDirection.DOWN);
+            direction = MoveDirection.DOWN;
         }
+        System.out.println("Key press detected, moving sprite: " + direction);
 
+        if (direction != null) {
+            Tile newCurrentTile = tm.moveFromTile(currentTile, direction.name());
+
+            if (newCurrentTile != currentTile) {
+                currentTile = newCurrentTile;
+                setMoving(true); //Run animation
+            } else {
+                System.out.println("Not running since new direction is unavailable");
+            }
+        }
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        setMoving(false);
+        //setMoving just handles the animation
+        //setMoving(false);
         return false;
-    }
-
-    /**
-     * Move the player by the passed direction (left/right/up/down).
-     *
-     * @param direction the direction to move the player (MoveDirection.LEFT/RIGHT/UP/DOWN)
-     */
-    private void move(MoveDirection direction) {
-        setMoving(true);
-
-        switch (direction) {
-            case LEFT:
-                setDCoords(-10, 0);
-                break;
-            case RIGHT:
-                setDCoords(10, 0);
-                break;
-            case UP:
-                setDCoords(0, 10);
-                break;
-            case DOWN:
-                setDCoords(0, -10);
-                break;
-        }
     }
 
     @Override
     public boolean keyTyped(char character) {
+        keyDown(character);
         return false;
     }
 
@@ -133,10 +125,6 @@ public class Player extends MySprite implements ApplicationListener, InputProces
 
     }
 
-    private enum MoveDirection {
-        LEFT,
-        RIGHT,
-        UP,
-        DOWN
-    }
+
+
 }

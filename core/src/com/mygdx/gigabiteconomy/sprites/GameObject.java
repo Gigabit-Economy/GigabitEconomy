@@ -2,6 +2,7 @@ package com.mygdx.gigabiteconomy.sprites;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.gigabiteconomy.screens.TileManager;
 
 /**
  * Interface for controlling sprite
@@ -13,13 +14,13 @@ public interface GameObject {
      * @param moving true: moving; false: still
      */
     void setMoving(boolean moving);
-    boolean isMoving();
+    //boolean isMoving();
 
     /**
      * Method to change coords by values in delta coords
      * Switches image to next in cycle, defined by regions array
      */
-    void move();
+    void move(float delta);
 
     /**
      * Method used for sprite movement
@@ -34,8 +35,13 @@ public interface GameObject {
      */
     TextureRegion getCurrRegion();
 
-    int getActorX();
-    int getActorY();
+    float getActorX();
+    float getActorY();
+
+    void setActorX();
+    void setActorY();
+
+    int initTile(TileManager tm); //Adds all sprites to starting tiles
 
     Rectangle getRectangle();
 }
