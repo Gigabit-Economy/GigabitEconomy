@@ -4,14 +4,13 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.mygdx.gigabiteconomy.GigabitEconomy;
 
 /**
  * Class for separating Player functionality from general Sprite functionality
  * Such as:
  *  > Attacking (detecting collisions for certain sprites only)
  */
-public class Player extends MySprite implements ApplicationListener, InputProcessor {
+public class Player extends MovingSprite implements ApplicationListener, InputProcessor {
     public Player(String config, int x, int y) {
         super(config, x, y);
 

@@ -6,13 +6,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.gigabiteconomy.sprites.GameObject;
 
 /**
  * Class represents a sprite shown on screen, ready to be drawn with batch.draw(); in MainScreen class
  * MainScreen interfaces with this class through GameObject
  */
-abstract class MySprite extends Actor implements GameObject {
+abstract class MovingSprite extends Actor implements GameObject {
     //Rectangle which holds the texture
     private Rectangle rect;
 
@@ -34,7 +33,7 @@ abstract class MySprite extends Actor implements GameObject {
      * @param x Initial x
      * @param y Initial y
      */
-    public MySprite(String config, int x, int y) {
+    public MovingSprite(String config, int x, int y) {
         ta = new TextureAtlas(config);
         regions = ta.getRegions();
 
