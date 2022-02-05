@@ -10,4 +10,6 @@ public class Enemy extends MovingSprite {
     public Enemy(String config, int x, int y) {
         super(config, x, y);
     }
+
+
 }
