@@ -4,11 +4,6 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.math.Vector2;
-import com.mygdx.gigabiteconomy.GigabitEconomy;
-import com.mygdx.gigabiteconomy.screens.Tile;
-
-import java.util.Locale;
 
 /**
  * Class for separating Player functionality from general Sprite functionality
@@ -17,7 +12,9 @@ import java.util.Locale;
  */
 public class Player extends MySprite implements ApplicationListener, InputProcessor {
 
+    //Deprecated variable for determining if player has to finish movement to centre of next Tile on keyUp()
     boolean stillMoving = false;
+    //How much player should move vertically and horizontally every move() respectively
     private static float deltaVert = 1.5F;
     private static float deltaHoriz = 1.75F;
 
@@ -29,13 +26,17 @@ public class Player extends MySprite implements ApplicationListener, InputProces
 
     @Override
     public boolean keyDown(int keycode) {
-        //if (isMoving()) return false;
 
         System.out.println("key pressed: " + keycode);
 
         //Might have to move movement handling into other method if we add more functions for key presses
 
-        //Handles player movement on key press. Everything handled inside Sprite class
+        /**
+         * Movement calculated by:
+         *  -> Adding values defined above to deltaMove vector
+         *  -> Every time move() is called, deltaMove is added to position vector
+         *  -> This allows for diagonal movement
+         */
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT) {
             // Move left
             deltaMove.add(-deltaHoriz, 0);
@@ -52,30 +53,20 @@ public class Player extends MySprite implements ApplicationListener, InputProces
             // Move down
             deltaMove.add(0, -deltaVert);
         } else {
-            direction = null;
             return false;
         }
         System.out.println("delta set to: " + deltaMove.toString());
 
         stillMoving = true;
         setMoving(true);
-        return false;
-//        System.out.println("Key press detected, moving sprite: " + direction + " " + keycode);
-//
-//        if (direction != null) {
-//            Tile newCurrentTile = tm.moveFromTile(currentTile, direction.name(), 2);
-//
-//            if (newCurrentTile != currentTile) {
-//                currentTile = newCurrentTile;
-//                setMoving(true); //Run animation
-//            } else {
-//                System.out.println("Not running since new direction is unavailable");
-//            }
-//        }
+        return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
+        /**
+         * Simply removes change from deltaMove vector made in keyDown()
+         */
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT) {
             // Move left
             deltaMove.sub(-deltaHoriz, 0);
@@ -92,7 +83,6 @@ public class Player extends MySprite implements ApplicationListener, InputProces
             // Move down
             deltaMove.sub(0, -deltaVert);
         } else {
-            direction = null;
             return false;
         }
         if (deltaMove.epsilonEquals(0, 0)) {
@@ -100,26 +90,30 @@ public class Player extends MySprite implements ApplicationListener, InputProces
         }
 
         System.out.println("delta removed to: " + deltaMove.toString());
-        //setMoving just handles the animation
-        //setMoving(false);
+
         return false;
     }
 
     @Override
     public boolean move(float delta) {
-        boolean ret = super.move(delta); //Move to new pos if isMoving() == true
+        boolean ret = super.move(delta);
 
+        /**
+         * Makes sure to centre Player on the Tile the user stopped on
+         * -> This is what stillMoving was for, if we keep Tiles small then the user won't see much 'snap' (teleporting of Player to centre)
+         */
         if (!ret && stillMoving) {
-            pos.x = currentTile.getTileCoords()[0];
-            pos.y = currentTile.getTileCoords()[1];
+            snap();
+            stillMoving = false;
         }
         return true;
 
     }
 
+
+
     @Override
     public boolean keyTyped(char character) {
-        //keyDown(character);
         return false;
     }
 

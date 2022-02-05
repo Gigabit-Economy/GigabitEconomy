@@ -26,18 +26,15 @@ abstract class MySprite extends Actor implements GameObject {
 
     TextureAtlas ta;
     //Coordinates of sprite on screen
-    //private float[] coords = new float[2];
-    Vector2 pos = new Vector2(0, 0); //Coordinates of sprite on screen
-    Vector2 deltaMove = new Vector2(0, 0); //To add to "Vector2 pos" with every move
+    Vector2 pos = new Vector2(0, 0);
+    //Vector we add to position with every move
+    Vector2 deltaMove = new Vector2(0, 0);
     //Array of regions in spritesheet
     private Array<TextureAtlas.AtlasRegion> regions;
     //Current image being displayed in the movement animation
     private TextureRegion current;
 
     boolean moving; //Can use for paused? Also useful for player (holding down keys)
-    MoveDirection direction;
-
-    private int[] dcoords = new int[2]; //Increment of each x, y if moving is true
 
     /**
      * Constructor used to create a new sprite
@@ -92,24 +89,6 @@ abstract class MySprite extends Actor implements GameObject {
         return pos.y;
     }
 
-    @Override
-    public void setActorX() {
-
-    }
-
-    @Override
-    public void setActorY() {
-
-    }
-    @Override
-    public Rectangle getRectangle() {
-        return rect;
-    }
-
-    public void setDCoords(int dx, int dy) {
-        dcoords[0] += dx; dcoords[1] += dy;
-    }
-
     public void setMoving(boolean moving) {
         this.moving = moving;
 
@@ -119,27 +98,10 @@ abstract class MySprite extends Actor implements GameObject {
         return moving;
     }
 
-//    private int[] movingFrom() {
-//
-//        int[] ret = new int[2];
-//        System.out.println("Calculating with direction: " + direction);
-//        switch (direction) {
-//            case LEFT: //[x, y] = [1, 0]
-//                ret[0] = 1; ret[1] = 0;
-//                break;
-//            case RIGHT:
-//                ret[0] = -1; ret[1] = 0;
-//                break;
-//            case UP:
-//                ret[1] = 1; ret[0] = 0;
-//                break;
-//            case DOWN:
-//                ret[1] = -1; ret[0] = 0;
-//                break;
-//        }
-//        return ret;
-//    }
-
+    public void snap() {
+        pos.x = currentTile.getTileCoords()[0];
+        pos.y = currentTile.getTileCoords()[1];
+    }
 
     /**
      * Method runs if boolean moving set to true
@@ -152,16 +114,10 @@ abstract class MySprite extends Actor implements GameObject {
 
         Tile toMove = tm.getTileFromCoords(pos.x, pos.y);
         if (toMove != null) currentTile = toMove;
+        else snap();
         System.out.println("Player now on Tile: " + currentTile.getTileCoords()[0] + " " + currentTile.getTileCoords()[1]);
 
         return true;
-    }
-
-    public enum MoveDirection {
-        LEFT,
-        RIGHT,
-        UP,
-        DOWN
     }
 
 }

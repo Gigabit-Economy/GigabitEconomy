@@ -14,7 +14,6 @@ public interface GameObject {
      * @param moving true: moving; false: still
      */
     void setMoving(boolean moving);
-    //boolean isMoving();
 
     /**
      * Method to change coords by values in delta coords
@@ -28,7 +27,6 @@ public interface GameObject {
      * @param dx Change in x
      * @param dy Change in y
      */
-    void setDCoords(int dx, int dy);
 
     /**
      * @return The current TextureRegion the animation is on
@@ -38,10 +36,5 @@ public interface GameObject {
     float getActorX();
     float getActorY();
 
-    void setActorX();
-    void setActorY();
-
     int initTile(TileManager tm); //Adds all sprites to starting tiles
-
-    Rectangle getRectangle();
 }
