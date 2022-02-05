@@ -18,6 +18,8 @@ import java.util.Locale;
 public class Player extends MySprite implements ApplicationListener, InputProcessor {
 
     boolean stillMoving = false;
+    private static float deltaVert = 1.5F;
+    private static float deltaHoriz = 1.75F;
 
     public Player(String config, int x, int y) {
         super(config, x, y);
@@ -36,19 +38,19 @@ public class Player extends MySprite implements ApplicationListener, InputProces
         //Handles player movement on key press. Everything handled inside Sprite class
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT) {
             // Move left
-            deltaMove.add(-1, 0);
+            deltaMove.add(-deltaHoriz, 0);
         }
         else if (keycode == Input.Keys.D || keycode == Input.Keys.RIGHT) {
             // Move right
-            deltaMove.add(1, 0);
+            deltaMove.add(deltaHoriz, 0);
         }
         else if (keycode == Input.Keys.W || keycode == Input.Keys.UP) {
             // Move up
-            deltaMove.add(0, 1);
+            deltaMove.add(0, deltaVert);
         }
         else if (keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
             // Move down
-            deltaMove.add(0, -1);
+            deltaMove.add(0, -deltaVert);
         } else {
             direction = null;
             return false;
@@ -76,19 +78,19 @@ public class Player extends MySprite implements ApplicationListener, InputProces
     public boolean keyUp(int keycode) {
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT) {
             // Move left
-            deltaMove.sub(-1, 0);
+            deltaMove.sub(-deltaHoriz, 0);
         }
         else if (keycode == Input.Keys.D || keycode == Input.Keys.RIGHT) {
             // Move right
-            deltaMove.sub(1, 0);
+            deltaMove.sub(deltaHoriz, 0);
         }
         else if (keycode == Input.Keys.W || keycode == Input.Keys.UP) {
             // Move up
-            deltaMove.sub(0, 1);
+            deltaMove.sub(0, deltaVert);
         }
         else if (keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
             // Move down
-            deltaMove.sub(0, -1);
+            deltaMove.sub(0, -deltaVert);
         } else {
             direction = null;
             return false;
