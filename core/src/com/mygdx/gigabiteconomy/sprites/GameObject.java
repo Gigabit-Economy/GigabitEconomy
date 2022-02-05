@@ -20,7 +20,7 @@ public interface GameObject {
      * Method to change coords by values in delta coords
      * Switches image to next in cycle, defined by regions array
      */
-    void move(float delta);
+    boolean move(float delta);
 
     /**
      * Method used for sprite movement

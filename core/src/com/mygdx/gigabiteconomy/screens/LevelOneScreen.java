@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class LevelOneScreen extends LevelScreen {
     // Player character
-    private static final Player PLAYER = new Player("finished_assets/player/attacks/katanaRightAt.txt",0 , 0);
+    private static final Player PLAYER = new Player("finished_assets/player/movement/katanaRightMv.txt",0 , 0);
     // Enemy 1 character
     private static final Enemy ENEMY_ONE = new Enemy("finished_assets/player/attacks/golfRightAt.txt", 6, 6);
     // ArrayList of all enemy characters

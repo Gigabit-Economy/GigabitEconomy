@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.gigabiteconomy.screens.Tile;
@@ -25,7 +26,9 @@ abstract class MySprite extends Actor implements GameObject {
 
     TextureAtlas ta;
     //Coordinates of sprite on screen
-    private float[] coords = new float[2];
+    //private float[] coords = new float[2];
+    Vector2 pos = new Vector2(0, 0); //Coordinates of sprite on screen
+    Vector2 deltaMove = new Vector2(0, 0); //To add to "Vector2 pos" with every move
     //Array of regions in spritesheet
     private Array<TextureAtlas.AtlasRegion> regions;
     //Current image being displayed in the movement animation
@@ -51,7 +54,7 @@ abstract class MySprite extends Actor implements GameObject {
 
         setBounds(x, y, current.getRegionWidth(), current.getRegionHeight());
 
-        coords[0] = x; coords[1] = y;
+        pos.x = x; pos.y=y;
 
         //Creating rectangle to cover texture
         rect = new Rectangle(x, y, current.getRegionWidth(), current.getRegionHeight()); //What happens to rectangle when texture changes size (e.g. in an animation)?
@@ -62,9 +65,9 @@ abstract class MySprite extends Actor implements GameObject {
     public int initTile(TileManager tmPass) {
         if (tm != null) return -1; //Returning error code if tm is already init
         this.tm = tmPass;
-        currentTile = tm.placeObject((int)coords[0], (int)coords[1], this); //At init tile coords[x] will be filled with tile coords on grid
-        coords[0] = currentTile.getTileCoords()[0]; coords[1] = currentTile.getTileCoords()[1];
-        System.out.println("Initialised at " + coords[0] + " " + coords[1]);
+        currentTile = tm.placeObject((int)pos.x, (int)pos.y, this); //At init tile coords[x] will be filled with tile coords on grid
+        pos.x = currentTile.getTileCoords()[0]; pos.y = currentTile.getTileCoords()[1];
+        System.out.println("Initialised at " + pos.x + " " + pos.y);
         //Success
         return 0;
     }
@@ -81,12 +84,12 @@ abstract class MySprite extends Actor implements GameObject {
 
     @Override
     public float getActorX() {
-        return coords[0];
+        return pos.x;
     }
 
     @Override
     public float getActorY() {
-        return coords[1];
+        return pos.y;
     }
 
     @Override
@@ -109,70 +112,49 @@ abstract class MySprite extends Actor implements GameObject {
 
     public void setMoving(boolean moving) {
         this.moving = moving;
-        if (!moving) dcoords[0] = dcoords[1] = 0;
+
     }
 
     public boolean isMoving() {
         return moving;
     }
 
-    private int[] movingFrom() {
+//    private int[] movingFrom() {
+//
+//        int[] ret = new int[2];
+//        System.out.println("Calculating with direction: " + direction);
+//        switch (direction) {
+//            case LEFT: //[x, y] = [1, 0]
+//                ret[0] = 1; ret[1] = 0;
+//                break;
+//            case RIGHT:
+//                ret[0] = -1; ret[1] = 0;
+//                break;
+//            case UP:
+//                ret[1] = 1; ret[0] = 0;
+//                break;
+//            case DOWN:
+//                ret[1] = -1; ret[0] = 0;
+//                break;
+//        }
+//        return ret;
+//    }
 
-        int[] ret = new int[2];
-        System.out.println("Calculating with direction: " + direction);
-        switch (direction) {
-            case LEFT: //[x, y] = [1, 0]
-                ret[0] = 1; ret[1] = 0;
-                break;
-            case RIGHT:
-                ret[0] = -1; ret[1] = 0;
-                break;
-            case UP:
-                ret[1] = 1; ret[0] = 0;
-                break;
-            case DOWN:
-                ret[1] = -1; ret[0] = 0;
-                break;
-        }
-        return ret;
-    }
 
     /**
      * Method runs if boolean moving set to true
      * @param delta
      */
-    public void move(float delta) {
-        if (!isMoving()) return;
+    public boolean move(float delta) {
+        if (!isMoving()) return false;
 
+        pos.add(deltaMove);
 
-        //coords[0] += dcoords[0]; coords[1] += dcoords[1];
+        Tile toMove = tm.getTileFromCoords(pos.x, pos.y);
+        if (toMove != null) currentTile = toMove;
+        System.out.println("Player now on Tile: " + currentTile.getTileCoords()[0] + " " + currentTile.getTileCoords()[1]);
 
-        //Changing current sprite
-        //current = regions.get(regions.indexOf((TextureAtlas.AtlasRegion) current, true)+1);
-        //Some 'code' for an 'animation'
-        current = regions.get((regions.indexOf((TextureAtlas.AtlasRegion) current, true) + 1) % regions.size);
-
-        //If moving is true, move delta*distance until at new tile
-        //Calculated from position from 'current tile'
-        if (isMoving()) {
-            //coords[Math.abs(movingFrom()[1])] += (movingFrom()[0])*(delta*currentTile.getSideLength());
-            System.out.println("New coords: " + coords[0] + " " + coords[1]);
-            //Find difference between 'currentTile' coords and sprite coords
-            float newTileCoords[] = currentTile.getTileCoords();
-            float diff[] = { newTileCoords[0]-coords[0], newTileCoords[1]-coords[1] };
-
-            System.out.println("Diff " + diff[0] + " " + diff[1]);
-            //If diff[0] is negative, we're moving left, if diff[1] is pos
-            float deltaX = (diff[0]/(Math.abs(diff[0])==0?1:Math.abs(diff[0])))*(delta*8*currentTile.getSideLength());
-            float deltaY = (diff[1]/(Math.abs(diff[1])==0?1:Math.abs(diff[1])))*(delta*8*currentTile.getSideLength());
-            coords[0] += deltaX;
-            coords[1] += deltaY;
-            System.out.println("Changed by " + deltaX + " " + deltaY);
-        }
-        if (currentTile.isOnTile(coords[0], coords[1]) != null) {
-            setMoving(false);
-            System.out.println("Arrived at tile");
-        }
+        return true;
     }
 
     public enum MoveDirection {

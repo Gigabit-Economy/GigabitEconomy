@@ -4,8 +4,11 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.screens.Tile;
+
+import java.util.Locale;
 
 /**
  * Class for separating Player functionality from general Sprite functionality
@@ -13,6 +16,9 @@ import com.mygdx.gigabiteconomy.screens.Tile;
  *  > Attacking (detecting collisions for certain sprites only)
  */
 public class Player extends MySprite implements ApplicationListener, InputProcessor {
+
+    boolean stillMoving = false;
+
     public Player(String config, int x, int y) {
         super(config, x, y);
 
@@ -21,55 +27,97 @@ public class Player extends MySprite implements ApplicationListener, InputProces
 
     @Override
     public boolean keyDown(int keycode) {
-        if (isMoving()) return false;
+        //if (isMoving()) return false;
 
+        System.out.println("key pressed: " + keycode);
 
+        //Might have to move movement handling into other method if we add more functions for key presses
 
         //Handles player movement on key press. Everything handled inside Sprite class
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT) {
             // Move left
-            direction = MoveDirection.LEFT;
+            deltaMove.add(-1, 0);
         }
         else if (keycode == Input.Keys.D || keycode == Input.Keys.RIGHT) {
             // Move right
-            direction = MoveDirection.RIGHT;
+            deltaMove.add(1, 0);
         }
         else if (keycode == Input.Keys.W || keycode == Input.Keys.UP) {
             // Move up
-            direction = MoveDirection.UP;
+            deltaMove.add(0, 1);
         }
         else if (keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
             // Move down
-            direction = MoveDirection.DOWN;
+            deltaMove.add(0, -1);
         } else {
             direction = null;
             return false;
         }
-        System.out.println("Key press detected, moving sprite: " + direction + " " + keycode);
+        System.out.println("delta set to: " + deltaMove.toString());
 
-        if (direction != null) {
-            Tile newCurrentTile = tm.moveFromTile(currentTile, direction.name(), 2);
-
-            if (newCurrentTile != currentTile) {
-                currentTile = newCurrentTile;
-                setMoving(true); //Run animation
-            } else {
-                System.out.println("Not running since new direction is unavailable");
-            }
-        }
+        stillMoving = true;
+        setMoving(true);
         return false;
+//        System.out.println("Key press detected, moving sprite: " + direction + " " + keycode);
+//
+//        if (direction != null) {
+//            Tile newCurrentTile = tm.moveFromTile(currentTile, direction.name(), 2);
+//
+//            if (newCurrentTile != currentTile) {
+//                currentTile = newCurrentTile;
+//                setMoving(true); //Run animation
+//            } else {
+//                System.out.println("Not running since new direction is unavailable");
+//            }
+//        }
     }
 
     @Override
     public boolean keyUp(int keycode) {
+        if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT) {
+            // Move left
+            deltaMove.sub(-1, 0);
+        }
+        else if (keycode == Input.Keys.D || keycode == Input.Keys.RIGHT) {
+            // Move right
+            deltaMove.sub(1, 0);
+        }
+        else if (keycode == Input.Keys.W || keycode == Input.Keys.UP) {
+            // Move up
+            deltaMove.sub(0, 1);
+        }
+        else if (keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
+            // Move down
+            deltaMove.sub(0, -1);
+        } else {
+            direction = null;
+            return false;
+        }
+        if (deltaMove.epsilonEquals(0, 0)) {
+            setMoving(false); //Should stop as soon as possible
+        }
+
+        System.out.println("delta removed to: " + deltaMove.toString());
         //setMoving just handles the animation
         //setMoving(false);
         return false;
     }
 
     @Override
+    public boolean move(float delta) {
+        boolean ret = super.move(delta); //Move to new pos if isMoving() == true
+
+        if (!ret && stillMoving) {
+            pos.x = currentTile.getTileCoords()[0];
+            pos.y = currentTile.getTileCoords()[1];
+        }
+        return true;
+
+    }
+
+    @Override
     public boolean keyTyped(char character) {
-        keyDown(character);
+        //keyDown(character);
         return false;
     }
 
