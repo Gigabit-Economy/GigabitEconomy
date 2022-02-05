@@ -59,10 +59,16 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         tileManager = new TileManager(backgroundTextureHeight/numberOfTilesHigh, backgroundTextureHeight/2, backgroundTextureWidth, 0, 0);
 
         //BELOW NOW DONE IN SPRITE CONSTRUCTOR
-        for (GameObject go : enemies) {
-            go.initTile(tileManager);
+        try {
+            for (GameObject go : enemies) {
+                go.initTile(tileManager);
+            }
+
+            player.initTile(tileManager);
+        } catch (Exception ex) {
+            Gdx.app.error("Exception", "Error initialising tile manager", ex);
+            System.exit(-1);
         }
-        player.initTile(tileManager);
     }
 
     /**
@@ -160,8 +166,8 @@ abstract class LevelScreen implements Screen, ApplicationListener {
     }
 
     /**
-     * Removes the screen's assets (background texture and sprite batch) from memory when the screen is made inactive
-     * and they're therefore no longer needed.
+     * Removes the screen's assets (background texture, sprite batch & moving sprites) from memory
+     * when the screen is made inactive and they're therefore no longer needed.
      * Called by hide().
      */
     @Override
@@ -169,6 +175,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         backgroundTexture.dispose();
         batch.dispose();
 
+        // dispose of moving sprites (to dispose their texture atlas)
         for (GameObject sprite : sprites)
         {
             if (sprite instanceof MovingSprite) {

@@ -10,9 +10,11 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.screens.TileManager;
 
+import java.lang.Exception;
+
 public class StaticSprite extends Actor implements GameObject {
     private Texture texture;
-
+    private TextureRegion textureRegion;
     // Rectangle which holds the texture
     private Rectangle rect;
 
@@ -21,8 +23,6 @@ public class StaticSprite extends Actor implements GameObject {
 
     // Coordinates of sprite on screen
     private float[] coords = new float[2];
-    // Current image being displayed in the movement animation
-    private TextureRegion current;
 
     /**
      * Constructor used to create a new static sprite
@@ -32,36 +32,39 @@ public class StaticSprite extends Actor implements GameObject {
      * @param y position of Tile (within tile grid) to place sprite
      */
     public StaticSprite(String png, int x, int y) {
-        // Create texture
+        // Create texture & assign to TextureRegion
         texture = new Texture(png);
+        textureRegion.setTexture(texture);
 
-        setBounds(x, y, current.getRegionWidth(), current.getRegionHeight());
+        setBounds(x, y, textureRegion.getRegionWidth(), textureRegion.getRegionHeight());
 
         coords[0] = x; coords[1] = y;
 
         // Creating rectangle to cover texture
-        rect = new Rectangle(x, y, current.getRegionWidth(), current.getRegionHeight()); //What happens to rectangle when texture changes size (e.g. in an animation)?
+        rect = new Rectangle(x, y, textureRegion.getRegionWidth(), textureRegion.getRegionHeight()); //What happens to rectangle when texture changes size (e.g. in an animation)?
     }
 
     @Override
-    public int initTile(TileManager tmPass) {
-        if (tm != null) return -1; //Returning error code if tm is already init
+    public void initTile(TileManager tmPass) throws Exception {
+        // Check if tile manager has already been initialised
+        if (tm != null)
+            throw new Exception("The tile manager has already been initialised");
+
         this.tm = tmPass;
+
         currentTile = tm.placeObject((int)coords[0], (int)coords[1], this); //At init tile coords[x] will be filled with tile coords on grid
         coords[0] = currentTile.getTileCoords()[0]; coords[1] = currentTile.getTileCoords()[1];
         System.out.println("Initialised at " + coords[0] + " " + coords[1]);
-        //Success
-        return 0;
     }
 
     @Override
     public void draw(Batch batch, float alpha) {
-        batch.draw(current, this.getActorX(), this.getActorY());
+        batch.draw(textureRegion, this.getActorX(), this.getActorY());
     }
 
     @Override
     public TextureRegion getCurrRegion() {
-        return current;
+        return textureRegion;
     }
 
     @Override
