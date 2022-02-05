@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 katanaLeftAt.png
 size: 1680, 240
 format: RGBA8888
@@ -108,4 +107,3 @@ katanaLeftAttack7
   orig: 240, 240
   offset: 0, 0
   index: -1
->>>>>>> 90348a187867dfc5e82a944555ec0174e568afc0

@@ -143,6 +143,22 @@ public class TileManager {
     }
 
     /**
+     * Method returns Tile placed over x, y
+     * @param x coord within Tile to get
+     * @param y coord within Tile to get
+     * @return Tile which holds [x, y]
+     */
+    public Tile getTileFromCoords(float x, float y) {
+        Tile ret = null;
+        try {
+            ret = tileArray[(int)x/sideLength][(int)y/sideLength];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Could not find at " + x + " " + y);
+        }
+        return ret;
+    }
+
+    /**
      * Method to move an entity by only one space
      */
     public Tile moveFromTile(Tile tileFrom, String direction) {
