@@ -8,13 +8,13 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.screens.TileManager;
-import com.mygdx.gigabiteconomy.sprites.GameObject;
+import com.badlogic.gdx.utils.Disposable;
 
 /**
  * Class represents a sprite shown on screen, ready to be drawn with batch.draw(); in MainScreen class
  * MainScreen interfaces with this class through GameObject
  */
-public abstract class MovingSprite extends Actor implements GameObject {
+public abstract class MovingSprite extends Actor implements GameObject, Disposable {
     //Rectangle which holds the texture
     private Rectangle rect;
 
@@ -96,6 +96,7 @@ public abstract class MovingSprite extends Actor implements GameObject {
     public void setActorY() {
 
     }
+
     @Override
     public Rectangle getRectangle() {
         return rect;
@@ -180,4 +181,10 @@ public abstract class MovingSprite extends Actor implements GameObject {
         DOWN
     }
 
+    /**
+     * Remove the sprite's texture atlas from memory once the sprite is no longer needed.
+     */
+    public void dispose() {
+        ta.dispose();
+    }
 }

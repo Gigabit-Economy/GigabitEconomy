@@ -29,6 +29,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
     private SpriteBatch batch;
     private Player player;
     private ArrayList<GameObject> enemies;
+    private ArrayList<StaticSprite> staticSprites;
 
     /**
      * A template constructor for use by all level screen subclasses. Sets properties that differ between levels
@@ -37,12 +38,14 @@ abstract class LevelScreen implements Screen, ApplicationListener {
      * @param director the instance of the game director
      * @param player the player character for the level
      * @param enemies an ArrayList containing all enemy characters for the level
+     * @param staticSprites an ArrayList containing all static sprites (such as fences etc.)
      * @param backgroundTexture the background graphic of the level
      */
-    public LevelScreen(GigabitEconomy director, Player player, ArrayList<GameObject> enemies, Texture backgroundTexture) {
+    public LevelScreen(GigabitEconomy director, Player player, ArrayList<GameObject> enemies, ArrayList<StaticSprite> staticSprites, Texture backgroundTexture) {
         this.director = director;
         this.player = player;
         this.enemies = enemies;
+        this.staticSprites = staticSprites;
         this.backgroundTexture = backgroundTexture;
 
         //Variables used for creating tileManager, stated them explicitly here in case we want to mess about with them
@@ -81,6 +84,9 @@ abstract class LevelScreen implements Screen, ApplicationListener {
 
         // Add enemies
         sprites.addAll(enemies);
+
+        // Add static sprites
+        sprites.addAll(staticSprites);
     }
 
     /**
@@ -162,5 +168,13 @@ abstract class LevelScreen implements Screen, ApplicationListener {
     public void dispose() {
         backgroundTexture.dispose();
         batch.dispose();
+
+        for (GameObject sprite : sprites)
+        {
+            if (sprite instanceof MovingSprite) {
+                MovingSprite movingSprite = (MovingSprite) sprite;
+                movingSprite.dispose();
+            }
+        }
     }
 }
