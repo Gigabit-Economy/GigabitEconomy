@@ -1,19 +1,19 @@
 package com.mygdx.gigabiteconomy.screens;
 
 import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.gigabiteconomy.sprites.GameObject;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.sprites.Player;
 import com.mygdx.gigabiteconomy.screens.TileManager;
+import com.mygdx.gigabiteconomy.sprites.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * Base class for all level screens.
@@ -51,10 +51,12 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         int backgroundTextureHeight = backgroundTexture.getHeight();
         int backgroundTextureWidth = backgroundTexture.getWidth();
         int numberOfTilesHigh = 12;
+
         //Add players to TileManager
         tileManager = new TileManager(backgroundTextureHeight/numberOfTilesHigh, backgroundTextureHeight/2, backgroundTextureWidth, 0, 0);
-      //BELOW NOW DONE IN SPRITE CONSTRUCTOR
-        for ( GameObject go : enemies ) {
+
+        //BELOW NOW DONE IN SPRITE CONSTRUCTOR
+        for (GameObject go : enemies) {
             go.initTile(tileManager);
         }
         player.initTile(tileManager);
@@ -105,9 +107,13 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         // Draw the background
         backgroundSprite.draw(batch);
 
-        // Draw sprites
+        // Move (if moving sprite) & draw sprites
         for (GameObject sprite : sprites) {
-            sprite.move(delta);
+            if (sprite instanceof MovingSprite) {
+                MovingSprite movingSprite = (MovingSprite) sprite;
+                movingSprite.move(delta);
+            }
+
             batch.draw(sprite.getCurrRegion(), sprite.getActorX(), sprite.getActorY());
         }
 
