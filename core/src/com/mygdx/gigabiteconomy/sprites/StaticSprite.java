@@ -19,7 +19,7 @@ public class StaticSprite extends Actor implements GameObject {
     private Rectangle rect;
 
     TileManager tm;
-    Tile currentTile;
+    Tile tile;
 
     // Coordinates of sprite on screen
     private float[] coords = new float[2];
@@ -52,8 +52,8 @@ public class StaticSprite extends Actor implements GameObject {
 
         this.tm = tmPass;
 
-        currentTile = tm.placeObject((int)coords[0], (int)coords[1], this); //At init tile coords[x] will be filled with tile coords on grid
-        coords[0] = currentTile.getTileCoords()[0]; coords[1] = currentTile.getTileCoords()[1];
+        tile = tm.placeObject((int)coords[0], (int)coords[1], this); //At init tile coords[x] will be filled with tile coords on grid
+        coords[0] = tile.getTileCoords()[0]; coords[1] = tile.getTileCoords()[1];
         System.out.println("Initialised at " + coords[0] + " " + coords[1]);
     }
 
