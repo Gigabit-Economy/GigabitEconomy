@@ -39,7 +39,7 @@ public class StaticSprite extends Actor implements GameObject {
         coords[0] = x; coords[1] = y;
 
         // Creating rectangle to cover texture
-        rect = new Rectangle(x, y, textureRegion.getRegionWidth(), textureRegion.getRegionHeight()); //What happens to rectangle when texture changes size (e.g. in an animation)?
+        rect = new Rectangle(x, y, textureRegion.getRegionWidth(), textureRegion.getRegionHeight());
     }
 
     @Override
@@ -52,7 +52,6 @@ public class StaticSprite extends Actor implements GameObject {
 
         tile = tm.placeObject((int)coords[0], (int)coords[1], this); //At init tile coords[x] will be filled with tile coords on grid
         coords[0] = tile.getTileCoords()[0]; coords[1] = tile.getTileCoords()[1];
-        System.out.println("Initialised at " + coords[0] + " " + coords[1]);
     }
 
     @Override

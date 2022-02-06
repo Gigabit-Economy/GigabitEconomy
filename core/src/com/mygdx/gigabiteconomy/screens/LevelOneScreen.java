@@ -19,7 +19,7 @@ public class LevelOneScreen extends LevelScreen {
     private static final ArrayList<GameObject> ENEMIES = new ArrayList<GameObject>(Arrays.asList(ENEMY_ONE));
 
     /* STATIC SPRITES (FENCES ETC...) */
-    private static final StaticSprite FENCE = new StaticSprite("finished_assets/obstacles/fence.png", 1, 1);
+    private static final StaticSprite FENCE = new StaticSprite("finished_assets/static_sprites/fence.png", 455, 360);
     private static final ArrayList<StaticSprite> STATIC_SPRITES = new ArrayList<StaticSprite>(Arrays.asList(FENCE));
 
     // Level screen background texture
