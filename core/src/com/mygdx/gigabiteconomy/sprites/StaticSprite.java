@@ -12,7 +12,7 @@ import java.lang.Exception;
 
 public class StaticSprite extends Actor implements GameObject {
     private Texture texture;
-    private TextureRegion textureRegion;
+    private TextureRegion textureRegion = new TextureRegion();
     // Rectangle which holds the texture
     private Rectangle rect;
 
