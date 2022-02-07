@@ -144,6 +144,7 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
                 currentTile = targetTile;
                 targetTile = null;
                 snap(delta);
+                directionMoving = null;
             }
 
         } else {

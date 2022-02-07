@@ -27,7 +27,7 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
      * @param keycode
      */
     public void handleMovement(int keycode) {
-        if (targetTile != null && !isMoving()) {
+        if (targetTile != null && !isMoving() || directionMoving != null) {
             System.out.println("Not finished with previous movement");
             return; //Not finished with previous movement
         }
