@@ -141,6 +141,7 @@ abstract class MySprite extends Actor implements GameObject {
                 currentTile = targetTile;
                 targetTile = null;
                 snap(delta);
+                directionMoving = null;
             }
 
         } else {
