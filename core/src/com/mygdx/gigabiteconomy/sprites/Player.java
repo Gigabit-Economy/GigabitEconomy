@@ -16,8 +16,7 @@ public class Player extends MySprite implements ApplicationListener, InputProces
     //Deprecated variable for determining if player has to finish movement to centre of next Tile on keyUp()
     boolean stillMoving = false;
     //How much player should move vertically and horizontally every move() respectively
-    private static float deltaVert = 3F;
-    private static float deltaHoriz = 3.5F;
+
 
 
 
@@ -41,22 +40,22 @@ public class Player extends MySprite implements ApplicationListener, InputProces
          * Sets direction enum which defines the velocity vector (which speed and direction to move in with each move() call)
          */
         Tile toTarget = null;
-        DIRECTION direction = null;
+
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT) {
             // Move left
-            direction = DIRECTION.WEST;
+            directionMoving = DIRECTION.WEST;
         }
         else if (keycode == Input.Keys.D || keycode == Input.Keys.RIGHT) {
             // Move right
-            direction = DIRECTION.EAST;
+            directionMoving = DIRECTION.EAST;
         }
         else if (keycode == Input.Keys.W || keycode == Input.Keys.UP) {
             // Move up
-            direction = DIRECTION.NORTH;
+            directionMoving = DIRECTION.NORTH;
         }
         else if (keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
             // Move down
-            direction = DIRECTION.SOUTH;
+            directionMoving = DIRECTION.SOUTH;
         } else {
             System.out.println(keycode + " not accounted for in movement logic");
             return;
@@ -66,8 +65,8 @@ public class Player extends MySprite implements ApplicationListener, InputProces
          * Uses tile manager to get adjecentTile
          * Sets velocity vector based on value of direction set above
          */
-        toTarget = tm.getAdjecentTile(currentTile, direction.toString(), 1);
-        setDeltaMove(direction.dx, direction.dy);
+        toTarget = tm.getAdjecentTile(currentTile, directionMoving.toString(), 1);
+        setDeltaMove(directionMoving.dx, directionMoving.dy);
 
         //Checks if Player can move to Tile
         if (toTarget != null && toTarget.getOccupiedBy() == null) {
@@ -173,22 +172,7 @@ public class Player extends MySprite implements ApplicationListener, InputProces
 
     }
 
-    /**
-     * Enum which maps direction to velocity vector with instance variables defined above
-     */
-    private enum DIRECTION {
-        NORTH (0, deltaVert),
-        EAST (deltaHoriz, 0),
-        SOUTH (0, -deltaVert),
-        WEST (-deltaHoriz, 0);
 
-        private final float dx;
-        private final float dy;
-
-        private DIRECTION(float dx, float dy) {
-            this.dx = dx; this.dy = dy;
-        }
-    }
 
 
 }

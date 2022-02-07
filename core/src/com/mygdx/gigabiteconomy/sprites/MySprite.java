@@ -26,6 +26,8 @@ abstract class MySprite extends Actor implements GameObject {
     Tile currentTile;
     Tile targetTile;
 
+    DIRECTION directionMoving;
+
     TextureAtlas ta;
     //Coordinates of sprite on screen
     Vector2 pos = new Vector2(0, 0);
@@ -35,6 +37,9 @@ abstract class MySprite extends Actor implements GameObject {
     private Array<TextureAtlas.AtlasRegion> regions;
     //Current image being displayed in the movement animation
     private TextureRegion current;
+
+    private static float deltaVert = 3F;
+    private static float deltaHoriz = 3.5F;
 
     boolean moving; //Can use for paused? Also useful for player (holding down keys)
 
@@ -128,9 +133,16 @@ abstract class MySprite extends Actor implements GameObject {
         if ((Math.abs(pos.x-targetTile.getTileCoords()[0])<5) && (Math.abs(pos.y-targetTile.getTileCoords()[1])<5)) {
             //Arrived at tile
             System.out.println("Arrived at tile");
-            currentTile = targetTile;
-            targetTile = null;
-            snap(delta);
+            if (isMoving()) {
+                targetTile = tm.getAdjecentTile(targetTile, directionMoving.toString(), 1);
+                if (targetTile == null) setMoving(false);
+            }
+            if (!isMoving() && targetTile != null) {
+                currentTile = targetTile;
+                targetTile = null;
+                snap(delta);
+            }
+
         } else {
             /**
              * Otherwise, keep adding deltaMove vector to positionVector
@@ -141,6 +153,22 @@ abstract class MySprite extends Actor implements GameObject {
         }
 
         return true;
+    }
+    /**
+     * Enum which maps direction to velocity vector with instance variables defined above
+     */
+    public enum DIRECTION {
+        NORTH (0, deltaVert),
+        EAST (deltaHoriz, 0),
+        SOUTH (0, -deltaVert),
+        WEST (-deltaHoriz, 0);
+
+        public final float dx;
+        public final float dy;
+
+        private DIRECTION(float dx, float dy) {
+            this.dx = dx; this.dy = dy;
+        }
     }
 
 }
