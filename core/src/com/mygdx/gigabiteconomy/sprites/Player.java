@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.mygdx.gigabiteconomy.screens.Tile;
 
 /**
  * Class for separating Player functionality from general Sprite functionality
@@ -18,10 +19,50 @@ public class Player extends MySprite implements ApplicationListener, InputProces
     private static float deltaVert = 3F;
     private static float deltaHoriz = 3.5F;
 
+
+
     public Player(String config, int x, int y) {
         super(config, x, y);
 
         Gdx.input.setInputProcessor(this);
+    }
+
+    public void handleMovement(int keycode) {
+        if (targetTile != null && !isMoving()) {
+            System.out.println("Not finished with previous movement");
+            return; //Not finished with previous movement
+        }
+
+        Tile toTarget = null;
+        DIRECTION direction = null;
+        if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT) {
+            // Move left
+            direction = DIRECTION.WEST;
+        }
+        else if (keycode == Input.Keys.D || keycode == Input.Keys.RIGHT) {
+            // Move right
+            direction = DIRECTION.EAST;
+        }
+        else if (keycode == Input.Keys.W || keycode == Input.Keys.UP) {
+            // Move up
+            direction = DIRECTION.NORTH;
+        }
+        else if (keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
+            // Move down
+            direction = DIRECTION.SOUTH;
+        } else {
+            System.out.println(keycode + " not accounted for in movement logic");
+            return;
+        }
+
+        toTarget = tm.getAdjecentTile(currentTile, direction.toString(), 1);
+        setDeltaMove(direction.dx, direction.dy);
+
+        if (toTarget != null && toTarget.getOccupiedBy() == null) {
+            targetTile = toTarget;
+            setMoving(true);
+            System.out.println("Moving true to " + targetTile.getTileCoords()[0] + " " + targetTile.getTileCoords()[1]);
+        }
     }
 
     @Override
@@ -37,77 +78,24 @@ public class Player extends MySprite implements ApplicationListener, InputProces
          *  -> Every time move() is called, deltaMove is added to position vector
          *  -> This allows for diagonal movement
          */
-        if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT) {
-            // Move left
-            deltaMove.add(-deltaHoriz, 0);
-        }
-        else if (keycode == Input.Keys.D || keycode == Input.Keys.RIGHT) {
-            // Move right
-            deltaMove.add(deltaHoriz, 0);
-        }
-        else if (keycode == Input.Keys.W || keycode == Input.Keys.UP) {
-            // Move up
-            deltaMove.add(0, deltaVert);
-        }
-        else if (keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
-            // Move down
-            deltaMove.add(0, -deltaVert);
+        if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT || keycode == Input.Keys.D ||
+                keycode == Input.Keys.RIGHT || keycode == Input.Keys.W ||
+                keycode == Input.Keys.UP || keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
+
+            handleMovement(keycode);
+
         } else {
             return false;
         }
-        System.out.println("delta set to: " + deltaMove.toString());
 
-        stillMoving = true;
-        setMoving(true);
         return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        /**
-         * Simply removes change from deltaMove vector made in keyDown()
-         */
-        if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT) {
-            // Move left
-            deltaMove.sub(-deltaHoriz, 0);
-        }
-        else if (keycode == Input.Keys.D || keycode == Input.Keys.RIGHT) {
-            // Move right
-            deltaMove.sub(deltaHoriz, 0);
-        }
-        else if (keycode == Input.Keys.W || keycode == Input.Keys.UP) {
-            // Move up
-            deltaMove.sub(0, deltaVert);
-        }
-        else if (keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
-            // Move down
-            deltaMove.sub(0, -deltaVert);
-        } else {
-            return false;
-        }
-        if (deltaMove.epsilonEquals(0, 0)) {
-            setMoving(false); //Should stop as soon as possible
-        }
-
-        System.out.println("delta removed to: " + deltaMove.toString());
+        setMoving(false);
 
         return false;
-    }
-
-    @Override
-    public boolean move(float delta) {
-        boolean ret = super.move(delta);
-
-        /**
-         * Makes sure to centre Player on the Tile the user stopped on
-         * -> This is what stillMoving was for, if we keep Tiles small then the user won't see much 'snap' (teleporting of Player to centre)
-         */
-        if (!ret && stillMoving) {
-            if (snap(delta))
-                stillMoving = false;
-        }
-        return true;
-
     }
 
 
@@ -172,6 +160,19 @@ public class Player extends MySprite implements ApplicationListener, InputProces
 
     }
 
+    private enum DIRECTION {
+        NORTH (0, deltaVert),
+        EAST (deltaHoriz, 0),
+        SOUTH (0, -deltaVert),
+        WEST (-deltaHoriz, 0);
+
+        private final float dx;
+        private final float dy;
+
+        private DIRECTION(float dx, float dy) {
+            this.dx = dx; this.dy = dy;
+        }
+    }
 
 
 }

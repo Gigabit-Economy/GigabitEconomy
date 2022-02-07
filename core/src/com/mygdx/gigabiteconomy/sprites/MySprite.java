@@ -22,7 +22,9 @@ abstract class MySprite extends Actor implements GameObject {
     private Rectangle rect;
 
     TileManager tm;
+
     Tile currentTile;
+    Tile targetTile;
 
     TextureAtlas ta;
     //Coordinates of sprite on screen
@@ -98,37 +100,14 @@ abstract class MySprite extends Actor implements GameObject {
         return moving;
     }
 
-    public boolean snap(float delta) {
-//        if (Math.abs(pos.x-currentTile.getTileCoords()[0])<5 && Math.abs(pos.y-currentTile.getTileCoords()[1])<5) {
-//            pos.x =currentTile.getTileCoords()[0];
-//            pos.y =currentTile.getTileCoords()[1];
-//            return true;
-//        } else {
-//            pos.x += (pos.x-currentTile.getTileCoords()[0])*delta;
-//            pos.x += (pos.y-currentTile.getTileCoords()[0])*delta;
-//            return false;
-//        }
-        boolean ret = true;
-        if (Math.abs(pos.x-currentTile.getTileCoords()[0])<5) {
-            pos.x =currentTile.getTileCoords()[0];
-            ret |= true;
-        } else {
-            pos.x -= (pos.x-currentTile.getTileCoords()[0])*delta;
-            ret &= false;
-        }
+    public void setDeltaMove(float x, float y) {
+        deltaMove.x = x; deltaMove.y = y;
+    }
 
-        if (Math.abs(pos.y-currentTile.getTileCoords()[1])<5) {
-            pos.y =currentTile.getTileCoords()[1];
-            ret |= true;
-        } else {
-            pos.y -= (pos.y-currentTile.getTileCoords()[1])*delta;
-            ret &= false;
-        }
-        System.out.println(pos.toString());
-//        pos.x =currentTile.getTileCoords()[0];
-//        pos.y =currentTile.getTileCoords()[1];
-//        return true;
-        return ret;
+    public boolean snap(float delta) {
+        pos.x = currentTile.getTileCoords()[0];
+        pos.y = currentTile.getTileCoords()[1];
+        return true;
     }
 
     /**
@@ -136,14 +115,21 @@ abstract class MySprite extends Actor implements GameObject {
      * @param delta
      */
     public boolean move(float delta) {
-        if (!isMoving()) return false;
+        if (targetTile == null) {
+            return false;
+        }
 
-        pos.add(deltaMove);
-
-        Tile toMove = tm.getTileFromCoords(pos.x, pos.y);
-        if (toMove != null) currentTile = toMove;
-        else snap(delta);
-        System.out.println("Player now on Tile: " + currentTile.getTileCoords()[0] + " " + currentTile.getTileCoords()[1]);
+        if ((Math.abs(pos.x-targetTile.getTileCoords()[0])<5) && (Math.abs(pos.y-targetTile.getTileCoords()[1])<5)) {
+            //Arrived at tile
+            System.out.println("Arrived at tile");
+            currentTile = targetTile;
+            targetTile = null;
+            snap(delta);
+        } else {
+            //Keep on moving
+            pos.add(deltaMove);
+            System.out.println("New pos: " + pos.x + " " + pos.y);
+        }
 
         return true;
     }

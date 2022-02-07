@@ -62,23 +62,23 @@ public class TileManager {
      * @param distance Distance from Tile given to get new Tile
      * @return Tile satisfying conditions, or null if impossible
      */
-    private Tile getAdjecentTile(Tile tileFrom, String direction, int distance) {
+    public Tile getAdjecentTile(Tile tileFrom, String direction, int distance) {
         if (tileFrom == null) return null;
         direction = direction.toUpperCase();
         int[] pos = tileFrom.getPositionTile();
         Tile ret;
         try {
             switch (direction) {
-                case "LEFT":
+                case "WEST":
                     ret = getTile(pos[0]-distance, pos[1]);
                     break;
-                case "RIGHT":
+                case "EAST":
                     ret = getTile(pos[0]+distance, pos[1]);
                     break;
-                case "UP":
+                case "NORTH":
                     ret = getTile(pos[0], pos[1]+distance);
                     break;
-                case "DOWN":
+                case "SOUTH":
                     ret = getTile(pos[0], pos[1]-distance);
                     break;
                 default:
@@ -166,5 +166,8 @@ public class TileManager {
         return moveFromTile(tileFrom, direction, 1);
     }
 
+    public int getSideLength() {
+        return sideLength;
+    }
 
 }
