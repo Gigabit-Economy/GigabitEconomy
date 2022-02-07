@@ -27,6 +27,7 @@ public class TileManager {
         initialX=x; initialY=y;
 
         this.sideLength = sideLength;
+        System.out.println("Side length: " + sideLength);
         //Basic checking
         if (!(maxHeight%sideLength!=0 || maxWidth%sideLength!=0)) {
             System.out.println(">>> WARNING: maxHeight/maxWidth must be divisible by sideLength <<<"); //Throw exception here

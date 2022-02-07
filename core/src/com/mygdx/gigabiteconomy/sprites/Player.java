@@ -15,8 +15,8 @@ public class Player extends MySprite implements ApplicationListener, InputProces
     //Deprecated variable for determining if player has to finish movement to centre of next Tile on keyUp()
     boolean stillMoving = false;
     //How much player should move vertically and horizontally every move() respectively
-    private static float deltaVert = 1.5F;
-    private static float deltaHoriz = 1.75F;
+    private static float deltaVert = 3F;
+    private static float deltaHoriz = 3.5F;
 
     public Player(String config, int x, int y) {
         super(config, x, y);
@@ -103,8 +103,8 @@ public class Player extends MySprite implements ApplicationListener, InputProces
          * -> This is what stillMoving was for, if we keep Tiles small then the user won't see much 'snap' (teleporting of Player to centre)
          */
         if (!ret && stillMoving) {
-            snap();
-            stillMoving = false;
+            if (snap(delta))
+                stillMoving = false;
         }
         return true;
 

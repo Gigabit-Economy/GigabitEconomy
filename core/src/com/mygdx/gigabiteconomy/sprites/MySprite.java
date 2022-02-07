@@ -98,9 +98,37 @@ abstract class MySprite extends Actor implements GameObject {
         return moving;
     }
 
-    public void snap() {
-        pos.x = currentTile.getTileCoords()[0];
-        pos.y = currentTile.getTileCoords()[1];
+    public boolean snap(float delta) {
+//        if (Math.abs(pos.x-currentTile.getTileCoords()[0])<5 && Math.abs(pos.y-currentTile.getTileCoords()[1])<5) {
+//            pos.x =currentTile.getTileCoords()[0];
+//            pos.y =currentTile.getTileCoords()[1];
+//            return true;
+//        } else {
+//            pos.x += (pos.x-currentTile.getTileCoords()[0])*delta;
+//            pos.x += (pos.y-currentTile.getTileCoords()[0])*delta;
+//            return false;
+//        }
+        boolean ret = true;
+        if (Math.abs(pos.x-currentTile.getTileCoords()[0])<5) {
+            pos.x =currentTile.getTileCoords()[0];
+            ret |= true;
+        } else {
+            pos.x -= (pos.x-currentTile.getTileCoords()[0])*delta;
+            ret &= false;
+        }
+
+        if (Math.abs(pos.y-currentTile.getTileCoords()[1])<5) {
+            pos.y =currentTile.getTileCoords()[1];
+            ret |= true;
+        } else {
+            pos.y -= (pos.y-currentTile.getTileCoords()[1])*delta;
+            ret &= false;
+        }
+        System.out.println(pos.toString());
+//        pos.x =currentTile.getTileCoords()[0];
+//        pos.y =currentTile.getTileCoords()[1];
+//        return true;
+        return ret;
     }
 
     /**
@@ -114,7 +142,7 @@ abstract class MySprite extends Actor implements GameObject {
 
         Tile toMove = tm.getTileFromCoords(pos.x, pos.y);
         if (toMove != null) currentTile = toMove;
-        else snap();
+        else snap(delta);
         System.out.println("Player now on Tile: " + currentTile.getTileCoords()[0] + " " + currentTile.getTileCoords()[1]);
 
         return true;
