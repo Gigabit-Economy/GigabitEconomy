@@ -104,6 +104,9 @@ abstract class MySprite extends Actor implements GameObject {
         deltaMove.x = x; deltaMove.y = y;
     }
 
+    /**
+     * 'snaps' player sprite to current Tile centre
+     */
     public boolean snap(float delta) {
         pos.x = currentTile.getTileCoords()[0];
         pos.y = currentTile.getTileCoords()[1];
@@ -111,7 +114,7 @@ abstract class MySprite extends Actor implements GameObject {
     }
 
     /**
-     * Method runs if boolean moving set to true
+     * Method runs on each GameObject if there is a targetSquare set to go to.
      * @param delta
      */
     public boolean move(float delta) {
@@ -119,6 +122,9 @@ abstract class MySprite extends Actor implements GameObject {
             return false;
         }
 
+        /**
+         * If the distance from the centre is 5px, we snap and call it a day (Sprite has arrived at target)
+         */
         if ((Math.abs(pos.x-targetTile.getTileCoords()[0])<5) && (Math.abs(pos.y-targetTile.getTileCoords()[1])<5)) {
             //Arrived at tile
             System.out.println("Arrived at tile");
@@ -126,6 +132,9 @@ abstract class MySprite extends Actor implements GameObject {
             targetTile = null;
             snap(delta);
         } else {
+            /**
+             * Otherwise, keep adding deltaMove vector to positionVector
+             */
             //Keep on moving
             pos.add(deltaMove);
             System.out.println("New pos: " + pos.x + " " + pos.y);

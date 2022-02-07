@@ -27,12 +27,19 @@ public class Player extends MySprite implements ApplicationListener, InputProces
         Gdx.input.setInputProcessor(this);
     }
 
+    /**
+     * Method to handle movement
+     * @param keycode
+     */
     public void handleMovement(int keycode) {
         if (targetTile != null && !isMoving()) {
             System.out.println("Not finished with previous movement");
             return; //Not finished with previous movement
         }
 
+        /**
+         * Sets direction enum which defines the velocity vector (which speed and direction to move in with each move() call)
+         */
         Tile toTarget = null;
         DIRECTION direction = null;
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT) {
@@ -55,9 +62,14 @@ public class Player extends MySprite implements ApplicationListener, InputProces
             return;
         }
 
+        /**
+         * Uses tile manager to get adjecentTile
+         * Sets velocity vector based on value of direction set above
+         */
         toTarget = tm.getAdjecentTile(currentTile, direction.toString(), 1);
         setDeltaMove(direction.dx, direction.dy);
 
+        //Checks if Player can move to Tile
         if (toTarget != null && toTarget.getOccupiedBy() == null) {
             targetTile = toTarget;
             setMoving(true);
@@ -93,6 +105,7 @@ public class Player extends MySprite implements ApplicationListener, InputProces
 
     @Override
     public boolean keyUp(int keycode) {
+        //Player no longer WANTS to be moving, but we must finish animation to centre of target square
         setMoving(false);
 
         return false;
@@ -160,6 +173,9 @@ public class Player extends MySprite implements ApplicationListener, InputProces
 
     }
 
+    /**
+     * Enum which maps direction to velocity vector with instance variables defined above
+     */
     private enum DIRECTION {
         NORTH (0, deltaVert),
         EAST (deltaHoriz, 0),
