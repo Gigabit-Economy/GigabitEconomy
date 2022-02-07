@@ -73,15 +73,4 @@ public class StaticSprite extends Actor implements GameObject {
     public float getActorY() {
         return coords[1];
     }
-
-    @Override
-    public void setActorX() {}
-
-    @Override
-    public void setActorY() {}
-
-    @Override
-    public Rectangle getRectangle() {
-        return rect;
-    }
 }
