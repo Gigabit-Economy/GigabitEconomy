@@ -1,9 +1,12 @@
 package com.mygdx.gigabiteconomy.sprites;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.gigabiteconomy.screens.Tile;
@@ -19,20 +22,26 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
     private Rectangle rect;
 
     TileManager tm;
+
     Tile currentTile;
+    Tile targetTile;
+
+    DIRECTION directionMoving;
 
     TextureAtlas ta;
     //Coordinates of sprite on screen
-    private float[] coords = new float[2];
+    Vector2 pos = new Vector2(0, 0);
+    //Vector we add to position with every move
+    Vector2 deltaMove = new Vector2(0, 0);
     //Array of regions in spritesheet
     private Array<TextureAtlas.AtlasRegion> regions;
     //Current image being displayed in the movement animation
     private TextureRegion current;
 
-    boolean moving; //Can use for paused? Also useful for player (holding down keys)
-    MoveDirection direction;
+    private static float deltaVert = 3F;
+    private static float deltaHoriz = 3.5F;
 
-    private int[] dcoords = new int[2]; //Increment of each x, y if moving is true
+    boolean moving; //Can use for paused? Also useful for player (holding down keys)
 
     /**
      * Constructor used to create a new moving sprite
@@ -50,7 +59,7 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
 
         setBounds(x, y, current.getRegionWidth(), current.getRegionHeight());
 
-        coords[0] = x; coords[1] = y;
+        pos.x = x; pos.y=y;
 
         //Creating rectangle to cover texture
         rect = new Rectangle(x, y, current.getRegionWidth(), current.getRegionHeight()); //What happens to rectangle when texture changes size (e.g. in an animation)?
@@ -64,9 +73,10 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
 
         this.tm = tmPass;
 
-        currentTile = tm.placeObject((int)coords[0], (int)coords[1], this); //At init tile coords[x] will be filled with tile coords on grid
-        coords[0] = currentTile.getTileCoords()[0]; coords[1] = currentTile.getTileCoords()[1];
-        System.out.println("Initialised at " + coords[0] + " " + coords[1]);
+        currentTile = tm.placeObject((int)pos.x, (int)pos.y, this); //At init tile coords[x] will be filled with tile coords on grid
+        pos.x = currentTile.getTileCoords()[0]; pos.y = currentTile.getTileCoords()[1];
+        
+        System.out.println("Initialised at " + pos.x + " " + pos.y);
     }
 
     @Override
@@ -81,106 +91,88 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
 
     @Override
     public float getActorX() {
-        return coords[0];
+        return pos.x;
     }
 
     @Override
     public float getActorY() {
-        return coords[1];
-    }
-
-    @Override
-    public void setActorX() {
-
-    }
-
-    @Override
-    public void setActorY() {
-
-    }
-
-    @Override
-    public Rectangle getRectangle() {
-        return rect;
-    }
-
-    public void setDCoords(int dx, int dy) {
-        dcoords[0] += dx; dcoords[1] += dy;
+        return pos.y;
     }
 
     public void setMoving(boolean moving) {
         this.moving = moving;
-        if (!moving) dcoords[0] = dcoords[1] = 0;
+
     }
 
     public boolean isMoving() {
         return moving;
     }
 
-    private int[] movingFrom() {
-
-        int[] ret = new int[2];
-        System.out.println("Calculating with direction: " + direction);
-        switch (direction) {
-            case LEFT: //[x, y] = [1, 0]
-                ret[0] = 1; ret[1] = 0;
-                break;
-            case RIGHT:
-                ret[0] = -1; ret[1] = 0;
-                break;
-            case UP:
-                ret[1] = 1; ret[0] = 0;
-                break;
-            case DOWN:
-                ret[1] = -1; ret[0] = 0;
-                break;
-        }
-        return ret;
+    public void setDeltaMove(float x, float y) {
+        deltaMove.x = x; deltaMove.y = y;
     }
 
     /**
-     * Method runs if boolean moving set to true
-     * @param delta
+     * 'snaps' player sprite to current Tile centre
      */
-    public void move(float delta) {
-        if (!isMoving()) return;
-
-
-        //coords[0] += dcoords[0]; coords[1] += dcoords[1];
-
-        //Changing current sprite
-        //current = regions.get(regions.indexOf((TextureAtlas.AtlasRegion) current, true)+1);
-        //Some 'code' for an 'animation'
-        current = regions.get((regions.indexOf((TextureAtlas.AtlasRegion) current, true) + 1) % regions.size);
-
-        //If moving is true, move delta*distance until at new tile
-        //Calculated from position from 'current tile'
-        if (isMoving()) {
-            //coords[Math.abs(movingFrom()[1])] += (movingFrom()[0])*(delta*currentTile.getSideLength());
-            System.out.println("New coords: " + coords[0] + " " + coords[1]);
-            //Find difference between 'currentTile' coords and sprite coords
-            float newTileCoords[] = currentTile.getTileCoords();
-            float diff[] = { newTileCoords[0]-coords[0], newTileCoords[1]-coords[1] };
-
-            System.out.println("Diff " + diff[0] + " " + diff[1]);
-            //If diff[0] is negative, we're moving left, if diff[1] is pos
-            float deltaX = (diff[0]/(Math.abs(diff[0])==0?1:Math.abs(diff[0])))*(delta*currentTile.getSideLength());
-            float deltaY = (diff[1]/(Math.abs(diff[1])==0?1:Math.abs(diff[1])))*(delta*currentTile.getSideLength());
-            coords[0] += deltaX;
-            coords[1] += deltaY;
-            System.out.println("Changed by " + deltaX + " " + deltaY);
-        }
-        if (currentTile.isOnTile(coords[0], coords[1]) != null) {
-            setMoving(false);
-            System.out.println("Arrived at tile");
-        }
+    public boolean snap(float delta) {
+        pos.x = currentTile.getTileCoords()[0];
+        pos.y = currentTile.getTileCoords()[1];
+        return true;
     }
 
-    public enum MoveDirection {
-        LEFT,
-        RIGHT,
-        UP,
-        DOWN
+    /**
+     * Method runs on each GameObject if there is a targetSquare set to go to.
+     * @param delta
+     */
+    public boolean move(float delta) {
+        if (targetTile == null) {
+            return false;
+        }
+
+        /**
+         * If the distance from the centre is 5px, we snap and call it a day (Sprite has arrived at target)
+         */
+        if ((Math.abs(pos.x-targetTile.getTileCoords()[0])<5) && (Math.abs(pos.y-targetTile.getTileCoords()[1])<5)) {
+            //Arrived at tile
+            System.out.println("Arrived at tile");
+            if (isMoving()) {
+                targetTile = tm.getAdjecentTile(targetTile, directionMoving.toString(), 1);
+                if (targetTile == null) setMoving(false);
+            }
+            if (!isMoving() && targetTile != null) {
+                currentTile = targetTile;
+                targetTile = null;
+                snap(delta);
+                directionMoving = null;
+            }
+
+        } else {
+            /**
+             * Otherwise, keep adding deltaMove vector to positionVector
+             */
+            //Keep on moving
+            pos.add(deltaMove);
+            System.out.println("New pos: " + pos.x + " " + pos.y);
+        }
+
+        return true;
+    }
+    /**
+     * Enum which maps direction to velocity vector with instance variables defined above
+     */
+    public enum DIRECTION {
+        NORTH (0, deltaVert),
+        EAST (deltaHoriz, 0),
+        SOUTH (0, -deltaVert),
+        WEST (-deltaHoriz, 0);
+
+        public final float dx;
+        public final float dy;
+
+        private DIRECTION(float dx, float dy) {
+            this.dx = dx; this.dy = dy;
+        }
     }
 
     /**

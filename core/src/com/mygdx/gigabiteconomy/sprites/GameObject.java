@@ -15,10 +15,5 @@ public interface GameObject {
     float getActorX();
     float getActorY();
 
-    void setActorX();
-    void setActorY();
-
     void initTile(TileManager tm) throws Exception;
-
-    Rectangle getRectangle();
 }

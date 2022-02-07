@@ -27,6 +27,7 @@ public class TileManager {
         initialX=x; initialY=y;
 
         this.sideLength = sideLength;
+        System.out.println("Side length: " + sideLength);
         //Basic checking
         if (!(maxHeight%sideLength!=0 || maxWidth%sideLength!=0)) {
             System.out.println(">>> WARNING: maxHeight/maxWidth must be divisible by sideLength <<<"); //Throw exception here
@@ -61,23 +62,23 @@ public class TileManager {
      * @param distance Distance from Tile given to get new Tile
      * @return Tile satisfying conditions, or null if impossible
      */
-    private Tile getAdjecentTile(Tile tileFrom, String direction, int distance) {
+    public Tile getAdjecentTile(Tile tileFrom, String direction, int distance) {
         if (tileFrom == null) return null;
         direction = direction.toUpperCase();
         int[] pos = tileFrom.getPositionTile();
         Tile ret;
         try {
             switch (direction) {
-                case "LEFT":
+                case "WEST":
                     ret = getTile(pos[0]-distance, pos[1]);
                     break;
-                case "RIGHT":
+                case "EAST":
                     ret = getTile(pos[0]+distance, pos[1]);
                     break;
-                case "UP":
+                case "NORTH":
                     ret = getTile(pos[0], pos[1]+distance);
                     break;
-                case "DOWN":
+                case "SOUTH":
                     ret = getTile(pos[0], pos[1]-distance);
                     break;
                 default:
@@ -143,11 +144,30 @@ public class TileManager {
     }
 
     /**
+     * Method returns Tile placed over x, y
+     * @param x coord within Tile to get
+     * @param y coord within Tile to get
+     * @return Tile which holds [x, y]
+     */
+    public Tile getTileFromCoords(float x, float y) {
+        Tile ret = null;
+        try {
+            ret = tileArray[(int)x/sideLength][(int)y/sideLength];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Could not find at " + x + " " + y);
+        }
+        return ret;
+    }
+
+    /**
      * Method to move an entity by only one space
      */
     public Tile moveFromTile(Tile tileFrom, String direction) {
         return moveFromTile(tileFrom, direction, 1);
     }
 
+    public int getSideLength() {
+        return sideLength;
+    }
 
 }

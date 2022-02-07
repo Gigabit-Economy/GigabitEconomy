@@ -53,7 +53,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         //-> One TileManager per level sounds like the cleanest option
         int backgroundTextureHeight = backgroundTexture.getHeight();
         int backgroundTextureWidth = backgroundTexture.getWidth();
-        int numberOfTilesHigh = 12;
+        int numberOfTilesHigh = 18;
         tileManager = new TileManager(backgroundTextureHeight/numberOfTilesHigh, backgroundTextureHeight/2, backgroundTextureWidth, 0, 0);
 
         // Initialise each sprite's position on tiles using the tile manager

@@ -1,0 +1,54 @@
+knifeRightMv.png
+size: 1680, 240
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+knifeRightWalk1
+  rotate: false
+  xy: 0, 0
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+knifeRightWalk2
+  rotate: false
+  xy: 240, 0
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+knifeRightWalk3
+  rotate: false
+  xy: 480, 0
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+knifeRightWalk4
+  rotate: false
+  xy: 720, 0
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+knifeRightWalk5
+  rotate: false
+  xy: 960, 0
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+knifeRightWalk6
+  rotate: false
+  xy: 1200, 0
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+knifeRightWalk7
+  rotate: false
+  xy: 1440, 0
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
