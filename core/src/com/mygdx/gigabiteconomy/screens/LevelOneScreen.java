@@ -1,9 +1,7 @@
 package com.mygdx.gigabiteconomy.screens;
 
 import com.mygdx.gigabiteconomy.GigabitEconomy;
-import com.mygdx.gigabiteconomy.sprites.GameObject;
-import com.mygdx.gigabiteconomy.sprites.Player;
-import com.mygdx.gigabiteconomy.sprites.Enemy;
+import com.mygdx.gigabiteconomy.sprites.*;
 import com.badlogic.gdx.graphics.Texture;
 
 import java.util.Arrays;
@@ -15,10 +13,15 @@ import java.util.ArrayList;
 public class LevelOneScreen extends LevelScreen {
     // Player character
     private static final Player PLAYER = new Player("amzn_9iron.txt",0 , 0);
-    // Enemy 1 character
+
+    /* ENEMIES */
     private static final Enemy ENEMY_ONE = new Enemy("amzn_9iron.txt", 2, 2);
-    // ArrayList of all enemy characters
     private static final ArrayList<GameObject> ENEMIES = new ArrayList<GameObject>(Arrays.asList(ENEMY_ONE));
+
+    /* STATIC SPRITES (FENCES ETC...) */
+    private static final StaticSprite FENCE = new StaticSprite("finished_assets/static_sprites/fence.png", 455, 360);
+    private static final ArrayList<StaticSprite> STATIC_SPRITES = new ArrayList<StaticSprite>(Arrays.asList(FENCE));
+
     // Level screen background texture
     private static final Texture BACKGROUND_TEXTURE = new Texture("finished_assets/levels/level1.png");
 
@@ -29,6 +32,6 @@ public class LevelOneScreen extends LevelScreen {
      * @param director the instance of the game director
      */
     public LevelOneScreen(GigabitEconomy director) {
-        super(director, PLAYER, ENEMIES, BACKGROUND_TEXTURE);
+        super(director, PLAYER, ENEMIES, STATIC_SPRITES, BACKGROUND_TEXTURE);
     }
 }

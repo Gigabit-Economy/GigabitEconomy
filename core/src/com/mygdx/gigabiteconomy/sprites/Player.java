@@ -12,7 +12,7 @@ import com.mygdx.gigabiteconomy.screens.Tile;
  * Such as:
  *  > Attacking (detecting collisions for certain sprites only)
  */
-public class Player extends MySprite implements ApplicationListener, InputProcessor {
+public class Player extends MovingSprite implements ApplicationListener, InputProcessor {
     public Player(String config, int x, int y) {
         super(config, x, y);
 
