@@ -11,15 +11,11 @@ import com.mygdx.gigabiteconomy.screens.Tile;
  * Such as:
  *  > Attacking (detecting collisions for certain sprites only)
  */
-public class Player extends MySprite implements ApplicationListener, InputProcessor {
-
+public class Player extends MovingSprite implements ApplicationListener, InputProcessor {
     //Deprecated variable for determining if player has to finish movement to centre of next Tile on keyUp()
     boolean stillMoving = false;
     //How much player should move vertically and horizontally every move() respectively
-
-
-
-
+    
     public Player(String config, int x, int y) {
         super(config, x, y);
 
