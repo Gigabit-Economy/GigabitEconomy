@@ -124,6 +124,8 @@ abstract class MySprite extends Actor implements GameObject {
      */
     public boolean move(float delta) {
         if (targetTile == null) {
+            directionMoving = null;
+            setMoving(false);
             return false;
         }
 
@@ -133,6 +135,7 @@ abstract class MySprite extends Actor implements GameObject {
         if ((Math.abs(pos.x-targetTile.getTileCoords()[0])<5) && (Math.abs(pos.y-targetTile.getTileCoords()[1])<5)) {
             //Arrived at tile
             System.out.println("Arrived at tile");
+            currentTile = targetTile;
             if (isMoving()) {
                 targetTile = tm.getAdjecentTile(targetTile, directionMoving.toString(), 1);
                 if (targetTile == null) setMoving(false);
@@ -150,7 +153,7 @@ abstract class MySprite extends Actor implements GameObject {
              */
             //Keep on moving
             pos.add(deltaMove);
-            System.out.println("New pos: " + pos.x + " " + pos.y);
+            //System.out.println("New pos: " + pos.x + " " + pos.y);
         }
 
         return true;

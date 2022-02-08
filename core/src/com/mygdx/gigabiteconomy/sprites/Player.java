@@ -73,6 +73,9 @@ public class Player extends MySprite implements ApplicationListener, InputProces
             targetTile = toTarget;
             setMoving(true);
             System.out.println("Moving true to " + targetTile.getTileCoords()[0] + " " + targetTile.getTileCoords()[1]);
+        } else {
+            targetTile = null;
+            //setMoving(false);
         }
     }
 
