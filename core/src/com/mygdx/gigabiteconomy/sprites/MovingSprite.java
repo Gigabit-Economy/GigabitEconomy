@@ -138,6 +138,7 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
         if ((Math.abs(pos.x-targetTile.getTileCoords()[0])<5) && (Math.abs(pos.y-targetTile.getTileCoords()[1])<5)) {
             //Arrived at tile
             System.out.println("Arrived at tile");
+            currentTile = targetTile;
             if (isMoving()) {
                 targetTile = tm.getAdjecentTile(targetTile, directionMoving.toString(), 1);
                 if (targetTile == null) setMoving(false);
