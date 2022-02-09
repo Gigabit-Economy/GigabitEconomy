@@ -48,7 +48,7 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
      * @param x position of Tile (within tile grid) to place sprite
      * @param y position of Tile (within tile grid) to place sprite
      */
-    public MovingSprite(String config, float x, float y) {
+    public MovingSprite(String config, int x, int y) {
         ta = new TextureAtlas(config);
         regions = ta.getRegions();
 
@@ -57,7 +57,7 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
 
         setBounds(x, y, current.getRegionWidth(), current.getRegionHeight());
 
-        pos.x = x; pos.y=y;
+        pos.x = x; pos.y = y;
 
         //Creating rectangle to cover texture
         rect = new Rectangle(x, y, current.getRegionWidth(), current.getRegionHeight()); //What happens to rectangle when texture changes size (e.g. in an animation)?
@@ -75,9 +75,10 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
 
         this.tm = tmPass;
 
-        currentTile = tm.placeObjectFromCoords(pos.x, pos.y, this);
-
+        currentTile = tm.placeObject((int)pos.x, (int)pos.y, this);
+        System.out.println(pos.x + " " + pos.y);
         if (currentTile == null) {
+
             throw new Exception("THERE IS ALREADY A SPRITE IN THIS LOCATION");
         }
 
