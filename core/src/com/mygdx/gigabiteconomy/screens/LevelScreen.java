@@ -123,8 +123,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         // Move (if moving sprite) & draw sprites
         for (GameObject sprite : sprites) {
             if (sprite instanceof MovingSprite) {
-                MovingSprite movingSprite = (MovingSprite) sprite;
-                movingSprite.move(delta);
+                ((MovingSprite) sprite).move(delta);
             } else if (sprite instanceof StaticSprite) {
                 ((StaticSprite) sprite).draw(batch, delta);
             }
