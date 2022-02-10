@@ -61,6 +61,9 @@ abstract class LevelScreen implements Screen, ApplicationListener {
             for (GameObject go : enemies) {
                 go.initTile(tileManager);
             }
+            for (GameObject go : staticSprites) {
+                go.initTile(tileManager);
+            }
 
             player.initTile(tileManager);
         } catch (Exception ex) {
@@ -122,6 +125,8 @@ abstract class LevelScreen implements Screen, ApplicationListener {
             if (sprite instanceof MovingSprite) {
                 MovingSprite movingSprite = (MovingSprite) sprite;
                 movingSprite.move(delta);
+            } else if (sprite instanceof StaticSprite) {
+                ((StaticSprite) sprite).draw(batch, delta);
             }
 
             batch.draw(sprite.getCurrRegion(), sprite.getActorX(), sprite.getActorY());

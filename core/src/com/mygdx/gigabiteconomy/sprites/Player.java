@@ -69,6 +69,9 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
             targetTile = toTarget;
             setMoving(true);
             System.out.println("Moving true to " + targetTile.getTileCoords()[0] + " " + targetTile.getTileCoords()[1]);
+        } else {
+            targetTile = null;
+            //setMoving(false);
         }
     }
 

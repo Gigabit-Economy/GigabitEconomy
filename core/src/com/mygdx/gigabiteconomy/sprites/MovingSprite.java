@@ -1,7 +1,5 @@
 package com.mygdx.gigabiteconomy.sprites;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -59,12 +57,16 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
 
         setBounds(x, y, current.getRegionWidth(), current.getRegionHeight());
 
-        pos.x = x; pos.y=y;
+        pos.x = x; pos.y = y;
 
         //Creating rectangle to cover texture
         rect = new Rectangle(x, y, current.getRegionWidth(), current.getRegionHeight()); //What happens to rectangle when texture changes size (e.g. in an animation)?
     }
 
+    //
+    // THIS METHOD SHOULD GO IN TILE MANAGER CLASS? Tile placeObject(Gameobject o, float x, float y);
+    //      To place a game object on a given tile, returns the coordinates of the tile placed on?
+    //
     @Override
     public void initTile(TileManager tmPass) throws Exception {
         // Check if tile manager has already been initialised
@@ -73,7 +75,15 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
 
         this.tm = tmPass;
 
-        currentTile = tm.placeObject((int)pos.x, (int)pos.y, this); //At init tile coords[x] will be filled with tile coords on grid
+        currentTile = tm.placeObject((int)pos.x, (int)pos.y, this);
+        System.out.println(pos.x + " " + pos.y);
+        if (currentTile == null) {
+
+            throw new Exception("THERE IS ALREADY A SPRITE IN THIS LOCATION");
+        }
+
+        System.out.println("Current tile coords: " + currentTile.getTileCoords()[0] + " " + currentTile.getTileCoords()[1]);
+
         pos.x = currentTile.getTileCoords()[0]; pos.y = currentTile.getTileCoords()[1];
         
         System.out.println("Initialised at " + pos.x + " " + pos.y);
@@ -126,7 +136,10 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
      * @param delta
      */
     public boolean move(float delta) {
-        if (targetTile == null) {
+        if (targetTile == null || targetTile.getOccupiedBy() != null) {
+            directionMoving = null;
+            targetTile = null;
+            setMoving(false);
             return false;
         }
 
@@ -136,14 +149,23 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
         if ((Math.abs(pos.x-targetTile.getTileCoords()[0])<5) && (Math.abs(pos.y-targetTile.getTileCoords()[1])<5)) {
             //Arrived at tile
             System.out.println("Arrived at tile");
+            System.out.println("Occupied tiles:");
+            tm.printOccupiedTiles();
+
+            //Reset currentTile to targetTile
+            currentTile = tm.placeObject(targetTile, this);
+
             if (isMoving()) {
+                //If key is still held down, get next tile
                 targetTile = tm.getAdjecentTile(targetTile, directionMoving.toString(), 1);
                 if (targetTile == null) setMoving(false);
             }
             if (!isMoving() && targetTile != null) {
-                currentTile = targetTile;
+                //If key is released, but there's still distance to cover
+                //currentTile = targetTile; useless line?
                 targetTile = null;
                 snap(delta);
+                //Reset direction moving
                 directionMoving = null;
             }
 
@@ -153,7 +175,7 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
              */
             //Keep on moving
             pos.add(deltaMove);
-            System.out.println("New pos: " + pos.x + " " + pos.y);
+            //System.out.println("New pos: " + pos.x + " " + pos.y);
         }
 
         return true;
@@ -180,5 +202,13 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
      */
     public void dispose() {
         ta.dispose();
+    }
+
+    public Tile getCurrentTile() {
+        return currentTile;
+    }
+
+    public void setCurrentTile(Tile tile) {
+        currentTile = tile;
     }
 }
