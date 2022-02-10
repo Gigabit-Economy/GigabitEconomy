@@ -1,5 +1,7 @@
 package com.mygdx.gigabiteconomy.sprites;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -36,8 +38,16 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
     //Current image being displayed in the movement animation
     private TextureRegion current;
 
-    private static float deltaVert = 3F;
-    private static float deltaHoriz = 3.5F;
+    private MovingAnimation<TextureRegion> movementAnimation;
+    private MovingAnimation<TextureRegion> attackAnimation;
+    private boolean attacking = false;
+
+
+
+    private static float deltaVert = 3.5F;
+    private static float deltaHoriz = 4F;
+
+
 
     boolean moving; //Can use for paused? Also useful for player (holding down keys)
 
@@ -48,8 +58,8 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
      * @param x position of Tile (within tile grid) to place sprite
      * @param y position of Tile (within tile grid) to place sprite
      */
-    public MovingSprite(String config, int x, int y) {
-        ta = new TextureAtlas(config);
+    public MovingSprite(String move_config, String attack_config, int x, int y) {
+        ta = new TextureAtlas(move_config);
         regions = ta.getRegions();
 
         current = regions.get(0); //Change to more general name to fit with all sprites
@@ -59,6 +69,8 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
 
         pos.x = x; pos.y = y;
 
+        movementAnimation = new MovingAnimation<TextureRegion>(1/14f, regions, true);
+        attackAnimation = new MovingAnimation<TextureRegion>(1/14f, new TextureAtlas(attack_config).getRegions(), false);
         //Creating rectangle to cover texture
         rect = new Rectangle(x, y, current.getRegionWidth(), current.getRegionHeight()); //What happens to rectangle when texture changes size (e.g. in an animation)?
     }
@@ -114,8 +126,17 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
 
     }
 
+    public void setAttacking(boolean attacking) {
+        this.attacking = attacking;
+        System.out.println(attacking);
+    }
+
     public boolean isMoving() {
         return moving;
+    }
+
+    public boolean isAttacking() {
+        return attacking;
     }
 
     public void setDeltaMove(float x, float y) {
@@ -136,6 +157,14 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
      * @param delta
      */
     public boolean move(float delta) {
+        if (attacking) {
+            current = (TextureRegion) attackAnimation.runAnimation(delta);
+            //System.out.println("Changed to" + current);
+            if (attackAnimation.isFinished(delta)) {
+                System.out.println("Finished attacking");
+                setAttacking(false);
+            }
+        }
         if (targetTile == null || targetTile.getOccupiedBy() != null) {
             directionMoving = null;
             targetTile = null;
@@ -175,6 +204,9 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
              */
             //Keep on moving
             pos.add(deltaMove);
+            current = (TextureRegion) movementAnimation.runAnimation(delta);
+            //System.out.println("Current changed to: " + currentTile);
+
             //System.out.println("New pos: " + pos.x + " " + pos.y);
         }
 

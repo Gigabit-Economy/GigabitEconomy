@@ -12,10 +12,10 @@ import java.util.ArrayList;
  */
 public class LevelOneScreen extends LevelScreen {
     // Player character
-    private static final Player PLAYER = new Player("finished_assets/player/movement/katanaRightMv.txt",0 , 0);
+    private static final Player PLAYER = new Player("finished_assets/player/movement/katanaRightMv.txt", "finished_assets/player/attacks/katanaRightAt.txt", 0 , 0);
 
     /* ENEMIES */
-    private static final Enemy ENEMY_ONE = new Enemy("finished_assets/player/attacks/golfRightAt.txt", 2, 2);
+    private static final Enemy ENEMY_ONE = new Enemy("finished_assets/player/attacks/golfRightAt.txt", "finished_assets/player/attacks/golfRightAt.txt", 2, 2);
     private static final ArrayList<GameObject> ENEMIES = new ArrayList<GameObject>(Arrays.asList(ENEMY_ONE));
 
     /* STATIC SPRITES (FENCES ETC...) */
