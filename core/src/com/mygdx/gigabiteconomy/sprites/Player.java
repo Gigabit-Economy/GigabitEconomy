@@ -64,7 +64,7 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
          * Sets velocity vector based on value of direction set above
          */
         toTarget = tm.getAdjecentTile(currentTile, directionMoving.toString(), 1);
-        setDeltaMove(directionMoving.dx, directionMoving.dy);
+        setDeltaMove(directionMoving);
 
         //Checks if Player can move to Tile
         if (toTarget != null && toTarget.getOccupiedBy() == null) {
