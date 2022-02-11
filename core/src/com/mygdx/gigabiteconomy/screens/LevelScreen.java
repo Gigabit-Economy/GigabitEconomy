@@ -4,10 +4,12 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.sprites.Player;
 import com.mygdx.gigabiteconomy.screens.TileManager;
@@ -31,6 +33,10 @@ abstract class LevelScreen implements Screen, ApplicationListener {
     private ArrayList<GameObject> enemies;
     private ArrayList<StaticSprite> staticSprites;
 
+    private int scoreCount, parcelCount, healthCount;
+    private String scoreText, parcelText, healthText;
+    private BitmapFont bitmapFont;
+
     /**
      * A template constructor for use by all level screen subclasses. Sets properties that differ between levels
      * such as game director, player/enemy character sprites & background texture.
@@ -47,6 +53,14 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         this.enemies = enemies;
         this.staticSprites = staticSprites;
         this.backgroundTexture = backgroundTexture;
+
+        scoreCount = 0;
+        parcelCount = 0;
+        healthCount = 0;
+        scoreText = "score: 0";
+        parcelText = "no. parcels: 0";
+        healthText = "health: 100 %"; 
+        bitmapFont = new BitmapFont();
 
         // Create tile manager instance (stated variables explicitly here in case we want to mess about with them)
         //-> Might need to move creating tileManager to other method (after we add level switching)
@@ -123,14 +137,18 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         // Move (if moving sprite) & draw sprites
         for (GameObject sprite : sprites) {
             if (sprite instanceof MovingSprite) {
-                MovingSprite movingSprite = (MovingSprite) sprite;
-                movingSprite.move(delta);
+                ((MovingSprite) sprite).move(delta);
             } else if (sprite instanceof StaticSprite) {
                 ((StaticSprite) sprite).draw(batch, delta);
             }
 
             batch.draw(sprite.getCurrRegion(), sprite.getActorX(), sprite.getActorY());
         }
+
+        bitmapFont.setColor(Color.CORAL);
+        bitmapFont.draw(batch, scoreText, 25, 1040);
+        bitmapFont.draw(batch, parcelText, 25, 1020);
+        bitmapFont.draw(batch, healthText, 25, 1000);
 
         batch.end();
     }
