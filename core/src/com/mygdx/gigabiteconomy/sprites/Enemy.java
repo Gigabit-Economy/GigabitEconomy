@@ -2,7 +2,7 @@ package com.mygdx.gigabiteconomy.sprites;
 
 import com.mygdx.gigabiteconomy.screens.Tile;
 
-import java.util.ArrayList;
+import java.util.Queue;
 
 /**
  * Class to create a new enemy. Will have the ability to:
@@ -11,10 +11,12 @@ import java.util.ArrayList;
  */
 public class Enemy extends MovingSprite {
 
-    private ArrayList<Tile> path;
+    private Queue<Tile> path;
 
     int[] agroDistance; //[dx, dy] tiles to cause agro
     boolean agro = false;
+
+    GameObject targetEntity;
 
 
 
@@ -27,7 +29,7 @@ public class Enemy extends MovingSprite {
      * Method to set path of enemy
      * @param pathSet
      */
-    public void setPath(ArrayList<Tile> pathSet) {
+    public void setPath(Queue<Tile> pathSet) {
         path = pathSet;
     }
 
@@ -40,6 +42,7 @@ public class Enemy extends MovingSprite {
         /**
          * If player square position is within agroDistance (see TileManager methods)
          * -> Set agro to true
+         * -> Set targetEntity to player
          * ::: In move method override: Agro = true => We run path finding and change pathSet to shortest path to player
          * Else return false
          *
@@ -52,12 +55,22 @@ public class Enemy extends MovingSprite {
         boolean ret = super.move(delta); //Checks if we've arrived else moved
 
         /**
-         * If agro is true
-         * -> Find new path with TileManager: ArrayList<Tile> findShortestPathBetween(Tile from, Tile to);
-         * -> Set new targetSquare from ArrayList (for next move();
+         * >>> ATTACKING LOGIC <<<
+         * If ret == false (couldn't move to requested Tile) && path.length == 1 (queue only has one element left)
+         * -> We're next to player
+         * -> Set attacking mode
+         * -> Call inflictDamage(float val); on player
          */
 
         /**
+         * >>> AGRO LOGIC <<<
+         * If agro is true
+         * -> Find new path with TileManager: Queue<Tile> findShortestPathBetween(Tile from, Tile to);
+         * -> Set new targetSquare from Queue (for next move();
+         */
+
+        /**
+         * >>> MAIN MOVEMENT LOGIC <<<
          * If ret is true (still moving)
          * -> Set new direction with TileManager: DIRECTION findDirectionFrom(Tile curr, Tile next);
          * -> Call setDeltaMove with direction
