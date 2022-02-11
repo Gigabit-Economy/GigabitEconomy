@@ -4,74 +4,112 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.mygdx.gigabiteconomy.GigabitEconomy;
+import com.mygdx.gigabiteconomy.screens.Tile;
 
 /**
  * Class for separating Player functionality from general Sprite functionality
  * Such as:
  *  > Attacking (detecting collisions for certain sprites only)
  */
-public class Player extends MySprite implements ApplicationListener, InputProcessor {
+public class Player extends MovingSprite implements ApplicationListener, InputProcessor {
+    //Deprecated variable for determining if player has to finish movement to centre of next Tile on keyUp()
+    boolean stillMoving = false;
+    //How much player should move vertically and horizontally every move() respectively
+    
     public Player(String config, int x, int y) {
         super(config, x, y);
 
         Gdx.input.setInputProcessor(this);
     }
 
-    @Override
-    public boolean keyDown(int keycode) {
-        System.out.println("Key pressed");
+    /**
+     * Method to handle movement
+     * @param keycode
+     */
+    public void handleMovement(int keycode) {
+        if (targetTile != null && !isMoving() || directionMoving != null) {
+            System.out.println("Not finished with previous movement");
+            return; //Not finished with previous movement
+        }
 
-        //Handles player movement on key press. Everything handled inside Sprite class
+        /**
+         * Sets direction enum which defines the velocity vector (which speed and direction to move in with each move() call)
+         */
+        Tile toTarget = null;
+
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT) {
             // Move left
-            move(MoveDirection.LEFT);
+            directionMoving = DIRECTION.WEST;
         }
         else if (keycode == Input.Keys.D || keycode == Input.Keys.RIGHT) {
             // Move right
-            move(MoveDirection.RIGHT);
+            directionMoving = DIRECTION.EAST;
         }
         else if (keycode == Input.Keys.W || keycode == Input.Keys.UP) {
             // Move up
-            move(MoveDirection.UP);
+            directionMoving = DIRECTION.NORTH;
         }
         else if (keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
             // Move down
-            move(MoveDirection.DOWN);
+            directionMoving = DIRECTION.SOUTH;
+        } else {
+            System.out.println(keycode + " not accounted for in movement logic");
+            return;
         }
 
-        return false;
+        /**
+         * Uses tile manager to get adjecentTile
+         * Sets velocity vector based on value of direction set above
+         */
+        toTarget = tm.getAdjecentTile(currentTile, directionMoving.toString(), 1);
+        setDeltaMove(directionMoving.dx, directionMoving.dy);
+
+        //Checks if Player can move to Tile
+        if (toTarget != null && toTarget.getOccupiedBy() == null) {
+            targetTile = toTarget;
+            setMoving(true);
+            System.out.println("Moving true to " + targetTile.getTileCoords()[0] + " " + targetTile.getTileCoords()[1]);
+        } else {
+            targetTile = null;
+            //setMoving(false);
+        }
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+
+        System.out.println("key pressed: " + keycode);
+
+        //Might have to move movement handling into other method if we add more functions for key presses
+
+        /**
+         * Movement calculated by:
+         *  -> Adding values defined above to deltaMove vector
+         *  -> Every time move() is called, deltaMove is added to position vector
+         *  -> This allows for diagonal movement
+         */
+        if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT || keycode == Input.Keys.D ||
+                keycode == Input.Keys.RIGHT || keycode == Input.Keys.W ||
+                keycode == Input.Keys.UP || keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
+
+            handleMovement(keycode);
+
+        } else {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
+        //Player no longer WANTS to be moving, but we must finish animation to centre of target square
         setMoving(false);
+
         return false;
     }
 
-    /**
-     * Move the player by the passed direction (left/right/up/down).
-     *
-     * @param direction the direction to move the player (MoveDirection.LEFT/RIGHT/UP/DOWN)
-     */
-    private void move(MoveDirection direction) {
-        setMoving(true);
 
-        switch (direction) {
-            case LEFT:
-                setDCoords(-10, 0);
-                break;
-            case RIGHT:
-                setDCoords(10, 0);
-                break;
-            case UP:
-                setDCoords(0, 10);
-                break;
-            case DOWN:
-                setDCoords(0, -10);
-                break;
-        }
-    }
 
     @Override
     public boolean keyTyped(char character) {
@@ -133,10 +171,7 @@ public class Player extends MySprite implements ApplicationListener, InputProces
 
     }
 
-    private enum MoveDirection {
-        LEFT,
-        RIGHT,
-        UP,
-        DOWN
-    }
+
+
+
 }

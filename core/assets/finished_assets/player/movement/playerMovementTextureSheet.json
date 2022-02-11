@@ -1,0 +1,1359 @@
+{
+  "frames": {
+    "movement/NineIronLeftWalk1.png": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 156,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 16,
+        "y": 20,
+        "w": 156,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 184,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/NineIronLeftWalk2.png": {
+      "frame": {
+        "x": 0,
+        "y": 204,
+        "w": 156,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 16,
+        "y": 20,
+        "w": 156,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 184,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/NineIronLeftWalk3.png": {
+      "frame": {
+        "x": 0,
+        "y": 408,
+        "w": 156,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 16,
+        "y": 20,
+        "w": 156,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 184,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/NineIronLeftWalk4.png": {
+      "frame": {
+        "x": 0,
+        "y": 612,
+        "w": 156,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 16,
+        "y": 20,
+        "w": 156,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 184,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/PipeLeftWalk1.png": {
+      "frame": {
+        "x": 0,
+        "y": 816,
+        "w": 124,
+        "h": 204
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 60,
+        "y": 20,
+        "w": 124,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/PipeLeftWalk2.png": {
+      "frame": {
+        "x": 204,
+        "y": 816,
+        "w": 124,
+        "h": 204
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 60,
+        "y": 20,
+        "w": 124,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/NineIronLeftWalk5.png": {
+      "frame": {
+        "x": 156,
+        "y": 0,
+        "w": 156,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 16,
+        "y": 20,
+        "w": 156,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 184,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/NineIronLeftWalk6.png": {
+      "frame": {
+        "x": 156,
+        "y": 204,
+        "w": 156,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 16,
+        "y": 20,
+        "w": 156,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 184,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/NineIronLeftWalk7.png": {
+      "frame": {
+        "x": 156,
+        "y": 408,
+        "w": 156,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 16,
+        "y": 20,
+        "w": 156,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 184,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/NineIronRightWalk1.png": {
+      "frame": {
+        "x": 156,
+        "y": 612,
+        "w": 156,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 12,
+        "y": 20,
+        "w": 156,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 184,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/NineIronRightWalk2.png": {
+      "frame": {
+        "x": 312,
+        "y": 0,
+        "w": 156,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 12,
+        "y": 20,
+        "w": 156,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 184,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/NineIronRightWalk3.png": {
+      "frame": {
+        "x": 312,
+        "y": 204,
+        "w": 156,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 12,
+        "y": 20,
+        "w": 156,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 184,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/NineIronRightWalk4.png": {
+      "frame": {
+        "x": 312,
+        "y": 408,
+        "w": 156,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 12,
+        "y": 20,
+        "w": 156,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 184,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/NineIronRightWalk5.png": {
+      "frame": {
+        "x": 312,
+        "y": 612,
+        "w": 156,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 12,
+        "y": 20,
+        "w": 156,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 184,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/NineIronRightWalk6.png": {
+      "frame": {
+        "x": 468,
+        "y": 612,
+        "w": 156,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 12,
+        "y": 20,
+        "w": 156,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 184,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/PipeLeftWalk3.png": {
+      "frame": {
+        "x": 408,
+        "y": 816,
+        "w": 124,
+        "h": 204
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 60,
+        "y": 20,
+        "w": 124,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/PipeLeftWalk4.png": {
+      "frame": {
+        "x": 612,
+        "y": 816,
+        "w": 124,
+        "h": 204
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 64,
+        "y": 20,
+        "w": 124,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/NineIronRightWalk7.png": {
+      "frame": {
+        "x": 468,
+        "y": 0,
+        "w": 156,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 12,
+        "y": 20,
+        "w": 156,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 184,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/PipeLeftWalk5.png": {
+      "frame": {
+        "x": 468,
+        "y": 204,
+        "w": 124,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 64,
+        "y": 20,
+        "w": 124,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/PipeLeftWalk6.png": {
+      "frame": {
+        "x": 468,
+        "y": 408,
+        "w": 124,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 64,
+        "y": 20,
+        "w": 124,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/PipeLeftWalk7.png": {
+      "frame": {
+        "x": 592,
+        "y": 204,
+        "w": 124,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 64,
+        "y": 20,
+        "w": 124,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/PipeRightWalk1.png": {
+      "frame": {
+        "x": 624,
+        "y": 0,
+        "w": 124,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 56,
+        "y": 20,
+        "w": 124,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/PipeRightWalk2.png": {
+      "frame": {
+        "x": 592,
+        "y": 408,
+        "w": 124,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 56,
+        "y": 20,
+        "w": 124,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/PipeRightWalk3.png": {
+      "frame": {
+        "x": 716,
+        "y": 408,
+        "w": 124,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 56,
+        "y": 20,
+        "w": 124,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/PipeRightWalk4.png": {
+      "frame": {
+        "x": 840,
+        "y": 408,
+        "w": 124,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 52,
+        "y": 20,
+        "w": 124,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/PipeRightWalk5.png": {
+      "frame": {
+        "x": 716,
+        "y": 204,
+        "w": 124,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 52,
+        "y": 20,
+        "w": 124,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/PipeRightWalk6.png": {
+      "frame": {
+        "x": 748,
+        "y": 0,
+        "w": 124,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 52,
+        "y": 20,
+        "w": 124,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/PipeRightWalk7.png": {
+      "frame": {
+        "x": 840,
+        "y": 204,
+        "w": 124,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 52,
+        "y": 20,
+        "w": 124,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/knifeLeftWalk1.png": {
+      "frame": {
+        "x": 872,
+        "y": 0,
+        "w": 96,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 60,
+        "y": 20,
+        "w": 96,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/knifeLeftWalk2.png": {
+      "frame": {
+        "x": 624,
+        "y": 612,
+        "w": 96,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 60,
+        "y": 20,
+        "w": 96,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/knifeLeftWalk3.png": {
+      "frame": {
+        "x": 720,
+        "y": 612,
+        "w": 96,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 60,
+        "y": 20,
+        "w": 96,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/knifeLeftWalk4.png": {
+      "frame": {
+        "x": 816,
+        "y": 612,
+        "w": 96,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 64,
+        "y": 20,
+        "w": 96,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/knifeLeftWalk5.png": {
+      "frame": {
+        "x": 816,
+        "y": 816,
+        "w": 96,
+        "h": 204
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 64,
+        "y": 20,
+        "w": 96,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/knifeLeftWalk6.png": {
+      "frame": {
+        "x": 912,
+        "y": 612,
+        "w": 96,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 64,
+        "y": 20,
+        "w": 96,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/knifeLeftWalk7.png": {
+      "frame": {
+        "x": 964,
+        "y": 204,
+        "w": 96,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 64,
+        "y": 20,
+        "w": 96,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/knifeRightWalk1.png": {
+      "frame": {
+        "x": 968,
+        "y": 0,
+        "w": 96,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 84,
+        "y": 20,
+        "w": 96,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/knifeRightWalk2.png": {
+      "frame": {
+        "x": 964,
+        "y": 408,
+        "w": 96,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 84,
+        "y": 20,
+        "w": 96,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/knifeRightWalk3.png": {
+      "frame": {
+        "x": 1060,
+        "y": 408,
+        "w": 96,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 84,
+        "y": 20,
+        "w": 96,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/knifeRightWalk4.png": {
+      "frame": {
+        "x": 1060,
+        "y": 204,
+        "w": 96,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 80,
+        "y": 20,
+        "w": 96,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/knifeRightWalk5.png": {
+      "frame": {
+        "x": 1064,
+        "y": 0,
+        "w": 96,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 80,
+        "y": 20,
+        "w": 96,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/knifeRightWalk6.png": {
+      "frame": {
+        "x": 1008,
+        "y": 612,
+        "w": 96,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 80,
+        "y": 20,
+        "w": 96,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/knifeRightWalk7.png": {
+      "frame": {
+        "x": 1020,
+        "y": 816,
+        "w": 96,
+        "h": 204
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 80,
+        "y": 20,
+        "w": 96,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/katanaLeftWalk1.png": {
+      "frame": {
+        "x": 1104,
+        "y": 612,
+        "w": 92,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 60,
+        "y": 20,
+        "w": 92,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/katanaLeftWalk3.png": {
+      "frame": {
+        "x": 1156,
+        "y": 204,
+        "w": 92,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 60,
+        "y": 20,
+        "w": 92,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/katanaRightWalk1.png": {
+      "frame": {
+        "x": 1160,
+        "y": 0,
+        "w": 92,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 88,
+        "y": 20,
+        "w": 92,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/katanaRightWalk3.png": {
+      "frame": {
+        "x": 1156,
+        "y": 408,
+        "w": 92,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 88,
+        "y": 20,
+        "w": 92,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/katanaLeftWalk2.png": {
+      "frame": {
+        "x": 1248,
+        "y": 408,
+        "w": 88,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 60,
+        "y": 20,
+        "w": 88,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/katanaLeftWalk4.png": {
+      "frame": {
+        "x": 1248,
+        "y": 204,
+        "w": 88,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 64,
+        "y": 20,
+        "w": 88,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/katanaLeftWalk5.png": {
+      "frame": {
+        "x": 1252,
+        "y": 0,
+        "w": 88,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 64,
+        "y": 20,
+        "w": 88,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/katanaLeftWalk6.png": {
+      "frame": {
+        "x": 1196,
+        "y": 612,
+        "w": 88,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 64,
+        "y": 20,
+        "w": 88,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/katanaLeftWalk7.png": {
+      "frame": {
+        "x": 1224,
+        "y": 816,
+        "w": 88,
+        "h": 204
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 64,
+        "y": 20,
+        "w": 88,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/katanaRightWalk2.png": {
+      "frame": {
+        "x": 1284,
+        "y": 612,
+        "w": 88,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 92,
+        "y": 20,
+        "w": 88,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/katanaRightWalk4.png": {
+      "frame": {
+        "x": 1428,
+        "y": 0,
+        "w": 88,
+        "h": 204
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 88,
+        "y": 20,
+        "w": 88,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/katanaRightWalk5.png": {
+      "frame": {
+        "x": 1340,
+        "y": 0,
+        "w": 88,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 88,
+        "y": 20,
+        "w": 88,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/katanaRightWalk6.png": {
+      "frame": {
+        "x": 1428,
+        "y": 88,
+        "w": 88,
+        "h": 204
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 88,
+        "y": 20,
+        "w": 88,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "movement/katanaRightWalk7.png": {
+      "frame": {
+        "x": 1428,
+        "y": 176,
+        "w": 88,
+        "h": 204
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 88,
+        "y": 20,
+        "w": 88,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 240
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.7",
+    "image": "playerMovementTextureSheet.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 1632,
+      "h": 940
+    },
+    "scale": 1
+  }
+}

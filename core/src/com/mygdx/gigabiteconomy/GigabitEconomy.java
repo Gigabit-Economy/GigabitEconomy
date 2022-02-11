@@ -37,7 +37,25 @@ public class GigabitEconomy extends Game {
         return camera.position;
     }
 
-    public void updateCameraPos(float x, float y) {
+     public void updateCameraPos(float x, float y) {
+        // Map start and end locations
+        float startX = 950;
+        float startY = 515;
+
+        float endX = 4820;
+        float endY = 565;
+       
+        // If next camera position is out of borders just assign map borders to camera.
+        if(y > startY) {
+            if(y < endY) {
+            } else y=endY;
+        } else y=startY;
+
+        if(x > startX) {
+            if(x < endX) {
+            } else x=endX;
+        } else x=startX;
+       
         camera.position.set(x, y, 0);
         camera.update();
     }

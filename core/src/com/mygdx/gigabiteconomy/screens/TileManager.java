@@ -13,6 +13,8 @@ public class TileManager {
 
     private Tile[][] tileArray;
     private int sideLength;
+    int initialX, initialY; //Where the Tiles begin (bottom left) - don't really need to worry about this since all ours start at 0,0 for the time being
+    private int gridHeight; private int gridWidth;
 
     /**
      * Constructor to create a number of tiles for the game screen
@@ -23,28 +25,35 @@ public class TileManager {
      * @param y Position of first tile on screen (bottom left)
      */
     public TileManager(int sideLength, int maxHeight, int maxWidth, int x, int y) {
+        initialX=x; initialY=y;
+
         this.sideLength = sideLength;
+        System.out.println("Side length: " + sideLength);
         //Basic checking
         if (!(maxHeight%sideLength!=0 || maxWidth%sideLength!=0)) {
             System.out.println(">>> WARNING: maxHeight/maxWidth must be divisible by sideLength <<<"); //Throw exception here
             System.out.println(">>>        : Whole number of tiles needed within given bounds!  <<<");
             System.out.println(">>>        : Change sideLength?                                 <<<");
         }
-        int tileMapY = maxHeight/sideLength;
-        int tileMapX = maxWidth/sideLength;
-        tileArray = new Tile[tileMapX][tileMapY];
+        gridHeight = maxHeight/sideLength;
+        gridWidth = maxWidth/sideLength;
+        tileArray = new Tile[gridWidth][gridHeight];
 
-        for (int i=0; i<tileMapX; i++) {
-            for (int ii=0; ii<tileMapY; ii++) {
+        for (int i=0; i<gridWidth; i++) {
+            for (int ii=0; ii<gridHeight; ii++) {
                 tileArray[i][ii] = new Tile((x+(sideLength*i)), (y+(sideLength*ii)), sideLength, i, ii);
-                System.out.println("Tile created at " + (x+(sideLength*i)) + " " + (y+(sideLength*ii)));
+                //System.out.println("Tile created at " + (i) + " " + (ii));
             }
         }
 
     }
 
     private Tile getTile(int x, int y) {
-        return tileArray[x][y];
+        try {
+            return tileArray[x][y];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
     /**
@@ -54,23 +63,23 @@ public class TileManager {
      * @param distance Distance from Tile given to get new Tile
      * @return Tile satisfying conditions, or null if impossible
      */
-    private Tile getAdjecentTile(Tile tileFrom, String direction, int distance) {
+    public Tile getAdjecentTile(Tile tileFrom, String direction, int distance) {
         if (tileFrom == null) return null;
         direction = direction.toUpperCase();
         int[] pos = tileFrom.getPositionTile();
         Tile ret;
         try {
             switch (direction) {
-                case "LEFT":
+                case "WEST":
                     ret = getTile(pos[0]-distance, pos[1]);
                     break;
-                case "RIGHT":
+                case "EAST":
                     ret = getTile(pos[0]+distance, pos[1]);
                     break;
-                case "UP":
+                case "NORTH":
                     ret = getTile(pos[0], pos[1]+distance);
                     break;
-                case "DOWN":
+                case "SOUTH":
                     ret = getTile(pos[0], pos[1]-distance);
                     break;
                 default:
@@ -86,15 +95,32 @@ public class TileManager {
      * @param toTile Tile to place given object on
      * @param objectToPlace Object to place on given Tile
      */
-    public void placeObject(Tile toTile, GameObject objectToPlace) {
-        if (toTile.getOccupiedBy() != null) {
-            toTile.setOccupied(objectToPlace);
+    public Tile placeObject(Tile toTile, GameObject objectToPlace) {
+        if (toTile.getOccupiedBy() != null) return null;
+        Tile objTile = objectToPlace.getCurrentTile();
+        //Clearing old tile
+        if (objTile != null) {
+            objTile.setOccupied(null);
+            objectToPlace.setCurrentTile(null);
         }
+        toTile.setOccupied(objectToPlace);
+        return toTile;
     }
 
-    public void placeObject(int x, int y, GameObject objectToPlace) {
-        placeObject(getTile(x, y), objectToPlace);
+    public Tile placeObject(int x, int y, GameObject objectToPlace) {
+        Tile toPlace;
+        if ((toPlace = getTile(x, y)) != null) {
+            toPlace = placeObject(toPlace, objectToPlace);
+        }
+        return toPlace;
     }
+
+    public Tile placeObjectFromCoords(float x, float y, GameObject objectToPlace) {
+        Tile ret = this.getTileFromCoords(x, y);
+        ret = this.placeObject(ret, objectToPlace);
+        return ret;
+    }
+
 
     /**
      * Method to get list of adjacent tiles to given Tile
@@ -119,7 +145,7 @@ public class TileManager {
      * @param direction New direction to place the GameObject
      * @param distance How far to move the GameObject
      */
-    public void moveFromTile(Tile tileFrom, String direction, int distance) {
+    public Tile moveFromTile(Tile tileFrom, String direction, int distance) {
         direction = direction.toUpperCase();
         GameObject occupier = tileFrom.getOccupiedBy();
         Tile nextTile = getAdjecentTile(tileFrom, direction, distance);
@@ -128,24 +154,55 @@ public class TileManager {
             placeObject(tileFrom, null);
             placeObject(nextTile, occupier);
         }
+        return nextTile!=null ? nextTile : tileFrom;
     }
+
+    /**
+     * Method returns Tile placed over x, y
+     * @param x coord within Tile to get
+     * @param y coord within Tile to get
+     * @return Tile which holds [x, y]
+     */
+    public Tile getTileFromCoords(float x, float y) {
+        Tile ret = null;
+        try {
+            ret = tileArray[(int)x/sideLength][(int)y/sideLength];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Could not find at " + x + " " + y);
+        }
+        return ret;
+    }
+
+
 
     /**
      * Method to move an entity by only one space
      */
-    public void moveFromTile(Tile tileFrom, String direction) {
-        moveFromTile(tileFrom, direction, 1);
+    public Tile moveFromTile(Tile tileFrom, String direction) {
+        return moveFromTile(tileFrom, direction, 1);
     }
 
+    public int getSideLength() {
+        return sideLength;
+    }
+
+    public int getWidth() { return gridWidth; }
+
+    public int getHeight() { return gridHeight; }
+
     /**
-     * Method to return screen coordinates of given tile (bottom left)
-     * @param tileOccupied Tile to return coordinates of
-     * @return int[2] of form [screen coord x, screen coord y]
+     * Debugging func
      */
-    public int[] getTileCoords(Tile tileOccupied) {
-        int[] pos = tileOccupied.getPositionTile().clone();
-        pos[0] = pos[0]*sideLength; pos[1] = pos[1]*sideLength;
-        return pos;
+    public void printOccupiedTiles() {
+        String occupied = " ";
+        for (Tile[] tileX : tileArray) {
+            for (Tile tile : tileX) {
+                if (tile.getOccupiedBy() != null) {
+                    occupied += "[" + tile.getTileCoords()[0] + "," + tile.getTileCoords()[1] + "] ";
+                }
+            }
+        }
+        System.out.println(occupied);
     }
 
 }
