@@ -2,6 +2,7 @@ package com.mygdx.gigabiteconomy.sprites;
 
 import com.mygdx.gigabiteconomy.screens.Tile;
 
+import java.util.ArrayList;
 import java.util.Queue;
 
 /**
@@ -11,8 +12,9 @@ import java.util.Queue;
  */
 public class Enemy extends MovingSprite {
 
-    private Queue<Tile> movePath;
-    private Queue<Tile> agroMovePath;
+    private Queue<DIRECTION> movePath;
+    private Queue<DIRECTION> agroMovePath;
+    private Tile pathBegin;
 
     int[] agroDistance; //[dx, dy] tiles to cause agro
     boolean agro = false;
@@ -30,7 +32,7 @@ public class Enemy extends MovingSprite {
      * Method to set path of enemy
      * @param pathSet
      */
-    public void setPath(Queue<Tile> pathSet) {
+    public void setPath(Queue<DIRECTION> pathSet) {
         movePath = pathSet;
     }
 
@@ -70,8 +72,12 @@ public class Enemy extends MovingSprite {
          * -> Find new path with TileManager: Queue<Tile> findShortestPathBetween(Tile from, Tile to);
          * -> Set new targetSquare from Queue (for next move();
          */
-        if (agro) {
+        DIRECTION dirPlayerIn;
+        if (agro && ((dirPlayerIn = tm.findDirectionFrom(currentTile, targetEntity.getCurrentTile())) != null)) {
             //Start agro path
+            directionMoving = dirPlayerIn;
+        } else {
+            //Resume agro path
         }
 
         /**

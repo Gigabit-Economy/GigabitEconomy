@@ -141,7 +141,7 @@ public class TileManager {
     }
 
     /**
-     * @return MovingSprite.DIRECTION of next from curr
+     * @return MovingSprite.DIRECTION of next from curr. E.g. Which direction is Player relative to Enemy?
      */
     public MovingSprite.DIRECTION findDirectionFrom(Tile curr, Tile next) {
         // For each direction, we need to find corresponding row or col, then see if that's contained

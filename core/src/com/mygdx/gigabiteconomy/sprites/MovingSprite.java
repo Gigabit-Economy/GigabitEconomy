@@ -133,6 +133,9 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
      * @return False: Movement has finished ; True: Movement is continuing
      */
     public boolean move(float delta) {
+        /**
+         * Checking if sprite should be attacking
+         */
         if (attacking) {
             current = (TextureRegion) attackAnimation.runAnimation(delta);
             //System.out.println("Changed to" + current);
@@ -141,6 +144,10 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
                 setAttacking(false);
             }
         }
+        
+        /**
+         * Checking if blocked
+         */
         if (targetTile == null || targetTile.getOccupiedBy() != null) {
             directionMoving = null;
             targetTile = null;
@@ -187,6 +194,15 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
 
         private DIRECTION(float dx, float dy) {
             this.dx = dx; this.dy = dy;
+        }
+
+        /**
+         * For getting opposite direction of enum. Used for reversing path of entity.
+         * e.g. NORTH.getOpposite() returns SOUTH
+         * @return Opposite of enum called on
+         */
+        public DIRECTION getOpposite() {
+            return this.dx == 0 ? DIRECTION.values()[this.ordinal()+1] : DIRECTION.values()[this.ordinal()-1];
         }
     }
 
