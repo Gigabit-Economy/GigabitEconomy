@@ -16,6 +16,7 @@ import com.mygdx.gigabiteconomy.screens.TileManager;
 import com.mygdx.gigabiteconomy.sprites.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Base class for all level screens.
@@ -31,7 +32,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
     private SpriteBatch batch;
     private Player player;
     private ArrayList<GameObject> enemies;
-    private ArrayList<StaticSprite> staticSprites;
+    private ArrayList<GameObject> staticSprites;
 
     private int scoreCount, parcelCount, healthCount;
     private String scoreText, parcelText, healthText;
@@ -47,7 +48,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
      * @param staticSprites an ArrayList containing all static sprites (such as fences etc.)
      * @param backgroundTexture the background graphic of the level
      */
-    public LevelScreen(GigabitEconomy director, Player player, ArrayList<GameObject> enemies, ArrayList<StaticSprite> staticSprites, Texture backgroundTexture) {
+    public LevelScreen(GigabitEconomy director, Player player, ArrayList<GameObject> enemies, ArrayList<GameObject> staticSprites, Texture backgroundTexture) {
         this.director = director;
         this.player = player;
         this.enemies = enemies;
@@ -71,19 +72,21 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         tileManager = new TileManager(backgroundTextureHeight/numberOfTilesHigh, backgroundTextureHeight/2, backgroundTextureWidth, 0, 0);
 
         // Initialise each sprite's position on tiles using the tile manager
-        try {
-            for (GameObject go : enemies) {
-                go.initTile(tileManager);
-            }
-            for (GameObject go : staticSprites) {
-                go.initTile(tileManager);
-            }
-
-            player.initTile(tileManager);
-        } catch (Exception ex) {
-            Gdx.app.error("Exception", "Error initialising tile manager", ex);
-            System.exit(-1);
-        }
+        ArrayList<GameObject> playerList = new ArrayList<GameObject>(); playerList.add(player);
+        tileManager.initObjects(playerList, staticSprites, enemies); //In priority order
+//        try {
+//            for (GameObject go : enemies) {
+//                go.initTile(tileManager);
+//            }
+//            for (GameObject go : staticSprites) {
+//                go.initTile(tileManager);
+//            }
+//
+//            player.initTile(tileManager);
+//        } catch (Exception ex) {
+//            Gdx.app.error("Exception", "Error initialising tile manager", ex);
+//            System.exit(-1);
+//        }
     }
 
     /**
@@ -97,7 +100,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         // Add background
         backgroundSprite = new Sprite(backgroundTexture);
         System.out.println("Texture dimensions: h:" + backgroundTexture.getHeight() + " w:" + backgroundTexture.getWidth());
-        tileManager = new TileManager(135, backgroundTexture.getHeight()/2, backgroundTexture.getWidth(), 0, 0);
+        //tileManager = new TileManager(135, backgroundTexture.getHeight()/2, backgroundTexture.getWidth(), 0, 0);
 
         // Add player
         sprites.add(player);

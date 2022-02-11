@@ -44,28 +44,6 @@ public class StaticSprite extends Actor implements GameObject {
     }
 
     @Override
-    public void initTile(TileManager tmPass) throws Exception {
-        // Check if tile manager has already been initialised
-        if (tm != null)
-            throw new Exception("The tile manager has already been initialised");
-
-        this.tm = tmPass;
-
-        System.out.println("Initialising StaticSprite at " + pos.x + " " + pos.y);
-        currentTile = tm.placeObject((int)pos.x, (int)pos.y, this);
-
-        if (currentTile == null) {
-            throw new Exception("THERE IS ALREADY A SPRITE IN THIS LOCATION");
-        }
-
-        System.out.println("Current tile coords: " + currentTile.getTileCoords()[0] + " " + currentTile.getTileCoords()[1]);
-
-        pos.x = currentTile.getTileCoords()[0]; pos.y = currentTile.getTileCoords()[1];
-
-        System.out.println("Initialised at " + pos.x + " " + pos.y);
-    }
-
-    @Override
     public void draw(Batch batch, float alpha) {
         batch.draw(textureRegion, this.getActorX(), this.getActorY());
     }
@@ -93,5 +71,10 @@ public class StaticSprite extends Actor implements GameObject {
     @Override
     public void setCurrentTile(Tile tile) {
 
+    }
+
+    @Override
+    public void setTileManager(TileManager tm) {
+        this.tm = tm;
     }
 }

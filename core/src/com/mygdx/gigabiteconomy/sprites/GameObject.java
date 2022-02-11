@@ -19,5 +19,5 @@ public interface GameObject {
     Tile getCurrentTile();
     void setCurrentTile(Tile tile);
 
-    void initTile(TileManager tm) throws Exception;
+    void setTileManager(TileManager tm);
 }
