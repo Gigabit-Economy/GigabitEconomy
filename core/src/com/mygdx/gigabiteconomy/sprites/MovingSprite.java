@@ -114,8 +114,8 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
         return attacking;
     }
 
-    public void setDeltaMove(float x, float y) {
-        deltaMove.x = x; deltaMove.y = y;
+    public void setDeltaMove(DIRECTION dir) {
+        deltaMove.x = dir.dx; deltaMove.y = dir.dy;
     }
 
     /**
@@ -130,6 +130,7 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
     /**
      * Method runs on each GameObject if there is a targetSquare set to go to.
      * @param delta
+     * @return False: Movement has finished ; True: Movement is continuing
      */
     public boolean move(float delta) {
         if (attacking) {
