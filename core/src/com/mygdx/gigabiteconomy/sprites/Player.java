@@ -114,6 +114,31 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
         return false;
     }
 
+    @Override
+    public boolean move(float delta) {
+        boolean ret = super.move(delta);
+
+        if (ret) {
+            if (isMoving()) {
+                //If key is still held down, get next tile
+                targetTile = tm.getAdjecentTile(targetTile, directionMoving.toString(), 1);
+                if (targetTile == null) setMoving(false);
+                return true;
+            }
+            else if (!isMoving() && targetTile != null) {
+                //If key is released, but there's still distance to cover
+                //currentTile = targetTile; useless line?
+                targetTile = null;
+                snap(delta);
+                //Reset direction moving
+                directionMoving = null;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
 
     @Override

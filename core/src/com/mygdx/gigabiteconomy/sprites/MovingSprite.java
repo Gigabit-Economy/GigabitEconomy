@@ -154,25 +154,11 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
             //Arrived at tile
             System.out.println("Arrived at tile");
             System.out.println("Occupied tiles:");
-            tm.printOccupiedTiles();
+            tm.printOccupiedTiles(); //Debugging function
 
             //Reset currentTile to targetTile
             currentTile = tm.placeObject(targetTile, this);
-
-            if (isMoving()) {
-                //If key is still held down, get next tile
-                targetTile = tm.getAdjecentTile(targetTile, directionMoving.toString(), 1);
-                if (targetTile == null) setMoving(false);
-            }
-            if (!isMoving() && targetTile != null) {
-                //If key is released, but there's still distance to cover
-                //currentTile = targetTile; useless line?
-                targetTile = null;
-                snap(delta);
-                //Reset direction moving
-                directionMoving = null;
-            }
-
+            return true;
         } else {
             /**
              * Otherwise, keep adding deltaMove vector to positionVector
@@ -183,9 +169,8 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
             //System.out.println("Current changed to: " + currentTile);
 
             //System.out.println("New pos: " + pos.x + " " + pos.y);
+            return false;
         }
-
-        return true;
     }
     /**
      * Enum which maps direction to velocity vector with instance variables defined above
