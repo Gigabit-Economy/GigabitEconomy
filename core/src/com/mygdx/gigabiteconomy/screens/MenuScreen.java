@@ -49,6 +49,7 @@ public class MenuScreen implements Screen {
         backgroundSprite = new Sprite(backgroundTexture);
         System.out.println("Texture dimensions: h:" + backgroundTexture.getHeight() + " w:" + backgroundTexture.getWidth());
 
+
         // Buttons
         buttons = new Table();
         buttons.setFillParent(true);
@@ -95,6 +96,10 @@ public class MenuScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
         stage.draw();
+
+        batch.begin();
+        backgroundSprite.draw(batch);
+        batch.end();
     }
 
     @Override
