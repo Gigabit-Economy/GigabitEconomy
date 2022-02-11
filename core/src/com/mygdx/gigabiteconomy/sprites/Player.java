@@ -6,6 +6,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.mygdx.gigabiteconomy.screens.Tile;
 
+import javax.sound.midi.SysexMessage;
+
 /**
  * Class for separating Player functionality from general Sprite functionality
  * Such as:

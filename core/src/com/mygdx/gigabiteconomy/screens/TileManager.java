@@ -4,6 +4,8 @@ import com.badlogic.gdx.Game;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.sprites.GameObject;
 
+import java.util.ArrayList;
+
 /**
  * Class to hold and manage Tiles.
  * - Each MySprite instance is passed the TileManager it belongs to and sets a Tile to occupy
@@ -138,6 +140,25 @@ public class TileManager {
 
         return adjecentTiles;
     }
+
+    public void initObjects(ArrayList<GameObject>... objsArr) {
+
+        for (ArrayList<GameObject> arr : objsArr) {
+            for (GameObject o : arr) {
+                float spriteX = o.getActorX();
+                float spriteY = o.getActorY();
+                Tile placeAt = this.placeObject((int) spriteX, (int) spriteY, o);
+
+                //System.out.println(pos.x + " " + pos.y);
+
+                o.setCurrentTile(placeAt);
+                o.setTileManager(this);
+
+                System.out.println("Current tile coords: " + placeAt.getTileCoords()[0] + " " + placeAt.getTileCoords()[1]);
+            }
+        }
+    }
+
 
     /**
      * Method to move an entity from one tile to another
