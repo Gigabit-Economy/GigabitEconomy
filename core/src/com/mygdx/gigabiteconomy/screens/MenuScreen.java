@@ -45,15 +45,16 @@ public class MenuScreen implements Screen {
         Skin style = new Skin(Gdx.files.internal("uiskin.json"));
 
         //add background
-        batch = new SpriteBatch();
+    /*    batch = new SpriteBatch();
         backgroundSprite = new Sprite(backgroundTexture);
         System.out.println("Texture dimensions: h:" + backgroundTexture.getHeight() + " w:" + backgroundTexture.getWidth());
-
+*/
 
         // Buttons
         buttons = new Table();
+        buttons.setBackground(new TextureRegionDrawable(new TextureRegion(backgroundTexture)));
         buttons.setFillParent(true);
-        buttons.center();
+        buttons.bottom();
 
         /*
         TextButton level1Button = new TextButton("Level 1", style);
@@ -97,9 +98,9 @@ public class MenuScreen implements Screen {
         stage.act(delta);
         stage.draw();
 
-        batch.begin();
+   /*     batch.begin();
         backgroundSprite.draw(batch);
-        batch.end();
+        batch.end();*/
     }
 
     @Override
