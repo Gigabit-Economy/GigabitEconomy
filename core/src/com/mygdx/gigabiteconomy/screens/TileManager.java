@@ -3,6 +3,7 @@ package com.mygdx.gigabiteconomy.screens;
 import com.badlogic.gdx.Game;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.sprites.GameObject;
+import com.mygdx.gigabiteconomy.sprites.MovingSprite;
 
 import java.util.ArrayList;
 
@@ -123,6 +124,26 @@ public class TileManager {
         return ret;
     }
 
+    public MovingSprite.DIRECTION findDirectionFrom(Tile curr, Tile next) {
+        Tile[] adjTiles = getAdjecentTiles(curr);
+        int i=0;
+        for (; i<5 && adjTiles[i] != next; i++);
+
+        switch (i) {
+            case 0:
+                return MovingSprite.DIRECTION.NORTH;
+            case 1:
+                return MovingSprite.DIRECTION.EAST;
+            case 2:
+                return MovingSprite.DIRECTION.SOUTH;
+            case 3:
+                return MovingSprite.DIRECTION.WEST;
+            default:
+                System.out.println("Not found in adjecent tiles");
+                return null;
+        }
+    }
+
 
     /**
      * Method to get list of adjacent tiles to given Tile
@@ -133,10 +154,10 @@ public class TileManager {
         int[] pos = tile.getPositionTile();
 
         Tile[] adjecentTiles = new Tile[4];
-        adjecentTiles[0] = getAdjecentTile(tile, "UP", 1);
-        adjecentTiles[1] = getAdjecentTile(tile, "RIGHT", 1);
-        adjecentTiles[2] = getAdjecentTile(tile, "DOWN", 1);
-        adjecentTiles[3] = getAdjecentTile(tile, "LEFT", 1);
+        adjecentTiles[0] = getAdjecentTile(tile, "NORTH", 1);
+        adjecentTiles[1] = getAdjecentTile(tile, "EAST", 1);
+        adjecentTiles[2] = getAdjecentTile(tile, "SOUTH", 1);
+        adjecentTiles[3] = getAdjecentTile(tile, "WEST", 1);
 
         return adjecentTiles;
     }

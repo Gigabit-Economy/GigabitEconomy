@@ -38,7 +38,7 @@ public class Enemy extends MovingSprite {
      * @param player
      * @return
      */
-    public boolean checkAgro(GameObject player) {
+    public boolean checkAgro(MovingSprite player) {
         /**
          * If player square position is within agroDistance (see TileManager methods)
          * -> Set agro to true
