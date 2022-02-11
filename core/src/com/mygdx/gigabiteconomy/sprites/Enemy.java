@@ -11,7 +11,8 @@ import java.util.Queue;
  */
 public class Enemy extends MovingSprite {
 
-    private Queue<Tile> path;
+    private Queue<Tile> movePath;
+    private Queue<Tile> agroMovePath;
 
     int[] agroDistance; //[dx, dy] tiles to cause agro
     boolean agro = false;
@@ -30,7 +31,7 @@ public class Enemy extends MovingSprite {
      * @param pathSet
      */
     public void setPath(Queue<Tile> pathSet) {
-        path = pathSet;
+        movePath = pathSet;
     }
 
     /**
@@ -39,6 +40,7 @@ public class Enemy extends MovingSprite {
      * @return
      */
     public boolean checkAgro(MovingSprite player) {
+        targetEntity = player;
         /**
          * If player square position is within agroDistance (see TileManager methods)
          * -> Set agro to true
@@ -56,7 +58,7 @@ public class Enemy extends MovingSprite {
 
         /**
          * >>> ATTACKING LOGIC <<<
-         * If ret == false (couldn't move to requested Tile) && path.length == 1 (queue only has one element left)
+         * If ret == false (couldn't move to requested Tile) && any adjecent tile is owned by player
          * -> We're next to player
          * -> Set attacking mode
          * -> Call inflictDamage(float val); on player
@@ -68,6 +70,9 @@ public class Enemy extends MovingSprite {
          * -> Find new path with TileManager: Queue<Tile> findShortestPathBetween(Tile from, Tile to);
          * -> Set new targetSquare from Queue (for next move();
          */
+        if (agro) {
+            //Start agro path
+        }
 
         /**
          * >>> MAIN MOVEMENT LOGIC <<<

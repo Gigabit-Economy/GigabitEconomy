@@ -6,6 +6,9 @@ import com.mygdx.gigabiteconomy.sprites.GameObject;
 import com.mygdx.gigabiteconomy.sprites.MovingSprite;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Class to hold and manage Tiles.
@@ -118,32 +121,40 @@ public class TileManager {
         return toPlace;
     }
 
-    public Tile placeObjectFromCoords(float x, float y, GameObject objectToPlace) {
-        Tile ret = this.getTileFromCoords(x, y);
-        ret = this.placeObject(ret, objectToPlace);
-        return ret;
-    }
-
-    public MovingSprite.DIRECTION findDirectionFrom(Tile curr, Tile next) {
-        Tile[] adjTiles = getAdjecentTiles(curr);
-        int i=0;
-        for (; i<5 && adjTiles[i] != next; i++);
-
-        switch (i) {
-            case 0:
-                return MovingSprite.DIRECTION.NORTH;
-            case 1:
-                return MovingSprite.DIRECTION.EAST;
-            case 2:
-                return MovingSprite.DIRECTION.SOUTH;
-            case 3:
-                return MovingSprite.DIRECTION.WEST;
-            default:
-                System.out.println("Not found in adjecent tiles");
-                return null;
+    /**
+     * @param x coordinate to find row of
+     * @param y coordinate to find row of
+     * @param direction which direction to return row of
+     * @return
+     */
+    public ArrayList<Tile> getSelectiveDir(int x, int y, MovingSprite.DIRECTION direction) {
+        ArrayList<Tile> ret = new ArrayList<>();
+        try {
+            while (true) {
+                ret.add(tileArray[x][y]);
+                x = (direction.dx < 0) && (direction.dx != 0) ? x-- : x++;
+                y = (direction.dy < 0) && (direction.dy != 0) ? y-- : y++;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return ret;
         }
     }
 
+    /**
+     * @return MovingSprite.DIRECTION of next from curr
+     */
+    public MovingSprite.DIRECTION findDirectionFrom(Tile curr, Tile next) {
+        // For each direction, we need to find corresponding row or col, then see if that's contained
+
+        for (MovingSprite.DIRECTION direction : MovingSprite.DIRECTION.values()) {
+            ArrayList<Tile> toSearch = getSelectiveDir(curr.getPositionTile()[0], curr.getPositionTile()[1], direction);
+            if (toSearch.contains(next)) {
+                return direction;
+            }
+        }
+
+        return null;
+    }
 
     /**
      * Method to get list of adjacent tiles to given Tile
