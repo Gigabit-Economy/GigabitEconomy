@@ -1,0 +1,54 @@
+icons.png
+size: 480, 436
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+backSquare
+  rotate: false
+  xy: 128, 0
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
+instructionSquare
+  rotate: false
+  xy: 224, 0
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
+levelRectangle
+  rotate: false
+  xy: 0, 96
+  size: 420, 148
+  orig: 420, 148
+  offset: 0, 0
+  index: -1
+settingsbutton
+  rotate: false
+  xy: 0, 244
+  size: 480, 96
+  orig: 480, 96
+  offset: 0, 0
+  index: -1
+star1
+  rotate: false
+  xy: 0, 0
+  size: 64, 58
+  orig: 64, 58
+  offset: 0, 0
+  index: -1
+star2
+  rotate: false
+  xy: 64, 0
+  size: 64, 58
+  orig: 64, 58
+  offset: 0, 0
+  index: -1
+startbutton
+  rotate: false
+  xy: 0, 340
+  size: 480, 96
+  orig: 480, 96
+  offset: 0, 0
+  index: -1

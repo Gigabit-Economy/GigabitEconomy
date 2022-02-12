@@ -7,8 +7,8 @@ package com.mygdx.gigabiteconomy.sprites;
  */
 public class Enemy extends MovingSprite {
 
-    public Enemy(String config, int x, int y) {
-        super(config, x, y);
+    public Enemy(String move_config, String attack_config, int x, int y) {
+        super(move_config, attack_config, x, y);
     }
 
 

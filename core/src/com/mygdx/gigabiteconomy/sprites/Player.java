@@ -13,6 +13,7 @@ import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.screens.LevelOneScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
 
+import javax.sound.midi.SysexMessage;
 
 /**
  * Class for separating Player functionality from general Sprite functionality
@@ -23,12 +24,9 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
     // Deprecated variable for determining if player has to finish movement to
     // centre of next Tile on keyUp()
     boolean stillMoving = false;
-
-    // How much player should move vertically and horizontally every move()
-    // respectively
-
-    public Player(String config, int x, int y, GigabitEconomy LevelOneScreen) {
-        super(config, x, y);
+    
+    public Player(String move_config, String attack_config, int x, int y) {
+        super(move_config, attack_config, x, y);
 
         Gdx.input.setInputProcessor(this);
         LevelOneScreen LevelScreenObj = new LevelOneScreen(LevelOneScreen);
@@ -80,6 +78,9 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
             targetTile = toTarget;
             setMoving(true);
             System.out.println("Moving true to " + targetTile.getTileCoords()[0] + " " + targetTile.getTileCoords()[1]);
+        } else {
+            targetTile = null;
+            //setMoving(false);
         }
     }
 
@@ -105,6 +106,9 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
 
         } else if (keycode == Input.Keys.P || keycode == Input.Keys.ESCAPE) {
             pause();
+        } else if (keycode == Input.Keys.SPACE) {
+            System.out.println("Attacking now");
+            setAttacking(true);
         } else {
             return false;
         }

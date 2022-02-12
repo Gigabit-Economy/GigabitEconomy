@@ -2,6 +2,7 @@ package com.mygdx.gigabiteconomy.sprites;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.screens.TileManager;
 
 import java.lang.Exception;
@@ -15,5 +16,8 @@ public interface GameObject {
     float getActorX();
     float getActorY();
 
-    void initTile(TileManager tm) throws Exception;
+    Tile getCurrentTile();
+    void setCurrentTile(Tile tile);
+
+    void setTileManager(TileManager tm);
 }

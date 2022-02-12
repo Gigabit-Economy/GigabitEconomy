@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.screens.TileManager;
@@ -17,10 +18,10 @@ public class StaticSprite extends Actor implements GameObject {
     private Rectangle rect;
 
     TileManager tm;
-    Tile tile;
+    Tile currentTile;
 
     // Coordinates of sprite on screen
-    private float[] coords = new float[2];
+    private Vector2 pos = new Vector2(0, 0);
 
     /**
      * Constructor used to create a new static sprite
@@ -36,22 +37,10 @@ public class StaticSprite extends Actor implements GameObject {
 
         setBounds(x, y, textureRegion.getRegionWidth(), textureRegion.getRegionHeight());
 
-        coords[0] = x; coords[1] = y;
+        pos.x = x; pos.y = y;
 
         // Creating rectangle to cover texture
         rect = new Rectangle(x, y, textureRegion.getRegionWidth(), textureRegion.getRegionHeight());
-    }
-
-    @Override
-    public void initTile(TileManager tmPass) throws Exception {
-        // Check if tile manager has already been initialised
-        if (tm != null)
-            throw new Exception("The tile manager has already been initialised");
-
-        this.tm = tmPass;
-
-        tile = tm.placeObject((int)coords[0], (int)coords[1], this); //At init tile coords[x] will be filled with tile coords on grid
-        coords[0] = tile.getTileCoords()[0]; coords[1] = tile.getTileCoords()[1];
     }
 
     @Override
@@ -66,11 +55,26 @@ public class StaticSprite extends Actor implements GameObject {
 
     @Override
     public float getActorX() {
-        return coords[0];
+        return pos.x;
     }
 
     @Override
     public float getActorY() {
-        return coords[1];
+        return pos.y;
+    }
+
+    @Override
+    public Tile getCurrentTile() {
+        return null;
+    }
+
+    @Override
+    public void setCurrentTile(Tile tile) {
+
+    }
+
+    @Override
+    public void setTileManager(TileManager tm) {
+        this.tm = tm;
     }
 }
