@@ -1,10 +1,6 @@
-package com.mygdx.gigabiteconomy.sprites.coordinated;
+package com.mygdx.gigabiteconomy.sprites;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
-import com.mygdx.gigabiteconomy.sprites.GameObject;
-
-import java.util.Locale;
 
 /**
  * Class to create a new enemy. Will have the ability to:
@@ -24,7 +20,7 @@ public class House extends GameObject {
     public House(HouseType type, int x, int y) {
         super (x, y);
 
-        texture = new Texture(String.format("%s.png", type.name().toString().toLowerCase()));
+        texture = new Texture(String.format("/finished_assets/houses/%s.png", type.name().toString().toLowerCase()));
     }
 
     public enum HouseType {
