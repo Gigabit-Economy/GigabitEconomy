@@ -18,7 +18,7 @@ import com.mygdx.gigabiteconomy.sprites.tiled.StaticSprite;
 import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * Base class for all level screens.
@@ -30,10 +30,10 @@ abstract class LevelScreen implements Screen {
     private Texture backgroundTexture;
     private Sprite backgroundSprite;
 
-    private ArrayList<TiledObject> sprites = new ArrayList<TiledObject>(); // First sprite is ALWAYS player
+    private ArrayList<GameObject> sprites = new ArrayList<GameObject>(); // First sprite is ALWAYS player
     private SpriteBatch batch;
     private Player player;
-    private ArrayList<GameObject> enemies;
+    private ArrayList<TiledObject> enemies;
     private ArrayList<GameObject> staticSprites;
 
     private int scoreCount, parcelCount, healthCount;
@@ -50,7 +50,7 @@ abstract class LevelScreen implements Screen {
      * @param staticSprites an ArrayList containing all static sprites (such as fences etc.)
      * @param backgroundTexture the background graphic of the level
      */
-    public LevelScreen(GigabitEconomy director, Player player, ArrayList<GameObject> enemies, ArrayList<GameObject> staticSprites, Texture backgroundTexture) {
+    public LevelScreen(GigabitEconomy director, Player player, ArrayList<TiledObject> enemies, ArrayList<GameObject> staticSprites, Texture backgroundTexture) {
         this.director = director;
         this.player = player;
         this.enemies = enemies;
@@ -74,21 +74,8 @@ abstract class LevelScreen implements Screen {
         tileManager = new TileManager(backgroundTextureHeight/numberOfTilesHigh, backgroundTextureHeight/2, backgroundTextureWidth, 0, 0);
 
         // Initialise each sprite's position on tiles using the tile manager
-        ArrayList<GameObject> playerList = new ArrayList<GameObject>(); playerList.add(player);
-        tileManager.initObjects(playerList, staticSprites, enemies); //In priority order
-//        try {
-//            for (GameObject go : enemies) {
-//                go.initTile(tileManager);
-//            }
-//            for (GameObject go : staticSprites) {
-//                go.initTile(tileManager);
-//            }
-//
-//            player.initTile(tileManager);
-//        } catch (Exception ex) {
-//            Gdx.app.error("Exception", "Error initialising tile manager", ex);
-//            System.exit(-1);
-//        }
+        ArrayList<TiledObject> playerList = new ArrayList<TiledObject>(Arrays.asList(player));
+        tileManager.initObjects(playerList, enemies); // in priority order
     }
 
     /**
@@ -200,7 +187,7 @@ abstract class LevelScreen implements Screen {
         batch.dispose();
 
         // dispose of moving sprites (to dispose their texture atlas)
-        for (TiledObject sprite : sprites)
+        for (GameObject sprite : sprites)
         {
             if (sprite instanceof MovingSprite) {
                 MovingSprite movingSprite = (MovingSprite) sprite;

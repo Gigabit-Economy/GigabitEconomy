@@ -1,5 +1,6 @@
 package com.mygdx.gigabiteconomy.screens;
 
+import com.mygdx.gigabiteconomy.sprites.GameObject;
 import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
 import java.util.ArrayList;
@@ -139,12 +140,11 @@ public class TileManager {
         return adjecentTiles;
     }
 
-    public void initObjects(ArrayList<GameObject>... objsArr) {
-
-        for (ArrayList<GameObject> arr : objsArr) {
-            for (GameObject o : arr) {
-                float spriteX = o.getActorX();
-                float spriteY = o.getActorY();
+    public void initObjects(ArrayList<TiledObject>... objsArr) {
+        for (ArrayList<TiledObject> arr : objsArr) {
+            for (TiledObject o : arr) {
+                float spriteX = o.getX();
+                float spriteY = o.getY();
                 Tile placeAt = this.placeObject((int) spriteX, (int) spriteY, o);
 
                 //System.out.println(pos.x + " " + pos.y);
@@ -156,7 +156,6 @@ public class TileManager {
             }
         }
     }
-
 
     /**
      * Method to move an entity from one tile to another

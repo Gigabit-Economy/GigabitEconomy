@@ -79,10 +79,7 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
 
     @Override
     public boolean keyDown(int keycode) {
-
         System.out.println("key pressed: " + keycode);
-
-        //Might have to move movement handling into other method if we add more functions for key presses
 
         /**
          * Movement calculated by:

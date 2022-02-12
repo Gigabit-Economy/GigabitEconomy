@@ -22,27 +22,6 @@ public abstract class TiledObject extends GameObject {
         super(x, y);
     }
 
-    public void initTile(TileManager tileManager) throws Exception {
-        // Check if tile manager has already been initialised
-        if (this.tileManager != null)
-            throw new Exception("The tile manager has already been initialised");
-
-        this.tileManager = tileManager;
-
-        currentTile = tileManager.placeObject((int) getX(), (int) getY(), this);
-        System.out.println(getX() + " " + getY());
-        if (currentTile == null) {
-
-            throw new Exception("THERE IS ALREADY A SPRITE IN THIS LOCATION");
-        }
-
-        System.out.println("Current tile coords: " + currentTile.getTileCoords()[0] + " " + currentTile.getTileCoords()[1]);
-
-        setPos(currentTile.getTileCoords()[0], currentTile.getTileCoords()[1]);
-
-        System.out.println("Initialised at " + getX() + " " + getY());
-    }
-
     /**
      * Get the instance of Tile Manager
      *
@@ -51,6 +30,15 @@ public abstract class TiledObject extends GameObject {
     public TileManager getTileManager()
     {
         return tileManager;
+    }
+
+    /**
+     * Set the instance of Tile Manager
+     *
+     * @param tileManager the TileManager instance
+     */
+    public void setTileManager(TileManager tileManager) {
+        this.tileManager = tileManager;
     }
 
     /**
@@ -68,6 +56,13 @@ public abstract class TiledObject extends GameObject {
      * @param tile the new Tile instance for the sprite to occupy
      */
     public void setCurrentTile(Tile tile) {
+        if (tile == null) {
+            return;
+        }
+
         currentTile = tile;
+
+        setPos(currentTile.getTileCoords()[0] ,currentTile.getTileCoords()[1]);
+        System.out.println("Setting position to " + getX() + " " + getY());
     }
 }

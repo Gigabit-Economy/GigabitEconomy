@@ -29,6 +29,10 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     private static float deltaHoriz = 3.5F;
     private Tile targetTile;
 
+    private MovingAnimation<TextureRegion> movementAnimation;
+    private MovingAnimation<TextureRegion> attackAnimation;
+    private boolean attacking = false;
+
     /**
      * Constructor used to create a new moving sprite
      *
@@ -36,13 +40,15 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * @param x position of Tile (within tile grid) to place sprite
      * @param y position of Tile (within tile grid) to place sprite
      */
-    public MovingSprite(String config, int x, int y) {
+    public MovingSprite(String movementConfig, String attackingConfig, int x, int y) {
         super(x, y);
 
-        ta = new TextureAtlas(config);
+        ta = new TextureAtlas(movementConfig);
         regions = ta.getRegions();
-
         textureRegion = regions.get(0);
+
+        movementAnimation = new MovingAnimation<TextureRegion>(1/14f, regions, true);
+        attackAnimation = new MovingAnimation<TextureRegion>(1/14f, new TextureAtlas(attackingConfig).getRegions(), false);
     }
 
     public TextureRegion getTextureRegion() {
@@ -107,6 +113,15 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * @param delta
      */
     public void move(float delta) throws TileMovementException {
+        if (attacking) {
+            textureRegion = (TextureRegion) attackAnimation.runAnimation(delta);
+
+            if (attackAnimation.isFinished(delta)) {
+                System.out.println("Finished attacking");
+                setAttacking(false);
+            }
+        }
+
         if (targetTile == null || targetTile.getOccupiedBy() != null) {
             directionMoving = null;
             targetTile = null;
@@ -170,6 +185,25 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     public DIRECTION getDirectionMoving()
     {
         return directionMoving;
+    }
+
+    /**
+     * Get if the sprite is attacking
+     *
+     * @return if attacking (true => attacking; false => not attacking)
+     */
+    public boolean isAttacking() {
+        return attacking;
+    }
+
+    /**
+     * Set if the sprite is attacking
+     *
+     * @param attacking if attacking (true => attacking; false => not attacking)
+     */
+    public void setAttacking(boolean attacking) {
+        this.attacking = attacking;
+        System.out.println(String.format("Attacking: %s", attacking));
     }
 
     /**

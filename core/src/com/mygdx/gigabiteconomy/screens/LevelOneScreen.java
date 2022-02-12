@@ -2,6 +2,7 @@ package com.mygdx.gigabiteconomy.screens;
 
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.badlogic.gdx.graphics.Texture;
+import com.mygdx.gigabiteconomy.sprites.GameObject;
 import com.mygdx.gigabiteconomy.sprites.tiled.Enemy;
 import com.mygdx.gigabiteconomy.sprites.tiled.Player;
 import com.mygdx.gigabiteconomy.sprites.tiled.StaticSprite;
@@ -19,7 +20,7 @@ public class LevelOneScreen extends LevelScreen {
 
     /* ENEMIES */
     private static final Enemy ENEMY_ONE = new Enemy("finished_assets/player/attacks/golfRightAt.txt", "finished_assets/player/attacks/golfRightAt.txt", 2, 2);
-    private static final ArrayList<GameObject> ENEMIES = new ArrayList<GameObject>(Arrays.asList(ENEMY_ONE));
+    private static final ArrayList<TiledObject> ENEMIES = new ArrayList<TiledObject>(Arrays.asList(ENEMY_ONE));
 
     /* STATIC SPRITES (FENCES ETC...) */
     private static final StaticSprite FENCE = new StaticSprite("finished_assets/static_sprites/fence.png", 5, 0);
