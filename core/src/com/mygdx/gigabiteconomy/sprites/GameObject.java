@@ -7,8 +7,7 @@ public abstract class GameObject {
     private Vector2 pos;
 
     public GameObject(float x, float y) {
-        pos.x = x;
-        pos.y = y;
+        pos = new Vector2(x, y);
     }
 
     /**
