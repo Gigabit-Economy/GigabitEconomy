@@ -19,11 +19,7 @@ import javax.sound.midi.SysexMessage;
 /**
  * Class representing a player sprite (one per level)
  */
-public class Player extends MovingSprite implements InputProcessor {
-    //Deprecated variable for determining if player has to finish movement to centre of next Tile on keyUp()
-    boolean stillMoving = false;
-    //How much player should move vertically and horizontally every move() respectively
-
+public class Player extends MovingSprite {
     /**
      * Create a new Player sprite (MovingSprite)
      *
@@ -34,9 +30,6 @@ public class Player extends MovingSprite implements InputProcessor {
      */
     public Player(String movementConfig, String attackingConfig, int x, int y) {
         super(movementConfig, attackingConfig, x, y);
-
-        Gdx.input.setInputProcessor(this);
-        LevelOneScreen LevelScreenObj = new LevelOneScreen(LevelOneScreen);
     }
 
     /**
@@ -94,104 +87,17 @@ public class Player extends MovingSprite implements InputProcessor {
     }
 
     /**
-     * Deal with a user's key press (initiate movement/attacking, go to pause menu etc.).
-     * Part of ApplicationListener implementation.
-     *
-     * @param keycode the pressed key
-     * @return if the key press was processed
+     * Stop the player from moving (i.e. when a movement key is lifted)
      */
-    @Override
-    public boolean keyDown(int keycode) {
-        System.out.println("key pressed: " + keycode);
-
-        /**
-         * Movement calculated by:
-         * -> Adding values defined above to deltaMove vector
-         * -> Every time move() is called, deltaMove is added to position vector
-         * -> This allows for diagonal movement
-         */
-        if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT || keycode == Input.Keys.D ||
-                keycode == Input.Keys.RIGHT || keycode == Input.Keys.W ||
-                keycode == Input.Keys.UP || keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
-            handleMovement(keycode);
-
-        } else if (keycode == Input.Keys.P || keycode == Input.Keys.ESCAPE) {
-            pause();
-        } else if (keycode == Input.Keys.SPACE) {
-            System.out.println("Attacking now");
-            setAttacking(true);
-        } else {
-            return false;
-        }
-
-        return true;
+    public void stopMovement() {
+        setMoving(false);
     }
 
     /**
-     * Deal with a key press being lifted.
-     * Part of ApplicationListener implementation.
-     *
-     * @param keycode the key lifted
-     * @return if the key lift was processed
+     * Set for the player to attack
      */
-    @Override
-    public boolean keyUp(int keycode) {
-        // Player no longer WANTS to be moving, but we must finish animation to centre
-        // of target square
-        setMoving(false);
-
-        return false;
+    public void attack() {
+        setAttacking(true);
+        System.out.println("Attacking now");
     }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(float amountX, float amountY) {
-        return false;
-    }
-
-    @Override
-    public void pause() {
-        //if (Gdx.input.isKeyPressed(Keys.P)) {
-           // LevelScreen levelScreenObj = new LevelScreen();
-           //LevelScreenObj.setPauseMenuStatus(true);
-            System.out.println("P or ESQ was pressed");
-       // }
-
-    }
-
-    @Override
-    public void pause() {
-        //if (Gdx.input.isKeyPressed(Keys.P)) {
-           // LevelScreen levelScreenObj = new LevelScreen();
-           //LevelScreenObj.setPauseMenuStatus(true);
-            System.out.println("P or ESQ was pressed");
-       // }
-
-    }
-
-
 }

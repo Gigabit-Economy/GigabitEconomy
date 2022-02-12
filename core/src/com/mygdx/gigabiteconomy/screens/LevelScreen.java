@@ -1,9 +1,6 @@
 package com.mygdx.gigabiteconomy.screens;
 
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,7 +15,6 @@ import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
 import com.mygdx.gigabiteconomy.sprites.tiled.StaticSprite;
 import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -27,14 +23,12 @@ import java.util.Arrays;
  * Each individual level class extends this class and defines properties such as the player, enemies, houses &
  * static sprites etc.
  */
-abstract class LevelScreen implements Screen {
+public abstract class LevelScreen implements Screen, InputProcessor {
     private GigabitEconomy director;
     private TileManager tileManager;
 
     private Texture backgroundTexture;
     private Sprite backgroundSprite;
-
-    private boolean pauseMenuStatus;
 
     private ArrayList<GameObject> sprites = new ArrayList<GameObject>(); // First sprite is ALWAYS player
     private SpriteBatch batch;
@@ -108,7 +102,7 @@ abstract class LevelScreen implements Screen {
 
         // Add player
         sprites.add(player);
-        Gdx.input.setInputProcessor(this.player);
+        Gdx.input.setInputProcessor(this);
 
         // Add enemies
         sprites.addAll(enemies);
@@ -137,25 +131,6 @@ abstract class LevelScreen implements Screen {
 
         // Draw the background
         backgroundSprite.draw(batch);
-
-        if(getPauseMenuStatus() == true)
-        {
-            try {
-                director.switchScreen("pausemenu");
-            } catch (Exception ex) {
-                Gdx.app.error("Exception", String.format("Error switching screen to %s", "pausemenu"), ex);
-                System.exit(-1);
-            }
-
-            if(getPauseMenuStatus() == false) {
-                try {
-                    director.switchScreen("level1");
-                } catch (Exception ex) {
-                    Gdx.app.error("Exception", String.format("Error switching screen to %s", "level1"), ex);
-                    System.exit(-1);
-                }
-            }
-        }
         
         // Move (if moving sprite) & draw sprites
         for (GameObject sprite : sprites) {
@@ -182,7 +157,83 @@ abstract class LevelScreen implements Screen {
         bitmapFont.draw(batch, healthText, 25, 1000);
 
         batch.end();
-        
+    }
+
+    /**
+     * Deal with a user's key press (initiate movement/attacking, go to pause menu etc.).
+     * Part of ApplicationListener implementation.
+     *
+     * @param keycode the pressed key
+     * @return if the key press was processed
+     */
+    @Override
+    public boolean keyDown(int keycode) {
+        System.out.println("key pressed: " + keycode);
+
+        /**
+         * Movement calculated by:
+         * -> Adding values defined above to deltaMove vector
+         * -> Every time move() is called, deltaMove is added to position vector
+         * -> This allows for diagonal movement
+         */
+        if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT || keycode == Input.Keys.D ||
+                keycode == Input.Keys.RIGHT || keycode == Input.Keys.W ||
+                keycode == Input.Keys.UP || keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
+            player.handleMovement(keycode);
+
+        } else if (keycode == Input.Keys.P || keycode == Input.Keys.ESCAPE) {
+            pause();
+        } else if (keycode == Input.Keys.SPACE) {
+            player.attack();
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Deal with a key press being lifted.
+     * Part of ApplicationListener implementation.
+     *
+     * @param keycode the key lifted
+     * @return if the key lift was processed
+     */
+    @Override
+    public boolean keyUp(int keycode) {
+        player.stopMovement();
+
+        return true;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(float amountX, float amountY) {
+        return false;
     }
 
     @Override
@@ -191,11 +242,17 @@ abstract class LevelScreen implements Screen {
 
     @Override
     public void pause() {
-       
+        try {
+            director.switchScreen("pausemenu");
+        } catch (Exception ex) {
+            Gdx.app.error("Exception", "Error switching screen to pause menu", ex);
+            System.exit(-1);
+        }
     }
 
     @Override
     public void resume() {
+        Gdx.input.setInputProcessor(this);
     }
 
     /**
@@ -229,13 +286,5 @@ abstract class LevelScreen implements Screen {
                 ((StaticSprite) sprite).dispose();
             }
         }
-    }
-
-    public boolean getPauseMenuStatus() {
-        return pauseMenuStatus;
-    }
-
-    public void setPauseMenuStatus(boolean pauseMenuStatus) {
-        this.pauseMenuStatus = pauseMenuStatus;
     }
 }

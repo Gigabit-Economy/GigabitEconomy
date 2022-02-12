@@ -1,13 +1,8 @@
 package com.mygdx.gigabiteconomy.screens;
 
-import javax.swing.JFrame;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.Graphics.DisplayMode;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -17,36 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Vector3;
-import com.mygdx.gigabiteconomy.GigabitEconomy;
-import com.mygdx.gigabiteconomy.sprites.Player;
-import com.mygdx.gigabiteconomy.screens.TileManager;
-import com.mygdx.gigabiteconomy.sprites.*;
-
-import java.security.Key;
-import java.util.ArrayList;
-
-import com.mygdx.gigabiteconomy.GigabitEconomy;
-import com.mygdx.gigabiteconomy.sprites.*;
-import com.badlogic.gdx.graphics.Texture;
-
-import java.util.Arrays;
-import java.util.ArrayList;
 
 /**
  * Constructor to create a number of tiles for the game screen
@@ -60,6 +26,7 @@ import java.util.ArrayList;
  */
 public class PauseMenu implements Screen {
     private GigabitEconomy director;
+
     private Stage stage;
     private Table pauseMenuTable;
 
@@ -169,7 +136,6 @@ public class PauseMenu implements Screen {
             res1920Button.addListener(buttonsListener);
 
             stage.addActor(pauseMenuTable);
-
         }
 
         pauseCount++;
@@ -205,7 +171,6 @@ public class PauseMenu implements Screen {
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);
-
     }
 
     @Override
@@ -213,5 +178,4 @@ public class PauseMenu implements Screen {
         stage.dispose();
 
     }
-
 }
