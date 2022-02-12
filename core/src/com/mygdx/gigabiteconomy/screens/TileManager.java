@@ -1,8 +1,6 @@
 package com.mygdx.gigabiteconomy.screens;
 
-import com.badlogic.gdx.Game;
-import com.mygdx.gigabiteconomy.screens.Tile;
-import com.mygdx.gigabiteconomy.sprites.GameObject;
+import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
 /**
  * Class to hold and manage Tiles.
@@ -95,7 +93,7 @@ public class TileManager {
      * @param toTile Tile to place given object on
      * @param objectToPlace Object to place on given Tile
      */
-    public Tile placeObject(Tile toTile, GameObject objectToPlace) {
+    public Tile placeObject(Tile toTile, TiledObject objectToPlace) {
         if (toTile.getOccupiedBy() != null) return null;
         Tile objTile = objectToPlace.getCurrentTile();
         //Clearing old tile
@@ -107,7 +105,7 @@ public class TileManager {
         return toTile;
     }
 
-    public Tile placeObject(int x, int y, GameObject objectToPlace) {
+    public Tile placeObject(int x, int y, TiledObject objectToPlace) {
         Tile toPlace;
         if ((toPlace = getTile(x, y)) != null) {
             toPlace = placeObject(toPlace, objectToPlace);
@@ -115,7 +113,7 @@ public class TileManager {
         return toPlace;
     }
 
-    public Tile placeObjectFromCoords(float x, float y, GameObject objectToPlace) {
+    public Tile placeObjectFromCoords(float x, float y, TiledObject objectToPlace) {
         Tile ret = this.getTileFromCoords(x, y);
         ret = this.placeObject(ret, objectToPlace);
         return ret;
@@ -147,7 +145,7 @@ public class TileManager {
      */
     public Tile moveFromTile(Tile tileFrom, String direction, int distance) {
         direction = direction.toUpperCase();
-        GameObject occupier = tileFrom.getOccupiedBy();
+        TiledObject occupier = tileFrom.getOccupiedBy();
         Tile nextTile = getAdjecentTile(tileFrom, direction, distance);
 
         if (nextTile != null) {

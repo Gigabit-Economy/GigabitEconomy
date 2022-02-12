@@ -1,4 +1,6 @@
-package com.mygdx.gigabiteconomy.sprites;
+package com.mygdx.gigabiteconomy.sprites.tiled;
+
+import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
 
 /**
  * Class to create a new enemy. Will have the ability to:

@@ -1,9 +1,6 @@
 package com.mygdx.gigabiteconomy.screens;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.gigabiteconomy.sprites.GameObject;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
+import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
 /**
  * Tile class
@@ -20,8 +17,8 @@ public class Tile {
     private int[] positionTile = new int[2]; //Holds relative position on screen
     private int sideLength;
     private boolean occupied; //Makes tile impassible
-    private GameObject ownedBy; //Owned by entity (for homeowners)
-    private GameObject occupiedBy; //Impassible or delivery spot!
+    private TiledObject ownedBy; //Owned by entity (for homeowners)
+    private TiledObject occupiedBy; //Impassible or delivery spot!
 
     /**
      *
@@ -41,7 +38,7 @@ public class Tile {
      * Sets current Tile to occupied
      * @param occupying GameObject to occupy current Tile
      */
-    public void setOccupied(GameObject occupying) {
+    public void setOccupied(TiledObject occupying) {
         this.occupiedBy = occupying;
     }
 
@@ -69,7 +66,7 @@ public class Tile {
     /**
      * @return GameObject occupying current Tile
      */
-    public GameObject getOccupiedBy() {
+    public TiledObject getOccupiedBy() {
         return occupiedBy;
     }
 

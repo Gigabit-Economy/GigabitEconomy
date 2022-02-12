@@ -1,10 +1,11 @@
-package com.mygdx.gigabiteconomy.sprites;
+package com.mygdx.gigabiteconomy.sprites.tiled;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.mygdx.gigabiteconomy.screens.Tile;
+import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
 
 /**
  * Class for separating Player functionality from general Sprite functionality
@@ -27,7 +28,7 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
      * @param keycode
      */
     public void handleMovement(int keycode) {
-        if (targetTile != null && !isMoving() || directionMoving != null) {
+        if (getTargetTile() != null && !isMoving() || super.getDirectionMoving() != null) {
             System.out.println("Not finished with previous movement");
             return; //Not finished with previous movement
         }
@@ -39,19 +40,19 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
 
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT) {
             // Move left
-            directionMoving = DIRECTION.WEST;
+            super.setDirectionMoving(DIRECTION.WEST);
         }
         else if (keycode == Input.Keys.D || keycode == Input.Keys.RIGHT) {
             // Move right
-            directionMoving = DIRECTION.EAST;
+            super.setDirectionMoving(DIRECTION.EAST);
         }
         else if (keycode == Input.Keys.W || keycode == Input.Keys.UP) {
             // Move up
-            directionMoving = DIRECTION.NORTH;
+            super.setDirectionMoving(DIRECTION.NORTH);
         }
         else if (keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
             // Move down
-            directionMoving = DIRECTION.SOUTH;
+            super.setDirectionMoving(DIRECTION.SOUTH);
         } else {
             System.out.println(keycode + " not accounted for in movement logic");
             return;
@@ -61,17 +62,16 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
          * Uses tile manager to get adjecentTile
          * Sets velocity vector based on value of direction set above
          */
-        toTarget = tm.getAdjecentTile(currentTile, directionMoving.toString(), 1);
-        setDeltaMove(directionMoving.dx, directionMoving.dy);
+        toTarget = getTileManager().getAdjecentTile(getCurrentTile(), getDirectionMoving().toString(), 1);
+        setDeltaMove(getDirectionMoving().dx, getDirectionMoving().dy);
 
         //Checks if Player can move to Tile
         if (toTarget != null && toTarget.getOccupiedBy() == null) {
-            targetTile = toTarget;
+            setTargetTile(toTarget);
             setMoving(true);
-            System.out.println("Moving true to " + targetTile.getTileCoords()[0] + " " + targetTile.getTileCoords()[1]);
+            System.out.println("Moving true to " + getTargetTile().getTileCoords()[0] + " " + getTargetTile().getTileCoords()[1]);
         } else {
-            targetTile = null;
-            //setMoving(false);
+            setTargetTile(null);
         }
     }
 

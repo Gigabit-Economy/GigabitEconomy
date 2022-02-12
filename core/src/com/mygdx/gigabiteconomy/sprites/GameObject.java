@@ -1,23 +1,55 @@
 package com.mygdx.gigabiteconomy.sprites;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.gigabiteconomy.screens.Tile;
-import com.mygdx.gigabiteconomy.screens.TileManager;
+import com.badlogic.gdx.math.Vector2;
 
-import java.lang.Exception;
+public abstract class GameObject {
+    // Coordinates of sprite on screen
+    private Vector2 pos;
 
-/**
- * Interface for controlling sprite
- */
-public interface GameObject {
-    TextureRegion getCurrRegion();
+    public GameObject(float x, float y) {
+        pos.x = x;
+        pos.y = y;
+    }
 
-    float getActorX();
-    float getActorY();
+    /**
+     * Get the Vector2 position of the sprite
+     *
+     * @return the current X coordinate of the sprite
+     */
+    public float getX()
+    {
+        return pos.x;
+    }
 
-    Tile getCurrentTile();
-    void setCurrentTile(Tile tile);
+    /**
+     * Get the Vector2 position of the sprite
+     *
+     * @return the current U coordinate of the sprite
+     */
+    public float getY()
+    {
+        return pos.y;
+    }
 
-    void initTile(TileManager tm) throws Exception;
+    /**
+     * Set the Vector2 position of the sprite
+     *
+     * @param x the new X coordinate
+     * @param y the new Y coordinate
+     */
+    public void setPos(float x, float y)
+    {
+        pos.x = x;
+        pos.y = y;
+    }
+
+    /**
+     * Add to the sprite's current Vector2 position.
+     *
+     * @param deltaMove the Vector 2 coordinates to move by
+     */
+    public void addToPos(Vector2 deltaMove)
+    {
+        pos.add(deltaMove);
+    }
 }
