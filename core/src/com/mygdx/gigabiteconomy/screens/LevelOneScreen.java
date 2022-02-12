@@ -23,13 +23,17 @@ public class LevelOneScreen extends LevelScreen {
     private static final Enemy ENEMY_ONE = new Enemy("finished_assets/player/attacks/golfRightAt.txt", "finished_assets/player/attacks/golfRightAt.txt", 2, 2);
     private static final ArrayList<TiledObject> ENEMIES = new ArrayList<TiledObject>(Arrays.asList(ENEMY_ONE));
 
+    /* HOUSES */
+    private static final House HOUSE_ONE = new House(House.HouseType.DETACHED, 640, 480);
+    private static final ArrayList<House> HOUSES = new ArrayList<House>(Arrays.asList(HOUSE_ONE));
+
     /* STATIC SPRITES (FENCES ETC...) */
     private static final StaticSprite FENCE = new StaticSprite("finished_assets/static_sprites/fence.png", 5, 0);
-    private static final House HOUSE_ONE = new House(House.HouseType.DETACHED, 10, 10);
     private static final ArrayList<GameObject> STATIC_SPRITES = new ArrayList<GameObject>(Arrays.asList(FENCE));
 
     // Level screen background texture
     private static final Texture BACKGROUND_TEXTURE = new Texture("finished_assets/levels/level1.png");
+
     /**
      * Creates a new screen instance for Level 1 based off the LevelScreen abstract class, which contains all shared
      * methods/properties between levels and implements the LibGDX Screen interface.
@@ -37,6 +41,6 @@ public class LevelOneScreen extends LevelScreen {
      * @param director the instance of the game director
      */
     public LevelOneScreen(GigabitEconomy director) {
-        super(director, PLAYER, ENEMIES, STATIC_SPRITES, BACKGROUND_TEXTURE);
+        super(director, PLAYER, ENEMIES, HOUSES, STATIC_SPRITES, BACKGROUND_TEXTURE);
     }
 }

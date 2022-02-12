@@ -34,6 +34,7 @@ abstract class LevelScreen implements Screen {
     private SpriteBatch batch;
     private Player player;
     private ArrayList<TiledObject> enemies;
+    private ArrayList<House> houses;
     private ArrayList<GameObject> staticSprites;
 
     private int scoreCount, parcelCount, healthCount;
@@ -47,12 +48,14 @@ abstract class LevelScreen implements Screen {
      * @param director the instance of the game director
      * @param player the player character for the level
      * @param enemies an ArrayList containing all enemy characters for the level
-     * @param staticSprites an ArrayList containing all static sprites (such as fences etc.)
+     * @param houses an ArrayList containing all houses for the level
+     * @param staticSprites an ArrayList containing all static sprites (such as fences etc.) for the level
      * @param backgroundTexture the background graphic of the level
      */
-    public LevelScreen(GigabitEconomy director, Player player, ArrayList<TiledObject> enemies, ArrayList<GameObject> staticSprites, Texture backgroundTexture) {
+    public LevelScreen(GigabitEconomy director, Player player, ArrayList<TiledObject> enemies, ArrayList<House> houses, ArrayList<GameObject> staticSprites, Texture backgroundTexture) {
         this.director = director;
         this.player = player;
+        this.houses = houses;
         this.enemies = enemies;
         this.staticSprites = staticSprites;
         this.backgroundTexture = backgroundTexture;
@@ -91,15 +94,18 @@ abstract class LevelScreen implements Screen {
         System.out.println("Texture dimensions: h:" + backgroundTexture.getHeight() + " w:" + backgroundTexture.getWidth());
         //tileManager = new TileManager(135, backgroundTexture.getHeight()/2, backgroundTexture.getWidth(), 0, 0);
 
+        // Add static sprites
+        sprites.addAll(staticSprites);
+
+        // Add houses
+        sprites.addAll(houses);
+
         // Add player
         sprites.add(player);
         Gdx.input.setInputProcessor(this.player);
 
         // Add enemies
         sprites.addAll(enemies);
-
-        // Add static sprites
-        sprites.addAll(staticSprites);
     }
 
     /**
