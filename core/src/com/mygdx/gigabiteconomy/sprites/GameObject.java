@@ -8,7 +8,7 @@ public abstract class GameObject implements Disposable {
     private Vector2 pos;
 
     /**
-     * Constructor to create a new GameObject (sets the x & y coordinates for subclasses).
+     * Constructor to create a new GameObject (sets the x and y coordinates for subclasses).
      *
      * @param x the game object's X coordinate
      * @param y the game object's Y coordinate

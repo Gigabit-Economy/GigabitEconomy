@@ -183,7 +183,7 @@ abstract class LevelScreen implements Screen {
     }
 
     /**
-     * Removes the screen's assets (background texture, sprite batch & moving sprites) from memory
+     * Removes the screen's assets (background texture, sprite batch and moving sprites) from memory
      * when the screen is made inactive and they're therefore no longer needed.
      * Called by hide().
      */
