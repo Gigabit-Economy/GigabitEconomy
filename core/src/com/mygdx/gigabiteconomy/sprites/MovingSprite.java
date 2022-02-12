@@ -1,7 +1,5 @@
 package com.mygdx.gigabiteconomy.sprites;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -12,6 +10,8 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.screens.TileManager;
 import com.badlogic.gdx.utils.Disposable;
+
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 
 /**
  * Class represents a sprite shown on screen, ready to be drawn with batch.draw(); in MainScreen class
@@ -114,8 +114,19 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
         return attacking;
     }
 
-    public void setDeltaMove(DIRECTION dir) {
+    public void setDirectionMovement(DIRECTION dir) {
+        directionMoving = dir;
+        if (directionMoving == null) {
+            deltaMove.x = 0;
+            deltaMove.y = 0;
+            return;
+        }
         deltaMove.x = dir.dx; deltaMove.y = dir.dy;
+    }
+
+    public boolean onTile(Tile toCheck) {
+        if (targetTile==null) return false;
+        return (Math.abs(pos.x-targetTile.getTileCoords()[0])<5) && (Math.abs(pos.y-targetTile.getTileCoords()[1])<5);
     }
 
     /**
@@ -126,6 +137,13 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
         pos.y = currentTile.getTileCoords()[1];
         return true;
     }
+
+    public abstract void moveStart();
+    public abstract boolean moveBlocked();
+
+    public abstract Tile getNextTile();
+
+
 
     /**
      * Method runs on each GameObject if there is a targetSquare set to go to.
@@ -144,41 +162,72 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
                 setAttacking(false);
             }
         }
-        
-        /**
-         * Checking if blocked
-         */
-        if (targetTile == null || targetTile.getOccupiedBy() != null) {
-            directionMoving = null;
-            targetTile = null;
-            setMoving(false);
-            return false;
-        }
 
-        /**
-         * If the distance from the centre is 5px, we snap and call it a day (Sprite has arrived at target)
-         */
-        if ((Math.abs(pos.x-targetTile.getTileCoords()[0])<5) && (Math.abs(pos.y-targetTile.getTileCoords()[1])<5)) {
-            //Arrived at tile
-            System.out.println("Arrived at tile");
-            System.out.println("Occupied tiles:");
-            tm.printOccupiedTiles(); //Debugging function
+        if (directionMoving != null) { //First sign that we should be moving
 
-            //Reset currentTile to targetTile
-            currentTile = tm.placeObject(targetTile, this);
-            return true;
+
+
+            if (targetTile == null)
+                targetTile = getNextTile(); //If we are still then get next tile
+
+            /** is */ moveBlocked();
+
+            //if (targetTile == null) return false; //If we're blocked return false (more in depth check coming soon)
+            if (targetTile == null) {
+                System.out.println("getNextTile() Returned null for some reason");
+            }
+            //Commence move
+            if (this.onTile(targetTile)) {
+                if (this instanceof Player) {
+                    System.out.println("Arrived at tile");
+                    System.out.println("Occupied tiles:");
+                    tm.printOccupiedTiles(); //Debugging function
+                }
+
+                //Reset currentTile to targetTile
+                currentTile = tm.placeObject(targetTile, this);
+                snap(delta);
+                targetTile = null;
+                //setDirectionMovement(null);
+                return true;
+            } else { //Not made it yet!
+                //Keep on moving
+                pos.add(deltaMove);
+                current = (TextureRegion) movementAnimation.runAnimation(delta);
+                //System.out.println("Current changed to: " + currentTile);
+                if (this instanceof Player)
+                    System.out.println("I want to move!!" + deltaMove.toString());
+                //System.out.println("New pos: " + pos.x + " " + pos.y);
+                return false;
+            }
         } else {
-            /**
-             * Otherwise, keep adding deltaMove vector to positionVector
-             */
-            //Keep on moving
-            pos.add(deltaMove);
-            current = (TextureRegion) movementAnimation.runAnimation(delta);
-            //System.out.println("Current changed to: " + currentTile);
-
-            //System.out.println("New pos: " + pos.x + " " + pos.y);
-            return false;
+            return false; //Not moving
         }
+
+//        /**
+//         * If the distance from the centre is 5px, we snap and call it a day (Sprite has arrived at target)
+//         */
+//        if ((Math.abs(pos.x-targetTile.getTileCoords()[0])<5) && (Math.abs(pos.y-targetTile.getTileCoords()[1])<5)) {
+//            //Arrived at tile
+//            System.out.println("Arrived at tile");
+//            System.out.println("Occupied tiles:");
+//            tm.printOccupiedTiles(); //Debugging function
+//            //Reset currentTile to targetTile
+//            currentTile = tm.placeObject(targetTile, this);
+//            return true;
+//        } else {
+//            /**
+//             * Otherwise, keep adding deltaMove vector to positionVector
+//             */
+//            //Keep on moving
+//            pos.add(deltaMove);
+//            current = (TextureRegion) movementAnimation.runAnimation(delta);
+//            //System.out.println("Current changed to: " + currentTile);
+//            if (this instanceof Enemy)
+//                System.out.println("I want to move!!" + deltaMove.toString());
+//            //System.out.println("New pos: " + pos.x + " " + pos.y);
+//            return false;
+//        }
     }
     /**
      * Enum which maps direction to velocity vector with instance variables defined above
@@ -226,5 +275,10 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
 
     public void setTileManager(TileManager tm) {
         this.tm = tm;
+
+        if (directionMoving != null) {
+            targetTile = tm.getAdjecentTile(currentTile, directionMoving.name(), 1);
+            setDirectionMovement(directionMoving);
+        }
     }
 }
