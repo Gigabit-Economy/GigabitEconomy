@@ -24,12 +24,14 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
         Gdx.input.setInputProcessor(this);
     }
 
+
+
     /**
      * Method to handle movement
      * @param keycode
      */
     public void handleMovement(int keycode) {
-        if (targetTile != null && !isMoving() || directionMoving != null) {
+        if (targetTile != null) {
             System.out.println("Not finished with previous movement");
             return; //Not finished with previous movement
         }
@@ -41,40 +43,41 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
 
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT) {
             // Move left
-            directionMoving = DIRECTION.WEST;
+            setDirectionMovement(DIRECTION.WEST);
         }
         else if (keycode == Input.Keys.D || keycode == Input.Keys.RIGHT) {
             // Move right
-            directionMoving = DIRECTION.EAST;
+            setDirectionMovement(DIRECTION.EAST);
         }
         else if (keycode == Input.Keys.W || keycode == Input.Keys.UP) {
             // Move up
-            directionMoving = DIRECTION.NORTH;
+            setDirectionMovement(DIRECTION.NORTH);
         }
         else if (keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
             // Move down
-            directionMoving = DIRECTION.SOUTH;
+            setDirectionMovement(DIRECTION.SOUTH);
         } else {
             System.out.println(keycode + " not accounted for in movement logic");
             return;
         }
+        setMoving(true);
 
         /**
          * Uses tile manager to get adjecentTile
          * Sets velocity vector based on value of direction set above
          */
-        toTarget = tm.getAdjecentTile(currentTile, directionMoving.toString(), 1);
-        setDeltaMove(directionMoving);
-
-        //Checks if Player can move to Tile
-        if (toTarget != null && toTarget.getOccupiedBy() == null) {
-            targetTile = toTarget;
-            setMoving(true);
-            System.out.println("Moving true to " + targetTile.getTileCoords()[0] + " " + targetTile.getTileCoords()[1]);
-        } else {
-            targetTile = null;
-            //setMoving(false);
-        }
+//        toTarget = tm.getAdjecentTile(currentTile, directionMoving.toString(), 1);
+//        setDeltaMove(directionMoving);
+//
+//        //Checks if Player can move to Tile
+//        if (toTarget != null && toTarget.getOccupiedBy() == null) {
+//            targetTile = toTarget;
+//            setMoving(true);
+//            System.out.println("Moving true to " + targetTile.getTileCoords()[0] + " " + targetTile.getTileCoords()[1]);
+//        } else {
+//            targetTile = null;
+//            //setMoving(false);
+//        }
     }
 
     @Override
@@ -115,26 +118,59 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
     }
 
     @Override
+    public boolean moveBlocked() {
+        if (targetTile == null || targetTile.getOccupiedBy() != null) {
+            setDirectionMovement(null);
+            targetTile = null;
+            setMoving(false);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Tile getNextTile() {
+        targetTile = tm.getAdjecentTile(currentTile, directionMoving.name(), 1);
+        if (targetTile != null) System.out.println("Getting player a target tile " + targetTile.getPositionTile()[0] + " " + targetTile.getPositionTile()[1]);
+        return targetTile;
+    }
+
+    @Override
+    public void moveStart() {
+        return;
+    }
+
+    @Override
     public boolean move(float delta) {
         boolean ret = super.move(delta);
 
-        if (ret) {
-            if (isMoving()) {
-                //If key is still held down, get next tile
-                targetTile = tm.getAdjecentTile(targetTile, directionMoving.toString(), 1);
-                if (targetTile == null) setMoving(false);
-                return true;
-            }
-            else if (!isMoving() && targetTile != null) {
-                //If key is released, but there's still distance to cover
-                //currentTile = targetTile; useless line?
-                targetTile = null;
-                snap(delta);
-                //Reset direction moving
-                directionMoving = null;
-                return true;
-            }
+        if (ret && isMoving()) {
+            setDirectionMovement(directionMoving);
+            System.out.println("Holding down, direction movement set");
+        } else if (ret && !isMoving()) {
+            setDirectionMovement(null);
+            System.out.println("Setting to null");
         }
+
+
+
+//        if (ret) {
+//            if (isMoving()) {
+//                //If key is still held down, get next tile
+//                targetTile = tm.getAdjecentTile(targetTile, directionMoving.toString(), 1);
+//                if (targetTile == null) setMoving(false);
+//                return true;
+//            }
+//            else if (!isMoving() && targetTile != null) {
+//                //If key is released, but there's still distance to cover
+//                //currentTile = targetTile; useless line?
+//                targetTile = null;
+//                snap(delta);
+//                //Reset direction moving
+//                directionMoving = null;
+//                return true;
+//            }
+//        }
 
         return false;
     }
