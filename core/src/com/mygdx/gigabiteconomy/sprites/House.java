@@ -20,7 +20,7 @@ public class House extends GameObject {
     public House(HouseType type, int x, int y) {
         super (x, y);
 
-        texture = new Texture(String.format("finished_assets/houses/%s.png", type.name().toString().toLowerCase()));
+        texture = new Texture(String.format("finished_assets/houses/%s.png", type.name().toLowerCase()));
     }
 
     public enum HouseType {
