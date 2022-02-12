@@ -190,8 +190,10 @@ abstract class LevelScreen implements Screen {
         for (GameObject sprite : sprites)
         {
             if (sprite instanceof MovingSprite) {
-                MovingSprite movingSprite = (MovingSprite) sprite;
-                movingSprite.dispose();
+                ((MovingSprite) sprite).dispose();
+            }
+            else if (sprite instanceof StaticSprite) {
+                ((StaticSprite) sprite).dispose();
             }
         }
     }

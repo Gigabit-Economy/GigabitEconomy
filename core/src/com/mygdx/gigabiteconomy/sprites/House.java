@@ -26,4 +26,11 @@ public class House extends GameObject {
     public enum HouseType {
         DETACHED
     }
+
+    /**
+     * Remove the House's texture from memory once the sprite is no longer needed
+     */
+    public void dispose() {
+        texture.dispose();
+    }
 }

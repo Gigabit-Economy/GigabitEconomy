@@ -35,4 +35,11 @@ public class StaticSprite extends TiledObject {
     {
         return texture;
     }
+
+    /**
+     * Remove the sprite's texture from memory once the sprite is no longer needed
+     */
+    public void dispose() {
+        texture.dispose();
+    }
 }

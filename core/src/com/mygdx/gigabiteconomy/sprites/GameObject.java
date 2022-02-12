@@ -1,8 +1,9 @@
 package com.mygdx.gigabiteconomy.sprites;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Disposable;
 
-public abstract class GameObject {
+public abstract class GameObject implements Disposable {
     // Coordinates of sprite on screen
     private Vector2 pos;
 
@@ -57,4 +58,6 @@ public abstract class GameObject {
     {
         pos.add(deltaMove);
     }
+
+    public abstract void dispose();
 }
