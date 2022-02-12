@@ -1,55 +1,66 @@
 package com.mygdx.gigabiteconomy.sprites;
 
+import java.lang.System.Logger.Level;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.gigabiteconomy.GigabitEconomy;
+import com.mygdx.gigabiteconomy.screens.LevelOneScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
+
 
 /**
  * Class for separating Player functionality from general Sprite functionality
  * Such as:
- *  > Attacking (detecting collisions for certain sprites only)
+ * > Attacking (detecting collisions for certain sprites only)
  */
 public class Player extends MovingSprite implements ApplicationListener, InputProcessor {
-    //Deprecated variable for determining if player has to finish movement to centre of next Tile on keyUp()
+    // Deprecated variable for determining if player has to finish movement to
+    // centre of next Tile on keyUp()
     boolean stillMoving = false;
-    //How much player should move vertically and horizontally every move() respectively
-    
-    public Player(String config, int x, int y) {
+
+    // How much player should move vertically and horizontally every move()
+    // respectively
+
+    public Player(String config, int x, int y, GigabitEconomy LevelOneScreen) {
         super(config, x, y);
 
         Gdx.input.setInputProcessor(this);
+        LevelOneScreen LevelScreenObj = new LevelOneScreen(LevelOneScreen);
     }
 
     /**
      * Method to handle movement
+     * 
      * @param keycode
      */
     public void handleMovement(int keycode) {
         if (targetTile != null && !isMoving() || directionMoving != null) {
             System.out.println("Not finished with previous movement");
-            return; //Not finished with previous movement
+            return; // Not finished with previous movement
         }
 
         /**
-         * Sets direction enum which defines the velocity vector (which speed and direction to move in with each move() call)
+         * Sets direction enum which defines the velocity vector (which speed and
+         * direction to move in with each move() call)
          */
         Tile toTarget = null;
 
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT) {
             // Move left
             directionMoving = DIRECTION.WEST;
-        }
-        else if (keycode == Input.Keys.D || keycode == Input.Keys.RIGHT) {
+        } else if (keycode == Input.Keys.D || keycode == Input.Keys.RIGHT) {
             // Move right
             directionMoving = DIRECTION.EAST;
-        }
-        else if (keycode == Input.Keys.W || keycode == Input.Keys.UP) {
+        } else if (keycode == Input.Keys.W || keycode == Input.Keys.UP) {
             // Move up
             directionMoving = DIRECTION.NORTH;
-        }
-        else if (keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
+        } else if (keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
             // Move down
             directionMoving = DIRECTION.SOUTH;
         } else {
@@ -64,7 +75,7 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
         toTarget = tm.getAdjecentTile(currentTile, directionMoving.toString(), 1);
         setDeltaMove(directionMoving.dx, directionMoving.dy);
 
-        //Checks if Player can move to Tile
+        // Checks if Player can move to Tile
         if (toTarget != null && toTarget.getOccupiedBy() == null) {
             targetTile = toTarget;
             setMoving(true);
@@ -77,13 +88,14 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
 
         System.out.println("key pressed: " + keycode);
 
-        //Might have to move movement handling into other method if we add more functions for key presses
+        // Might have to move movement handling into other method if we add more
+        // functions for key presses
 
         /**
          * Movement calculated by:
-         *  -> Adding values defined above to deltaMove vector
-         *  -> Every time move() is called, deltaMove is added to position vector
-         *  -> This allows for diagonal movement
+         * -> Adding values defined above to deltaMove vector
+         * -> Every time move() is called, deltaMove is added to position vector
+         * -> This allows for diagonal movement
          */
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT || keycode == Input.Keys.D ||
                 keycode == Input.Keys.RIGHT || keycode == Input.Keys.W ||
@@ -91,6 +103,8 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
 
             handleMovement(keycode);
 
+        } else if (keycode == Input.Keys.P || keycode == Input.Keys.ESCAPE) {
+            pause();
         } else {
             return false;
         }
@@ -100,13 +114,12 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
 
     @Override
     public boolean keyUp(int keycode) {
-        //Player no longer WANTS to be moving, but we must finish animation to centre of target square
+        // Player no longer WANTS to be moving, but we must finish animation to centre
+        // of target square
         setMoving(false);
 
         return false;
     }
-
-
 
     @Override
     public boolean keyTyped(char character) {
@@ -154,11 +167,6 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
     }
 
     @Override
-    public void pause() {
-
-    }
-
-    @Override
     public void resume() {
 
     }
@@ -168,7 +176,15 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
 
     }
 
+    @Override
+    public void pause() {
+        //if (Gdx.input.isKeyPressed(Keys.P)) {
+           // LevelScreen levelScreenObj = new LevelScreen();
+           //LevelScreenObj.setPauseMenuStatus(true);
+            System.out.println("P or ESQ was pressed");
+       // }
 
+    }
 
 
 }

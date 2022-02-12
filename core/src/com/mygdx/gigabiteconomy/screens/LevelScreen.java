@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -13,6 +14,7 @@ import com.mygdx.gigabiteconomy.sprites.Player;
 import com.mygdx.gigabiteconomy.screens.TileManager;
 import com.mygdx.gigabiteconomy.sprites.*;
 
+import java.security.Key;
 import java.util.ArrayList;
 
 /**
@@ -24,6 +26,8 @@ abstract class LevelScreen implements Screen, ApplicationListener {
 
     private Texture backgroundTexture;
     private Sprite backgroundSprite;
+
+    private boolean pauseMenuStatus;
 
     private ArrayList<GameObject> sprites = new ArrayList<GameObject>(); // First sprite is ALWAYS player
     private SpriteBatch batch;
@@ -91,6 +95,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
 
         // Add static sprites
         sprites.addAll(staticSprites);
+
     }
 
     /**
@@ -107,7 +112,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
 
         // Set screen's projection matrix to director's ortho camera
         batch.setProjectionMatrix(director.getCameraCombined());
-
+        
         // This should only take place when player gets to a certain position in camera view
         // update camera position to follow player
         director.updateCameraPos(player.getActorX(), player.getActorY());
@@ -117,6 +122,25 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         // Draw the background
         backgroundSprite.draw(batch);
 
+        if(getPauseMenuStatus() == true)
+        {
+            try {
+                director.switchScreen("pausemenu");
+            } catch (Exception ex) {
+                Gdx.app.error("Exception", String.format("Error switching screen to %s", "pausemenu"), ex);
+                System.exit(-1);
+            }
+
+            if(getPauseMenuStatus() == false) {
+                try {
+                    director.switchScreen("level1");
+                } catch (Exception ex) {
+                    Gdx.app.error("Exception", String.format("Error switching screen to %s", "level1"), ex);
+                    System.exit(-1);
+                }
+            }
+        }
+        
         // Move (if moving sprite) & draw sprites
         for (GameObject sprite : sprites) {
             if (sprite instanceof MovingSprite) {
@@ -126,8 +150,9 @@ abstract class LevelScreen implements Screen, ApplicationListener {
 
             batch.draw(sprite.getCurrRegion(), sprite.getActorX(), sprite.getActorY());
         }
-
+        pause();
         batch.end();
+        
     }
 
     @Override
@@ -146,6 +171,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
 
     @Override
     public void pause() {
+       
     }
 
     @Override
@@ -181,5 +207,13 @@ abstract class LevelScreen implements Screen, ApplicationListener {
                 movingSprite.dispose();
             }
         }
+    }
+
+    public boolean getPauseMenuStatus() {
+        return pauseMenuStatus;
+    }
+
+    public void setPauseMenuStatus(boolean pauseMenuStatus) {
+        this.pauseMenuStatus = pauseMenuStatus;
     }
 }

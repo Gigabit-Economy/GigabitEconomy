@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.gigabiteconomy.screens.MenuScreen;
+import com.mygdx.gigabiteconomy.screens.PauseMenu;
 import com.mygdx.gigabiteconomy.screens.LevelOneScreen;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.Gdx;
@@ -28,6 +29,7 @@ public class GigabitEconomy extends Game {
         // Define screens
         screens.put("menu", new MenuScreen(this));
         screens.put("level1", new LevelOneScreen(this));
+        screens.put("pausemenu", new PauseMenu(this));
 
         // Set active screen to main menu
         setScreen(screens.get("menu"));
@@ -39,11 +41,11 @@ public class GigabitEconomy extends Game {
 
      public void updateCameraPos(float x, float y) {
         // Map start and end locations
-        float startX = 950;
-        float startY = 515;
+        float startX = viewport.getWorldWidth() / 2;
+        float startY = viewport.getScreenHeight() / 2;
 
-        float endX = 4820;
-        float endY = 565;
+        float endX = 5760 - viewport.getWorldWidth() / 2 ;
+        float endY = 1080 - viewport.getScreenHeight() / 2;
        
         // If next camera position is out of borders just assign map borders to camera.
         if(y > startY) {
