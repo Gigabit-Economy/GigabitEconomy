@@ -26,7 +26,7 @@ public class MenuScreen implements Screen {
     private Table buttons;
 
     private Sprite backgroundSprite;
-    private static final Texture backgroundTexture = new Texture("finished_assets/objects/gigabitEconomyHomeScreen.png");
+    private static final Texture backgroundTexture = new Texture("finished_assets/ui_elements/gigabitEconomyHomeScreen.png");
 
     private SpriteBatch batch;
     TextureAtlas ta;
@@ -54,7 +54,7 @@ public class MenuScreen implements Screen {
         buttons.bottom();
 
         //add button images
-        ta = new TextureAtlas("finished_assets/objects/icons.txt");
+        ta = new TextureAtlas("finished_assets/ui_elements/icons.txt");
         regions = ta.getRegions();
         current = regions.get(6);
         Drawable drawable = new TextureRegionDrawable(current);
