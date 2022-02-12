@@ -1,8 +1,11 @@
 package com.mygdx.gigabiteconomy.sprites;
 
 import com.mygdx.gigabiteconomy.screens.Tile;
+import sun.awt.image.ImageWatched;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Queue;
 
 /**
@@ -14,7 +17,10 @@ public class Enemy extends MovingSprite {
 
     private Queue<DIRECTION> movePath;
     private Queue<DIRECTION> agroMovePath;
-    private Tile pathBegin;
+    private Tile pathBegin = currentTile;
+
+    private HashMap<String, Queue<DIRECTION>> movementPaths = new HashMap<>(); //Allows n paths for n behaviours
+    private Queue<DIRECTION> currentPath;
 
     int[] agroDistance; //[dx, dy] tiles to cause agro
     boolean agro = false;
@@ -25,6 +31,15 @@ public class Enemy extends MovingSprite {
 
     public Enemy(String move_config, String attack_config, int x, int y) {
         super(move_config, attack_config, x, y);
+        movePath = new LinkedList<>();
+        movePath.add(DIRECTION.NORTH);
+        movePath.add(DIRECTION.NORTH);
+        movePath.add(DIRECTION.SOUTH);
+        movePath.add(DIRECTION.SOUTH);
+        setDirectionMovement(movePath.remove());
+        movePath.add(directionMoving);
+
+        setMoving(true);
     }
 
 
@@ -54,9 +69,49 @@ public class Enemy extends MovingSprite {
         return false;
     }
 
+
+    @Override
+    public boolean moveBlocked() {
+        if (targetTile == null || !(targetTile.getOccupiedBy() instanceof Player)) {
+            //Take this tile out of rotation since we can't go here
+//            setDirectionMovement(movePath.remove());
+//            targetTile = tm.getAdjecentTile(currentTile, directionMoving.name(), 1);
+            return true; //Break and attempt movement again
+        } else if (targetTile.getOccupiedBy() instanceof Player) {
+            //Start attacking mode!!
+            //Do we need to check for this since attacking will be checked for in other abstract method
+            return true;
+        } else {
+            return false; //Not blocked!
+        }
+    }
+
+    @Override
+    public Tile getNextTile() {
+        setDirectionMovement(movePath.remove());
+        movePath.add(directionMoving);
+        return tm.getAdjecentTile(currentTile, directionMoving.name(), 1);
+    }
+
+    @Override
+    public void moveStart() {
+        //if (targetTile != null || !isMoving() && directionMoving == null) return;
+        if ((targetTile == null || directionMoving != null) && isMoving() ) {
+            targetTile = tm.getAdjecentTile(currentTile, directionMoving.name(), 1);
+        }
+
+    }
+
     @Override
     public boolean move(float delta) {
         boolean ret = super.move(delta); //Checks if we've arrived else moved
+//        if (ret) {
+//            targetTile = tm.getAdjecentTile(currentTile, directionMoving.name(), 1);
+//            setDeltaMove(directionMoving);
+//            setMoving(true);
+//        }
+
+        if (ret) setMoving(false);
 
         /**
          * >>> ATTACKING LOGIC <<<
@@ -72,13 +127,14 @@ public class Enemy extends MovingSprite {
          * -> Find new path with TileManager: Queue<Tile> findShortestPathBetween(Tile from, Tile to);
          * -> Set new targetSquare from Queue (for next move();
          */
-        DIRECTION dirPlayerIn;
-        if (agro && ((dirPlayerIn = tm.findDirectionFrom(currentTile, targetEntity.getCurrentTile())) != null)) {
-            //Start agro path
-            directionMoving = dirPlayerIn;
-        } else {
-            //Resume agro path
-        }
+        //Must also check for distance condition
+//        DIRECTION dirPlayerIn;
+//        if (agro && ((dirPlayerIn = tm.findDirectionFrom(currentTile, targetEntity.getCurrentTile())) != null)) {
+//            //Start agro path
+//            directionMoving = dirPlayerIn;
+//        } else {
+//            //Resume agro path
+//        }
 
         /**
          * >>> MAIN MOVEMENT LOGIC <<<
@@ -86,6 +142,10 @@ public class Enemy extends MovingSprite {
          * -> Set new direction with TileManager: DIRECTION findDirectionFrom(Tile curr, Tile next);
          * -> Call setDeltaMove with direction
          */
+         if (ret) {
+             directionMoving = movePath.remove();
+             movePath.add(directionMoving);
+         }
 
         /**
          * If above is implemented right, enemy should be able to move in 'direction' towards 'targetTile'
