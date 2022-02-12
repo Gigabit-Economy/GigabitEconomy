@@ -44,28 +44,22 @@ public class MenuScreen implements Screen {
         // Skin defined in UI skin (commodore - hopefully we can use, looks really cool)
         Skin style = new Skin(Gdx.files.internal("uiskin.json"));
 
-        //add background
-    /*    batch = new SpriteBatch();
-        backgroundSprite = new Sprite(backgroundTexture);
-        System.out.println("Texture dimensions: h:" + backgroundTexture.getHeight() + " w:" + backgroundTexture.getWidth());
-*/
+
 
         // Buttons
         buttons = new Table();
+        //add background
         buttons.setBackground(new TextureRegionDrawable(new TextureRegion(backgroundTexture)));
         buttons.setFillParent(true);
         buttons.bottom();
 
-        /*
-        TextButton level1Button = new TextButton("Level 1", style);
-        level1Button.setName("level1");
-        buttons.add(level1Button);*/
-
+        //add button images
         ta = new TextureAtlas("finished_assets/objects/icons.txt");
         regions = ta.getRegions();
         current = regions.get(6);
         Drawable drawable = new TextureRegionDrawable(current);
 
+        //add buttons
         ImageButton level1Button = new ImageButton(drawable);
         level1Button.setName("level1");
         buttons.add(level1Button);
