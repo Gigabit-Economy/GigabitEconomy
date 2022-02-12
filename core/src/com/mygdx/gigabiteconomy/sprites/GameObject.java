@@ -52,4 +52,6 @@ public abstract class GameObject {
     {
         pos.add(deltaMove);
     }
+    
+    void setTileManager(TileManager tm);
 }

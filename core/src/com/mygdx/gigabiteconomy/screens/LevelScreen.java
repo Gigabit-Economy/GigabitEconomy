@@ -3,10 +3,12 @@ package com.mygdx.gigabiteconomy.screens;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.sprites.tiled.Player;
@@ -16,6 +18,7 @@ import com.mygdx.gigabiteconomy.sprites.tiled.StaticSprite;
 import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Base class for all level screens.
@@ -30,8 +33,12 @@ abstract class LevelScreen implements Screen {
     private ArrayList<TiledObject> sprites = new ArrayList<TiledObject>(); // First sprite is ALWAYS player
     private SpriteBatch batch;
     private Player player;
-    private ArrayList<TiledObject> enemies;
-    private ArrayList<StaticSprite> staticSprites;
+    private ArrayList<GameObject> enemies;
+    private ArrayList<GameObject> staticSprites;
+
+    private int scoreCount, parcelCount, healthCount;
+    private String scoreText, parcelText, healthText;
+    private BitmapFont bitmapFont;
 
     /**
      * A template constructor for use by all level screen subclasses. Sets properties that differ between levels
@@ -43,12 +50,20 @@ abstract class LevelScreen implements Screen {
      * @param staticSprites an ArrayList containing all static sprites (such as fences etc.)
      * @param backgroundTexture the background graphic of the level
      */
-    public LevelScreen(GigabitEconomy director, Player player, ArrayList<TiledObject> enemies, ArrayList<StaticSprite> staticSprites, Texture backgroundTexture) {
+    public LevelScreen(GigabitEconomy director, Player player, ArrayList<GameObject> enemies, ArrayList<GameObject> staticSprites, Texture backgroundTexture) {
         this.director = director;
         this.player = player;
         this.enemies = enemies;
         this.staticSprites = staticSprites;
         this.backgroundTexture = backgroundTexture;
+
+        scoreCount = 0;
+        parcelCount = 0;
+        healthCount = 0;
+        scoreText = "score: 0";
+        parcelText = "no. parcels: 0";
+        healthText = "health: 100 %"; 
+        bitmapFont = new BitmapFont();
 
         // Create tile manager instance (stated variables explicitly here in case we want to mess about with them)
         //-> Might need to move creating tileManager to other method (after we add level switching)
@@ -59,19 +74,21 @@ abstract class LevelScreen implements Screen {
         tileManager = new TileManager(backgroundTextureHeight/numberOfTilesHigh, backgroundTextureHeight/2, backgroundTextureWidth, 0, 0);
 
         // Initialise each sprite's position on tiles using the tile manager
-        try {
-            for (TiledObject go : enemies) {
-                go.initTile(tileManager);
-            }
-            for (TiledObject go : staticSprites) {
-                go.initTile(tileManager);
-            }
-
-            player.initTile(tileManager);
-        } catch (Exception ex) {
-            Gdx.app.error("Exception", "Error initialising tile manager", ex);
-            System.exit(-1);
-        }
+        ArrayList<GameObject> playerList = new ArrayList<GameObject>(); playerList.add(player);
+        tileManager.initObjects(playerList, staticSprites, enemies); //In priority order
+//        try {
+//            for (GameObject go : enemies) {
+//                go.initTile(tileManager);
+//            }
+//            for (GameObject go : staticSprites) {
+//                go.initTile(tileManager);
+//            }
+//
+//            player.initTile(tileManager);
+//        } catch (Exception ex) {
+//            Gdx.app.error("Exception", "Error initialising tile manager", ex);
+//            System.exit(-1);
+//        }
     }
 
     /**
@@ -85,8 +102,8 @@ abstract class LevelScreen implements Screen {
         // Add background
         backgroundSprite = new Sprite(backgroundTexture);
         System.out.println("Texture dimensions: h:" + backgroundTexture.getHeight() + " w:" + backgroundTexture.getWidth());
-        tileManager = new TileManager(135, backgroundTexture.getHeight()/2, backgroundTexture.getWidth(), 0, 0);
-        
+        //tileManager = new TileManager(135, backgroundTexture.getHeight()/2, backgroundTexture.getWidth(), 0, 0);
+
         // Add player
         sprites.add(player);
         Gdx.input.setInputProcessor(this.player);
@@ -140,6 +157,11 @@ abstract class LevelScreen implements Screen {
                 batch.draw(staticSprite.getTexture(), staticSprite.getX(), staticSprite.getY());
             }
         }
+
+        bitmapFont.setColor(Color.CORAL);
+        bitmapFont.draw(batch, scoreText, 25, 1040);
+        bitmapFont.draw(batch, parcelText, 25, 1020);
+        bitmapFont.draw(batch, healthText, 25, 1000);
 
         batch.end();
     }
