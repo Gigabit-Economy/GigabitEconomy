@@ -3,6 +3,7 @@ package com.mygdx.gigabiteconomy.screens;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.gigabiteconomy.sprites.GameObject;
+import com.mygdx.gigabiteconomy.sprites.coordinated.House;
 import com.mygdx.gigabiteconomy.sprites.tiled.Enemy;
 import com.mygdx.gigabiteconomy.sprites.tiled.Player;
 import com.mygdx.gigabiteconomy.sprites.tiled.StaticSprite;
@@ -24,6 +25,7 @@ public class LevelOneScreen extends LevelScreen {
 
     /* STATIC SPRITES (FENCES ETC...) */
     private static final StaticSprite FENCE = new StaticSprite("finished_assets/static_sprites/fence.png", 5, 0);
+    private static final House HOUSE_ONE = new House(House.HouseType.DETACHED, 10, 10);
     private static final ArrayList<GameObject> STATIC_SPRITES = new ArrayList<GameObject>(Arrays.asList(FENCE));
 
     // Level screen background texture
