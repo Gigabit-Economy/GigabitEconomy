@@ -8,10 +8,15 @@ import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
  * > Specify movement pattern (random about defined area or movement along radius of circle for the doggies)
  */
 public class Enemy extends MovingSprite {
-
-    public Enemy(String move_config, String attack_config, int x, int y) {
-        super(move_config, attack_config, x, y);
+    /**
+     * Create a new Enemy sprite (MovingSprite)
+     *
+     * @param movementConfig path of texture atlas movement config file (.txt)
+     * @param attackingConfig path of texture atlas attacking config file (.txt)
+     * @param x position of Tile (within tile grid) to place sprite
+     * @param y position of Tile (within tile grid) to place sprite
+     */
+    public Enemy(String movementConfig, String attackingConfig, int x, int y) {
+        super(movementConfig, attackingConfig, x, y);
     }
-
-
 }

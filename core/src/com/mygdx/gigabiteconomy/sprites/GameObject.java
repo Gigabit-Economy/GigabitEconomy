@@ -6,6 +6,12 @@ public abstract class GameObject {
     // Coordinates of sprite on screen
     private Vector2 pos;
 
+    /**
+     * Constructor to create a new GameObject (sets the x & y coordinates for subclasses).
+     *
+     * @param x the game object's X coordinate
+     * @param y the game object's Y coordinate
+     */
     public GameObject(float x, float y) {
         pos = new Vector2(x, y);
     }

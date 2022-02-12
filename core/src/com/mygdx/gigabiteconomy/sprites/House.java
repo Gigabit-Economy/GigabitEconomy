@@ -11,9 +11,9 @@ public class House extends GameObject {
     private Texture texture;
 
     /**
-     * Constructor used to create a new house static sprite
+     * Create a new House game object
      *
-     * @param png the .png file of the sprite's texture
+     * @param type the type of house (HouseType enum)
      * @param x position of Tile (within tile grid) to place sprite
      * @param y position of Tile (within tile grid) to place sprite
      */
