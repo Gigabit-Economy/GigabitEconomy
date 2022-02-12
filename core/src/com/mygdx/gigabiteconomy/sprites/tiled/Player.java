@@ -1,4 +1,4 @@
-package com.mygdx.gigabiteconomy.sprites;
+package com.mygdx.gigabiteconomy.sprites.tiled;
 
 import java.lang.System.Logger.Level;
 
@@ -12,33 +12,40 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.screens.LevelOneScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
+import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
 
 import javax.sound.midi.SysexMessage;
 
 /**
- * Class for separating Player functionality from general Sprite functionality
- * Such as:
- * > Attacking (detecting collisions for certain sprites only)
+ * Class representing a player sprite (one per level)
  */
-public class Player extends MovingSprite implements ApplicationListener, InputProcessor {
-    // Deprecated variable for determining if player has to finish movement to
-    // centre of next Tile on keyUp()
+public class Player extends MovingSprite implements InputProcessor {
+    //Deprecated variable for determining if player has to finish movement to centre of next Tile on keyUp()
     boolean stillMoving = false;
-    
-    public Player(String move_config, String attack_config, int x, int y) {
-        super(move_config, attack_config, x, y);
+    //How much player should move vertically and horizontally every move() respectively
+
+    /**
+     * Create a new Player sprite (MovingSprite)
+     *
+     * @param movementConfig path of texture atlas movement config file (.txt)
+     * @param attackingConfig path of texture atlas attacking config file (.txt)
+     * @param x position of Tile (within tile grid) to place sprite
+     * @param y position of Tile (within tile grid) to place sprite
+     */
+    public Player(String movementConfig, String attackingConfig, int x, int y) {
+        super(movementConfig, attackingConfig, x, y);
 
         Gdx.input.setInputProcessor(this);
         LevelOneScreen LevelScreenObj = new LevelOneScreen(LevelOneScreen);
     }
 
     /**
-     * Method to handle movement
-     * 
-     * @param keycode
+     * Method to handle movement of the Player
+     *
+     * @param keycode the user inputted key
      */
     public void handleMovement(int keycode) {
-        if (targetTile != null && !isMoving() || directionMoving != null) {
+        if (getTargetTile() != null && !isMoving() || super.getDirectionMoving() != null) {
             System.out.println("Not finished with previous movement");
             return; // Not finished with previous movement
         }
@@ -51,16 +58,19 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
 
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT) {
             // Move left
-            directionMoving = DIRECTION.WEST;
-        } else if (keycode == Input.Keys.D || keycode == Input.Keys.RIGHT) {
+            super.setDirectionMoving(DIRECTION.WEST);
+        }
+        else if (keycode == Input.Keys.D || keycode == Input.Keys.RIGHT) {
             // Move right
-            directionMoving = DIRECTION.EAST;
-        } else if (keycode == Input.Keys.W || keycode == Input.Keys.UP) {
+            super.setDirectionMoving(DIRECTION.EAST);
+        }
+        else if (keycode == Input.Keys.W || keycode == Input.Keys.UP) {
             // Move up
-            directionMoving = DIRECTION.NORTH;
-        } else if (keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
+            super.setDirectionMoving(DIRECTION.NORTH);
+        }
+        else if (keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
             // Move down
-            directionMoving = DIRECTION.SOUTH;
+            super.setDirectionMoving(DIRECTION.SOUTH);
         } else {
             System.out.println(keycode + " not accounted for in movement logic");
             return;
@@ -70,27 +80,29 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
          * Uses tile manager to get adjecentTile
          * Sets velocity vector based on value of direction set above
          */
-        toTarget = tm.getAdjecentTile(currentTile, directionMoving.toString(), 1);
-        setDeltaMove(directionMoving.dx, directionMoving.dy);
+        toTarget = getTileManager().getAdjecentTile(getCurrentTile(), getDirectionMoving().toString(), 1);
+        setDeltaMove(getDirectionMoving().dx, getDirectionMoving().dy);
 
         // Checks if Player can move to Tile
         if (toTarget != null && toTarget.getOccupiedBy() == null) {
-            targetTile = toTarget;
+            setTargetTile(toTarget);
             setMoving(true);
-            System.out.println("Moving true to " + targetTile.getTileCoords()[0] + " " + targetTile.getTileCoords()[1]);
+            System.out.println("Moving true to " + getTargetTile().getTileCoords()[0] + " " + getTargetTile().getTileCoords()[1]);
         } else {
-            targetTile = null;
-            //setMoving(false);
+            setTargetTile(null);
         }
     }
 
+    /**
+     * Deal with a user's key press (initiate movement/attacking, go to pause menu etc.).
+     * Part of ApplicationListener implementation.
+     *
+     * @param keycode the pressed key
+     * @return if the key press was processed
+     */
     @Override
     public boolean keyDown(int keycode) {
-
         System.out.println("key pressed: " + keycode);
-
-        // Might have to move movement handling into other method if we add more
-        // functions for key presses
 
         /**
          * Movement calculated by:
@@ -101,7 +113,6 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT || keycode == Input.Keys.D ||
                 keycode == Input.Keys.RIGHT || keycode == Input.Keys.W ||
                 keycode == Input.Keys.UP || keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
-
             handleMovement(keycode);
 
         } else if (keycode == Input.Keys.P || keycode == Input.Keys.ESCAPE) {
@@ -116,6 +127,13 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
         return true;
     }
 
+    /**
+     * Deal with a key press being lifted.
+     * Part of ApplicationListener implementation.
+     *
+     * @param keycode the key lifted
+     * @return if the key lift was processed
+     */
     @Override
     public boolean keyUp(int keycode) {
         // Player no longer WANTS to be moving, but we must finish animation to centre
@@ -156,27 +174,12 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
     }
 
     @Override
-    public void create() {
-
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void render() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void dispose() {
+    public void pause() {
+        //if (Gdx.input.isKeyPressed(Keys.P)) {
+           // LevelScreen levelScreenObj = new LevelScreen();
+           //LevelScreenObj.setPauseMenuStatus(true);
+            System.out.println("P or ESQ was pressed");
+       // }
 
     }
 
