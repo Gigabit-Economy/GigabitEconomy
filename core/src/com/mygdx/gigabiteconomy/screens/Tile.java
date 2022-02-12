@@ -3,7 +3,7 @@ package com.mygdx.gigabiteconomy.screens;
 import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
 /**
- * Tile class
+ * Class representing a Tile on the player-accessible parts of level screen.
  * -> Contains:
  * --> Position (relative to texture)
  * --> Height/Width

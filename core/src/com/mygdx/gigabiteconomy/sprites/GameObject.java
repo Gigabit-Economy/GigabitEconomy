@@ -3,6 +3,9 @@ package com.mygdx.gigabiteconomy.sprites;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 
+/**
+ * Abstract class which all sprites (such as players/enemies)/game objects (such as houses) derive from
+ */
 public abstract class GameObject implements Disposable {
     // Coordinates of sprite on screen
     private Vector2 pos;

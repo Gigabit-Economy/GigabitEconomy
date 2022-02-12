@@ -10,9 +10,7 @@ import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
 import javax.sound.midi.SysexMessage;
 
 /**
- * Class for separating Player functionality from general Sprite functionality
- * Such as:
- *  > Attacking (detecting collisions for certain sprites only)
+ * Class representing a player sprite (one per level)
  */
 public class Player extends MovingSprite implements InputProcessor {
     //Deprecated variable for determining if player has to finish movement to centre of next Tile on keyUp()

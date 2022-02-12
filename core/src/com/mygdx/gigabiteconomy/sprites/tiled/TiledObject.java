@@ -10,7 +10,8 @@ import com.mygdx.gigabiteconomy.sprites.GameObject;
 import java.lang.Exception;
 
 /**
- * Interface for controlling sprite
+ * Abstract class which all tiled sprites/game objects derive from.
+ * Implements GameObject.
  */
 public abstract class TiledObject extends GameObject {
     private TileManager tileManager;

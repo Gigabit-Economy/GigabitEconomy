@@ -3,9 +3,7 @@ package com.mygdx.gigabiteconomy.sprites;
 import com.badlogic.gdx.graphics.Texture;
 
 /**
- * Class to create a new enemy. Will have the ability to:
- * > Specify initial x, y
- * > Specify movement pattern (random about defined area or movement along radius of circle for the doggies)
+ * Class representing a house
  */
 public class House extends GameObject {
     private Texture texture;

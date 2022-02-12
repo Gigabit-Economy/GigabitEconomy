@@ -21,7 +21,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Base class for all level screens.
+ * Abstract class which acts as a base class for all level screens.
+ * Each individual level class extends this class and defines properties such as the player, enemies, houses &
+ * static sprites etc.
  */
 abstract class LevelScreen implements Screen {
     private GigabitEconomy director;

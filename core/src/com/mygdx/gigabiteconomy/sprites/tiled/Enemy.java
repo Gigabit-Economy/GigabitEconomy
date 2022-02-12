@@ -3,9 +3,7 @@ package com.mygdx.gigabiteconomy.sprites.tiled;
 import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
 
 /**
- * Class to create a new enemy. Will have the ability to:
- * > Specify initial x, y
- * > Specify movement pattern (random about defined area or movement along radius of circle for the doggies)
+ * Class representing an enemy sprite (many per level)
  */
 public class Enemy extends MovingSprite {
     /**

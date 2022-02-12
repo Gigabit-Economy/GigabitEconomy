@@ -6,7 +6,7 @@ import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 import java.util.ArrayList;
 
 /**
- * Class to hold and manage Tiles.
+ * Class used to hold and manage all Tiles.
  * - Each MySprite instance is passed the TileManager it belongs to and sets a Tile to occupy
  * - Then Player position can be retrieved from the Tile it's on (or the bottom leftmost if multiple -- Rat King)
  */

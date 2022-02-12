@@ -20,6 +20,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 
+/**
+ * The menu screen which is shown on initial game load.
+ */
 public class MenuScreen implements Screen {
     private GigabitEconomy director;
     private Stage stage;
@@ -44,8 +47,6 @@ public class MenuScreen implements Screen {
         // Skin defined in UI skin (commodore - hopefully we can use, looks really cool)
         Skin style = new Skin(Gdx.files.internal("uiskin.json"));
 
-
-
         // Buttons
         buttons = new Table();
         //add background
@@ -64,21 +65,20 @@ public class MenuScreen implements Screen {
         level1Button.setName("level1");
         buttons.add(level1Button);
 
-
         // Add click listener for buttons
         ClickListener buttonsListener = new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                String buttonName = event.getListenerActor().getName();
-                System.out.println(buttonName);
+            String buttonName = event.getListenerActor().getName();
+            System.out.println(buttonName);
 
-                // Switch to selected level screen via. director
-                try {
-                    director.switchScreen(buttonName);
-                } catch (Exception ex) {
-                    Gdx.app.error("Exception", String.format("Error switching screen to %s", buttonName), ex);
-                    System.exit(-1);
-                }
+            // Switch to selected level screen via. director
+            try {
+                director.switchScreen(buttonName);
+            } catch (Exception ex) {
+                Gdx.app.error("Exception", String.format("Error switching screen to %s", buttonName), ex);
+                System.exit(-1);
+            }
             }
         };
         level1Button.addListener(buttonsListener);
