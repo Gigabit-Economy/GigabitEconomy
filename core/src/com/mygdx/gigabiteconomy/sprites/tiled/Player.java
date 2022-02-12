@@ -14,20 +14,29 @@ import javax.sound.midi.SysexMessage;
  * Such as:
  *  > Attacking (detecting collisions for certain sprites only)
  */
-public class Player extends MovingSprite implements ApplicationListener, InputProcessor {
+public class Player extends MovingSprite implements InputProcessor {
     //Deprecated variable for determining if player has to finish movement to centre of next Tile on keyUp()
     boolean stillMoving = false;
     //How much player should move vertically and horizontally every move() respectively
-    
-    public Player(String move_config, String attack_config, int x, int y) {
-        super(move_config, attack_config, x, y);
+
+    /**
+     * Create a new Player sprite (MovingSprite)
+     *
+     * @param movementConfig path of texture atlas movement config file (.txt)
+     * @param attackingConfig path of texture atlas attacking config file (.txt)
+     * @param x position of Tile (within tile grid) to place sprite
+     * @param y position of Tile (within tile grid) to place sprite
+     */
+    public Player(String movementConfig, String attackingConfig, int x, int y) {
+        super(movementConfig, attackingConfig, x, y);
 
         Gdx.input.setInputProcessor(this);
     }
 
     /**
-     * Method to handle movement
-     * @param keycode
+     * Method to handle movement of the Player
+     *
+     * @param keycode the user inputted key
      */
     public void handleMovement(int keycode) {
         if (getTargetTile() != null && !isMoving() || super.getDirectionMoving() != null) {
@@ -77,6 +86,13 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
         }
     }
 
+    /**
+     * Deal with a user's key press (initiate movement/attacking, go to pause menu etc.).
+     * Part of ApplicationListener implementation.
+     *
+     * @param keycode the pressed key
+     * @return if the key press was processed
+     */
     @Override
     public boolean keyDown(int keycode) {
         System.out.println("key pressed: " + keycode);
@@ -90,9 +106,7 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT || keycode == Input.Keys.D ||
                 keycode == Input.Keys.RIGHT || keycode == Input.Keys.W ||
                 keycode == Input.Keys.UP || keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
-
             handleMovement(keycode);
-
         } else if (keycode == Input.Keys.SPACE) {
             System.out.println("Attacking now");
             setAttacking(true);
@@ -103,6 +117,13 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
         return true;
     }
 
+    /**
+     * Deal with a key press being lifted.
+     * Part of ApplicationListener implementation.
+     *
+     * @param keycode the key lifted
+     * @return if the key lift was processed
+     */
     @Override
     public boolean keyUp(int keycode) {
         //Player no longer WANTS to be moving, but we must finish animation to centre of target square
@@ -110,8 +131,6 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
 
         return false;
     }
-
-
 
     @Override
     public boolean keyTyped(char character) {
@@ -142,38 +161,4 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
     public boolean scrolled(float amountX, float amountY) {
         return false;
     }
-
-    @Override
-    public void create() {
-
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void render() {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void dispose() {
-
-    }
-
-
-
-
 }
