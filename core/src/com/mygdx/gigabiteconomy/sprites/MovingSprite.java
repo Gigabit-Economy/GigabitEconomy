@@ -165,19 +165,19 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
 
         if (directionMoving != null) { //First sign that we should be moving
 
-
-
             if (targetTile == null)
                 targetTile = getNextTile(); //If we are still then get next tile
 
             ///** is */ moveBlocked();
 
             //if (targetTile == null) return false; //If we're blocked return false (more in depth check coming soon)
-            if (targetTile == null) {
+            if (targetTile == null || targetTile.getOccupiedBy() != null) {
                 System.out.println("getNextTile() Returned null for some reason");
+                targetTile = null;
+                return false;
             }
             //Commence move
-            if (this.onTile(targetTile)) {
+            if (this.onTile(targetTile)) { //Need to sort out blocking, will remove != null check
                 if (this instanceof Player) {
                     System.out.println("Arrived at tile");
                     System.out.println("Occupied tiles:");
