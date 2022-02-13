@@ -23,7 +23,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     // Current image being displayed in the movement animation
     private TextureRegion textureRegion;
 
-    private DIRECTION directionMoving;
+    private DIRECTION directionMoving = DIRECTION.EAST;
     private boolean moving;
     // Vector we add to position with every move
     private Vector2 deltaMove = new Vector2(0, 0);
@@ -247,8 +247,8 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
                 direction = "Right";
         }
         String selectedWeapon = weapon.name().toLowerCase();
-        String movementConfig = String.format("finished_assets/player/movement/%s%s", selectedWeapon, direction);
-        String attackingConfig = String.format("finished_assets/player/attacks/%s%s", selectedWeapon, direction);
+        String movementConfig = String.format("finished_assets/player/movement/%s%s.txt", selectedWeapon, direction);
+        String attackingConfig = String.format("finished_assets/player/attacks/%s%s.txt", selectedWeapon, direction);
 
         this.ta = new TextureAtlas(movementConfig);
         this.regions = ta.getRegions();
