@@ -44,6 +44,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     private ArrayList<TiledObject> staticSprites;
 
     private int score = 0;
+    private int parcels = 5;
 
     private BitmapFont font;
     private String scoreText, parcelText, healthText;
@@ -169,7 +170,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         }
 
         scoreText = String.format("score: %d", score);
-        parcelText = String.format("parcels remaining: %d", 5);
+        parcelText = String.format("parcels remaining: %d", parcels);
         healthText = String.format("health: %d%", player.getHealth());
 
         font.setColor(Color.CORAL);
