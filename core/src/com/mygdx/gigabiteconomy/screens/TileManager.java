@@ -1,9 +1,13 @@
 package com.mygdx.gigabiteconomy.screens;
 
 import com.mygdx.gigabiteconomy.sprites.GameObject;
+import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
 import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Class used to hold and manage all Tiles.
@@ -116,12 +120,40 @@ public class TileManager {
         return toPlace;
     }
 
-    public Tile placeObjectFromCoords(float x, float y, TiledObject objectToPlace) {
-        Tile ret = this.getTileFromCoords(x, y);
-        ret = this.placeObject(ret, objectToPlace);
-        return ret;
+    /**
+     * @param x coordinate to find row of
+     * @param y coordinate to find row of
+     * @param direction which direction to return row of
+     * @return
+     */
+    public ArrayList<Tile> getSelectiveDir(int x, int y, MovingSprite.DIRECTION direction) {
+        ArrayList<Tile> ret = new ArrayList<>();
+        try {
+            while (true) {
+                ret.add(tileArray[x][y]);
+                x = (direction.dx < 0) && (direction.dx != 0) ? x-- : x++;
+                y = (direction.dy < 0) && (direction.dy != 0) ? y-- : y++;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return ret;
+        }
     }
 
+    /**
+     * @return MovingSprite.DIRECTION of next from curr. E.g. Which direction is Player relative to Enemy?
+     */
+    public MovingSprite.DIRECTION findDirectionFrom(Tile curr, Tile next) {
+        // For each direction, we need to find corresponding row or col, then see if that's contained
+
+        for (MovingSprite.DIRECTION direction : MovingSprite.DIRECTION.values()) {
+            ArrayList<Tile> toSearch = getSelectiveDir(curr.getPositionTile()[0], curr.getPositionTile()[1], direction);
+            if (toSearch.contains(next)) {
+                return direction;
+            }
+        }
+
+        return null;
+    }
 
     /**
      * Method to get list of adjacent tiles to given Tile
@@ -132,10 +164,10 @@ public class TileManager {
         int[] pos = tile.getPositionTile();
 
         Tile[] adjecentTiles = new Tile[4];
-        adjecentTiles[0] = getAdjecentTile(tile, "UP", 1);
-        adjecentTiles[1] = getAdjecentTile(tile, "RIGHT", 1);
-        adjecentTiles[2] = getAdjecentTile(tile, "DOWN", 1);
-        adjecentTiles[3] = getAdjecentTile(tile, "LEFT", 1);
+        adjecentTiles[0] = getAdjecentTile(tile, "NORTH", 1);
+        adjecentTiles[1] = getAdjecentTile(tile, "EAST", 1);
+        adjecentTiles[2] = getAdjecentTile(tile, "SOUTH", 1);
+        adjecentTiles[3] = getAdjecentTile(tile, "WEST", 1);
 
         return adjecentTiles;
     }
