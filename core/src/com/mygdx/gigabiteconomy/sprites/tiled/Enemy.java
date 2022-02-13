@@ -11,9 +11,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * Class to create a new enemy. Will have the ability to:
- * > Specify initial x, y
- * > Specify movement pattern (random about defined area or movement along radius of circle for the doggies)
+ * Class representing an enemy sprite (many per level)
  */
 public class Enemy extends MovingSprite {
 
@@ -29,10 +27,16 @@ public class Enemy extends MovingSprite {
 
     GameObject targetEntity;
 
-
-
-    public Enemy(String move_config, String attack_config, int x, int y) {
-        super(move_config, attack_config, x, y);
+    /**
+     * Create a new Enemy sprite (MovingSprite)
+     *
+     * @param movementConfig path of texture atlas movement config file (.txt)
+     * @param attackingConfig path of texture atlas attacking config file (.txt)
+     * @param x position of Tile (within tile grid) to place sprite
+     * @param y position of Tile (within tile grid) to place sprite
+     */
+    public Enemy(String movementConfig, String attackingConfig, int x, int y) {
+        super(movementConfig, attackingConfig, x, y);
         movePath = new LinkedList<>();
         movePath.add(DIRECTION.NORTH);
         movePath.add(DIRECTION.EAST);
@@ -70,7 +74,6 @@ public class Enemy extends MovingSprite {
          */
         return false;
     }
-
 
     @Override
     public boolean moveBlocked() {
