@@ -125,9 +125,10 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      *
      * @param targetTile the Tile instance of the target tile
      */
-    public void setTargetTile(Tile targetTile)
-    {
+    public void setTargetTile(Tile targetTile) {
         this.targetTile = targetTile;
+        if (targetTile == null) return;
+        targetTile.setOccupied(this);
     }
 
     public boolean onTile(Tile toCheck) {
@@ -167,23 +168,25 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
             ///** is */ moveBlocked();
 
             //if (targetTile == null) return false; //If we're blocked return false (more in depth check coming soon)
-            if (targetTile == null || targetTile.getOccupiedBy() != null) {
+            if (targetTile == null || targetTile.getOccupiedBy() != this) {
                 System.out.println("getNextTile() Returned null for some reason");
                 targetTile = null;
                 return false;
             }
             //Commence move
             if (this.onTile(targetTile)) { //Need to sort out blocking, will remove != null check
+
+
+                //Reset currentTile to targetTile
+                getCurrentTile().setOccupied(null);
+                setCurrentTile(targetTile);
+                snap(delta);
+                targetTile = null;
                 if (this instanceof Player) {
                     System.out.println("Arrived at tile");
                     System.out.println("Occupied tiles:");
                     getTileManager().printOccupiedTiles(); //Debugging function
                 }
-
-                //Reset currentTile to targetTile
-                setCurrentTile(getTileManager().placeObject(targetTile, this));
-                snap(delta);
-                targetTile = null;
                 //setDirectionMovement(null);
                 return true;
             } else { //Not made it yet!
@@ -191,8 +194,8 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
                 addToPos(deltaMove);
                 textureRegion = (TextureRegion) movementAnimation.runAnimation(delta);
                 //System.out.println("Current changed to: " + currentTile);
-                if (this instanceof Player)
-                    System.out.println("I want to move!!" + deltaMove.toString());
+//                if (this instanceof Player)
+//                    System.out.println("I want to move!!" + deltaMove.toString());
                 //System.out.println("New pos: " + pos.x + " " + pos.y);
                 return false;
             }

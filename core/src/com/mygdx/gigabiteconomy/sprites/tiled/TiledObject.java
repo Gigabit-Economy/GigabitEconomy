@@ -63,7 +63,6 @@ public abstract class TiledObject extends GameObject {
 
         currentTile = tile;
 
-        setPos(currentTile.getTileCoords()[0] ,currentTile.getTileCoords()[1]);
-        System.out.println("Setting position to " + getX() + " " + getY());
+        setPos(currentTile.getTileCoords()[0], currentTile.getTileCoords()[1]);
     }
 }
