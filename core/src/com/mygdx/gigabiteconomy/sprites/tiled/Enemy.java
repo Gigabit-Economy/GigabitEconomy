@@ -43,18 +43,24 @@ public class Enemy extends MovingSprite {
         movePath.add(DIRECTION.SOUTH);
         movePath.add(DIRECTION.WEST);
 
-        setDirectionMovement(movePath.peek());
+        movementPaths.put("move", movePath);
+        movementPaths.put("agro", agroMovePath);
+
+        setPath("move");
+
 
         setMoving(true);
     }
 
 
     /**
-     * Method to set path of enemy
-     * @param pathSet
+     * Method to set path of enemy from hashmap of defined paths
+     * @param pathID Hashmap ID of path
      */
-    public void setPath(Queue<DIRECTION> pathSet) {
-        movePath = pathSet;
+    public void setPath(String pathID) {
+        if ((currentPath = movementPaths.get(pathID)) == null)
+            new Exception("Movement path does not exist");
+        setDirectionMovement(currentPath.peek());
     }
 
     /**
@@ -97,9 +103,9 @@ public class Enemy extends MovingSprite {
 
     @Override
     public Tile getNextTile() {
-        super.setDirectionMovement(movePath.remove());
-        movePath.add(getDirectionMoving());
-        System.out.println("Moving: " + getDirectionMoving().name() + " " + movePath.toString());
+        super.setDirectionMovement(currentPath.remove());
+        currentPath.add(getDirectionMoving());
+        System.out.println("Moving: " + getDirectionMoving().name() + " " + currentPath.toString());
         return getTileManager().getAdjecentTile(getCurrentTile(), getDirectionMoving().name(), 1);
     }
 
