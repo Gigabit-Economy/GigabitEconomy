@@ -13,7 +13,7 @@ import java.util.Locale;
 
 /**
  * Class representing a sprite shown on screen, ready to be drawn with batch.draw(); in MainScreen class.
- * Sprite has ability to move tiles.
+ * Sprite has ability to move tiles and launch attacks/be attacked.
  * MainScreen interfaces with this class through GameObject.
  */
 public abstract class MovingSprite extends TiledObject implements Disposable {
@@ -264,6 +264,12 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      */
     public void launchAttack() {
         Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTile(), directionMoving, 1);
+
+        // if adjacent tile is occupied by sprite which can be attacked, attack
+        TiledObject adjacentSprite = adjacentTile.getOccupiedBy();
+        if (adjacentSprite instanceof MovingSprite) {
+            ((MovingSprite) adjacentSprite).attack(weapon);
+        }
     }
 
     /**
