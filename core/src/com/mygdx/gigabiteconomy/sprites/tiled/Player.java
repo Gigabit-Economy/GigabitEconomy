@@ -27,7 +27,7 @@ public class Player extends MovingSprite implements InputProcessor {
     }
 
     /**
-     * Set the level the Player is in.
+     * Set the level the Player is in
      *
      * @param level the level the Player is in
      */
