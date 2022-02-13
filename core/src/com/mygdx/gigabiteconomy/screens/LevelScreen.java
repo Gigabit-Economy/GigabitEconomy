@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
+import com.mygdx.gigabiteconomy.exceptions.ScreenException;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.sprites.tiled.Player;
 import com.mygdx.gigabiteconomy.sprites.*;
@@ -25,7 +26,7 @@ import java.util.Arrays;
  * Each individual level class extends this class and defines properties such as the player, enemies, houses &
  * static sprites etc.
  */
-abstract class LevelScreen implements Screen {
+public abstract class LevelScreen implements Screen {
     private GigabitEconomy director;
     private TileManager tileManager;
 
@@ -185,6 +186,19 @@ abstract class LevelScreen implements Screen {
     }
 
     /**
+     * End the level (called when Player is destroyed)
+     */
+    public void end() {
+        try {
+            director.switchScreen("levelFailed");
+        } catch (ScreenException ex) {
+            Gdx.app.error("Exception", "The screen could not be switched when level failed", ex);
+        }
+
+        dispose();
+    }
+
+    /**
      * Removes the screen's assets (background texture, sprite batch and moving sprites) from memory
      * when the screen is made inactive and they're therefore no longer needed.
      * Called by hide().
@@ -198,10 +212,10 @@ abstract class LevelScreen implements Screen {
         for (GameObject sprite : sprites)
         {
             if (sprite instanceof MovingSprite) {
-                ((MovingSprite) sprite).dispose();
+                sprite.dispose();
             }
             else if (sprite instanceof StaticSprite) {
-                ((StaticSprite) sprite).dispose();
+                sprite.dispose();
             }
         }
     }

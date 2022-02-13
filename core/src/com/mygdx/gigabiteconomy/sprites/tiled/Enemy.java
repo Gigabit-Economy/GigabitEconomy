@@ -32,11 +32,13 @@ public class Enemy extends MovingSprite {
      *
      * @param movementConfig path of texture atlas movement config file (.txt)
      * @param attackingConfig path of texture atlas attacking config file (.txt)
+     * @param weapon the weapon the Enemy is carrying
      * @param x position of Tile (within tile grid) to place sprite
      * @param y position of Tile (within tile grid) to place sprite
      */
-    public Enemy(String movementConfig, String attackingConfig, int x, int y) {
-        super(movementConfig, attackingConfig, x, y);
+    public Enemy(Weapon weapon, int x, int y) {
+        super(weapon, x, y);
+
         movePath = new LinkedList<>();
         movePath.add(DIRECTION.NORTH);
         movePath.add(DIRECTION.EAST);
@@ -48,7 +50,6 @@ public class Enemy extends MovingSprite {
 
         setPath("move");
 
-
         setMoving(true);
     }
 
@@ -58,8 +59,10 @@ public class Enemy extends MovingSprite {
      * @param pathID Hashmap ID of path
      */
     public void setPath(String pathID) {
-        if ((currentPath = movementPaths.get(pathID)) == null)
+        if ((currentPath = movementPaths.get(pathID)) == null) {
             new Exception("Movement path does not exist");
+        }
+
         setDirectionMovement(currentPath.peek());
     }
 
@@ -84,28 +87,24 @@ public class Enemy extends MovingSprite {
     @Override
     public boolean moveBlocked() {
         if (getTargetTile() == null && !(getTargetTile().getOccupiedBy() instanceof Player)) {
-            //Take this tile out of rotation since we can't go here
+            // Take this tile out of rotation since we can't go here
 //            setDirectionMovement(movePath.remove());
-//            targetTile = tm.getAdjecentTile(currentTile, directionMoving.name(), 1);
-            //Skip current movement, hope it doesn't happen again
+//            targetTile = tm.getAdjacentTile(currentTile, directionMoving.name(), 1);
+
+            // Skip current movement, hope it doesn't happen again
             setTargetTile(getNextTile());
-            return true; //Break and attempt movement again
-        } else if (getTargetTile().getOccupiedBy() instanceof Player) {
-            System.out.println("I want to attack!");
-            //setMoving(false);
-            //Start attacking mode!!
-            //Do we need to check for this since attacking will be checked for in other abstract method
-            return true;
-        } else {
-            return false; //Not blocked!
+
+            return true; // movement blocked
         }
+
+        return false; // move not blocked
     }
 
     @Override
     public Tile getNextTile() {
         super.setDirectionMovement(currentPath.remove());
         currentPath.add(getDirectionMoving());
-        Tile toSet = getTileManager().getAdjecentTile(getCurrentTile(), getDirectionMoving().name(), 1);
+        Tile toSet = getTileManager().getAdjacentTile(getCurrentTile(), getDirectionMoving(), 1);
         if (toSet == null || (toSet.getOccupiedBy() != null && toSet.getOccupiedBy() != this)) return null;
         super.setTargetTile(toSet);
         //System.out.println("Moving: " + getDirectionMoving().name() + " " + currentPath.toString());
@@ -116,7 +115,7 @@ public class Enemy extends MovingSprite {
     public void moveStart() {
         //if (targetTile != null || !isMoving() && directionMoving == null) return;
         if ((getCurrentTile() == null || getDirectionMoving() != null) && isMoving() ) {
-            setTargetTile(getTileManager().getAdjecentTile(getCurrentTile(), getDirectionMoving().name(), 1));
+            setTargetTile(getTileManager().getAdjacentTile(getCurrentTile(), getDirectionMoving(), 1));
         }
 
     }

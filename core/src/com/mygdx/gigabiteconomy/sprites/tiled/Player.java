@@ -1,38 +1,39 @@
 package com.mygdx.gigabiteconomy.sprites.tiled;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
+import com.mygdx.gigabiteconomy.screens.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
-import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
-
-import javax.sound.midi.SysexMessage;
 
 /**
  * Class representing a player sprite (one per level)
  */
 public class Player extends MovingSprite implements InputProcessor {
-    //Deprecated variable for determining if player has to finish movement to centre of next Tile on keyUp()
-    boolean stillMoving = false;
-    //How much player should move vertically and horizontally every move() respectively
+    private LevelScreen level;
 
     /**
      * Create a new Player sprite (MovingSprite)
      *
-     * @param movementConfig path of texture atlas movement config file (.txt)
-     * @param attackingConfig path of texture atlas attacking config file (.txt)
+     * @param weapon the weapon the Player is carrying
      * @param x position of Tile (within tile grid) to place sprite
      * @param y position of Tile (within tile grid) to place sprite
      */
-    public Player(String movementConfig, String attackingConfig, int x, int y) {
-        super(movementConfig, attackingConfig, x, y);
+    public Player(Weapon weapon, int x, int y) {
+        super(weapon, x, y);
 
         Gdx.input.setInputProcessor(this);
     }
 
-
+    /**
+     * Set the level the Player is in.
+     *
+     * @param level the level the Player is in
+     */
+    public void setLevel(LevelScreen level) {
+        this.level = level;
+    }
 
     /**
      * Method to handle movement of the Player
@@ -149,7 +150,7 @@ public class Player extends MovingSprite implements InputProcessor {
 
     @Override
     public Tile getNextTile() {
-        Tile toSet = getTileManager().getAdjecentTile(getCurrentTile(), getDirectionMoving().name(), 1);
+        Tile toSet = getTileManager().getAdjacentTile(getCurrentTile(), getDirectionMoving(), 1);
 
         if (toSet != null) System.out.println("Getting player a target tile " + toSet.getPositionTile()[0] + " " + toSet.getPositionTile()[1]);
         if (toSet == null || (toSet.getOccupiedBy() != null && toSet.getOccupiedBy() != this)) return null;
@@ -198,6 +199,18 @@ public class Player extends MovingSprite implements InputProcessor {
         return false;
     }
 
+    /**
+     * Destroy the player & end the current level.
+     * Called when the player's health reaches 0 or less.
+     */
+    @Override
+    public void destroy() {
+        if (level != null) {
+            level.end();
+        }
+
+        super.destroy();
+    }
 
     @Override
     public boolean keyTyped(char character) {

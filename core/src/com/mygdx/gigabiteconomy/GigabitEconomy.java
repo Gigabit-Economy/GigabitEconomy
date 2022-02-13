@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.gigabiteconomy.exceptions.ScreenException;
 import com.mygdx.gigabiteconomy.screens.MenuScreen;
 import com.mygdx.gigabiteconomy.screens.LevelOneScreen;
 import com.badlogic.gdx.math.Vector3;
@@ -65,10 +66,10 @@ public class GigabitEconomy extends Game {
         return camera.combined;
     }
 
-    public void switchScreen(String name) throws Exception {
+    public void switchScreen(String name) throws ScreenException {
         Screen toSwitch = screens.get(name);
         if (toSwitch == null) {
-            throw new Exception(String.format("Tried to switch to invalid screen %s", name));
+            throw new ScreenException(String.format("Tried to switch to invalid screen %s", name));
         }
 
         setScreen(toSwitch);

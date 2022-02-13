@@ -1,53 +1,60 @@
-knifeLeftMv.png
-size: 1680, 240
+knifeRight.png
+size: 1920, 240
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-knifeLeftWalk1
+knifeRightAttack1
   rotate: false
   xy: 0, 0
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-knifeLeftWalk2
+knifeRightAttack2
   rotate: false
   xy: 240, 0
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-knifeLeftWalk3
+knifeRightAttack3
   rotate: false
   xy: 480, 0
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-knifeLeftWalk4
+knifeRightAttack4
   rotate: false
   xy: 720, 0
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-knifeLeftWalk5
+knifeRightAttack5
   rotate: false
   xy: 960, 0
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-knifeLeftWalk6
+knifeRightAttack6
   rotate: false
   xy: 1200, 0
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-knifeLeftWalk7
+knifeRightAttack7
   rotate: false
   xy: 1440, 0
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+knifeRightAttack8
+  rotate: false
+  xy: 1680, 0
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
