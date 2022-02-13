@@ -1,6 +1,8 @@
-package com.mygdx.gigabiteconomy.sprites;
+package com.mygdx.gigabiteconomy.sprites.tiled;
 
+import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.Tile;
+import com.mygdx.gigabiteconomy.sprites.GameObject;
 import sun.awt.image.ImageWatched;
 
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ public class Enemy extends MovingSprite {
 
     private Queue<DIRECTION> movePath;
     private Queue<DIRECTION> agroMovePath;
-    private Tile pathBegin = currentTile;
+    private Tile pathBegin = getCurrentTile();
 
     private HashMap<String, Queue<DIRECTION>> movementPaths = new HashMap<>(); //Allows n paths for n behaviours
     private Queue<DIRECTION> currentPath;
@@ -72,14 +74,14 @@ public class Enemy extends MovingSprite {
 
     @Override
     public boolean moveBlocked() {
-        if (targetTile == null && !(targetTile.getOccupiedBy() instanceof Player)) {
+        if (getTargetTile() == null && !(getTargetTile().getOccupiedBy() instanceof Player)) {
             //Take this tile out of rotation since we can't go here
 //            setDirectionMovement(movePath.remove());
 //            targetTile = tm.getAdjecentTile(currentTile, directionMoving.name(), 1);
             //Skip current movement, hope it doesn't happen again
-            targetTile = getNextTile();
+            setTargetTile(getNextTile());
             return true; //Break and attempt movement again
-        } else if (targetTile.getOccupiedBy() instanceof Player) {
+        } else if (getTargetTile().getOccupiedBy() instanceof Player) {
             System.out.println("I want to attack!");
             //setMoving(false);
             //Start attacking mode!!
@@ -92,23 +94,23 @@ public class Enemy extends MovingSprite {
 
     @Override
     public Tile getNextTile() {
-        setDirectionMovement(movePath.remove());
-        movePath.add(directionMoving);
-        System.out.println("Moving: " + directionMoving.name() + " " + movePath.toString());
-        return tm.getAdjecentTile(currentTile, directionMoving.name(), 1);
+        super.setDirectionMovement(movePath.remove());
+        movePath.add(getDirectionMoving());
+        System.out.println("Moving: " + getDirectionMoving().name() + " " + movePath.toString());
+        return getTileManager().getAdjecentTile(getCurrentTile(), getDirectionMoving().name(), 1);
     }
 
     @Override
     public void moveStart() {
         //if (targetTile != null || !isMoving() && directionMoving == null) return;
-        if ((targetTile == null || directionMoving != null) && isMoving() ) {
-            targetTile = tm.getAdjecentTile(currentTile, directionMoving.name(), 1);
+        if ((getCurrentTile() == null || getDirectionMoving() != null) && isMoving() ) {
+            setTargetTile(getTileManager().getAdjecentTile(getCurrentTile(), getDirectionMoving().name(), 1));
         }
 
     }
 
     @Override
-    public boolean move(float delta) {
+    public boolean move(float delta) throws TileMovementException {
         boolean ret = super.move(delta); //Checks if we've arrived else moved
 //        if (ret) {
 //            targetTile = tm.getAdjecentTile(currentTile, directionMoving.name(), 1);

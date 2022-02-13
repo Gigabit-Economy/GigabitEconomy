@@ -1,4 +1,4 @@
-package com.mygdx.gigabiteconomy.sprites;
+package com.mygdx.gigabiteconomy.sprites.tiled;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,13 +11,12 @@ public class MovingAnimation<T> extends Animation {
         super(frameDuration, keyFrames, looping ? PlayMode.LOOP : PlayMode.NORMAL);
     }
 
-
     public float getMovementTime() {
         return movementTime;
     }
 
     public Object runAnimation(float delta) {
-        this.movementTime+=delta;
+        this.movementTime += delta;
         Object ret = getKeyFrame(this.movementTime);
 
         return ret;

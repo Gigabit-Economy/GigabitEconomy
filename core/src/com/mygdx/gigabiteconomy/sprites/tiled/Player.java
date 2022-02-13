@@ -1,25 +1,33 @@
-package com.mygdx.gigabiteconomy.sprites;
+package com.mygdx.gigabiteconomy.sprites.tiled;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.Tile;
+import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
 
 import javax.sound.midi.SysexMessage;
 
 /**
- * Class for separating Player functionality from general Sprite functionality
- * Such as:
- *  > Attacking (detecting collisions for certain sprites only)
+ * Class representing a player sprite (one per level)
  */
-public class Player extends MovingSprite implements ApplicationListener, InputProcessor {
+public class Player extends MovingSprite implements InputProcessor {
     //Deprecated variable for determining if player has to finish movement to centre of next Tile on keyUp()
     boolean stillMoving = false;
     //How much player should move vertically and horizontally every move() respectively
-    
-    public Player(String move_config, String attack_config, int x, int y) {
-        super(move_config, attack_config, x, y);
+
+    /**
+     * Create a new Player sprite (MovingSprite)
+     *
+     * @param movementConfig path of texture atlas movement config file (.txt)
+     * @param attackingConfig path of texture atlas attacking config file (.txt)
+     * @param x position of Tile (within tile grid) to place sprite
+     * @param y position of Tile (within tile grid) to place sprite
+     */
+    public Player(String movementConfig, String attackingConfig, int x, int y) {
+        super(movementConfig, attackingConfig, x, y);
 
         Gdx.input.setInputProcessor(this);
     }
@@ -27,11 +35,12 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
 
 
     /**
-     * Method to handle movement
-     * @param keycode
+     * Method to handle movement of the Player
+     *
+     * @param keycode the user inputted key
      */
     public void handleMovement(int keycode) {
-        if (targetTile != null) {
+        if (getTargetTile() != null) {
             System.out.println("Not finished with previous movement");
             return; //Not finished with previous movement
         }
@@ -43,19 +52,19 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
 
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT) {
             // Move left
-            setDirectionMovement(DIRECTION.WEST);
+            super.setDirectionMovement(DIRECTION.WEST);
         }
         else if (keycode == Input.Keys.D || keycode == Input.Keys.RIGHT) {
             // Move right
-            setDirectionMovement(DIRECTION.EAST);
+            super.setDirectionMovement(DIRECTION.EAST);
         }
         else if (keycode == Input.Keys.W || keycode == Input.Keys.UP) {
             // Move up
-            setDirectionMovement(DIRECTION.NORTH);
+            super.setDirectionMovement(DIRECTION.NORTH);
         }
         else if (keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
             // Move down
-            setDirectionMovement(DIRECTION.SOUTH);
+            super.setDirectionMovement(DIRECTION.SOUTH);
         } else {
             System.out.println(keycode + " not accounted for in movement logic");
             return;
@@ -78,14 +87,19 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
 //            targetTile = null;
 //            //setMoving(false);
 //        }
+
     }
 
+    /**
+     * Deal with a user's key press (initiate movement/attacking, go to pause menu etc.).
+     * Part of ApplicationListener implementation.
+     *
+     * @param keycode the pressed key
+     * @return if the key press was processed
+     */
     @Override
     public boolean keyDown(int keycode) {
-
         System.out.println("key pressed: " + keycode);
-
-        //Might have to move movement handling into other method if we add more functions for key presses
 
         /**
          * Movement calculated by:
@@ -96,9 +110,7 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT || keycode == Input.Keys.D ||
                 keycode == Input.Keys.RIGHT || keycode == Input.Keys.W ||
                 keycode == Input.Keys.UP || keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
-
             handleMovement(keycode);
-
         } else if (keycode == Input.Keys.SPACE) {
             System.out.println("Attacking now");
             setAttacking(true);
@@ -109,6 +121,13 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
         return true;
     }
 
+    /**
+     * Deal with a key press being lifted.
+     * Part of ApplicationListener implementation.
+     *
+     * @param keycode the key lifted
+     * @return if the key lift was processed
+     */
     @Override
     public boolean keyUp(int keycode) {
         //Player no longer WANTS to be moving, but we must finish animation to centre of target square
@@ -119,9 +138,9 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
 
     @Override
     public boolean moveBlocked() {
-        if (targetTile == null || targetTile.getOccupiedBy() != null) {
-            setDirectionMovement(null);
-            targetTile = null;
+        if (getTargetTile() == null || getTargetTile().getOccupiedBy() != null) {
+            super.setDirectionMovement(null);
+            setTargetTile(null);
             setMoving(false);
             return true;
         }
@@ -130,9 +149,9 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
 
     @Override
     public Tile getNextTile() {
-        targetTile = tm.getAdjecentTile(currentTile, directionMoving.name(), 1);
-        if (targetTile != null) System.out.println("Getting player a target tile " + targetTile.getPositionTile()[0] + " " + targetTile.getPositionTile()[1]);
-        return targetTile;
+        setTargetTile(getTileManager().getAdjecentTile(getCurrentTile(), getDirectionMoving().name(), 1));
+        if (getTargetTile() != null) System.out.println("Getting player a target tile " + getTargetTile().getPositionTile()[0] + " " + getTargetTile().getPositionTile()[1]);
+        return getTargetTile();
     }
 
     @Override
@@ -141,11 +160,11 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
     }
 
     @Override
-    public boolean move(float delta) {
+    public boolean move(float delta) throws TileMovementException  {
         boolean ret = super.move(delta);
 
         if (ret && isMoving()) {
-            setDirectionMovement(directionMoving);
+            setDirectionMovement(getDirectionMoving());
             System.out.println("Holding down, direction movement set");
         } else if (ret && !isMoving()) {
             setDirectionMovement(null);
@@ -174,7 +193,6 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
 
         return false;
     }
-
 
 
     @Override
@@ -206,38 +224,4 @@ public class Player extends MovingSprite implements ApplicationListener, InputPr
     public boolean scrolled(float amountX, float amountY) {
         return false;
     }
-
-    @Override
-    public void create() {
-
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void render() {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void dispose() {
-
-    }
-
-
-
-
 }

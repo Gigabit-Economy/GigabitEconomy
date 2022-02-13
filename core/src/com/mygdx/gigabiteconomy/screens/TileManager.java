@@ -1,9 +1,8 @@
 package com.mygdx.gigabiteconomy.screens;
 
-import com.badlogic.gdx.Game;
-import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.sprites.GameObject;
-import com.mygdx.gigabiteconomy.sprites.MovingSprite;
+import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
+import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +10,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * Class to hold and manage Tiles.
+ * Class used to hold and manage all Tiles.
  * - Each MySprite instance is passed the TileManager it belongs to and sets a Tile to occupy
  * - Then Player position can be retrieved from the Tile it's on (or the bottom leftmost if multiple -- Rat King)
  */
@@ -101,7 +100,7 @@ public class TileManager {
      * @param toTile Tile to place given object on
      * @param objectToPlace Object to place on given Tile
      */
-    public Tile placeObject(Tile toTile, GameObject objectToPlace) {
+    public Tile placeObject(Tile toTile, TiledObject objectToPlace) {
         if (toTile.getOccupiedBy() != null) return null;
         Tile objTile = objectToPlace.getCurrentTile();
         //Clearing old tile
@@ -113,7 +112,7 @@ public class TileManager {
         return toTile;
     }
 
-    public Tile placeObject(int x, int y, GameObject objectToPlace) {
+    public Tile placeObject(int x, int y, TiledObject objectToPlace) {
         Tile toPlace;
         if ((toPlace = getTile(x, y)) != null) {
             toPlace = placeObject(toPlace, objectToPlace);
@@ -173,12 +172,11 @@ public class TileManager {
         return adjecentTiles;
     }
 
-    public void initObjects(ArrayList<GameObject>... objsArr) {
-
-        for (ArrayList<GameObject> arr : objsArr) {
-            for (GameObject o : arr) {
-                float spriteX = o.getActorX();
-                float spriteY = o.getActorY();
+    public void initObjects(ArrayList<TiledObject>... objsArr) {
+        for (ArrayList<TiledObject> arr : objsArr) {
+            for (TiledObject o : arr) {
+                float spriteX = o.getX();
+                float spriteY = o.getY();
                 Tile placeAt = this.placeObject((int) spriteX, (int) spriteY, o);
 
                 //System.out.println(pos.x + " " + pos.y);
@@ -191,7 +189,6 @@ public class TileManager {
         }
     }
 
-
     /**
      * Method to move an entity from one tile to another
      * @param tileFrom Tile from which to move the GameObject
@@ -200,7 +197,7 @@ public class TileManager {
      */
     public Tile moveFromTile(Tile tileFrom, String direction, int distance) {
         direction = direction.toUpperCase();
-        GameObject occupier = tileFrom.getOccupiedBy();
+        TiledObject occupier = tileFrom.getOccupiedBy();
         Tile nextTile = getAdjecentTile(tileFrom, direction, distance);
 
         if (nextTile != null) {
