@@ -205,7 +205,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         } else if (keycode == Input.Keys.P || keycode == Input.Keys.ESCAPE) {
             pause();
         } else if (keycode == Input.Keys.SPACE) {
-            player.attack();
+            // launch attack
         } else {
             return false;
         }

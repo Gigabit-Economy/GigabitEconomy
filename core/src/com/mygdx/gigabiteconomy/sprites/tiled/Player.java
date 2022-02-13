@@ -1,21 +1,8 @@
 package com.mygdx.gigabiteconomy.sprites.tiled;
 
-import java.lang.System.Logger.Level;
-
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.gigabiteconomy.GigabitEconomy;
-import com.mygdx.gigabiteconomy.screens.LevelOneScreen;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.Tile;
-import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
-
-import javax.sound.midi.SysexMessage;
 
 /**
  * Class representing a player sprite (one per level)
@@ -98,17 +85,6 @@ public class Player extends MovingSprite {
         setMoving(false);
     }
 
-    /**
-     * Set for the player to attack
-     */
-    @Override
-    public boolean keyUp(int keycode) {
-        //Player no longer WANTS to be moving, but we must finish animation to centre of target square
-        setMoving(false);
-
-        return false;
-    }
-
     @Override
     public boolean moveBlocked() {
         if (getTargetTile() == null || getTargetTile().getOccupiedBy() != null) {
@@ -168,37 +144,6 @@ public class Player extends MovingSprite {
 //            }
 //        }
 
-        return false;
-    }
-
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(float amountX, float amountY) {
         return false;
     }
 }
