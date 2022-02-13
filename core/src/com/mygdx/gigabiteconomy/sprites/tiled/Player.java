@@ -149,9 +149,13 @@ public class Player extends MovingSprite implements InputProcessor {
 
     @Override
     public Tile getNextTile() {
-        setTargetTile(getTileManager().getAdjecentTile(getCurrentTile(), getDirectionMoving().name(), 1));
-        if (getTargetTile() != null) System.out.println("Getting player a target tile " + getTargetTile().getPositionTile()[0] + " " + getTargetTile().getPositionTile()[1]);
-        return getTargetTile();
+        Tile toSet = getTileManager().getAdjecentTile(getCurrentTile(), getDirectionMoving().name(), 1);
+
+        if (toSet != null) System.out.println("Getting player a target tile " + toSet.getPositionTile()[0] + " " + toSet.getPositionTile()[1]);
+        if (toSet == null || (toSet.getOccupiedBy() != null && toSet.getOccupiedBy() != this)) return null;
+
+        super.setTargetTile(toSet); //Set target tile to one we want to go to
+        return toSet;
     }
 
     @Override

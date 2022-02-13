@@ -105,8 +105,11 @@ public class Enemy extends MovingSprite {
     public Tile getNextTile() {
         super.setDirectionMovement(currentPath.remove());
         currentPath.add(getDirectionMoving());
-        System.out.println("Moving: " + getDirectionMoving().name() + " " + currentPath.toString());
-        return getTileManager().getAdjecentTile(getCurrentTile(), getDirectionMoving().name(), 1);
+        Tile toSet = getTileManager().getAdjecentTile(getCurrentTile(), getDirectionMoving().name(), 1);
+        if (toSet == null || (toSet.getOccupiedBy() != null && toSet.getOccupiedBy() != this)) return null;
+        super.setTargetTile(toSet);
+        //System.out.println("Moving: " + getDirectionMoving().name() + " " + currentPath.toString());
+        return getTargetTile();
     }
 
     @Override
