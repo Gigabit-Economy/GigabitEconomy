@@ -11,6 +11,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.screens.LevelOneScreen;
+import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
 
@@ -32,13 +33,15 @@ public class Player extends MovingSprite {
         super(movementConfig, attackingConfig, x, y);
     }
 
+
+
     /**
      * Method to handle movement of the Player
      *
      * @param keycode the user inputted key
      */
     public void handleMovement(int keycode) {
-        if (getTargetTile() != null && !isMoving() || super.getDirectionMoving() != null) {
+        if (getTargetTile() != null) {
             System.out.println("Not finished with previous movement");
             return; // Not finished with previous movement
         }
@@ -51,39 +54,41 @@ public class Player extends MovingSprite {
 
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT) {
             // Move left
-            super.setDirectionMoving(DIRECTION.WEST);
+            super.setDirectionMovement(DIRECTION.WEST);
         }
         else if (keycode == Input.Keys.D || keycode == Input.Keys.RIGHT) {
             // Move right
-            super.setDirectionMoving(DIRECTION.EAST);
+            super.setDirectionMovement(DIRECTION.EAST);
         }
         else if (keycode == Input.Keys.W || keycode == Input.Keys.UP) {
             // Move up
-            super.setDirectionMoving(DIRECTION.NORTH);
+            super.setDirectionMovement(DIRECTION.NORTH);
         }
         else if (keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
             // Move down
-            super.setDirectionMoving(DIRECTION.SOUTH);
+            super.setDirectionMovement(DIRECTION.SOUTH);
         } else {
             System.out.println(keycode + " not accounted for in movement logic");
             return;
         }
+        setMoving(true);
 
         /**
          * Uses tile manager to get adjecentTile
          * Sets velocity vector based on value of direction set above
          */
-        toTarget = getTileManager().getAdjecentTile(getCurrentTile(), getDirectionMoving().toString(), 1);
-        setDeltaMove(getDirectionMoving().dx, getDirectionMoving().dy);
-
-        // Checks if Player can move to Tile
-        if (toTarget != null && toTarget.getOccupiedBy() == null) {
-            setTargetTile(toTarget);
-            setMoving(true);
-            System.out.println("Moving true to " + getTargetTile().getTileCoords()[0] + " " + getTargetTile().getTileCoords()[1]);
-        } else {
-            setTargetTile(null);
-        }
+//        toTarget = tm.getAdjecentTile(currentTile, directionMoving.toString(), 1);
+//        setDeltaMove(directionMoving);
+//
+//        //Checks if Player can move to Tile
+//        if (toTarget != null && toTarget.getOccupiedBy() == null) {
+//            targetTile = toTarget;
+//            setMoving(true);
+//            System.out.println("Moving true to " + targetTile.getTileCoords()[0] + " " + targetTile.getTileCoords()[1]);
+//        } else {
+//            targetTile = null;
+//            //setMoving(false);
+//        }
     }
 
     /**
@@ -96,8 +101,104 @@ public class Player extends MovingSprite {
     /**
      * Set for the player to attack
      */
-    public void attack() {
-        setAttacking(true);
-        System.out.println("Attacking now");
+    @Override
+    public boolean keyUp(int keycode) {
+        //Player no longer WANTS to be moving, but we must finish animation to centre of target square
+        setMoving(false);
+
+        return false;
+    }
+
+    @Override
+    public boolean moveBlocked() {
+        if (getTargetTile() == null || getTargetTile().getOccupiedBy() != null) {
+            super.setDirectionMovement(null);
+            setTargetTile(null);
+            setMoving(false);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Tile getNextTile() {
+        Tile toSet = getTileManager().getAdjecentTile(getCurrentTile(), getDirectionMoving().name(), 1);
+
+        if (toSet != null) System.out.println("Getting player a target tile " + toSet.getPositionTile()[0] + " " + toSet.getPositionTile()[1]);
+        if (toSet == null || (toSet.getOccupiedBy() != null && toSet.getOccupiedBy() != this)) return null;
+
+        super.setTargetTile(toSet); //Set target tile to one we want to go to
+        return toSet;
+    }
+
+    @Override
+    public void moveStart() {
+        return;
+    }
+
+    @Override
+    public boolean move(float delta) throws TileMovementException  {
+        boolean ret = super.move(delta);
+
+        if (ret && isMoving()) {
+            setDirectionMovement(getDirectionMoving());
+            System.out.println("Holding down, direction movement set");
+        } else if (ret && !isMoving()) {
+            setDirectionMovement(null);
+            System.out.println("Setting to null");
+        }
+
+
+
+//        if (ret) {
+//            if (isMoving()) {
+//                //If key is still held down, get next tile
+//                targetTile = tm.getAdjecentTile(targetTile, directionMoving.toString(), 1);
+//                if (targetTile == null) setMoving(false);
+//                return true;
+//            }
+//            else if (!isMoving() && targetTile != null) {
+//                //If key is released, but there's still distance to cover
+//                //currentTile = targetTile; useless line?
+//                targetTile = null;
+//                snap(delta);
+//                //Reset direction moving
+//                directionMoving = null;
+//                return true;
+//            }
+//        }
+
+        return false;
+    }
+
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(float amountX, float amountY) {
+        return false;
     }
 }

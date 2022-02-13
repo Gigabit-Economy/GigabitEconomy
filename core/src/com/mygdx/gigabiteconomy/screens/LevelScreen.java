@@ -39,7 +39,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     private Player player;
     private ArrayList<TiledObject> enemies;
     private ArrayList<House> houses;
-    private ArrayList<GameObject> staticSprites;
+    private ArrayList<TiledObject> staticSprites;
 
     private int scoreCount, parcelCount, healthCount;
     private String scoreText, parcelText, healthText;
@@ -59,8 +59,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      *                          fences etc.) for the level
      * @param backgroundTexture the background graphic of the level
      */
-    public LevelScreen(GigabitEconomy director, Player player, ArrayList<TiledObject> enemies, ArrayList<House> houses,
-            ArrayList<GameObject> staticSprites, Texture backgroundTexture) {
+    public LevelScreen(GigabitEconomy director, Player player, ArrayList<TiledObject> enemies, ArrayList<House> houses, ArrayList<TiledObject> staticSprites, Texture backgroundTexture) {
         this.director = director;
         this.player = player;
         this.houses = houses;
@@ -89,10 +88,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
         // Initialise each sprite's position on tiles using the tile manager
         ArrayList<TiledObject> playerList = new ArrayList<TiledObject>(Arrays.asList(player));
-        tileManager.initObjects(playerList, enemies); // in priority order
-
-        // this.director = director;
-        // this.stage = new Stage(director.getViewport());
+        tileManager.initObjects(playerList, staticSprites, enemies); // in priority order
     }
 
     /**
@@ -124,8 +120,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
         // Add enemies
         sprites.addAll(enemies);
-
-       
     }
 
     /**

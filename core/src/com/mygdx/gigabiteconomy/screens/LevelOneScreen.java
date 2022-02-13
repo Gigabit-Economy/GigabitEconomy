@@ -20,7 +20,7 @@ public class LevelOneScreen extends LevelScreen {
     private static final Player PLAYER = new Player("finished_assets/player/movement/katanaRightMv.txt", "finished_assets/player/attacks/katanaRightAt.txt", 0 , 0);
 
     /* ENEMIES */
-    private static final Enemy ENEMY_ONE = new Enemy("finished_assets/player/attacks/golfRightAt.txt", "finished_assets/player/attacks/golfRightAt.txt", 2, 2);
+    private static final Enemy ENEMY_ONE = new Enemy("finished_assets/player/movement/katanaRightMv.txt", "finished_assets/player/attacks/golfRightAt.txt", 2, 2);
     private static final ArrayList<TiledObject> ENEMIES = new ArrayList<TiledObject>(Arrays.asList(ENEMY_ONE));
 
     /* HOUSES */
@@ -29,7 +29,7 @@ public class LevelOneScreen extends LevelScreen {
 
     /* STATIC SPRITES (FENCES ETC...) */
     private static final StaticSprite FENCE = new StaticSprite("finished_assets/static_sprites/fence.png", 5, 0);
-    private static final ArrayList<GameObject> STATIC_SPRITES = new ArrayList<GameObject>(Arrays.asList(FENCE));
+    private static final ArrayList<TiledObject> STATIC_SPRITES = new ArrayList<TiledObject>(Arrays.asList(FENCE));
 
     // Level screen background texture
     private static final Texture BACKGROUND_TEXTURE = new Texture("finished_assets/levels/level1.png");

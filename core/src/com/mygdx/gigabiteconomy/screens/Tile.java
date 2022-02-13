@@ -1,5 +1,6 @@
 package com.mygdx.gigabiteconomy.screens;
 
+import com.mygdx.gigabiteconomy.sprites.GameObject;
 import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
 /**
@@ -68,6 +69,10 @@ public class Tile {
      */
     public TiledObject getOccupiedBy() {
         return occupiedBy;
+    }
+
+    public boolean isOccupiedBy(GameObject o) {
+        return getOccupiedBy() != o;
     }
 
     public int getSideLength() {
