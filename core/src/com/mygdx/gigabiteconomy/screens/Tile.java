@@ -51,10 +51,7 @@ public class Tile {
 
     /**
      * Method to return screen coordinates of given tile (from bottom left)
-<<<<<<< HEAD
-=======
      *
->>>>>>> main
      * @return float[2] of form [screen coord x, screen coord y]
      */
     public float[] getTileCoords() {
