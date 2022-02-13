@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.mygdx.gigabiteconomy"},{"l":"com.mygdx.gigabiteconomy.desktop"},{"l":"com.mygdx.gigabiteconomy.exceptions"},{"l":"com.mygdx.gigabiteconomy.screens"},{"l":"com.mygdx.gigabiteconomy.sprites"},{"l":"com.mygdx.gigabiteconomy.sprites.tiled"}];updateSearchResults();

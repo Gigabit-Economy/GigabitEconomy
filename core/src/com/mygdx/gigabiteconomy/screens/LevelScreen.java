@@ -1,24 +1,31 @@
 package com.mygdx.gigabiteconomy.screens;
 
 import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
-import com.mygdx.gigabiteconomy.sprites.Player;
-import com.mygdx.gigabiteconomy.screens.TileManager;
+import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
+import com.mygdx.gigabiteconomy.sprites.tiled.Player;
 import com.mygdx.gigabiteconomy.sprites.*;
+import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
+import com.mygdx.gigabiteconomy.sprites.tiled.StaticSprite;
+import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
- * Base class for all level screens.
+ * Abstract class which acts as a base class for all level screens.
+ * Each individual level class extends this class and defines properties such as the player, enemies, houses &
+ * static sprites etc.
  */
-abstract class LevelScreen implements Screen, ApplicationListener {
+abstract class LevelScreen implements Screen {
     private GigabitEconomy director;
     private TileManager tileManager;
 
@@ -28,8 +35,13 @@ abstract class LevelScreen implements Screen, ApplicationListener {
     private ArrayList<GameObject> sprites = new ArrayList<GameObject>(); // First sprite is ALWAYS player
     private SpriteBatch batch;
     private Player player;
-    private ArrayList<GameObject> enemies;
-    private ArrayList<StaticSprite> staticSprites;
+    private ArrayList<TiledObject> enemies;
+    private ArrayList<House> houses;
+    private ArrayList<TiledObject> staticSprites;
+
+    private int scoreCount, parcelCount, healthCount;
+    private String scoreText, parcelText, healthText;
+    private BitmapFont bitmapFont;
 
     /**
      * A template constructor for use by all level screen subclasses. Sets properties that differ between levels
@@ -38,15 +50,25 @@ abstract class LevelScreen implements Screen, ApplicationListener {
      * @param director the instance of the game director
      * @param player the player character for the level
      * @param enemies an ArrayList containing all enemy characters for the level
-     * @param staticSprites an ArrayList containing all static sprites (such as fences etc.)
+     * @param houses an ArrayList containing all houses for the level
+     * @param staticSprites an ArrayList containing all static sprites (such as fences etc.) for the level
      * @param backgroundTexture the background graphic of the level
      */
-    public LevelScreen(GigabitEconomy director, Player player, ArrayList<GameObject> enemies, ArrayList<StaticSprite> staticSprites, Texture backgroundTexture) {
+    public LevelScreen(GigabitEconomy director, Player player, ArrayList<TiledObject> enemies, ArrayList<House> houses, ArrayList<TiledObject> staticSprites, Texture backgroundTexture) {
         this.director = director;
         this.player = player;
+        this.houses = houses;
         this.enemies = enemies;
         this.staticSprites = staticSprites;
         this.backgroundTexture = backgroundTexture;
+
+        scoreCount = 0;
+        parcelCount = 0;
+        healthCount = 0;
+        scoreText = "score: 0";
+        parcelText = "no. parcels: 0";
+        healthText = "health: 100 %"; 
+        bitmapFont = new BitmapFont();
 
         // Create tile manager instance (stated variables explicitly here in case we want to mess about with them)
         //-> Might need to move creating tileManager to other method (after we add level switching)
@@ -57,19 +79,8 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         tileManager = new TileManager(backgroundTextureHeight/numberOfTilesHigh, backgroundTextureHeight/2, backgroundTextureWidth, 0, 0);
 
         // Initialise each sprite's position on tiles using the tile manager
-        try {
-            for (GameObject go : enemies) {
-                go.initTile(tileManager);
-            }
-            for (GameObject go : staticSprites) {
-                go.initTile(tileManager);
-            }
-
-            player.initTile(tileManager);
-        } catch (Exception ex) {
-            Gdx.app.error("Exception", "Error initialising tile manager", ex);
-            System.exit(-1);
-        }
+        ArrayList<TiledObject> playerList = new ArrayList<TiledObject>(Arrays.asList(player));
+        tileManager.initObjects(playerList, staticSprites, enemies); // in priority order
     }
 
     /**
@@ -83,7 +94,13 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         // Add background
         backgroundSprite = new Sprite(backgroundTexture);
         System.out.println("Texture dimensions: h:" + backgroundTexture.getHeight() + " w:" + backgroundTexture.getWidth());
-        tileManager = new TileManager(135, backgroundTexture.getHeight()/2, backgroundTexture.getWidth(), 0, 0);
+        //tileManager = new TileManager(135, backgroundTexture.getHeight()/2, backgroundTexture.getWidth(), 0, 0);
+
+        // Add static sprites
+        sprites.addAll(staticSprites);
+
+        // Add houses
+        sprites.addAll(houses);
 
         // Add player
         sprites.add(player);
@@ -91,9 +108,6 @@ abstract class LevelScreen implements Screen, ApplicationListener {
 
         // Add enemies
         sprites.addAll(enemies);
-
-        // Add static sprites
-        sprites.addAll(staticSprites);
     }
 
     /**
@@ -113,7 +127,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
 
         // This should only take place when player gets to a certain position in camera view
         // update camera position to follow player
-        director.updateCameraPos(player.getActorX(), player.getActorY());
+        director.updateCameraPos(player.getX(), player.getY());
 
         batch.begin();
 
@@ -124,29 +138,31 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         for (GameObject sprite : sprites) {
             if (sprite instanceof MovingSprite) {
                 MovingSprite movingSprite = (MovingSprite) sprite;
-                movingSprite.move(delta);
-            } else if (sprite instanceof StaticSprite) {
-                ((StaticSprite) sprite).draw(batch, delta);
-            }
 
-            batch.draw(sprite.getCurrRegion(), sprite.getActorX(), sprite.getActorY());
+                try {
+                    movingSprite.move(delta);
+                } catch (TileMovementException ex) {
+                    // ignore exception (could act on it and display message to user etc. later)
+                }
+
+                batch.draw(movingSprite.getTextureRegion(), movingSprite.getX(), movingSprite.getY());
+            } else if (sprite instanceof StaticSprite) {
+                StaticSprite staticSprite = (StaticSprite) sprite;
+
+                batch.draw(staticSprite.getTexture(), staticSprite.getX(), staticSprite.getY());
+            }
         }
+
+        bitmapFont.setColor(Color.CORAL);
+        bitmapFont.draw(batch, scoreText, 25, 1040);
+        bitmapFont.draw(batch, parcelText, 25, 1020);
+        bitmapFont.draw(batch, healthText, 25, 1000);
 
         batch.end();
     }
 
     @Override
-    public void create() {
-
-    }
-
-    @Override
     public void resize(int width, int height) {
-    }
-
-    @Override
-    public void render() {
-
     }
 
     @Override
@@ -158,7 +174,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
     }
 
     /**
-     * Sets the input processor to null to prevent the LevelScreen's application listener from listening to user
+     * Sets the input processor to null to prevent the Player's application listener from listening to user
      * inputs; then calls dispose() to remove the screen's assets from memory.
      * Called by LibGDX when the screen is made inactive.
      */
@@ -169,7 +185,7 @@ abstract class LevelScreen implements Screen, ApplicationListener {
     }
 
     /**
-     * Removes the screen's assets (background texture, sprite batch & moving sprites) from memory
+     * Removes the screen's assets (background texture, sprite batch and moving sprites) from memory
      * when the screen is made inactive and they're therefore no longer needed.
      * Called by hide().
      */
@@ -182,8 +198,10 @@ abstract class LevelScreen implements Screen, ApplicationListener {
         for (GameObject sprite : sprites)
         {
             if (sprite instanceof MovingSprite) {
-                MovingSprite movingSprite = (MovingSprite) sprite;
-                movingSprite.dispose();
+                ((MovingSprite) sprite).dispose();
+            }
+            else if (sprite instanceof StaticSprite) {
+                ((StaticSprite) sprite).dispose();
             }
         }
     }

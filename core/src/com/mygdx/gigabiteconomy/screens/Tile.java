@@ -1,12 +1,10 @@
 package com.mygdx.gigabiteconomy.screens;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.gigabiteconomy.sprites.GameObject;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
+import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
 /**
- * Tile class
+ * Class representing a Tile on the player-accessible parts of level screen.
  * -> Contains:
  * --> Position (relative to texture)
  * --> Height/Width
@@ -20,8 +18,8 @@ public class Tile {
     private int[] positionTile = new int[2]; //Holds relative position on screen
     private int sideLength;
     private boolean occupied; //Makes tile impassible
-    private GameObject ownedBy; //Owned by entity (for homeowners)
-    private GameObject occupiedBy; //Impassible or delivery spot!
+    private TiledObject ownedBy; //Owned by entity (for homeowners)
+    private TiledObject occupiedBy; //Impassible or delivery spot!
 
     /**
      *
@@ -41,7 +39,7 @@ public class Tile {
      * Sets current Tile to occupied
      * @param occupying GameObject to occupy current Tile
      */
-    public void setOccupied(GameObject occupying) {
+    public void setOccupied(TiledObject occupying) {
         this.occupiedBy = occupying;
     }
 
@@ -54,7 +52,7 @@ public class Tile {
 
     /**
      * Method to return screen coordinates of given tile (from bottom left)
-     * @param tileOccupied Tile to return coordinates of
+     *
      * @return float[2] of form [screen coord x, screen coord y]
      */
     public float[] getTileCoords() {
@@ -69,8 +67,12 @@ public class Tile {
     /**
      * @return GameObject occupying current Tile
      */
-    public GameObject getOccupiedBy() {
+    public TiledObject getOccupiedBy() {
         return occupiedBy;
+    }
+
+    public boolean isOccupiedBy(GameObject o) {
+        return getOccupiedBy() != o;
     }
 
     public int getSideLength() {

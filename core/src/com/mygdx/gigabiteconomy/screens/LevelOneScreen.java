@@ -1,8 +1,13 @@
 package com.mygdx.gigabiteconomy.screens;
 
 import com.mygdx.gigabiteconomy.GigabitEconomy;
-import com.mygdx.gigabiteconomy.sprites.*;
 import com.badlogic.gdx.graphics.Texture;
+import com.mygdx.gigabiteconomy.sprites.GameObject;
+import com.mygdx.gigabiteconomy.sprites.House;
+import com.mygdx.gigabiteconomy.sprites.tiled.Enemy;
+import com.mygdx.gigabiteconomy.sprites.tiled.Player;
+import com.mygdx.gigabiteconomy.sprites.tiled.StaticSprite;
+import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -12,15 +17,19 @@ import java.util.ArrayList;
  */
 public class LevelOneScreen extends LevelScreen {
     // Player character
-    private static final Player PLAYER = new Player("finished_assets/player/movement/katanaRightMv.txt",0 , 0);
+    private static final Player PLAYER = new Player("finished_assets/player/movement/katanaRightMv.txt", "finished_assets/player/attacks/katanaRightAt.txt", 0 , 0);
 
     /* ENEMIES */
-    private static final Enemy ENEMY_ONE = new Enemy("finished_assets/player/attacks/golfRightAt.txt", 2, 2);
-    private static final ArrayList<GameObject> ENEMIES = new ArrayList<GameObject>(Arrays.asList(ENEMY_ONE));
+    private static final Enemy ENEMY_ONE = new Enemy("finished_assets/player/movement/katanaRightMv.txt", "finished_assets/player/attacks/golfRightAt.txt", 2, 2);
+    private static final ArrayList<TiledObject> ENEMIES = new ArrayList<TiledObject>(Arrays.asList(ENEMY_ONE));
+
+    /* HOUSES */
+    private static final House HOUSE_ONE = new House(House.HouseType.DETACHED, 640, 480);
+    private static final ArrayList<House> HOUSES = new ArrayList<House>(Arrays.asList(HOUSE_ONE));
 
     /* STATIC SPRITES (FENCES ETC...) */
     private static final StaticSprite FENCE = new StaticSprite("finished_assets/static_sprites/fence.png", 5, 0);
-    private static final ArrayList<StaticSprite> STATIC_SPRITES = new ArrayList<StaticSprite>(Arrays.asList(FENCE));
+    private static final ArrayList<TiledObject> STATIC_SPRITES = new ArrayList<TiledObject>(Arrays.asList(FENCE));
 
     // Level screen background texture
     private static final Texture BACKGROUND_TEXTURE = new Texture("finished_assets/levels/level1.png");
@@ -32,6 +41,6 @@ public class LevelOneScreen extends LevelScreen {
      * @param director the instance of the game director
      */
     public LevelOneScreen(GigabitEconomy director) {
-        super(director, PLAYER, ENEMIES, STATIC_SPRITES, BACKGROUND_TEXTURE);
+        super(director, PLAYER, ENEMIES, HOUSES, STATIC_SPRITES, BACKGROUND_TEXTURE);
     }
 }

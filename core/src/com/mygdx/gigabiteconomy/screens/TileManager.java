@@ -1,11 +1,16 @@
 package com.mygdx.gigabiteconomy.screens;
 
-import com.badlogic.gdx.Game;
-import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.sprites.GameObject;
+import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
+import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
- * Class to hold and manage Tiles.
+ * Class used to hold and manage all Tiles.
  * - Each MySprite instance is passed the TileManager it belongs to and sets a Tile to occupy
  * - Then Player position can be retrieved from the Tile it's on (or the bottom leftmost if multiple -- Rat King)
  */
@@ -95,7 +100,7 @@ public class TileManager {
      * @param toTile Tile to place given object on
      * @param objectToPlace Object to place on given Tile
      */
-    public Tile placeObject(Tile toTile, GameObject objectToPlace) {
+    public Tile placeObject(Tile toTile, TiledObject objectToPlace) {
         if (toTile.getOccupiedBy() != null) return null;
         Tile objTile = objectToPlace.getCurrentTile();
         //Clearing old tile
@@ -107,7 +112,7 @@ public class TileManager {
         return toTile;
     }
 
-    public Tile placeObject(int x, int y, GameObject objectToPlace) {
+    public Tile placeObject(int x, int y, TiledObject objectToPlace) {
         Tile toPlace;
         if ((toPlace = getTile(x, y)) != null) {
             toPlace = placeObject(toPlace, objectToPlace);
@@ -115,12 +120,40 @@ public class TileManager {
         return toPlace;
     }
 
-    public Tile placeObjectFromCoords(float x, float y, GameObject objectToPlace) {
-        Tile ret = this.getTileFromCoords(x, y);
-        ret = this.placeObject(ret, objectToPlace);
-        return ret;
+    /**
+     * @param x coordinate to find row of
+     * @param y coordinate to find row of
+     * @param direction which direction to return row of
+     * @return
+     */
+    public ArrayList<Tile> getSelectiveDir(int x, int y, MovingSprite.DIRECTION direction) {
+        ArrayList<Tile> ret = new ArrayList<>();
+        try {
+            while (true) {
+                ret.add(tileArray[x][y]);
+                x = (direction.dx < 0) && (direction.dx != 0) ? x-- : x++;
+                y = (direction.dy < 0) && (direction.dy != 0) ? y-- : y++;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return ret;
+        }
     }
 
+    /**
+     * @return MovingSprite.DIRECTION of next from curr. E.g. Which direction is Player relative to Enemy?
+     */
+    public MovingSprite.DIRECTION findDirectionFrom(Tile curr, Tile next) {
+        // For each direction, we need to find corresponding row or col, then see if that's contained
+
+        for (MovingSprite.DIRECTION direction : MovingSprite.DIRECTION.values()) {
+            ArrayList<Tile> toSearch = getSelectiveDir(curr.getPositionTile()[0], curr.getPositionTile()[1], direction);
+            if (toSearch.contains(next)) {
+                return direction;
+            }
+        }
+
+        return null;
+    }
 
     /**
      * Method to get list of adjacent tiles to given Tile
@@ -131,12 +164,29 @@ public class TileManager {
         int[] pos = tile.getPositionTile();
 
         Tile[] adjecentTiles = new Tile[4];
-        adjecentTiles[0] = getAdjecentTile(tile, "UP", 1);
-        adjecentTiles[1] = getAdjecentTile(tile, "RIGHT", 1);
-        adjecentTiles[2] = getAdjecentTile(tile, "DOWN", 1);
-        adjecentTiles[3] = getAdjecentTile(tile, "LEFT", 1);
+        adjecentTiles[0] = getAdjecentTile(tile, "NORTH", 1);
+        adjecentTiles[1] = getAdjecentTile(tile, "EAST", 1);
+        adjecentTiles[2] = getAdjecentTile(tile, "SOUTH", 1);
+        adjecentTiles[3] = getAdjecentTile(tile, "WEST", 1);
 
         return adjecentTiles;
+    }
+
+    public void initObjects(ArrayList<TiledObject>... objsArr) {
+        for (ArrayList<TiledObject> arr : objsArr) {
+            for (TiledObject o : arr) {
+                float spriteX = o.getX();
+                float spriteY = o.getY();
+                Tile placeAt = this.placeObject((int) spriteX, (int) spriteY, o);
+
+                //System.out.println(pos.x + " " + pos.y);
+
+                o.setCurrentTile(placeAt);
+                o.setTileManager(this);
+
+                System.out.println("Current tile coords: " + placeAt.getTileCoords()[0] + " " + placeAt.getTileCoords()[1]);
+            }
+        }
     }
 
     /**
@@ -147,7 +197,7 @@ public class TileManager {
      */
     public Tile moveFromTile(Tile tileFrom, String direction, int distance) {
         direction = direction.toUpperCase();
-        GameObject occupier = tileFrom.getOccupiedBy();
+        TiledObject occupier = tileFrom.getOccupiedBy();
         Tile nextTile = getAdjecentTile(tileFrom, direction, distance);
 
         if (nextTile != null) {
