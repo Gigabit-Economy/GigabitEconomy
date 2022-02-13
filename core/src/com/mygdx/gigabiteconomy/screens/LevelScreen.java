@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
@@ -20,12 +21,15 @@ import java.util.Arrays;
 
 /**
  * Abstract class which acts as a base class for all level screens.
- * Each individual level class extends this class and defines properties such as the player, enemies, houses &
+ * Each individual level class extends this class and defines properties such as
+ * the player, enemies, houses &
  * static sprites etc.
  */
 public abstract class LevelScreen implements Screen, InputProcessor {
     private GigabitEconomy director;
     private TileManager tileManager;
+
+    private Stage stage;
 
     private Texture backgroundTexture;
     private Sprite backgroundSprite;
@@ -42,17 +46,21 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     private BitmapFont bitmapFont;
 
     /**
-     * A template constructor for use by all level screen subclasses. Sets properties that differ between levels
+     * A template constructor for use by all level screen subclasses. Sets
+     * properties that differ between levels
      * such as game director, player/enemy character sprites & background texture.
      *
-     * @param director the instance of the game director
-     * @param player the player character for the level
-     * @param enemies an ArrayList containing all enemy characters for the level
-     * @param houses an ArrayList containing all houses for the level
-     * @param staticSprites an ArrayList containing all static sprites (such as fences etc.) for the level
+     * @param director          the instance of the game director
+     * @param player            the player character for the level
+     * @param enemies           an ArrayList containing all enemy characters for the
+     *                          level
+     * @param houses            an ArrayList containing all houses for the level
+     * @param staticSprites     an ArrayList containing all static sprites (such as
+     *                          fences etc.) for the level
      * @param backgroundTexture the background graphic of the level
      */
-    public LevelScreen(GigabitEconomy director, Player player, ArrayList<TiledObject> enemies, ArrayList<House> houses, ArrayList<GameObject> staticSprites, Texture backgroundTexture) {
+    public LevelScreen(GigabitEconomy director, Player player, ArrayList<TiledObject> enemies, ArrayList<House> houses,
+            ArrayList<GameObject> staticSprites, Texture backgroundTexture) {
         this.director = director;
         this.player = player;
         this.houses = houses;
@@ -65,34 +73,45 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         healthCount = 0;
         scoreText = "score: 0";
         parcelText = "no. parcels: 0";
-        healthText = "health: 100 %"; 
+        healthText = "health: 100 %";
         bitmapFont = new BitmapFont();
 
-        // Create tile manager instance (stated variables explicitly here in case we want to mess about with them)
-        //-> Might need to move creating tileManager to other method (after we add level switching)
-        //-> One TileManager per level sounds like the cleanest option
+        // Create tile manager instance (stated variables explicitly here in case we
+        // want to mess about with them)
+        // -> Might need to move creating tileManager to other method (after we add
+        // level switching)
+        // -> One TileManager per level sounds like the cleanest option
         int backgroundTextureHeight = backgroundTexture.getHeight();
         int backgroundTextureWidth = backgroundTexture.getWidth();
         int numberOfTilesHigh = 18;
-        tileManager = new TileManager(backgroundTextureHeight/numberOfTilesHigh, backgroundTextureHeight/2, backgroundTextureWidth, 0, 0);
+        tileManager = new TileManager(backgroundTextureHeight / numberOfTilesHigh, backgroundTextureHeight / 2,
+                backgroundTextureWidth, 0, 0);
 
         // Initialise each sprite's position on tiles using the tile manager
         ArrayList<TiledObject> playerList = new ArrayList<TiledObject>(Arrays.asList(player));
         tileManager.initObjects(playerList, enemies); // in priority order
+
+        // this.director = director;
+        // this.stage = new Stage(director.getViewport());
     }
 
     /**
-     * Initialises the sprite batch (which contains all character sprites) and adds the player/enemy characters to it.
+     * Initialises the sprite batch (which contains all character sprites) and adds
+     * the player/enemy characters to it.
      * Called by LibGDX when the screen is set as active by the game director.
      */
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(this);
+
         batch = new SpriteBatch();
 
         // Add background
         backgroundSprite = new Sprite(backgroundTexture);
-        System.out.println("Texture dimensions: h:" + backgroundTexture.getHeight() + " w:" + backgroundTexture.getWidth());
-        //tileManager = new TileManager(135, backgroundTexture.getHeight()/2, backgroundTexture.getWidth(), 0, 0);
+        System.out.println(
+                "Texture dimensions: h:" + backgroundTexture.getHeight() + " w:" + backgroundTexture.getWidth());
+        // tileManager = new TileManager(135, backgroundTexture.getHeight()/2,
+        // backgroundTexture.getWidth(), 0, 0);
 
         // Add static sprites
         sprites.addAll(staticSprites);
@@ -102,15 +121,18 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
         // Add player
         sprites.add(player);
-        Gdx.input.setInputProcessor(this);
 
         // Add enemies
         sprites.addAll(enemies);
+
+       
     }
 
     /**
-     * Sets the current view of the screen, drawing sprites on the screen based on their current position; also
-     * calls the player collision check system to check for any collisions since the previous render.
+     * Sets the current view of the screen, drawing sprites on the screen based on
+     * their current position; also
+     * calls the player collision check system to check for any collisions since the
+     * previous render.
      * Called by LibGDX upon each render of the screen.
      *
      * @param delta the time elapsed since the previous render (in seconds)
@@ -120,10 +142,14 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        System.out.println("RENDERING IN LEVEL 1");
+        // stage.act(delta);
+        // stage.draw();
         // Set screen's projection matrix to director's ortho camera
         batch.setProjectionMatrix(director.getCameraCombined());
-        
-        // This should only take place when player gets to a certain position in camera view
+
+        // This should only take place when player gets to a certain position in camera
+        // view
         // update camera position to follow player
         director.updateCameraPos(player.getX(), player.getY());
 
@@ -131,7 +157,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
         // Draw the background
         backgroundSprite.draw(batch);
-        
+
         // Move (if moving sprite) & draw sprites
         for (GameObject sprite : sprites) {
             if (sprite instanceof MovingSprite) {
@@ -160,7 +186,8 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     }
 
     /**
-     * Deal with a user's key press (initiate movement/attacking, go to pause menu etc.).
+     * Deal with a user's key press (initiate movement/attacking, go to pause menu
+     * etc.).
      * Part of ApplicationListener implementation.
      *
      * @param keycode the pressed key
@@ -253,21 +280,24 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     @Override
     public void resume() {
         Gdx.input.setInputProcessor(this);
+        
     }
 
     /**
-     * Sets the input processor to null to prevent the Player's application listener from listening to user
+     * Sets the input processor to null to prevent the Player's application listener
+     * from listening to user
      * inputs; then calls dispose() to remove the screen's assets from memory.
      * Called by LibGDX when the screen is made inactive.
      */
     @Override
     public void hide() {
-        Gdx.input.setInputProcessor(null);
-        dispose();
+       Gdx.input.setInputProcessor(null);
+       // dispose();
     }
 
     /**
-     * Removes the screen's assets (background texture, sprite batch and moving sprites) from memory
+     * Removes the screen's assets (background texture, sprite batch and moving
+     * sprites) from memory
      * when the screen is made inactive and they're therefore no longer needed.
      * Called by hide().
      */
@@ -277,12 +307,10 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         batch.dispose();
 
         // dispose of moving sprites (to dispose their texture atlas)
-        for (GameObject sprite : sprites)
-        {
+        for (GameObject sprite : sprites) {
             if (sprite instanceof MovingSprite) {
                 ((MovingSprite) sprite).dispose();
-            }
-            else if (sprite instanceof StaticSprite) {
+            } else if (sprite instanceof StaticSprite) {
                 ((StaticSprite) sprite).dispose();
             }
         }

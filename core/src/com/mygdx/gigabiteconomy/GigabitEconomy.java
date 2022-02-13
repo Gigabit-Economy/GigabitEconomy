@@ -23,7 +23,7 @@ public class GigabitEconomy extends Game {
 
     @Override
     public void create() {
-        camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new ScreenViewport(camera);
 
         // Define screens
@@ -39,25 +39,29 @@ public class GigabitEconomy extends Game {
         return camera.position;
     }
 
-     public void updateCameraPos(float x, float y) {
+    public void updateCameraPos(float x, float y) {
         // Map start and end locations
         float startX = viewport.getWorldWidth() / 2;
         float startY = viewport.getScreenHeight() / 2;
 
-        float endX = 5760 - viewport.getWorldWidth() / 2 ;
+        float endX = 5760 - viewport.getWorldWidth() / 2;
         float endY = 1080 - viewport.getScreenHeight() / 2;
-       
-        // If next camera position is out of borders just assign map borders to camera.
-        if(y > startY) {
-            if(y < endY) {
-            } else y=endY;
-        } else y=startY;
 
-        if(x > startX) {
-            if(x < endX) {
-            } else x=endX;
-        } else x=startX;
-       
+        // If next camera position is out of borders just assign map borders to camera.
+        if (y > startY) {
+            if (y < endY) {
+            } else
+                y = endY;
+        } else
+            y = startY;
+
+        if (x > startX) {
+            if (x < endX) {
+            } else
+                x = endX;
+        } else
+            x = startX;
+
         camera.position.set(x, y, 0);
         camera.update();
     }
@@ -76,7 +80,7 @@ public class GigabitEconomy extends Game {
         setScreen(toSwitch);
     }
 
-    public ScreenViewport getViewport () {
+    public ScreenViewport getViewport() {
         return viewport;
     }
 }

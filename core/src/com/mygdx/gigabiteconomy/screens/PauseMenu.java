@@ -1,7 +1,15 @@
 package com.mygdx.gigabiteconomy.screens;
 
+import java.util.function.IntPredicate;
+
+import javax.swing.plaf.basic.BasicSplitPaneUI.KeyboardDownRightHandler;
+
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -24,7 +32,7 @@ import com.mygdx.gigabiteconomy.GigabitEconomy;
  * @param pauseCount          Makes sure pauseMenu is not drawn more than one
  *                            time
  */
-public class PauseMenu implements Screen {
+public class PauseMenu implements Screen, InputProcessor {
     private GigabitEconomy director;
 
     private Stage stage;
@@ -32,28 +40,31 @@ public class PauseMenu implements Screen {
 
     private Slider volumeControlSlider;
 
+    private InputMultiplexer inputMulti;
     private int pauseCount = 0;
 
     public PauseMenu(GigabitEconomy director) {
         this.director = director;
         this.stage = new Stage(director.getViewport());
+        this.inputMulti = new InputMultiplexer();
+        inputMulti.addProcessor(stage);
+		inputMulti.addProcessor(this);
     }
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(stage);
-
+        Gdx.input.setInputProcessor(inputMulti);
+        
         // Skin defined in UI skin (commodore - hopefully we can use, looks really cool)
         Skin style = new Skin(Gdx.files.internal("uiskin.json"));
 
         if (pauseCount == 0) {
             pauseMenuTable = new Table();
             pauseMenuTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-            // pauseMenuTable.setFillParent(true);
-            // pauseMenuTable.center();
 
             TextButton closePauseMenuButton = new TextButton("CLOSE", style);
             closePauseMenuButton.align(Align.topRight);
+            closePauseMenuButton.setName("closepausemenu");
             pauseMenuTable.add(closePauseMenuButton);
 
             pauseMenuTable.row();
@@ -63,7 +74,6 @@ public class PauseMenu implements Screen {
 
             Slider volumeControlSlider = new Slider(-40, 6, 2, false, style);
             volumeControlSlider.setName("volumeSlider");
-            // volumeControlSlider.align(Align.topLeft);
             volumeControlSlider.setWidth(300);
             volumeControlSlider.setHeight(500);
             pauseMenuTable.add(volumeControlSlider);
@@ -100,7 +110,6 @@ public class PauseMenu implements Screen {
                     System.out.println(buttonName);
 
                     if (buttonName == "menu") {
-                        // Switch to selected level screen via. director
                         try {
                             director.switchScreen(buttonName);
                         } catch (Exception ex) {
@@ -110,23 +119,28 @@ public class PauseMenu implements Screen {
                     }
 
                     if (buttonName == "res1920") {
-                        System.out.println("Res1920 is clicked");
                         Gdx.graphics.setWindowedMode(1920, 1080);
                         pauseMenuTable.setBounds(0, 0, 1920, 1080);
                     }
 
                     if (buttonName == "res1366") {
-                        System.out.println("Res1366 is clicked");
                         Gdx.graphics.setWindowedMode(1366, 768);
                         pauseMenuTable.setBounds(0, 0, 1366, 768);
                     }
 
                     if (buttonName == "res1280") {
-                        System.out.println("Res1280 is clicked");
                         Gdx.graphics.setWindowedMode(1280, 720);
                         pauseMenuTable.setBounds(0, 0, 1280, 720);
                     }
 
+                    if (buttonName == "closepausemenu") {
+                        try {
+                            director.switchScreen("level1");
+                        } catch (Exception ex) {
+                            Gdx.app.error("Exception", String.format("Error switching screen to %s", "level1"), ex);
+                            System.exit(-1);
+                        }
+                    }  
                 }
             };
             pauseMenuTable.debug();
@@ -134,12 +148,14 @@ public class PauseMenu implements Screen {
             res1280Button.addListener(buttonsListener);
             res1366Button.addListener(buttonsListener);
             res1920Button.addListener(buttonsListener);
+            closePauseMenuButton.addListener(buttonsListener);
 
             stage.addActor(pauseMenuTable);
         }
-
         pauseCount++;
+
     }
+    
 
     @Override
     public void render(float delta) {
@@ -176,6 +192,63 @@ public class PauseMenu implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+    }
 
+    @Override
+    public boolean keyDown(int keycode) {
+        if (keycode == Input.Keys.P || keycode == Input.Keys.ESCAPE) {
+            try {
+                director.switchScreen("level1");
+            } catch (Exception ex) {
+                Gdx.app.error("Exception", String.format("Error switching screen to %s", "level1"), ex);
+                System.exit(-1);
+            }
+        }
+        else{
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(float amountX, float amountY) {
+        // TODO Auto-generated method stub
+        return false;
     }
 }
