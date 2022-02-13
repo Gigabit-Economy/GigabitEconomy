@@ -330,6 +330,15 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     }
 
     /**
+     * Get the sprite's health
+     *
+     * @return the sprite's health (as a percentage i.e. out of 100)
+     */
+    public int getHealth() {
+        return this.health;
+    }
+
+    /**
      * Destroy the sprite.
      * Called when the sprite's health reaches 0 or less.
      */

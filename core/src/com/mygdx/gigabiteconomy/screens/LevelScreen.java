@@ -42,9 +42,10 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     private ArrayList<House> houses;
     private ArrayList<TiledObject> staticSprites;
 
-    private int scoreCount, parcelCount, healthCount;
+    private int score = 0;
+
+    private BitmapFont font;
     private String scoreText, parcelText, healthText;
-    private BitmapFont bitmapFont;
 
     /**
      * A template constructor for use by all level screen subclasses. Sets
@@ -68,13 +69,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         this.staticSprites = staticSprites;
         this.backgroundTexture = backgroundTexture;
 
-        scoreCount = 0;
-        parcelCount = 0;
-        healthCount = 0;
-        scoreText = "score: 0";
-        parcelText = "no. parcels: 0";
-        healthText = "health: 100 %";
-        bitmapFont = new BitmapFont();
+        font = new BitmapFont();
 
         // Create tile manager instance (stated variables explicitly here in case we
         // want to mess about with them)
@@ -172,10 +167,14 @@ public abstract class LevelScreen implements Screen, InputProcessor {
             }
         }
 
-        bitmapFont.setColor(Color.CORAL);
-        bitmapFont.draw(batch, scoreText, 25, 1040);
-        bitmapFont.draw(batch, parcelText, 25, 1020);
-        bitmapFont.draw(batch, healthText, 25, 1000);
+        scoreText = String.format("score: %d", score);
+        parcelText = String.format("parcels remaining: %d", 5);
+        healthText = String.format("health: %d%", player.getHealth());
+
+        font.setColor(Color.CORAL);
+        font.draw(batch, scoreText, 25, 1040);
+        font.draw(batch, parcelText, 25, 1020);
+        font.draw(batch, healthText, 25, 1000);
 
         batch.end();
     }
@@ -314,6 +313,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     public void dispose() {
         backgroundTexture.dispose();
         batch.dispose();
+        font.dispose();
 
         // dispose of moving sprites (to dispose their texture atlas)
         for (GameObject sprite : sprites) {
