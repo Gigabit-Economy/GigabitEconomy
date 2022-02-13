@@ -1,47 +1,66 @@
 package com.mygdx.gigabiteconomy.sprites;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.gigabiteconomy.screens.TileManager;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Disposable;
 
 /**
- * Interface for controlling sprite
+ * Abstract class which all sprites (such as players/enemies)/game objects (such as houses) derive from
  */
-public interface GameObject {
+public abstract class GameObject implements Disposable {
+    // Coordinates of sprite on screen
+    private Vector2 pos;
 
     /**
-     * Set sprite to be moving or not
-     * @param moving true: moving; false: still
+     * Constructor to create a new GameObject (sets the x and y coordinates for subclasses).
+     *
+     * @param x the game object's X coordinate
+     * @param y the game object's Y coordinate
      */
-    void setMoving(boolean moving);
-    //boolean isMoving();
+    public GameObject(float x, float y) {
+        pos = new Vector2(x, y);
+    }
 
     /**
-     * Method to change coords by values in delta coords
-     * Switches image to next in cycle, defined by regions array
+     * Get the Vector2 position of the sprite
+     *
+     * @return the current X coordinate of the sprite
      */
-    void move(float delta);
+    public float getX()
+    {
+        return pos.x;
+    }
 
     /**
-     * Method used for sprite movement
-     * Increments current dcoords for multiple key presses at once
-     * @param dx Change in x
-     * @param dy Change in y
+     * Get the Vector2 position of the sprite
+     *
+     * @return the current U coordinate of the sprite
      */
-    void setDCoords(int dx, int dy);
+    public float getY()
+    {
+        return pos.y;
+    }
 
     /**
-     * @return The current TextureRegion the animation is on
+     * Set the Vector2 position of the sprite
+     *
+     * @param x the new X coordinate
+     * @param y the new Y coordinate
      */
-    TextureRegion getCurrRegion();
+    public void setPos(float x, float y)
+    {
+        pos.x = x;
+        pos.y = y;
+    }
 
-    float getActorX();
-    float getActorY();
+    /**
+     * Add to the sprite's current Vector2 position.
+     *
+     * @param deltaMove the Vector 2 coordinates to move by
+     */
+    public void addToPos(Vector2 deltaMove)
+    {
+        pos.add(deltaMove);
+    }
 
-    void setActorX();
-    void setActorY();
-
-    int initTile(TileManager tm); //Adds all sprites to starting tiles
-
-    Rectangle getRectangle();
+    public abstract void dispose();
 }
