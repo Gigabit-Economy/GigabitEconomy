@@ -18,11 +18,11 @@ import java.util.ArrayList;
  */
 public class LevelOneScreen extends LevelScreen {
     // Player character
-    private static final Weapon PLAYER_WEAPON = Weapon.BOX_CUTTER;
+    private static final Weapon PLAYER_WEAPON = Weapon.KNIFE;
     private static final Player PLAYER = new Player(PLAYER_WEAPON, 0 , 0);
 
     /* ENEMIES */
-    private static final Enemy ENEMY_ONE = new Enemy(Weapon.SWORD, 2, 2);
+    private static final Enemy ENEMY_ONE = new Enemy(Weapon.KATANA, 2, 2);
     private static final ArrayList<TiledObject> ENEMIES = new ArrayList<TiledObject>(Arrays.asList(ENEMY_ONE));
 
     /* HOUSES */

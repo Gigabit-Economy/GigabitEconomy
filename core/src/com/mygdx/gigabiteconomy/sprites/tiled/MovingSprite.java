@@ -309,6 +309,20 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         System.out.println(String.format("Attacking: %s", attacking));
     }
 
+    public enum Weapon {
+        KNIFE (1),
+        GOLF (2),
+        PIPE (3),
+        BAR_BELL (4),
+        KATANA (5);
+
+        private int hitMultiplier;
+
+        private Weapon(int hitMultiplier) {
+            this.hitMultiplier = hitMultiplier;
+        }
+    }
+
     /**
      * Destroy the sprite.
      * Called when the sprite's health reaches 0 or less.
@@ -323,19 +337,5 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      */
     public void dispose() {
         ta.dispose();
-    }
-
-    public enum Weapon {
-        BOX_CUTTER (1),
-        GOLF_CLUB (2),
-        LEAD_PIPE (3),
-        BAR_BELL (4),
-        SWORD (5);
-
-        private int hitMultiplier;
-
-        private Weapon(int hitMultiplier) {
-            this.hitMultiplier = hitMultiplier;
-        }
     }
 }
