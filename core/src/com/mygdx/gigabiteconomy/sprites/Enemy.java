@@ -33,11 +33,11 @@ public class Enemy extends MovingSprite {
         super(move_config, attack_config, x, y);
         movePath = new LinkedList<>();
         movePath.add(DIRECTION.NORTH);
-        movePath.add(DIRECTION.NORTH);
+        movePath.add(DIRECTION.EAST);
         movePath.add(DIRECTION.SOUTH);
-        movePath.add(DIRECTION.SOUTH);
-        setDirectionMovement(movePath.remove());
-        movePath.add(directionMoving);
+        movePath.add(DIRECTION.WEST);
+
+        setDirectionMovement(movePath.peek());
 
         setMoving(true);
     }
@@ -72,12 +72,16 @@ public class Enemy extends MovingSprite {
 
     @Override
     public boolean moveBlocked() {
-        if (targetTile == null || !(targetTile.getOccupiedBy() instanceof Player)) {
+        if (targetTile == null && !(targetTile.getOccupiedBy() instanceof Player)) {
             //Take this tile out of rotation since we can't go here
 //            setDirectionMovement(movePath.remove());
 //            targetTile = tm.getAdjecentTile(currentTile, directionMoving.name(), 1);
+            //Skip current movement, hope it doesn't happen again
+            targetTile = getNextTile();
             return true; //Break and attempt movement again
         } else if (targetTile.getOccupiedBy() instanceof Player) {
+            System.out.println("I want to attack!");
+            //setMoving(false);
             //Start attacking mode!!
             //Do we need to check for this since attacking will be checked for in other abstract method
             return true;
@@ -90,6 +94,7 @@ public class Enemy extends MovingSprite {
     public Tile getNextTile() {
         setDirectionMovement(movePath.remove());
         movePath.add(directionMoving);
+        System.out.println("Moving: " + directionMoving.name() + " " + movePath.toString());
         return tm.getAdjecentTile(currentTile, directionMoving.name(), 1);
     }
 
@@ -142,10 +147,10 @@ public class Enemy extends MovingSprite {
          * -> Set new direction with TileManager: DIRECTION findDirectionFrom(Tile curr, Tile next);
          * -> Call setDeltaMove with direction
          */
-         if (ret) {
-             directionMoving = movePath.remove();
-             movePath.add(directionMoving);
-         }
+//         if (ret) {
+//             directionMoving = movePath.remove();
+//             movePath.add(directionMoving);
+//         }
 
         /**
          * If above is implemented right, enemy should be able to move in 'direction' towards 'targetTile'

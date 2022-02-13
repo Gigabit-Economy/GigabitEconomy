@@ -170,7 +170,7 @@ public abstract class MovingSprite extends Actor implements GameObject, Disposab
             if (targetTile == null)
                 targetTile = getNextTile(); //If we are still then get next tile
 
-            /** is */ moveBlocked();
+            ///** is */ moveBlocked();
 
             //if (targetTile == null) return false; //If we're blocked return false (more in depth check coming soon)
             if (targetTile == null) {
