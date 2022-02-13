@@ -19,6 +19,7 @@ import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
 
 /**
  * Abstract class which acts as a base class for all level screens.
@@ -261,6 +262,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
+        director.resize(width, height);
     }
 
     @Override
@@ -276,7 +278,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     @Override
     public void resume() {
         Gdx.input.setInputProcessor(this);
-        
     }
 
     /**
@@ -288,7 +289,10 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     @Override
     public void hide() {
        Gdx.input.setInputProcessor(null);
-       // dispose();
+
+       if (director.getScreen() instanceof PauseMenu == false) {
+           dispose();
+       }
     }
 
     /**
@@ -301,7 +305,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
             Gdx.app.error("Exception", "The screen could not be switched when level failed", ex);
         }
 
-        dispose();
+        hide();
     }
 
     /**
