@@ -1,8 +1,6 @@
 package com.mygdx.gigabiteconomy.sprites.tiled;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
@@ -10,7 +8,7 @@ import com.mygdx.gigabiteconomy.screens.Tile;
 /**
  * Class representing a player sprite (one per level)
  */
-public class Player extends MovingSprite implements InputProcessor {
+public class Player extends MovingSprite {
     private LevelScreen level;
 
     /**
@@ -22,8 +20,6 @@ public class Player extends MovingSprite implements InputProcessor {
      */
     public Player(Weapon weapon, int x, int y) {
         super(weapon, x, y);
-
-        Gdx.input.setInputProcessor(this);
     }
 
     /**
@@ -43,11 +39,12 @@ public class Player extends MovingSprite implements InputProcessor {
     public void handleMovement(int keycode) {
         if (getTargetTile() != null) {
             System.out.println("Not finished with previous movement");
-            return; //Not finished with previous movement
+            return; // Not finished with previous movement
         }
 
         /**
-         * Sets direction enum which defines the velocity vector (which speed and direction to move in with each move() call)
+         * Sets direction enum which defines the velocity vector (which speed and
+         * direction to move in with each move() call)
          */
         Tile toTarget = null;
 
@@ -88,53 +85,13 @@ public class Player extends MovingSprite implements InputProcessor {
 //            targetTile = null;
 //            //setMoving(false);
 //        }
-
     }
 
     /**
-     * Deal with a user's key press (initiate movement/attacking, go to pause menu etc.).
-     * Part of ApplicationListener implementation.
-     *
-     * @param keycode the pressed key
-     * @return if the key press was processed
+     * Stop the player from moving (i.e. when a movement key is lifted)
      */
-    @Override
-    public boolean keyDown(int keycode) {
-        System.out.println("key pressed: " + keycode);
-
-        /**
-         * Movement calculated by:
-         *  -> Adding values defined above to deltaMove vector
-         *  -> Every time move() is called, deltaMove is added to position vector
-         *  -> This allows for diagonal movement
-         */
-        if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT || keycode == Input.Keys.D ||
-                keycode == Input.Keys.RIGHT || keycode == Input.Keys.W ||
-                keycode == Input.Keys.UP || keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
-            handleMovement(keycode);
-        } else if (keycode == Input.Keys.SPACE) {
-            System.out.println("Attacking now");
-            setAttacking(true);
-        } else {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Deal with a key press being lifted.
-     * Part of ApplicationListener implementation.
-     *
-     * @param keycode the key lifted
-     * @return if the key lift was processed
-     */
-    @Override
-    public boolean keyUp(int keycode) {
-        //Player no longer WANTS to be moving, but we must finish animation to centre of target square
+    public void stopMovement() {
         setMoving(false);
-
-        return false;
     }
 
     @Override
@@ -210,35 +167,5 @@ public class Player extends MovingSprite implements InputProcessor {
         }
 
         super.destroy();
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(float amountX, float amountY) {
-        return false;
     }
 }
