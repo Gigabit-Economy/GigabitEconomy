@@ -198,18 +198,16 @@ public abstract class LevelScreen implements Screen, InputProcessor {
          * -> Every time move() is called, deltaMove is added to position vector
          * -> This allows for diagonal movement
          */
-        // Move player
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT || keycode == Input.Keys.D ||
                 keycode == Input.Keys.RIGHT || keycode == Input.Keys.W ||
                 keycode == Input.Keys.UP || keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
+            // Move player
             player.handleMovement(keycode);
-
-        // Pause play
         } else if (keycode == Input.Keys.P || keycode == Input.Keys.ESCAPE) {
+            // Pause play
             pause();
-
-        // Launch attack
         } else if (keycode == Input.Keys.SPACE) {
+            // Launch attack
             player.launchAttack();
         } else {
             return false;
