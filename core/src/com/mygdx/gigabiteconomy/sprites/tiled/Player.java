@@ -138,17 +138,17 @@ public class Player extends MovingSprite {
     /**
      * Open the Player's Parcel to get the weapon
      *
-     * @return the Weapon inside the Parcel
      * @throws ParcelException if no parcel is being carried by the Player
      */
-    public Weapon openParcel() throws ParcelException {
+    public void openParcel() throws ParcelException {
         if (parcel == null) {
             throw new ParcelException("No parcel is being carried");
         }
 
         this.parcel = null;
 
-        return parcel.open();
+        Weapon parcelWeapon = parcel.open();
+        setWeapon(parcelWeapon);
     }
 
     /**
