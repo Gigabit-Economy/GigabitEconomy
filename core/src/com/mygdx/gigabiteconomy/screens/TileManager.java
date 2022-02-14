@@ -97,26 +97,33 @@ public class TileManager {
     }
 
     /**
-     * Place given object on given Tile
+     * Place given object on given single Tile
      * @param toTile Tile to place given object on
      * @param objectToPlace Object to place on given Tile
      */
-    public Tile placeObject(Tile toTile, TiledObject objectToPlace) {
+    private Tile placeObject(Tile toTile, TiledObject objectToPlace) {
         if (toTile.getOccupiedBy() != null) return null;
-        Tile objTile = objectToPlace.getCurrentTile();
-        //Clearing old tile
-        if (objTile != null) {
-            objTile.setOccupied(null);
-            objectToPlace.setCurrentTile(null);
-        }
+//        Tile objTile = objectToPlace.getCurrentTile();
+//        //Clearing old tile
+//        if (objTile != null) {
+//            objTile.setOccupied(null);
+//            objectToPlace.setCurrentTile(null);
+//        }
         toTile.setOccupied(objectToPlace);
         return toTile;
     }
 
-    public Tile placeObject(int x, int y, TiledObject objectToPlace) {
-        Tile toPlace;
-        if ((toPlace = getTile(x, y)) != null) {
-            toPlace = placeObject(toPlace, objectToPlace);
+    public ArrayList<Tile> placeObject(int x, int y, int width, int height, TiledObject objectToPlace) {
+        ArrayList<Tile> toPlace = new ArrayList<>();
+        for (int i=0; i<width; i++) {
+            for (int ii=0; ii<height; ii++) {
+                Tile toAdd = getTile(x+i, y+ii);
+                if ((toAdd != null ? toPlace.add(toAdd) : toPlace.add(null))) {
+                    placeObject(toAdd, objectToPlace);
+                } else {
+                    return null;
+                }
+            }
         }
         return toPlace;
     }
@@ -173,19 +180,25 @@ public class TileManager {
         return adjacentTiles;
     }
 
+    /**
+     * Initialise Sprites on the gameboard
+     * @param objsArr ArrayLists of TiledObject to place
+     */
     public void initObjects(ArrayList<TiledObject>... objsArr) {
         for (ArrayList<TiledObject> arr : objsArr) {
             for (TiledObject o : arr) {
                 float spriteX = o.getX();
                 float spriteY = o.getY();
-                Tile placeAt = this.placeObject((int) spriteX, (int) spriteY, o);
+                int spriteH = 1;//o.getH();
+                int spriteW = 1;//o.getW();
+                ArrayList<Tile> placeAt = this.placeObject((int) spriteX, (int) spriteY, spriteW, spriteH, o);
 
                 //System.out.println(pos.x + " " + pos.y);
 
-                o.setCurrentTile(placeAt);
+                o.setCurrentTiles(placeAt); //Setting current tiles should be done within player
                 o.setTileManager(this);
 
-                System.out.println("Current tile coords: " + placeAt.getTileCoords()[0] + " " + placeAt.getTileCoords()[1]);
+                System.out.println("Current tile coords: " + placeAt.get(0).getTileCoords()[0] + " " + placeAt.get(0).getTileCoords()[1]);
             }
         }
     }

@@ -39,7 +39,7 @@ public class Player extends MovingSprite {
      * @param keycode the user inputted key
      */
     public void handleMovement(int keycode) {
-        if (getTargetTile() != null) {
+        if (getTargetTiles() != null) {
             System.out.println("Not finished with previous movement");
             return; // Not finished with previous movement
         }
@@ -80,7 +80,6 @@ public class Player extends MovingSprite {
     @Override
     public DIRECTION setNextDirection() {
         return getDirectionMoving();
-
     }
 
     /**
@@ -103,6 +102,7 @@ public class Player extends MovingSprite {
         }
 
         setDirectionMovement(null);
+        setMoving(false);
 
         return true;
     }
