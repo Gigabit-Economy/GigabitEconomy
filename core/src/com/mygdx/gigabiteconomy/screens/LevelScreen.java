@@ -171,7 +171,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
         scoreText = String.format("score: %d", score);
         parcelText = String.format("parcels remaining: %d", parcels);
-        healthText = String.format("health: %d%", player.getHealth());
+        healthText = String.format("health: %d", player.getHealth());
 
         font.setColor(Color.CORAL);
         font.draw(batch, scoreText, 25, 1040);
