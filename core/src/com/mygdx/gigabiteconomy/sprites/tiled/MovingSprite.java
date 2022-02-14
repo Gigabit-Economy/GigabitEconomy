@@ -139,7 +139,6 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
 
     public abstract Tile getNextTile();
 
-
     /**
      * Move the sprite to the set targetTile
      *
