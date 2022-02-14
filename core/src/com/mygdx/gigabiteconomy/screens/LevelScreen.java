@@ -71,6 +71,21 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         this.staticSprites = staticSprites;
         this.backgroundTexture = backgroundTexture;
 
+        batch = new SpriteBatch();
+
+        // Add background
+        backgroundSprite = new Sprite(backgroundTexture);
+        System.out.println(
+                "Texture dimensions: h:" + backgroundTexture.getHeight() + " w:" + backgroundTexture.getWidth());
+        // Add static sprites
+        sprites.addAll(staticSprites);
+        // Add houses
+        sprites.addAll(houses);
+        // Add player
+        sprites.add(player);
+        // Add enemies
+        sprites.addAll(enemies);
+
         font = new BitmapFont();
 
         // Create tile manager instance (stated variables explicitly here in case we
@@ -97,27 +112,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(this);
-
-        batch = new SpriteBatch();
-
-        // Add background
-        backgroundSprite = new Sprite(backgroundTexture);
-        System.out.println(
-                "Texture dimensions: h:" + backgroundTexture.getHeight() + " w:" + backgroundTexture.getWidth());
-        // tileManager = new TileManager(135, backgroundTexture.getHeight()/2,
-        // backgroundTexture.getWidth(), 0, 0);
-
-        // Add static sprites
-        sprites.addAll(staticSprites);
-
-        // Add houses
-        sprites.addAll(houses);
-
-        // Add player
-        sprites.add(player);
-
-        // Add enemies
-        sprites.addAll(enemies);
     }
 
     /**
