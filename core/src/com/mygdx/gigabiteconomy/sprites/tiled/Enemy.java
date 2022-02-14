@@ -32,11 +32,13 @@ public class Enemy extends MovingSprite {
      *
      * @param movementConfig path of texture atlas movement config file (.txt)
      * @param attackingConfig path of texture atlas attacking config file (.txt)
+     * @param weapon the weapon the Enemy is carrying
      * @param x position of Tile (within tile grid) to place sprite
      * @param y position of Tile (within tile grid) to place sprite
      */
-    public Enemy(String movementConfig, String attackingConfig, int x, int y) {
-        super(movementConfig, attackingConfig, x, y);
+    public Enemy(Weapon weapon, int x, int y) {
+        super(weapon, x, y);
+
         movePath = new LinkedList<>();
         movePath.add(DIRECTION.NORTH);
         movePath.add(DIRECTION.EAST);
@@ -48,7 +50,6 @@ public class Enemy extends MovingSprite {
 
         setPath("move");
 
-
         setMoving(true);
     }
 
@@ -58,8 +59,10 @@ public class Enemy extends MovingSprite {
      * @param pathID Hashmap ID of path
      */
     public void setPath(String pathID) {
-        if ((currentPath = movementPaths.get(pathID)) == null)
+        if ((currentPath = movementPaths.get(pathID)) == null) {
             new Exception("Movement path does not exist");
+        }
+
         setDirectionMovement(currentPath.peek());
     }
 
@@ -80,7 +83,7 @@ public class Enemy extends MovingSprite {
          */
         return false;
     }
-
+    
     @Override
     public DIRECTION setNextDirection() {
         super.setDirectionMovement(currentPath.remove());

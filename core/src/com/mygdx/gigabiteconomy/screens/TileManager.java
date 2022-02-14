@@ -63,32 +63,33 @@ public class TileManager {
 
     /**
      * Get certain in a direction "distance" from given Tile, not strictly adjacent but doesn't matter :p
+     *
      * @param tileFrom Tile from which to calculate distance from
      * @param direction Direction to retrieve the next tile in
      * @param distance Distance from Tile given to get new Tile
      * @return Tile satisfying conditions, or null if impossible
      */
-    public Tile getAdjecentTile(Tile tileFrom, String direction, int distance) {
+    public Tile getAdjacentTile(Tile tileFrom, MovingSprite.DIRECTION direction, int distance) {
         if (tileFrom == null) return null;
-        direction = direction.toUpperCase();
+
         int[] pos = tileFrom.getPositionTile();
         Tile ret;
+
         try {
             switch (direction) {
-                case "WEST":
+                case WEST:
                     ret = getTile(pos[0]-distance, pos[1]);
                     break;
-                case "EAST":
+                case EAST:
                     ret = getTile(pos[0]+distance, pos[1]);
                     break;
-                case "NORTH":
+                case NORTH:
                     ret = getTile(pos[0], pos[1]+distance);
                     break;
-                case "SOUTH":
+                case SOUTH:
                     ret = getTile(pos[0], pos[1]-distance);
                     break;
                 default:
-                    System.out.println("Direction: " + direction + " not recognised");
                     return null;
             }
         } catch (ArrayIndexOutOfBoundsException e) { return null; }
@@ -164,19 +165,19 @@ public class TileManager {
 
     /**
      * Method to get list of adjacent tiles to given Tile
-     * Returns Tiles clockwise from given Tile starting with Northernmost
-     * @return Always returns Tile[4] of adjacent Tiles
+     *
+     * @return Tile[4] of Tiles clockwise from given Tile starting with Northern-most
      */
-    public Tile[] getAdjecentTiles(Tile tile) {
+    public Tile[] getAdjacentTiles(Tile tile) {
         int[] pos = tile.getPositionTile();
 
-        Tile[] adjecentTiles = new Tile[4];
-        adjecentTiles[0] = getAdjecentTile(tile, "NORTH", 1);
-        adjecentTiles[1] = getAdjecentTile(tile, "EAST", 1);
-        adjecentTiles[2] = getAdjecentTile(tile, "SOUTH", 1);
-        adjecentTiles[3] = getAdjecentTile(tile, "WEST", 1);
+        Tile[] adjacentTiles = new Tile[4];
+        adjacentTiles[0] = getAdjacentTile(tile, MovingSprite.DIRECTION.NORTH, 1);
+        adjacentTiles[1] = getAdjacentTile(tile, MovingSprite.DIRECTION.EAST, 1);
+        adjacentTiles[2] = getAdjacentTile(tile, MovingSprite.DIRECTION.SOUTH, 1);
+        adjacentTiles[3] = getAdjacentTile(tile, MovingSprite.DIRECTION.WEST, 1);
 
-        return adjecentTiles;
+        return adjacentTiles;
     }
 
     /**
@@ -208,10 +209,9 @@ public class TileManager {
      * @param direction New direction to place the GameObject
      * @param distance How far to move the GameObject
      */
-    public Tile moveFromTile(Tile tileFrom, String direction, int distance) {
-        direction = direction.toUpperCase();
+    public Tile moveFromTile(Tile tileFrom, MovingSprite.DIRECTION direction, int distance) {
         TiledObject occupier = tileFrom.getOccupiedBy();
-        Tile nextTile = getAdjecentTile(tileFrom, direction, distance);
+        Tile nextTile = getAdjacentTile(tileFrom, direction, distance);
 
         if (nextTile != null) {
             placeObject(tileFrom, null);
@@ -241,7 +241,7 @@ public class TileManager {
     /**
      * Method to move an entity by only one space
      */
-    public Tile moveFromTile(Tile tileFrom, String direction) {
+    public Tile moveFromTile(Tile tileFrom, MovingSprite.DIRECTION direction) {
         return moveFromTile(tileFrom, direction, 1);
     }
 

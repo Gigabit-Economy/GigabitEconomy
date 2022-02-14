@@ -1,60 +1,46 @@
-knifeRightAt.png
-size: 1920, 240
+pipeRight.png
+size: 1440, 240
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-knifeRightAttack1
+PipeRightAttack1
   rotate: false
   xy: 0, 0
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-knifeRightAttack2
+PipeRightAttack2
   rotate: false
   xy: 240, 0
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-knifeRightAttack3
+PipeRightAttack3
   rotate: false
   xy: 480, 0
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-knifeRightAttack4
+PipeRightAttack4
   rotate: false
   xy: 720, 0
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-knifeRightAttack5
+PipeRightAttack5
   rotate: false
   xy: 960, 0
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-knifeRightAttack6
+PipeRightAttack6
   rotate: false
   xy: 1200, 0
-  size: 240, 240
-  orig: 240, 240
-  offset: 0, 0
-  index: -1
-knifeRightAttack7
-  rotate: false
-  xy: 1440, 0
-  size: 240, 240
-  orig: 240, 240
-  offset: 0, 0
-  index: -1
-knifeRightAttack8
-  rotate: false
-  xy: 1680, 0
   size: 240, 240
   orig: 240, 240
   offset: 0, 0

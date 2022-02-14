@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
+import com.mygdx.gigabiteconomy.exceptions.ScreenException;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.sprites.tiled.Player;
 import com.mygdx.gigabiteconomy.sprites.*;
@@ -18,6 +19,7 @@ import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
 
 /**
  * Abstract class which acts as a base class for all level screens.
@@ -41,9 +43,11 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     private ArrayList<House> houses;
     private ArrayList<TiledObject> staticSprites;
 
-    private int scoreCount, parcelCount, healthCount;
+    private int score = 0;
+    private int parcels = 5;
+
+    private BitmapFont font;
     private String scoreText, parcelText, healthText;
-    private BitmapFont bitmapFont;
 
     /**
      * A template constructor for use by all level screen subclasses. Sets
@@ -67,13 +71,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         this.staticSprites = staticSprites;
         this.backgroundTexture = backgroundTexture;
 
-        scoreCount = 0;
-        parcelCount = 0;
-        healthCount = 0;
-        scoreText = "score: 0";
-        parcelText = "no. parcels: 0";
-        healthText = "health: 100 %";
-        bitmapFont = new BitmapFont();
+        font = new BitmapFont();
 
         // Create tile manager instance (stated variables explicitly here in case we
         // want to mess about with them)
@@ -171,10 +169,14 @@ public abstract class LevelScreen implements Screen, InputProcessor {
             }
         }
 
-        bitmapFont.setColor(Color.CORAL);
-        bitmapFont.draw(batch, scoreText, 25, 1040);
-        bitmapFont.draw(batch, parcelText, 25, 1020);
-        bitmapFont.draw(batch, healthText, 25, 1000);
+        scoreText = String.format("score: %d", score);
+        parcelText = String.format("parcels remaining: %d", parcels);
+        healthText = String.format("health: %d", player.getHealth());
+
+        font.setColor(Color.CORAL);
+        font.draw(batch, scoreText, 25, 1040);
+        font.draw(batch, parcelText, 25, 1020);
+        font.draw(batch, healthText, 25, 1000);
 
         batch.end();
     }
@@ -200,13 +202,14 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT || keycode == Input.Keys.D ||
                 keycode == Input.Keys.RIGHT || keycode == Input.Keys.W ||
                 keycode == Input.Keys.UP || keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
+            // Move player
             player.handleMovement(keycode);
-
         } else if (keycode == Input.Keys.P || keycode == Input.Keys.ESCAPE) {
+            // Pause play
             pause();
         } else if (keycode == Input.Keys.SPACE) {
-            // launch attack
-            player.setAttacking(true);
+            // Launch attack
+            player.launchAttack();
         } else {
             return false;
         }
@@ -259,8 +262,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     }
 
     @Override
-    public void resize(int width, int height) {
-    }
+    public void resize(int width, int height) {}
 
     @Override
     public void pause() {
@@ -275,7 +277,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     @Override
     public void resume() {
         Gdx.input.setInputProcessor(this);
-        
     }
 
     /**
@@ -287,12 +288,27 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     @Override
     public void hide() {
        Gdx.input.setInputProcessor(null);
-       // dispose();
+
+       if (director.getScreen() instanceof PauseMenu == false) {
+           dispose();
+       }
     }
 
     /**
-     * Removes the screen's assets (background texture, sprite batch and moving
-     * sprites) from memory
+     * End the level (called when Player is destroyed)
+     */
+    public void end() {
+        try {
+            director.switchScreen("levelFailed");
+        } catch (ScreenException ex) {
+            Gdx.app.error("Exception", "The screen could not be switched when level failed", ex);
+        }
+
+        hide();
+    }
+
+    /**
+     * Removes the screen's assets (background texture, sprite batch and moving sprites) from memory
      * when the screen is made inactive and they're therefore no longer needed.
      * Called by hide().
      */
@@ -300,13 +316,15 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     public void dispose() {
         backgroundTexture.dispose();
         batch.dispose();
+        font.dispose();
 
         // dispose of moving sprites (to dispose their texture atlas)
         for (GameObject sprite : sprites) {
             if (sprite instanceof MovingSprite) {
-                ((MovingSprite) sprite).dispose();
-            } else if (sprite instanceof StaticSprite) {
-                ((StaticSprite) sprite).dispose();
+                sprite.dispose();
+            }
+            else if (sprite instanceof StaticSprite) {
+                sprite.dispose();
             }
         }
     }

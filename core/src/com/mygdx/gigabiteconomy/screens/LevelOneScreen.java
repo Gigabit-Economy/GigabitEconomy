@@ -8,6 +8,7 @@ import com.mygdx.gigabiteconomy.sprites.tiled.Enemy;
 import com.mygdx.gigabiteconomy.sprites.tiled.Player;
 import com.mygdx.gigabiteconomy.sprites.tiled.StaticSprite;
 import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
+import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite.Weapon;
 
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -17,10 +18,11 @@ import java.util.ArrayList;
  */
 public class LevelOneScreen extends LevelScreen {
     // Player character
-    private static final Player PLAYER = new Player("finished_assets/player/movement/katanaRightMv.txt", "finished_assets/player/attacks/katanaRightAt.txt", 0 , 0);
+    private static final Weapon PLAYER_WEAPON = Weapon.KNIFE;
+    private static final Player PLAYER = new Player(PLAYER_WEAPON, 0 , 0);
 
     /* ENEMIES */
-    private static final Enemy ENEMY_ONE = new Enemy("finished_assets/player/movement/katanaRightMv.txt", "finished_assets/player/attacks/golfRightAt.txt", 2, 2);
+    private static final Enemy ENEMY_ONE = new Enemy(Weapon.KATANA, 2, 2);
     private static final ArrayList<TiledObject> ENEMIES = new ArrayList<TiledObject>(Arrays.asList(ENEMY_ONE));
 
     /* HOUSES */
@@ -42,5 +44,7 @@ public class LevelOneScreen extends LevelScreen {
      */
     public LevelOneScreen(GigabitEconomy director) {
         super(director, PLAYER, ENEMIES, HOUSES, STATIC_SPRITES, BACKGROUND_TEXTURE);
+
+        PLAYER.setLevel(this);
     }
 }
