@@ -249,6 +249,16 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         private DIRECTION(float dx, float dy) {
             this.dx = dx; this.dy = dy;
         }
+
+        /**
+         * For getting opposite direction of enum. Used for reversing path of entity.
+         * e.g. NORTH.getOpposite() returns SOUTH
+         *
+         * @return Opposite of enum called on
+         */
+        public DIRECTION getOpposite() {
+            return this.dx == 0 ? DIRECTION.values()[this.ordinal()+1] : DIRECTION.values()[this.ordinal()-1];
+        }
     }
 
     /**
