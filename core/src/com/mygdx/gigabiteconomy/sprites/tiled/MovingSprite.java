@@ -138,7 +138,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
 
     public Tile setNextTile() {
         setNextDirection();
-        Tile toSet = getTileManager().getAdjecentTile(getCurrentTile(), getDirectionMoving().name(), 1);
+        Tile toSet = getTileManager().getAdjacentTile(getCurrentTile(), getDirectionMoving(), 1);
 
         if (toSet == null || (toSet.getOccupiedBy() != null && toSet.getOccupiedBy() != this)) return null;
 

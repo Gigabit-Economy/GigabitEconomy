@@ -262,9 +262,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     }
 
     @Override
-    public void resize(int width, int height) {
-        director.resize(width, height);
-    }
+    public void resize(int width, int height) {}
 
     @Override
     public void pause() {
