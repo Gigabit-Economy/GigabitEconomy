@@ -83,41 +83,12 @@ public class Enemy extends MovingSprite {
          */
         return false;
     }
-
+    
     @Override
-    public boolean moveBlocked() {
-        if (getTargetTile() == null && !(getTargetTile().getOccupiedBy() instanceof Player)) {
-            // Take this tile out of rotation since we can't go here
-//            setDirectionMovement(movePath.remove());
-//            targetTile = tm.getAdjacentTile(currentTile, directionMoving.name(), 1);
-
-            // Skip current movement, hope it doesn't happen again
-            setTargetTile(getNextTile());
-
-            return true; // movement blocked
-        }
-
-        return false; // move not blocked
-    }
-
-    @Override
-    public Tile getNextTile() {
+    public DIRECTION setNextDirection() {
         super.setDirectionMovement(currentPath.remove());
         currentPath.add(getDirectionMoving());
-        Tile toSet = getTileManager().getAdjacentTile(getCurrentTile(), getDirectionMoving(), 1);
-        if (toSet == null || (toSet.getOccupiedBy() != null && toSet.getOccupiedBy() != this)) return null;
-        super.setTargetTile(toSet);
-        //System.out.println("Moving: " + getDirectionMoving().name() + " " + currentPath.toString());
-        return getTargetTile();
-    }
-
-    @Override
-    public void moveStart() {
-        //if (targetTile != null || !isMoving() && directionMoving == null) return;
-        if ((getCurrentTile() == null || getDirectionMoving() != null) && isMoving() ) {
-            setTargetTile(getTileManager().getAdjacentTile(getCurrentTile(), getDirectionMoving(), 1));
-        }
-
+        return getDirectionMoving();
     }
 
     @Override

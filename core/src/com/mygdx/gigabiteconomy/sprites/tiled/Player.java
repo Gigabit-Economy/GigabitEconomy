@@ -22,6 +22,7 @@ public class Player extends MovingSprite {
         super(weapon, x, y);
     }
 
+
     /**
      * Set the level the Player is in
      *
@@ -30,6 +31,7 @@ public class Player extends MovingSprite {
     public void setLevel(LevelScreen level) {
         this.level = level;
     }
+
 
     /**
      * Method to handle movement of the Player
@@ -46,8 +48,6 @@ public class Player extends MovingSprite {
          * Sets direction enum which defines the velocity vector (which speed and
          * direction to move in with each move() call)
          */
-        Tile toTarget = null;
-
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT) {
             // Move left
             super.setDirectionMovement(DIRECTION.WEST);
@@ -68,23 +68,6 @@ public class Player extends MovingSprite {
             return;
         }
         setMoving(true);
-
-        /**
-         * Uses tile manager to get adjecentTile
-         * Sets velocity vector based on value of direction set above
-         */
-//        toTarget = tm.getAdjecentTile(currentTile, directionMoving.toString(), 1);
-//        setDeltaMove(directionMoving);
-//
-//        //Checks if Player can move to Tile
-//        if (toTarget != null && toTarget.getOccupiedBy() == null) {
-//            targetTile = toTarget;
-//            setMoving(true);
-//            System.out.println("Moving true to " + targetTile.getTileCoords()[0] + " " + targetTile.getTileCoords()[1]);
-//        } else {
-//            targetTile = null;
-//            //setMoving(false);
-//        }
     }
 
     /**
@@ -95,65 +78,33 @@ public class Player extends MovingSprite {
     }
 
     @Override
-    public boolean moveBlocked() {
-        if (getTargetTile() == null || getTargetTile().getOccupiedBy() != null) {
-            super.setDirectionMovement(null);
-            setTargetTile(null);
-            setMoving(false);
-            return true;
-        }
-        return false;
+    public DIRECTION setNextDirection() {
+        return getDirectionMoving();
+
     }
 
-    @Override
-    public Tile getNextTile() {
-        Tile toSet = getTileManager().getAdjacentTile(getCurrentTile(), getDirectionMoving(), 1);
-
-        if (toSet != null) System.out.println("Getting player a target tile " + toSet.getPositionTile()[0] + " " + toSet.getPositionTile()[1]);
-        if (toSet == null || (toSet.getOccupiedBy() != null && toSet.getOccupiedBy() != this)) return null;
-
-        super.setTargetTile(toSet); //Set target tile to one we want to go to
-        return toSet;
-    }
-
-    @Override
-    public void moveStart() {
-        return;
-    }
-
+    /**
+     * Defines specific movement for when we get to targetTile
+     * @param delta
+     * @return
+     * @throws TileMovementException
+     */
     @Override
     public boolean move(float delta) throws TileMovementException  {
         boolean ret = super.move(delta);
+        if (!ret) return false;
 
-        if (ret && isMoving()) {
+        /**
+         * Still holding down key, reset direction
+         */
+        if (isMoving()) {
             setDirectionMovement(getDirectionMoving());
-            System.out.println("Holding down, direction movement set");
-        } else if (ret && !isMoving()) {
-            setDirectionMovement(null);
-            System.out.println("Setting to null");
+            return false;
         }
 
+        setDirectionMovement(null);
 
-
-//        if (ret) {
-//            if (isMoving()) {
-//                //If key is still held down, get next tile
-//                targetTile = tm.getAdjecentTile(targetTile, directionMoving.toString(), 1);
-//                if (targetTile == null) setMoving(false);
-//                return true;
-//            }
-//            else if (!isMoving() && targetTile != null) {
-//                //If key is released, but there's still distance to cover
-//                //currentTile = targetTile; useless line?
-//                targetTile = null;
-//                snap(delta);
-//                //Reset direction moving
-//                directionMoving = null;
-//                return true;
-//            }
-//        }
-
-        return false;
+        return true;
     }
 
     /**

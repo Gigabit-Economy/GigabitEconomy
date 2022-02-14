@@ -134,7 +134,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        System.out.println("RENDERING IN LEVEL 1");
         // stage.act(delta);
         // stage.draw();
         // Set screen's projection matrix to director's ortho camera
@@ -159,6 +158,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
                     movingSprite.move(delta);
                 } catch (TileMovementException ex) {
                     // ignore exception (could act on it and display message to user etc. later)
+                    System.out.println("Sprite was blocked");
                 }
 
                 batch.draw(movingSprite.getTextureRegion(), movingSprite.getX(), movingSprite.getY());
