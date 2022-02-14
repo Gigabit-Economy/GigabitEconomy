@@ -4,10 +4,7 @@ import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.gigabiteconomy.sprites.GameObject;
 import com.mygdx.gigabiteconomy.sprites.House;
-import com.mygdx.gigabiteconomy.sprites.tiled.Enemy;
-import com.mygdx.gigabiteconomy.sprites.tiled.Player;
-import com.mygdx.gigabiteconomy.sprites.tiled.StaticSprite;
-import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
+import com.mygdx.gigabiteconomy.sprites.tiled.*;
 import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite.Weapon;
 
 import java.util.Arrays;
@@ -31,7 +28,7 @@ public class LevelOneScreen extends LevelScreen {
     private static final ArrayList<House> HOUSES = new ArrayList<House>(Arrays.asList(HOUSE_ONE, HOUSE_TWO));
 
     // Parcel van (for Player to collect parcels from)
-    private static final StaticSprite PARCEL_VAN = new StaticSprite("finished_assets/static_sprites/van.png", 15, 3);
+    private static final ParcelVan PARCEL_VAN = new ParcelVan(15, 3);
 
     /* STATIC SPRITES (FENCES ETC...) */
     private static final StaticSprite FENCE = new StaticSprite("finished_assets/static_sprites/fence.png", 5, 0);

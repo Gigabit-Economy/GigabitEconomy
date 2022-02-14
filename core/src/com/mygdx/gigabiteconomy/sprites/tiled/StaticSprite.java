@@ -12,7 +12,7 @@ public class StaticSprite extends TiledObject {
     private Texture texture;
 
     /**
-     * Constructor used to create a new static sprite
+     * Create a new static sprite
      *
      * @param png the .png file of the sprite's texture
      * @param x position of Tile (within tile grid) to place sprite

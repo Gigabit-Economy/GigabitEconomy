@@ -11,15 +11,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.exceptions.ScreenException;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
-import com.mygdx.gigabiteconomy.sprites.tiled.Player;
 import com.mygdx.gigabiteconomy.sprites.*;
-import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
-import com.mygdx.gigabiteconomy.sprites.tiled.StaticSprite;
-import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
+import com.mygdx.gigabiteconomy.sprites.tiled.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.logging.Level;
 
 /**
  * Abstract class which acts as a base class for all level screens.
@@ -41,7 +37,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     private Player player;
     private ArrayList<TiledObject> enemies;
     private ArrayList<House> houses;
-    private StaticSprite parcelVan;
+    private ParcelVan parcelVan;
     private ArrayList<TiledObject> staticSprites;
 
     private int score = 0;
@@ -65,7 +61,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      *                          fences etc.) for the level
      * @param backgroundTexture the background graphic of the level
      */
-    public LevelScreen(GigabitEconomy director, Player player, ArrayList<TiledObject> enemies, ArrayList<House> houses, StaticSprite parcelVan, ArrayList<TiledObject> staticSprites, Texture backgroundTexture) {
+    public LevelScreen(GigabitEconomy director, Player player, ArrayList<TiledObject> enemies, ArrayList<House> houses, ParcelVan parcelVan, ArrayList<TiledObject> staticSprites, Texture backgroundTexture) {
         this.director = director;
         this.player = player;
         this.houses = houses;
@@ -292,6 +288,19 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     }
 
     /**
+     * End the level (called when Player is destroyed)
+     */
+    public void end() {
+        try {
+            director.switchScreen("levelFailed");
+        } catch (ScreenException ex) {
+            Gdx.app.error("Exception", "The screen could not be switched when level failed", ex);
+        }
+
+        hide();
+    }
+
+    /**
      * Sets the input processor to null to prevent the Player's application listener
      * from listening to user
      * inputs; then calls dispose() to remove the screen's assets from memory.
@@ -307,19 +316,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     }
 
     /**
-     * End the level (called when Player is destroyed)
-     */
-    public void end() {
-        try {
-            director.switchScreen("levelFailed");
-        } catch (ScreenException ex) {
-            Gdx.app.error("Exception", "The screen could not be switched when level failed", ex);
-        }
-
-        hide();
-    }
-
-    /**
      * Removes the screen's assets (background texture, sprite batch and moving sprites) from memory
      * when the screen is made inactive and they're therefore no longer needed.
      * Called by hide().
@@ -332,12 +328,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
         // dispose of moving sprites (to dispose their texture atlas)
         for (GameObject sprite : sprites) {
-            if (sprite instanceof MovingSprite) {
-                sprite.dispose();
-            }
-            else if (sprite instanceof StaticSprite) {
-                sprite.dispose();
-            }
+            sprite.dispose();
         }
     }
 }
