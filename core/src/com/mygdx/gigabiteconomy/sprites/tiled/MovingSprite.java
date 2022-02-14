@@ -64,6 +64,33 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     }
 
     /**
+     * Update the sprite's texture regions (texture atlases being shown as the sprite)
+     * based on its directionFacing & weapon
+     */
+    public void updateTextureRegions() {
+        String direction;
+        switch (directionFacing) {
+            case WEST:
+                direction = "Left";
+            case EAST:
+                direction = "Right";
+            default:
+                direction = "Right";
+        }
+
+        String selectedWeapon = weapon.name().toLowerCase();
+        String movementConfig = String.format("finished_assets/player/movement/%s%s.txt", selectedWeapon, direction);
+        String attackingConfig = String.format("finished_assets/player/attacks/%s%s.txt", selectedWeapon, direction);
+
+        this.ta = new TextureAtlas(movementConfig);
+        this.regions = ta.getRegions();
+        this.textureRegion = regions.get(0);
+
+        this.movementAnimation = new MovingAnimation<TextureRegion>(1/14f, regions, true);
+        this.attackAnimation = new MovingAnimation<TextureRegion>(1/14f, new TextureAtlas(attackingConfig).getRegions(), false);
+    }
+
+    /**
      * Set the direction the sprite is facing (and therefore moves in).
      *
      * @param dir the direction enum to move in
@@ -79,6 +106,8 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         deltaMove.x = dir.dx; deltaMove.y = dir.dy;
         if (this instanceof Player)
             System.out.println("Direction movement set to " + dir.name());
+
+        updateTextureRegions();
     }
 
     /**
@@ -269,26 +298,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
 
-        String direction;
-        switch (directionFacing) {
-            case WEST:
-                direction = "Left";
-            case EAST:
-                direction = "Right";
-            default:
-                direction = "Right";
-        }
-
-        String selectedWeapon = weapon.name().toLowerCase();
-        String movementConfig = String.format("finished_assets/player/movement/%s%s.txt", selectedWeapon, direction);
-        String attackingConfig = String.format("finished_assets/player/attacks/%s%s.txt", selectedWeapon, direction);
-
-        this.ta = new TextureAtlas(movementConfig);
-        this.regions = ta.getRegions();
-        this.textureRegion = regions.get(0);
-
-        this.movementAnimation = new MovingAnimation<TextureRegion>(1/14f, regions, true);
-        this.attackAnimation = new MovingAnimation<TextureRegion>(1/14f, new TextureAtlas(attackingConfig).getRegions(), false);
+        updateTextureRegions();
     }
 
     /**
