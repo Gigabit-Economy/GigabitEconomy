@@ -24,6 +24,8 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     private TextureRegion textureRegion;
 
     private DIRECTION directionMoving = null;
+    private DIRECTION directionFacing = DIRECTION.EAST;
+
     private boolean moving;
     // Vector we add to position with every move
     private Vector2 deltaMove = new Vector2(0, 0);
@@ -71,6 +73,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
             deltaMove.y = 0;
             return;
         }
+        directionFacing = dir;
         deltaMove.x = dir.dx; deltaMove.y = dir.dy;
         if (this instanceof Player)
             System.out.println("Direction movement set to " + dir.name());
@@ -242,18 +245,15 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         this.weapon = weapon;
 
         String direction;
-        if (directionMoving != null)
-            switch (directionMoving) {
-                case WEST:
-                    direction = "Left";
-                case EAST:
-                    direction = "Right";
-                default:
-                    direction = "Right";
-            }
-        else {
-            direction = "Right";
+        switch (directionFacing) {
+            case WEST:
+                direction = "Left";
+            case EAST:
+                direction = "Right";
+            default:
+                direction = "Right";
         }
+
         String selectedWeapon = weapon.name().toLowerCase();
         String movementConfig = String.format("finished_assets/player/movement/%s%s.txt", selectedWeapon, direction);
         String attackingConfig = String.format("finished_assets/player/attacks/%s%s.txt", selectedWeapon, direction);
@@ -271,13 +271,14 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * Will call attack() and detract from health of any surrounding sprite.
      */
     public void launchAttack() {
-//        Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTile(), directionMoving, 1);
-//
-//        // if adjacent tile is occupied by sprite which can be attacked, attack
-//        TiledObject adjacentSprite = adjacentTile.getOccupiedBy();
-//        if (adjacentSprite instanceof MovingSprite) {
-//            ((MovingSprite) adjacentSprite).attack(weapon);
-//        }
+        Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTile(), directionFacing, 1);
+        if (adjacentTile == null) return; //Trying to attack invalid Tile
+
+        // if adjacent tile is occupied by sprite which can be attacked, attack
+        TiledObject adjacentSprite = adjacentTile.getOccupiedBy();
+        if (adjacentSprite instanceof MovingSprite) {
+            ((MovingSprite) adjacentSprite).attack(weapon);
+        }
         setAttacking(true);
     }
 
