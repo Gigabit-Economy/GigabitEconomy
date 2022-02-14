@@ -1,79 +1,79 @@
-golfLeftAt.png
+golfRight.png
 size: 480, 1440
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-nineIronLeftAttack1
+nineIronRightAttack1
   rotate: false
   xy: 0, 0
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-nineIronLeftAttack2
+nineIronRightAttack2
   rotate: false
   xy: 240, 0
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-nineIronLeftAttack3
+nineIronRightAttack3
   rotate: false
   xy: 0, 240
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-nineIronLeftAttack4
+nineIronRightAttack4
   rotate: false
   xy: 240, 240
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-nineIronLeftAttack5
+nineIronRightAttack5
   rotate: false
   xy: 0, 480
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-nineIronLeftAttack6
+nineIronRightAttack6
   rotate: false
   xy: 240, 480
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-nineIronLeftAttack7
+nineIronRightAttack7
   rotate: false
   xy: 0, 720
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-nineIronLeftAttack8
+nineIronRightAttack8
   rotate: false
   xy: 240, 720
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-nineIronLeftAttack9
+nineIronRightAttack9
   rotate: false
   xy: 0, 960
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-nineIronLeftAttack10
+nineIronRightAttack10
   rotate: false
   xy: 240, 960
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-nineIronLeftAttack11
+nineIronRightAttack11
   rotate: false
   xy: 0, 1200
   size: 240, 240
@@ -81,85 +81,86 @@ nineIronLeftAttack11
   offset: 0, 0
   index: -1
 =======
-golfLeftAt.png
+golfRightAt.png
 size: 480, 1440
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-nineIronLeftAttack1
+nineIronRightAttack1
   rotate: false
   xy: 0, 0
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-nineIronLeftAttack2
+nineIronRightAttack2
   rotate: false
   xy: 240, 0
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-nineIronLeftAttack3
+nineIronRightAttack3
   rotate: false
   xy: 0, 240
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-nineIronLeftAttack4
+nineIronRightAttack4
   rotate: false
   xy: 240, 240
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-nineIronLeftAttack5
+nineIronRightAttack5
   rotate: false
   xy: 0, 480
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-nineIronLeftAttack6
+nineIronRightAttack6
   rotate: false
   xy: 240, 480
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-nineIronLeftAttack7
+nineIronRightAttack7
   rotate: false
   xy: 0, 720
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-nineIronLeftAttack8
+nineIronRightAttack8
   rotate: false
   xy: 240, 720
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-nineIronLeftAttack9
+nineIronRightAttack9
   rotate: false
   xy: 0, 960
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-nineIronLeftAttack10
+nineIronRightAttack10
   rotate: false
   xy: 240, 960
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
-nineIronLeftAttack11
+nineIronRightAttack11
   rotate: false
   xy: 0, 1200
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
+>>>>>>> 90348a187867dfc5e82a944555ec0174e568afc0

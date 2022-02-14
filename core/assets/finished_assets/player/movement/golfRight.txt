@@ -1,4 +1,4 @@
-golfRightMove.png
+golfRight.png
 size: 1288, 240
 format: RGBA8888
 filter: Linear,Linear

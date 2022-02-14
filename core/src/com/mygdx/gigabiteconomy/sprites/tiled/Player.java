@@ -2,23 +2,36 @@ package com.mygdx.gigabiteconomy.sprites.tiled;
 
 import com.badlogic.gdx.Input;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
+import com.mygdx.gigabiteconomy.screens.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
 
 /**
  * Class representing a player sprite (one per level)
  */
 public class Player extends MovingSprite {
+    private LevelScreen level;
+
     /**
      * Create a new Player sprite (MovingSprite)
      *
-     * @param movementConfig path of texture atlas movement config file (.txt)
-     * @param attackingConfig path of texture atlas attacking config file (.txt)
+     * @param weapon the weapon the Player is carrying
      * @param x position of Tile (within tile grid) to place sprite
      * @param y position of Tile (within tile grid) to place sprite
      */
-    public Player(String movementConfig, String attackingConfig, int x, int y) {
-        super(movementConfig, attackingConfig, x, y);
+    public Player(Weapon weapon, int x, int y) {
+        super(weapon, x, y);
     }
+
+
+    /**
+     * Set the level the Player is in
+     *
+     * @param level the level the Player is in
+     */
+    public void setLevel(LevelScreen level) {
+        this.level = level;
+    }
+
 
     /**
      * Method to handle movement of the Player
@@ -67,6 +80,7 @@ public class Player extends MovingSprite {
     @Override
     public DIRECTION setNextDirection() {
         return getDirectionMoving();
+
     }
 
     /**
@@ -91,5 +105,18 @@ public class Player extends MovingSprite {
         setDirectionMovement(null);
 
         return true;
+    }
+
+    /**
+     * Destroy the player & end the current level.
+     * Called when the player's health reaches 0 or less.
+     */
+    @Override
+    public void destroy() {
+        if (level != null) {
+            level.end();
+        }
+
+        super.destroy();
     }
 }

@@ -1,4 +1,4 @@
-knifeLeftAt.png
+knifeLeft.png
 size: 1680, 240
 format: RGBA8888
 filter: Linear,Linear
