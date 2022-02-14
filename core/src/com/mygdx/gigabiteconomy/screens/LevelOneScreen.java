@@ -44,7 +44,7 @@ public class LevelOneScreen extends LevelScreen {
      * @param director the instance of the game director
      */
     public LevelOneScreen(GigabitEconomy director) {
-        super(director, PLAYER, ENEMIES, HOUSES, PARCEL_VAN, STATIC_SPRITES, BACKGROUND_TEXTURE);
+        super(director, PLAYER, ENEMIES, HOUSES, STATIC_SPRITES, BACKGROUND_TEXTURE);
 
         PLAYER.setLevel(this);
     }

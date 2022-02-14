@@ -26,6 +26,8 @@ import java.util.Arrays;
  */
 public abstract class LevelScreen implements Screen, InputProcessor {
     private GigabitEconomy director;
+    private boolean paused = false;
+
     private TileManager tileManager;
 
     private Stage stage;
@@ -58,7 +60,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      * @param enemies           an ArrayList containing all enemy characters for the
      *                          level
      * @param houses            an ArrayList containing all houses for the level
-     * @param parcelVan         the static sprite to be used by the Player to collect parcels from
      * @param staticSprites     an ArrayList containing all static sprites (such as
      *                          fences etc.) for the level
      * @param backgroundTexture the background graphic of the level
@@ -68,11 +69,8 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         this.player = player;
         this.houses = houses;
         this.enemies = enemies;
-        this.parcelVan = parcelVan;
         this.staticSprites = staticSprites;
         this.backgroundTexture = backgroundTexture;
-
-        font = new BitmapFont();
 
         // Create tile manager instance (stated variables explicitly here in case we
         // want to mess about with them)
@@ -99,29 +97,26 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     public void show() {
         Gdx.input.setInputProcessor(this);
 
-        batch = new SpriteBatch();
+        if (paused) {
+            return;
+        }
 
         // Add background
         backgroundSprite = new Sprite(backgroundTexture);
         System.out.println(
                 "Texture dimensions: h:" + backgroundTexture.getHeight() + " w:" + backgroundTexture.getWidth());
-        // tileManager = new TileManager(135, backgroundTexture.getHeight()/2,
-        // backgroundTexture.getWidth(), 0, 0);
 
         // Add static sprites
         sprites.addAll(staticSprites);
-
         // Add houses
         sprites.addAll(houses);
-
-        // Add parcel van
-        sprites.add(parcelVan);
-
         // Add player
         sprites.add(player);
-
         // Add enemies
         sprites.addAll(enemies);
+
+        batch = new SpriteBatch();
+        font = new BitmapFont();
     }
 
     /**
@@ -170,11 +165,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
                 StaticSprite staticSprite = (StaticSprite) sprite;
 
                 batch.draw(staticSprite.getTexture(), staticSprite.getX(), staticSprite.getY());
-            }
-            else if (sprite instanceof House) {
-                House house = (House) sprite;
-
-                batch.draw(house.getTexture(), house.getX(), house.getY());
             }
         }
 
@@ -322,6 +312,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     @Override
     public void pause() {
         try {
+            this.paused = true;
             director.switchScreen("pausemenu");
         } catch (Exception ex) {
             Gdx.app.error("Exception", "Error switching screen to pause menu", ex);
@@ -332,6 +323,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     @Override
     public void resume() {
         Gdx.input.setInputProcessor(this);
+        this.paused = false;
     }
 
     /**
@@ -357,7 +349,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     public void hide() {
        Gdx.input.setInputProcessor(null);
 
-       if (director.getScreen() instanceof PauseMenu == false) {
+       if (!paused) {
            dispose();
        }
     }
@@ -369,6 +361,10 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      */
     @Override
     public void dispose() {
+        if (paused) {
+            return;
+        }
+
         backgroundTexture.dispose();
         batch.dispose();
         font.dispose();
