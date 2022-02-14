@@ -136,72 +136,72 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         return (Math.abs(getX()-targetTile.getTileCoords()[0])<5) && (Math.abs(getY()-targetTile.getTileCoords()[1])<5);
     }
 
-    public abstract void moveStart();
-    public abstract boolean moveBlocked();
+    public abstract DIRECTION setNextDirection();
 
-    public abstract Tile getNextTile();
+    public Tile setNextTile() {
+        setNextDirection();
+        Tile toSet = getTileManager().getAdjecentTile(getCurrentTile(), getDirectionMoving().name(), 1);
+
+        if (toSet == null || (toSet.getOccupiedBy() != null && toSet.getOccupiedBy() != this)) return null;
+
+        setTargetTile(toSet); //Set target tile to one we want to go to
+        return toSet;
+    }
 
 
     /**
-     * Move the sprite to the set targetTile
-     *
+     * Method to handle general MovingSprite movement
+     * Attacks if boolean set and moves the sprite in direction of directionMoving
+     * Implementation notes:
+     *     -> setNextDirection() abstract method defines path of MovingSprite
+     *     -> Can be extended by overriding and calling super on this method
+     *     -> When a sprite is moving, two Tiles are occupied. Moving to and moving from.
      * @param delta
+     * @return True: Arrived at next tile ; False: Currently moving
      */
     public boolean move(float delta) throws TileMovementException {
         /**
          * Checking if sprite should be attacking
          */
         if (attacking) {
+            //Set current texture to next animation texture
             textureRegion = (TextureRegion) attackAnimation.runAnimation(delta);
-            //System.out.println("Changed to" + current);
+            //Checking if animation finished
             if (attackAnimation.isFinished(delta)) {
                 System.out.println("Finished attacking");
                 setAttacking(false);
             }
         }
 
-        if (directionMoving != null) { //First sign that we should be moving
+        //Not moving - can just return
+        if (directionMoving == null) return false;
 
-            if (targetTile == null)
-                targetTile = getNextTile(); //If we are still then get next tile
-
-            ///** is */ moveBlocked();
-
-            //if (targetTile == null) return false; //If we're blocked return false (more in depth check coming soon)
-            if (targetTile == null || targetTile.getOccupiedBy() != this) {
-                System.out.println("getNextTile() Returned null for some reason");
+        //Target tile is null when movement restarts (targetTile has been reached), we must get new Tile
+        if (targetTile == null) {
+            //If getting new tile results in null or new tile is occupied by something other than this, we are blocked
+            setNextTile();
+            if (targetTile == null /**|| targetTile.getOccupiedBy() != this */) { //If we are still then get next tile
+                //Setting targetTile to null will cause this loop to run again, checking if we are still blocked
                 targetTile = null;
                 return false;
             }
-            //Commence move
-            if (this.onTile(targetTile)) { //Need to sort out blocking, will remove != null check
-
-
-                //Reset currentTile to targetTile
-                getCurrentTile().setOccupied(null);
-                setCurrentTile(targetTile);
-                snap(delta);
-                targetTile = null;
-                if (this instanceof Player) {
-                    System.out.println("Arrived at tile");
-                    System.out.println("Occupied tiles:");
-                    getTileManager().printOccupiedTiles(); //Debugging function
-                }
-                //setDirectionMovement(null);
-                return true;
-            } else { //Not made it yet!
-                //Keep on moving
-                addToPos(deltaMove);
-                textureRegion = (TextureRegion) movementAnimation.runAnimation(delta);
-                //System.out.println("Current changed to: " + currentTile);
-//                if (this instanceof Player)
-//                    System.out.println("I want to move!!" + deltaMove.toString());
-                //System.out.println("New pos: " + pos.x + " " + pos.y);
-                return false;
-            }
-        } else {
-            return false; //Not moving
         }
+
+        /**
+         * Commence movement logic by checking if we've arrived at the targetTile
+         */
+        if (this.onTile(targetTile)) {
+            getCurrentTile().setOccupied(null);
+            setCurrentTile(targetTile);
+            snap(delta);
+            targetTile = null;
+            return true;
+        }
+        //Not made it yet!
+        //Keep on moving
+        addToPos(deltaMove);
+        textureRegion = (TextureRegion) movementAnimation.runAnimation(delta);
+        return false;
     }
 
     /**
