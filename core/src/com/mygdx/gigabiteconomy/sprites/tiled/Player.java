@@ -178,6 +178,11 @@ public class Player extends MovingSprite {
             this.isFinalParcel = (level.getParcels() == 1);
 
             level.decrementParcels();
+
+            // if final parcel, switch van to van with no parcels
+            if (isFinalParcel) {
+                level.getParcelVan().setToEmpty();
+            }
         }
 
         /**

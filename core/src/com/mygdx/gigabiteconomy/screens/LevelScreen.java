@@ -203,6 +203,15 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     }
 
     /**
+     * Get the level's player van
+     *
+     * @return the level's PlayerVan
+     */
+    public ParcelVan getParcelVan() {
+        return parcelVan;
+    }
+
+    /**
      * Get the number of parcels remaining to be collected in the level
      *
      * @return number of parcels remaining in level

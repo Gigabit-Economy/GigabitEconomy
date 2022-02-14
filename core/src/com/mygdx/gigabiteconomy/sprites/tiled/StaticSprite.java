@@ -36,6 +36,15 @@ public class StaticSprite extends TiledObject {
     }
 
     /**
+     * Update the sprite's texture
+     *
+     * @param texture the sprite's new texture
+     */
+    public void setTexture(Texture texture) {
+        this.texture = texture;
+    }
+
+    /**
      * Remove the sprite's texture from memory once the sprite is no longer needed
      */
     public void dispose() {
