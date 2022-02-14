@@ -21,6 +21,15 @@ public class House extends GameObject {
         texture = new Texture(String.format("finished_assets/houses/%s.png", type.name().toLowerCase()));
     }
 
+    /**
+     * Get the House's texture
+     *
+     * @return the House's png Texture
+     */
+    public Texture getTexture() {
+        return texture;
+    }
+
     public enum HouseType {
         DETACHED
     }

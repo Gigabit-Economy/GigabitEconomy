@@ -41,6 +41,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     private Player player;
     private ArrayList<TiledObject> enemies;
     private ArrayList<House> houses;
+    private StaticSprite parcelVan;
     private ArrayList<TiledObject> staticSprites;
 
     private int score = 0;
@@ -59,15 +60,17 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      * @param enemies           an ArrayList containing all enemy characters for the
      *                          level
      * @param houses            an ArrayList containing all houses for the level
+     * @param parcelVan         the static sprite to be used by the Player to collect parcels from
      * @param staticSprites     an ArrayList containing all static sprites (such as
      *                          fences etc.) for the level
      * @param backgroundTexture the background graphic of the level
      */
-    public LevelScreen(GigabitEconomy director, Player player, ArrayList<TiledObject> enemies, ArrayList<House> houses, ArrayList<TiledObject> staticSprites, Texture backgroundTexture) {
+    public LevelScreen(GigabitEconomy director, Player player, ArrayList<TiledObject> enemies, ArrayList<House> houses, StaticSprite parcelVan, ArrayList<TiledObject> staticSprites, Texture backgroundTexture) {
         this.director = director;
         this.player = player;
         this.houses = houses;
         this.enemies = enemies;
+        this.parcelVan = parcelVan;
         this.staticSprites = staticSprites;
         this.backgroundTexture = backgroundTexture;
 
@@ -112,6 +115,9 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
         // Add houses
         sprites.addAll(houses);
+
+        // Add parcel van
+        sprites.add(parcelVan);
 
         // Add player
         sprites.add(player);
@@ -166,6 +172,11 @@ public abstract class LevelScreen implements Screen, InputProcessor {
                 StaticSprite staticSprite = (StaticSprite) sprite;
 
                 batch.draw(staticSprite.getTexture(), staticSprite.getX(), staticSprite.getY());
+            }
+            else if (sprite instanceof House) {
+                House house = (House) sprite;
+
+                batch.draw(house.getTexture(), house.getX(), house.getY());
             }
         }
 
