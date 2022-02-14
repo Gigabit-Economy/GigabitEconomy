@@ -161,7 +161,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         ArrayList<Tile> toSet = new ArrayList<>();
 
         for (int i=0; i<getCurrentTiles().size(); i++) {
-            Tile tileToAdd = getTileManager().getAdjecentTile(getCurrentTiles().get(i), getDirectionMoving().name(), 1);
+            Tile tileToAdd = getTileManager().getAdjacentTile(getCurrentTiles().get(i), getDirectionMoving(), 1);
             if (tileToAdd == null || (tileToAdd.getOccupiedBy() != null && tileToAdd.getOccupiedBy() != this)) {
                 targetTiles = null;
                 return null;
@@ -296,7 +296,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * Will call attack() and detract from health of any surrounding sprite.
      */
     public void launchAttack() {
-        Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTile(), directionFacing, 1);
+        Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), directionFacing, 1);
         if (adjacentTile == null) return; //Trying to attack invalid Tile
 
         // if adjacent tile is occupied by sprite which can be attacked, attack
