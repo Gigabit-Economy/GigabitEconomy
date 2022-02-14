@@ -75,6 +75,10 @@ public class Tile {
         return getOccupiedBy() != o;
     }
 
+    public boolean withinTile(GameObject o) {
+        return (Math.abs(o.getX()-getTileCoords()[0])<5) && (Math.abs(o.getY()-getTileCoords()[1])<5);
+    }
+
     public int getSideLength() {
         return sideLength;
     }

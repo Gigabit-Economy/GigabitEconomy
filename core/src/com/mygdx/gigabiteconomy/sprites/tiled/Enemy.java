@@ -17,7 +17,7 @@ public class Enemy extends MovingSprite {
 
     private Queue<DIRECTION> movePath;
     private Queue<DIRECTION> agroMovePath;
-    private Tile pathBegin = getCurrentTile();
+    private Tile pathBegin; //Bottom leftmost tile
 
     private HashMap<String, Queue<DIRECTION>> movementPaths = new HashMap<>(); //Allows n paths for n behaviours
     private Queue<DIRECTION> currentPath;

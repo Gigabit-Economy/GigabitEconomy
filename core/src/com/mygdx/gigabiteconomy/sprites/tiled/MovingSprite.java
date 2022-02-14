@@ -9,6 +9,7 @@ import com.mygdx.gigabiteconomy.screens.Tile;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 /**
@@ -31,7 +32,8 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     private Vector2 deltaMove = new Vector2(0, 0);
     private static float deltaVert = 3F;
     private static float deltaHoriz = 3.5F;
-    private Tile targetTile;
+    //private Tile targetTile;
+    private ArrayList<Tile> targetTiles;
 
     private MovingAnimation<TextureRegion> movementAnimation;
     private MovingAnimation<TextureRegion> attackAnimation;
@@ -108,7 +110,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * @param delta the delta time of the current render
      */
     public void snap(float delta) {
-        Tile currentTile = super.getCurrentTile();
+        Tile currentTile = super.getCurrentTiles().get(0);
 
         setPos(currentTile.getTileCoords()[0], currentTile.getTileCoords()[1]);
     }
@@ -118,36 +120,57 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      *
      * @return the Tile instance of the target tile
      */
-    public Tile getTargetTile()
+    public ArrayList<Tile> getTargetTiles()
     {
-        return targetTile;
+        return targetTiles;
     }
 
     /**
      * Set the target tile for the sprite to move to
      *
-     * @param targetTile the Tile instance of the target tile
+     * @param targetTiles the new Tiles to occupy
      */
-    public void setTargetTile(Tile targetTile) {
-        this.targetTile = targetTile;
-        if (targetTile == null) return;
-        targetTile.setOccupied(this);
+    public void setTargetTiles(ArrayList<Tile> targetTiles) {
+        this.targetTiles = targetTiles;
+        if (targetTiles.contains(0)) return;
+        //Setting tile occupation in foreach
+        for (Tile t : targetTiles) {
+            t.setOccupied(this);
+        }
     }
 
-    public boolean onTile(Tile toCheck) {
-        if (targetTile==null) return false;
-        return (Math.abs(getX()-targetTile.getTileCoords()[0])<5) && (Math.abs(getY()-targetTile.getTileCoords()[1])<5);
+    public boolean onTargetTiles() {
+        if (targetTiles.contains(null)) return false;
+        boolean ret = false;
+        for (Tile t : targetTiles) {
+            ret |= t.withinTile(this);
+        }
+        return ret;
     }
 
     public abstract DIRECTION setNextDirection();
 
-    public Tile setNextTile() {
-        DIRECTION dirToGo = setNextDirection();
-        Tile toSet = getTileManager().getAdjacentTile(getCurrentTile(), dirToGo, 1);
+    /**
+     * Class for setting next tiles, creates an ArrayList of next Tiles from currentTiles
+     * @return
+     */
+    public ArrayList<Tile> setNextTiles() {
+        //Setting next direction
+        setNextDirection();
 
-        if (toSet == null || (toSet.getOccupiedBy() != null && toSet.getOccupiedBy() != this)) return null;
+        ArrayList<Tile> toSet = new ArrayList<>();
 
-        setTargetTile(toSet); //Set target tile to one we want to go to
+        for (int i=0; i<getCurrentTiles().size(); i++) {
+            Tile tileToAdd = getTileManager().getAdjacentTile(getCurrentTiles().get(i), getDirectionMoving(), 1);
+            if (tileToAdd == null || (tileToAdd.getOccupiedBy() != null && tileToAdd.getOccupiedBy() != this)) {
+                targetTiles = null;
+                return null;
+            }
+
+            toSet.add(tileToAdd); //Add next tile
+        }
+
+        setTargetTiles(toSet); //Set target tile to one we want to go to
         return toSet;
     }
 
@@ -179,12 +202,12 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         if (directionMoving == null) return false;
 
         //Target tile is null when movement restarts (targetTile has been reached), we must get new Tile
-        if (targetTile == null) {
+        if (targetTiles == null) {
             //If getting new tile results in null or new tile is occupied by something other than this, we are blocked
-            setNextTile();
-            if (targetTile == null /**|| targetTile.getOccupiedBy() != this */) { //If we are still then get next tile
-                //Setting targetTile to null will cause this loop to run again, checking if we are still blocked
-                targetTile = null;
+
+            if (setNextTiles() == null /**|| targetTile.getOccupiedBy() != this */) { //If we are still then get next tile
+                //Making sure targetTile contains null will cause this loop to run again, checking if we are still blocked
+                targetTiles = null;
                 return false;
             }
         }
@@ -192,11 +215,13 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         /**
          * Commence movement logic by checking if we've arrived at the targetTile
          */
-        if (this.onTile(targetTile)) {
-            getCurrentTile().setOccupied(null);
-            setCurrentTile(targetTile);
+        if (this.onTargetTiles()) {
+            for (Tile t : getCurrentTiles()) {
+                t.setOccupied(null);
+            }
+            setCurrentTiles(targetTiles);
             snap(delta);
-            targetTile = null;
+            targetTiles = null;
             return true;
         }
         if (this instanceof Player) {
@@ -271,7 +296,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * Will call attack() and detract from health of any surrounding sprite.
      */
     public void launchAttack() {
-        Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTile(), directionFacing, 1);
+        Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), directionFacing, 1);
         if (adjacentTile == null) return; //Trying to attack invalid Tile
 
         // if adjacent tile is occupied by sprite which can be attacked, attack

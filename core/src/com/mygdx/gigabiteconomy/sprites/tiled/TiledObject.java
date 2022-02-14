@@ -8,6 +8,8 @@ import com.mygdx.gigabiteconomy.screens.TileManager;
 import com.mygdx.gigabiteconomy.sprites.GameObject;
 
 import java.lang.Exception;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /**
  * Abstract class which all tiled sprites/game objects derive from.
@@ -16,7 +18,8 @@ import java.lang.Exception;
 public abstract class TiledObject extends GameObject {
     private TileManager tileManager;
 
-    private Tile currentTile;
+    //private Tile currentTile;
+    private ArrayList<Tile> currentTiles;
 
     public TiledObject(float x, float y)
     {
@@ -47,22 +50,22 @@ public abstract class TiledObject extends GameObject {
      *
      * @return the Tile instance of the current tile
      */
-    public Tile getCurrentTile() {
-        return currentTile;
+    public ArrayList<Tile> getCurrentTiles() {
+        return currentTiles;
     }
 
     /**
      * Set the tile the sprite the currently occupies
      *
-     * @param tile the new Tile instance for the sprite to occupy
+     * @param currentTiles the new Tiles for the sprite to occupy
      */
-    public void setCurrentTile(Tile tile) {
-        if (tile == null) {
+    public void setCurrentTiles(ArrayList<Tile> currentTiles) {
+        if (currentTiles.contains(null)) {
             return;
         }
 
-        currentTile = tile;
+        this.currentTiles = currentTiles;
 
-        setPos(currentTile.getTileCoords()[0], currentTile.getTileCoords()[1]);
+        setPos(currentTiles.get(0).getTileCoords()[0], currentTiles.get(0).getTileCoords()[1]);
     }
 }
