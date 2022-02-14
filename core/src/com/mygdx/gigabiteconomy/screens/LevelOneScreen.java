@@ -27,7 +27,7 @@ public class LevelOneScreen extends LevelScreen {
 
     /* HOUSES */
     private static final House HOUSE_ONE = new House(House.HouseType.DETACHED, 640, 480);
-    private static final House HOUSE_TWO = new House(House.HouseType.TWO_STORY, 680, 480);
+    private static final House HOUSE_TWO = new House(House.HouseType.TWO_STORY, 1050, 480);
     private static final ArrayList<House> HOUSES = new ArrayList<House>(Arrays.asList(HOUSE_ONE, HOUSE_TWO));
 
     // Parcel van (for Player to collect parcels from)
