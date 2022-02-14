@@ -118,21 +118,19 @@ public class Player extends MovingSprite {
      */
     @Override
     public void launchAttack() {
-        super.launchAttack();
-
         // if Player already has a parcel, don't allow to collect another
         if (this.parcel != null) {
-            return;
+            Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), getDirectionFacing(), 1);
+            if (adjacentTile == null) return; // trying to attack invalid Tile
+
+            // if adjacent tile is occupied by a parcel van, collect parcel
+            TiledObject adjacentSprite = adjacentTile.getOccupiedBy();
+            if (adjacentSprite instanceof ParcelVan) {
+                this.parcel = new Parcel();
+            }
         }
 
-        Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), getDirectionFacing(), 1);
-        if (adjacentTile == null) return; // trying to attack invalid Tile
-
-        // if adjacent tile is occupied by a parcel van, collect parcel
-        TiledObject adjacentSprite = adjacentTile.getOccupiedBy();
-        if (adjacentSprite instanceof ParcelVan) {
-            this.parcel = new Parcel();
-        }
+        super.launchAttack();
     }
 
     /**
@@ -164,7 +162,7 @@ public class Player extends MovingSprite {
         super.destroy();
     }
 
-    public class Parcel {
+    private class Parcel {
         private MovingSprite.Weapon weapon;
         private boolean isFinalParcel;
 

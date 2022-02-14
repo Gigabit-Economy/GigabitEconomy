@@ -317,7 +317,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      */
     public void launchAttack() {
         Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), directionFacing, 1);
-        if (adjacentTile == null) return; //Trying to attack invalid Tile
+        if (adjacentTile == null) return; // trying to attack invalid Tile
 
         // if adjacent tile is occupied by sprite which can be attacked, attack
         TiledObject adjacentSprite = adjacentTile.getOccupiedBy();
