@@ -187,7 +187,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         font.draw(batch, parcelText, 25, 1020);
         font.draw(batch, healthText, 25, 1000);
 
-        if (this.errorCountdown > 0 && this.errorText != null || this.errorText.length() != 0) {
+        if (this.errorCountdown > 0 && this.errorText != null && this.errorText.length() != 0) {
             font.draw(batch, this.errorText, 25, 980);
             // decrement error countdown by seconds passed in prev render
             errorCountdown -= 1 * delta;
