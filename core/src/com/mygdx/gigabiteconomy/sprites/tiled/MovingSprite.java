@@ -252,13 +252,23 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     }
 
     /**
-     * Get the direction the sprite is currently facing (i.e. move direction)
+     * Get the direction the sprite is currently moving
      *
      * @return direction enum of the sprite
      */
     public DIRECTION getDirectionMoving()
     {
         return directionMoving;
+    }
+
+    /**
+     * Get the direction the sprite is currently facing
+     *
+     * @return direction enum of the sprite
+     */
+    public DIRECTION getDirectionFacing()
+    {
+        return directionFacing;
     }
 
     /**
@@ -303,8 +313,8 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         TiledObject adjacentSprite = adjacentTile.getOccupiedBy();
         if (adjacentSprite instanceof MovingSprite) {
             ((MovingSprite) adjacentSprite).attack(weapon);
+            setAttacking(true);
         }
-        setAttacking(true);
     }
 
     /**

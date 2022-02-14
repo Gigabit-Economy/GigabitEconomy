@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
+import com.mygdx.gigabiteconomy.exceptions.ParcelException;
 import com.mygdx.gigabiteconomy.exceptions.ScreenException;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.sprites.*;
@@ -44,7 +45,8 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     private int parcels = 5;
 
     private BitmapFont font;
-    private String scoreText, parcelText, healthText;
+    private String errorText;
+    private float errorCountdown;
 
     /**
      * A template constructor for use by all level screen subclasses. Sets
@@ -176,16 +178,44 @@ public abstract class LevelScreen implements Screen, InputProcessor {
             }
         }
 
-        scoreText = String.format("score: %d", score);
-        parcelText = String.format("parcels remaining: %d", parcels);
-        healthText = String.format("health: %d", player.getHealth());
+        String scoreText = String.format("score: %d", score);
+        String parcelText = String.format("parcels remaining: %d", parcels);
+        String healthText = String.format("health: %d", player.getHealth());
 
         font.setColor(Color.CORAL);
         font.draw(batch, scoreText, 25, 1040);
         font.draw(batch, parcelText, 25, 1020);
         font.draw(batch, healthText, 25, 1000);
 
+        if (this.errorText != null || this.errorText.length() != 0) {
+            font.draw(batch, this.errorText, 25, 980);
+            // decrement error countdown by seconds passed in prev render
+            errorCountdown -= 1 * delta;
+        }
+
         batch.end();
+    }
+
+    public void showErrorText(String error) {
+        this.errorText = error;
+        // set for error to display for 5 seconds
+        this.errorCountdown = 5;
+    }
+
+    /**
+     * Get the number of parcels remaining to be collected in the level
+     *
+     * @return number of parcels remaining in level
+     */
+    public int getParcels() {
+        return parcels;
+    }
+
+    /**
+     * Decrement the parcels count (number of parcels remaining to be collected in the level)
+     */
+    public void decrementParcels() {
+        parcels--;
     }
 
     /**
@@ -218,6 +248,14 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         } else if (keycode == Input.Keys.SPACE) {
             // Launch attack
             player.launchAttack();
+        }
+        else if (keycode == Input.Keys.TAB) {
+            // Open parcel (if any)
+            try {
+                player.openParcel();
+            } catch (ParcelException ex) {
+                showErrorText(ex.getMessage());
+            }
         } else {
             return false;
         }
