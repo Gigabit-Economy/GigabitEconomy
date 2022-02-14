@@ -41,6 +41,11 @@ public class Player extends MovingSprite {
     public void handleMovement(int keycode) {
         if (getTargetTile() != null) {
             System.out.println("Not finished with previous movement");
+            if (getTargetTile() == getCurrentTile()) {
+                System.out.println("What I thought");
+            } else {
+                System.out.println(getTargetTile().getPositionTile()[0] + " " + getTargetTile().getPositionTile()[1]);
+            }
             return; // Not finished with previous movement
         }
 
@@ -80,7 +85,6 @@ public class Player extends MovingSprite {
     @Override
     public DIRECTION setNextDirection() {
         return getDirectionMoving();
-
     }
 
     /**
@@ -103,6 +107,7 @@ public class Player extends MovingSprite {
         }
 
         setDirectionMovement(null);
+        setMoving(false);
 
         return true;
     }

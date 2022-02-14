@@ -23,7 +23,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     // Current image being displayed in the movement animation
     private TextureRegion textureRegion;
 
-    private DIRECTION directionMoving = DIRECTION.EAST;
+    private DIRECTION directionMoving = null;
     private boolean moving;
     // Vector we add to position with every move
     private Vector2 deltaMove = new Vector2(0, 0);
@@ -72,6 +72,8 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
             return;
         }
         deltaMove.x = dir.dx; deltaMove.y = dir.dy;
+        if (this instanceof Player)
+            System.out.println("Direction movement set to " + dir.name());
     }
 
     /**
@@ -137,8 +139,8 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     public abstract DIRECTION setNextDirection();
 
     public Tile setNextTile() {
-        setNextDirection();
-        Tile toSet = getTileManager().getAdjacentTile(getCurrentTile(), getDirectionMoving(), 1);
+        DIRECTION dirToGo = setNextDirection();
+        Tile toSet = getTileManager().getAdjacentTile(getCurrentTile(), dirToGo, 1);
 
         if (toSet == null || (toSet.getOccupiedBy() != null && toSet.getOccupiedBy() != this)) return null;
 
@@ -194,6 +196,9 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
             targetTile = null;
             return true;
         }
+        if (this instanceof Player) {
+            System.out.println("I want to move!" + deltaMove.toString() + " " + directionMoving.name());
+        }
         //Not made it yet!
         //Keep on moving
         addToPos(deltaMove);
@@ -237,13 +242,17 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         this.weapon = weapon;
 
         String direction;
-        switch (directionMoving) {
-            case WEST:
-                direction = "Left";
-            case EAST:
-                direction = "Right";
-            default:
-                direction = "Right";
+        if (directionMoving != null)
+            switch (directionMoving) {
+                case WEST:
+                    direction = "Left";
+                case EAST:
+                    direction = "Right";
+                default:
+                    direction = "Right";
+            }
+        else {
+            direction = "Right";
         }
         String selectedWeapon = weapon.name().toLowerCase();
         String movementConfig = String.format("finished_assets/player/movement/%s%s.txt", selectedWeapon, direction);
@@ -262,13 +271,14 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * Will call attack() and detract from health of any surrounding sprite.
      */
     public void launchAttack() {
-        Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTile(), directionMoving, 1);
-
-        // if adjacent tile is occupied by sprite which can be attacked, attack
-        TiledObject adjacentSprite = adjacentTile.getOccupiedBy();
-        if (adjacentSprite instanceof MovingSprite) {
-            ((MovingSprite) adjacentSprite).attack(weapon);
-        }
+//        Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTile(), directionMoving, 1);
+//
+//        // if adjacent tile is occupied by sprite which can be attacked, attack
+//        TiledObject adjacentSprite = adjacentTile.getOccupiedBy();
+//        if (adjacentSprite instanceof MovingSprite) {
+//            ((MovingSprite) adjacentSprite).attack(weapon);
+//        }
+        setAttacking(true);
     }
 
     /**
