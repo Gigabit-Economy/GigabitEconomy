@@ -22,7 +22,7 @@ public class Enemy extends MovingSprite {
     private HashMap<String, Queue<DIRECTION>> movementPaths = new HashMap<>(); //Allows n paths for n behaviours
     private Queue<DIRECTION> currentPath;
 
-    int[] agroDistance; //[dx, dy] tiles to cause agro
+    int[][] agroDistance; //[[+x, -x], [+y, -y]] tiles to cause agro
     boolean agro = false;
 
     GameObject targetEntity;
@@ -56,18 +56,8 @@ public class Enemy extends MovingSprite {
         movePath.add(DIRECTION.NORTH);
 
         agroMovePath = new LinkedList<>();
-        agroMovePath.add(DIRECTION.NORTH);
-        agroMovePath.add(DIRECTION.NORTH);
-        agroMovePath.add(DIRECTION.NORTH);
-        agroMovePath.add(DIRECTION.NORTH);
-        agroMovePath.add(DIRECTION.NORTH);
-        agroMovePath.add(DIRECTION.SOUTH);
-        agroMovePath.add(DIRECTION.SOUTH);
-        agroMovePath.add(DIRECTION.SOUTH);
-        agroMovePath.add(DIRECTION.SOUTH);
-        agroMovePath.add(DIRECTION.SOUTH);
-        agroMovePath.add(DIRECTION.SOUTH);
-        agroMovePath.add(DIRECTION.SOUTH);
+        for (int i=0; i<5; i++) agroMovePath.add(DIRECTION.NORTH);
+        for (int i=0; i<5; i++) agroMovePath.add(DIRECTION.SOUTH);
 
         movementPaths.put("move", movePath);
         movementPaths.put("agro", agroMovePath);
@@ -96,7 +86,6 @@ public class Enemy extends MovingSprite {
      * @return
      */
     public boolean checkAgro(MovingSprite player) {
-        targetEntity = player;
         /**
          * If player square position is within agroDistance (see TileManager methods)
          * -> Set agro to true
@@ -104,7 +93,41 @@ public class Enemy extends MovingSprite {
          * ::: In move method override: Agro = true => We run path finding and change pathSet to shortest path to player
          * Else return false
          *
+         * Check whether Player is within agro square
          */
+        targetEntity = player;
+        Tile currTile = getCurrentTiles().get(0);
+        Tile currPlayerTile = player.getCurrentTiles().get(0);
+
+        /**
+         * Both blocks below check for the same condition (that player is within agro square
+         */
+
+        /** */
+        /** */
+        /** */
+        int i=0;
+        for (DIRECTION dir : new DIRECTION[]{DIRECTION.EAST, DIRECTION.NORTH}) {
+            agro |= (currPlayerTile.getPositionTile()[0] > getTileManager().getAdjacentTile(currTile, dir, agroDistance[i][0]).getPositionTile()[i]);
+            agro |= (currPlayerTile.getPositionTile()[0] > getTileManager().getAdjacentTile(currTile, dir.getOpposite(), agroDistance[i][1]).getPositionTile()[i]);
+            i++;
+        }
+        /** */
+        /** */
+        /** */
+        if (
+                (currPlayerTile.getPositionTile()[0] > getTileManager().getAdjacentTile(currTile, DIRECTION.EAST, agroDistance[0][0]).getPositionTile()[0])
+            &&  (currPlayerTile.getPositionTile()[0] < getTileManager().getAdjacentTile(currTile, DIRECTION.WEST, agroDistance[0][1]).getPositionTile()[0])
+            &&  (currPlayerTile.getPositionTile()[1] < getTileManager().getAdjacentTile(currTile, DIRECTION.NORTH, agroDistance[1][0]).getPositionTile()[1])
+            &&  (currPlayerTile.getPositionTile()[1] < getTileManager().getAdjacentTile(currTile, DIRECTION.SOUTH, agroDistance[1][1]).getPositionTile()[1])
+        ) {
+            /** !!! AGRO !!! */
+            agro = true;
+        }
+        /** */
+        /** */
+        /** */
+
         return false;
     }
     
@@ -149,16 +172,7 @@ public class Enemy extends MovingSprite {
 //            //Resume agro path
 //        }
 
-        /**
-         * >>> MAIN MOVEMENT LOGIC <<<
-         * If ret is true (still moving)
-         * -> Set new direction with TileManager: DIRECTION findDirectionFrom(Tile curr, Tile next);
-         * -> Call setDeltaMove with direction
-         */
-//         if (ret) {
-//             directionMoving = movePath.remove();
-//             movePath.add(directionMoving);
-//         }
+
 
         /**
          * If above is implemented right, enemy should be able to move in 'direction' towards 'targetTile'
