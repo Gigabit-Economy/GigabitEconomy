@@ -326,6 +326,8 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * Will call attack() and detract from health of any surrounding sprite.
      */
     public void launchAttack() {
+        setAttacking(true);
+
         Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), directionFacing, 1);
         if (adjacentTile == null) return; // trying to attack invalid Tile
 
@@ -333,7 +335,6 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         TiledObject adjacentSprite = adjacentTile.getOccupiedBy();
         if (adjacentSprite instanceof MovingSprite) {
             ((MovingSprite) adjacentSprite).attack(weapon);
-            setAttacking(true);
         }
     }
 
