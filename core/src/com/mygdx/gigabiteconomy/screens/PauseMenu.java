@@ -69,8 +69,8 @@ public class PauseMenu implements Screen, InputProcessor {
 
             pauseMenuTable.row();
 
-            TextField volumeControField = new TextField("AUDIO", style);
-            pauseMenuTable.add(volumeControField);
+            TextButton volumeControlButton = new TextButton("AUDIO", style);
+            pauseMenuTable.add(volumeControlButton);
 
             Slider volumeControlSlider = new Slider(-40, 6, 2, false, style);
             volumeControlSlider.setName("volumeSlider");
