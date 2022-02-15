@@ -48,8 +48,8 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * @param x position of Tile (within tile grid) to place sprite
      * @param y position of Tile (within tile grid) to place sprite
      */
-    public MovingSprite(Weapon weapon, int x, int y) {
-        super(x, y);
+    public MovingSprite(Weapon weapon, int x, int y, int height, int width) {
+        super(x, y, height, width);
 
         setWeapon(weapon);
     }
@@ -77,8 +77,6 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         }
         directionFacing = dir;
         deltaMove.x = dir.dx; deltaMove.y = dir.dy;
-        if (this instanceof Player)
-            System.out.println("Direction movement set to " + dir.name());
     }
 
     /**
@@ -224,9 +222,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
             targetTiles = null;
             return true;
         }
-        if (this instanceof Player) {
-            System.out.println("I want to move!" + deltaMove.toString() + " " + directionMoving.name());
-        }
+
         //Not made it yet!
         //Keep on moving
         addToPos(deltaMove);

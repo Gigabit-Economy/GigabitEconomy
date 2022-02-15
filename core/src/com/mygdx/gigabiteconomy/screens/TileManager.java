@@ -2,6 +2,7 @@ package com.mygdx.gigabiteconomy.screens;
 
 import com.mygdx.gigabiteconomy.sprites.GameObject;
 import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
+import com.mygdx.gigabiteconomy.sprites.tiled.StaticSprite;
 import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
 import java.util.ArrayList;
@@ -113,10 +114,19 @@ public class TileManager {
         return toTile;
     }
 
+    /**
+     * Returns ArrayList of unoccupied tiles between coordinates given
+     * @param x bottom left coord of where to start
+     * @param y bottom left coord of where to start
+     * @param width of tile segment to return
+     * @param height of tile segment to return
+     * @param objectToPlace object to place, can be null
+     * @return ArrayList of requested tiles
+     */
     public ArrayList<Tile> placeObject(int x, int y, int width, int height, TiledObject objectToPlace) {
         ArrayList<Tile> toPlace = new ArrayList<>();
-        for (int i=0; i<width; i++) {
-            for (int ii=0; ii<height; ii++) {
+        for (int i=width-1; i>=0; i--) {
+            for (int ii=height-1; ii>=0; ii--) {
                 Tile toAdd = getTile(x+i, y+ii);
                 if ((toAdd != null ? toPlace.add(toAdd) : toPlace.add(null))) {
                     placeObject(toAdd, objectToPlace);
@@ -125,6 +135,7 @@ public class TileManager {
                 }
             }
         }
+        System.out.println(String.format("Length %d for h:%d and w:%d", toPlace.size(), height, width));
         return toPlace;
     }
 
@@ -189,16 +200,14 @@ public class TileManager {
             for (TiledObject o : arr) {
                 float spriteX = o.getX();
                 float spriteY = o.getY();
-                int spriteH = 1;//o.getH();
-                int spriteW = 1;//o.getW();
+                int spriteH = o.getHeight();
+                int spriteW = o.getWidth();
                 ArrayList<Tile> placeAt = this.placeObject((int) spriteX, (int) spriteY, spriteW, spriteH, o);
 
                 //System.out.println(pos.x + " " + pos.y);
 
                 o.setCurrentTiles(placeAt); //Setting current tiles should be done within player
                 o.setTileManager(this);
-
-                System.out.println("Current tile coords: " + placeAt.get(0).getTileCoords()[0] + " " + placeAt.get(0).getTileCoords()[1]);
             }
         }
     }
