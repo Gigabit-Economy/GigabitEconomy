@@ -6,6 +6,7 @@ import com.mygdx.gigabiteconomy.exceptions.ParcelException;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
+import com.mygdx.gigabiteconomy.sprites.GameObject;
 import com.mygdx.gigabiteconomy.sprites.House;
 
 import java.util.ArrayList;
@@ -123,16 +124,25 @@ public class Player extends MovingSprite {
      */
     @Override
     public void launchAttack() {
-        // if Player already has a parcel, don't allow to collect another
-        if (this.parcel != null) {
-            Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), getDirectionFacing(), 1);
-            if (adjacentTile == null) return; // trying to attack invalid Tile
+        // get Tile adjacent to Player
+        Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), getDirectionFacing(), 1);
+        if (adjacentTile == null) return; // trying to attack invalid Tile
 
+        // if Player doesn't yet have a Parcel, check if next to a parcel van to collect one
+        if (this.parcel == null) {
             // if adjacent tile is occupied by a parcel van, collect parcel
             TiledObject adjacentSprite = adjacentTile.getOccupiedBy();
             if (adjacentSprite instanceof ParcelVan) {
                 this.parcel = new Parcel();
                 return;
+            }
+        }
+        // if Player does have a Parcel, check if next to House to be delivered to
+        else {
+            // if adjacent tile is owned by a House, deliver parcel
+            GameObject adjacentObject = adjacentTile.getOwnedBy();
+            if (adjacentObject != null && adjacentObject instanceof House) {
+                parcel.deliver();
             }
         }
 
@@ -184,7 +194,7 @@ public class Player extends MovingSprite {
             ArrayList<House> levelHouses = level.getHouses();
             this.house = levelHouses.get((RANDOM.nextInt(levelHouses.size())));
             try {
-                this.house.markAsDeliveryLocation();
+                this.house.markAsDeliveryLocation(level);
             } catch (Exception ex) {
                 Gdx.app.error("Exception", "Error assigning House as delivery location", ex);
                 System.exit(-1);
@@ -199,6 +209,14 @@ public class Player extends MovingSprite {
             if (isFinalParcel) {
                 level.getParcelVan().setToEmpty();
             }
+        }
+
+        /**
+         * Deliver the parcel in exchange for level points
+         */
+        public void deliver() {
+            level.addToScore(1);
+            parcel = null;
         }
 
         /**

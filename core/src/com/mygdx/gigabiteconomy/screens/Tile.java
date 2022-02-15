@@ -50,8 +50,6 @@ public class Tile {
     public float[] getTileCoords() {
         int[] pos = this.getPositionTile().clone();
         float[] coords = new float[2];
-//        coords[0] = (pos[0]*sideLength)+(sideLength/2); coords[1] = (pos[1]*sideLength)+(sideLength/2);
-//        return coords;
         coords[0] = pos[0]*sideLength; coords[1] = pos[1]*sideLength;
         return coords;
     }
@@ -69,6 +67,15 @@ public class Tile {
      */
     public void setOccupied(TiledObject occupying) {
         this.occupiedBy = occupying;
+    }
+
+    /**
+     * Get the GameObject which owns the Tile (if any; returns null if none)
+     *
+     * @return the GameObject owning the Tile
+     */
+    public GameObject getOwnedBy() {
+        return ownedBy;
     }
 
     /**

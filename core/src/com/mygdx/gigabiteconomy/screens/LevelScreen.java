@@ -240,6 +240,15 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     }
 
     /**
+     * Add to the score points count
+     *
+     * @param points the number of points to add
+     */
+    public void addToScore(int points) {
+        score.alterScore(points);
+    }
+
+    /**
      * Deal with a user's key press (initiate movement/attacking, go to pause menu
      * etc.).
      * Part of ApplicationListener implementation.
