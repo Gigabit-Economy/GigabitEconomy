@@ -215,8 +215,15 @@ public class Player extends MovingSprite {
          * Deliver the parcel in exchange for level points
          */
         public void deliver() {
-            level.addToScore(1);
             parcel = null;
+
+            level.addToScore(1);
+
+            house.unmarkAsDeliveryLocation();
+
+            if (isFinalParcel) {
+                level.complete();
+            }
         }
 
         /**

@@ -371,6 +371,19 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     }
 
     /**
+     * Complete the level (called when the level is complete i.e. the final parcel is delivered)
+     */
+    public void complete() {
+        score.submitScore();
+
+        try {
+            director.switchScreen("levelComplete");
+        } catch (ScreenException ex) {
+            Gdx.app.error("Exception", "The screen could not be switched when level complete", ex);
+        }
+    }
+
+    /**
      * Sets the input processor to null to prevent the Player's application listener
      * from listening to user
      * inputs; then calls dispose() to remove the screen's assets from memory.
