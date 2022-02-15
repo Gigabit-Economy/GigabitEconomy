@@ -43,7 +43,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     private ParcelVan parcelVan;
     private ArrayList<TiledObject> staticSprites;
 
-    private int score = 0;
+    private ScoreSystem score = new ScoreSystem();
     private int parcels = 5;
 
     private BitmapFont font;
@@ -168,7 +168,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
             }
         }
 
-        String scoreText = String.format("score: %d", score);
+        String scoreText = String.format("score: %d", score.alterScore(0));
         String parcelText = String.format("parcels remaining: %d", parcels);
         String healthText = String.format("health: %d", player.getHealth());
 
