@@ -93,7 +93,7 @@ public class TileManager {
                 default:
                     return null;
             }
-        } catch (ArrayIndexOutOfBoundsException e) { return null; }
+        } catch (ArrayIndexOutOfBoundsException e) { return getAdjacentTile(tileFrom, direction, distance-1); }
         return ret;
     }
 
