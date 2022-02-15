@@ -71,10 +71,13 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     public void updateTextureRegions() {
         String spriteDirection;
         switch (directionFacing) {
+            case NORTH: //direction at start should always be east
+            case SOUTH:
+                return;
             case WEST:
                 spriteDirection = "Left";
+                break;
             case EAST:
-                spriteDirection = "Right";
             default:
                 spriteDirection = "Right";
         }
@@ -106,7 +109,6 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         directionFacing = dir;
         deltaMove.x = dir.dx; deltaMove.y = dir.dy;
 
-        updateTextureRegions();
     }
 
     /**
@@ -238,6 +240,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
                 targetTiles = null;
                 return false;
             }
+            updateTextureRegions();
         }
 
         /**
