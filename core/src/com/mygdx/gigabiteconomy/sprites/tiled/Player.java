@@ -1,11 +1,14 @@
 package com.mygdx.gigabiteconomy.sprites.tiled;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.mygdx.gigabiteconomy.exceptions.ParcelException;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
+import com.mygdx.gigabiteconomy.sprites.House;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -167,15 +170,27 @@ public class Player extends MovingSprite {
 
     private class Parcel {
         private MovingSprite.Weapon weapon;
+        private House house;
         private boolean isFinalParcel;
 
         /**
          * Create a new Parcel to be carried by the Player
          */
         public Parcel() {
-            // pick a random Weapon from the enum values
+            // pick a random Weapon from the enum values to be weapon inside parcel (if it's opened)
             this.weapon = MovingSprite.Weapon.values()[RANDOM.nextInt(MovingSprite.Weapon.values().length)];
-            // if level is onto final parcel, set as final parcel
+
+            // pick a random House from the level's houses to be house to be delivered to
+            ArrayList<House> levelHouses = level.getHouses();
+            this.house = levelHouses.get((RANDOM.nextInt(levelHouses.size())));
+            try {
+                this.house.markAsDeliveryLocation();
+            } catch (Exception ex) {
+                Gdx.app.error("Exception", "Error assigning House as delivery location", ex);
+                System.exit(-1);
+            }
+
+            // if level is onto final parcel, mark as such
             this.isFinalParcel = (level.getParcels() == 1);
 
             level.decrementParcels();

@@ -47,5 +47,8 @@ public class LevelOneScreen extends LevelScreen {
         super(director, PLAYER, ENEMIES, HOUSES, PARCEL_VAN, STATIC_SPRITES, BACKGROUND_TEXTURE);
 
         PLAYER.setLevel(this);
+        for (House house : HOUSES) {
+            house.setLevel(this);
+        }
     }
 }

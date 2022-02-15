@@ -1,5 +1,6 @@
 package com.mygdx.gigabiteconomy.screens;
 
+import com.mygdx.gigabiteconomy.exceptions.TileException;
 import com.mygdx.gigabiteconomy.sprites.GameObject;
 import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
 import com.mygdx.gigabiteconomy.sprites.tiled.StaticSprite;
@@ -231,21 +232,41 @@ public class TileManager {
 
     /**
      * Method returns Tile placed over x, y
+     *
      * @param x coord within Tile to get
      * @param y coord within Tile to get
      * @return Tile which holds [x, y]
      */
-    public Tile getTileFromCoords(float x, float y) {
-        Tile ret = null;
+    public Tile getTileFromCoords(float x, float y) throws TileException {
         try {
-            ret = tileArray[(int)x/sideLength][(int)y/sideLength];
+            return tileArray[(int)x/sideLength][(int)y/sideLength];
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Could not find at " + x + " " + y);
+            throw new TileException("Could not find a Tile at " + x + ", " + y);
         }
-        return ret;
     }
 
+    /**
+     * Get the nearest Tile to passed x, y coordinates
+     *
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @return the nearest tile to x, y
+     */
+    public Tile getNearestTileToCoords(float x, float y) throws TileException {
+        try {
+            return getTileFromCoords(x, y);
+        } catch (TileException ex) {
+            if (gridWidth > (x / sideLength)) {
+                x = gridWidth;
+            }
 
+            if (gridHeight > (y / sideLength)) {
+                y = gridHeight;
+            }
+
+            return getTileFromCoords(x, y);
+        }
+    }
 
     /**
      * Method to move an entity by only one space

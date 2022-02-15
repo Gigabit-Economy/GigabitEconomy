@@ -18,7 +18,7 @@ public class Tile {
     private int[] positionTile = new int[2]; //Holds relative position on screen
     private int sideLength;
     private boolean occupied; //Makes tile impassible
-    private TiledObject ownedBy; //Owned by entity (for homeowners)
+    private GameObject ownedBy; //Owned by entity (for homeowners)
     private TiledObject occupiedBy; //Impassible or delivery spot!
 
     /**
@@ -33,14 +33,6 @@ public class Tile {
         positionTile[0] = tileX; positionTile[1] = tileY;
         position[0] = x; position[1] = y;
         this.sideLength = sideLength;
-    }
-
-    /**
-     * Sets current Tile to occupied
-     * @param occupying GameObject to occupy current Tile
-     */
-    public void setOccupied(TiledObject occupying) {
-        this.occupiedBy = occupying;
     }
 
     /**
@@ -69,6 +61,23 @@ public class Tile {
      */
     public TiledObject getOccupiedBy() {
         return occupiedBy;
+    }
+
+    /**
+     * Sets current Tile to occupied
+     * @param occupying GameObject to occupy current Tile
+     */
+    public void setOccupied(TiledObject occupying) {
+        this.occupiedBy = occupying;
+    }
+
+    /**
+     * Set the owner of the Tile
+     *
+     * @param owner the owner of the Tile
+     */
+    public void setOwned(GameObject owner) {
+        this.ownedBy = owner;
     }
 
     public boolean isOccupiedBy(GameObject o) {

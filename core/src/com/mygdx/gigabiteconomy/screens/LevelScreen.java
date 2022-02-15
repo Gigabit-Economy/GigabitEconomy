@@ -196,6 +196,25 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     }
 
     /**
+     * Get the level's TileManager instance
+     *
+     * @return the level's TileManager instance
+     */
+    public TileManager getTileManager() {
+        return tileManager;
+    }
+
+    /**
+     * Get the level's Houses
+     *
+     * @return an ArrayList containing all the level's Houses
+     */
+    public ArrayList<House> getHouses()
+    {
+        return houses;
+    }
+
+    /**
      * Get the level's player van
      *
      * @return the level's PlayerVan
