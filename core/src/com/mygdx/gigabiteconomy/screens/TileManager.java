@@ -114,6 +114,15 @@ public class TileManager {
         return toTile;
     }
 
+    /**
+     * Returns ArrayList of unoccupied tiles between coordinates given
+     * @param x bottom left coord of where to start
+     * @param y bottom left coord of where to start
+     * @param width of tile segment to return
+     * @param height of tile segment to return
+     * @param objectToPlace object to place, can be null
+     * @return ArrayList of requested tiles
+     */
     public ArrayList<Tile> placeObject(int x, int y, int width, int height, TiledObject objectToPlace) {
         ArrayList<Tile> toPlace = new ArrayList<>();
         for (int i=width-1; i>=0; i--) {

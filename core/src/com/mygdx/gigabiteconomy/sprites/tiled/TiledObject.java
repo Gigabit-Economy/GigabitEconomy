@@ -23,18 +23,23 @@ public abstract class TiledObject extends GameObject {
     private int height;
     private int width;
 
-    public TiledObject(float x, float y, int height, int width)
-    {
+    public TiledObject(float x, float y, int height, int width) {
         super(x, y);
 
         this.height = height <= 0 ? 1 : height; //Implement a max h/w?
         this.width = width <= 0 ? 1 : width;
     }
 
+    /**
+     * @return Height of Tiles occupied
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * @return Width of Tiles occupied
+     */
     public int getWidth() {
         return width;
     }
