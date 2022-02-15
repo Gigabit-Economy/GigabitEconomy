@@ -1,47 +1,47 @@
 pipeLeft.png
-size: 1440, 240
+size: 420, 60
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 PipeLeftAttack1
   rotate: false
   xy: 0, 0
-  size: 240, 240
-  orig: 240, 240
+  size: 70, 60
+  orig: 70, 60
   offset: 0, 0
   index: -1
 PipeLeftAttack2
   rotate: false
-  xy: 240, 0
-  size: 240, 240
-  orig: 240, 240
+  xy: 70, 0
+  size: 70, 60
+  orig: 70, 60
   offset: 0, 0
   index: -1
 PipeLeftAttack3
   rotate: false
-  xy: 480, 0
-  size: 240, 240
-  orig: 240, 240
+  xy: 140, 0
+  size: 70, 60
+  orig: 70, 60
   offset: 0, 0
   index: -1
 PipeLeftAttack4
   rotate: false
-  xy: 720, 0
-  size: 240, 240
-  orig: 240, 240
+  xy: 210, 0
+  size: 70, 60
+  orig: 70, 60
   offset: 0, 0
   index: -1
 PipeLeftAttack5
   rotate: false
-  xy: 960, 0
-  size: 240, 240
-  orig: 240, 240
+  xy: 280, 0
+  size: 70, 60
+  orig: 70, 60
   offset: 0, 0
   index: -1
 PipeLeftAttack6
   rotate: false
-  xy: 1200, 0
-  size: 240, 240
-  orig: 240, 240
+  xy: 350, 0
+  size: 70, 60
+  orig: 70, 60
   offset: 0, 0
   index: -1

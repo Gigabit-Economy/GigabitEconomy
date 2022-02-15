@@ -1,4 +1,4 @@
-knifeRight.png
+knifeRightAttack.png
 size: 1920, 240
 format: RGBA8888
 filter: Linear,Linear
