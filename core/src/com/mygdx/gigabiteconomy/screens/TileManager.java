@@ -125,6 +125,7 @@ public class TileManager {
                 }
             }
         }
+        System.out.println(String.format("Length %d for h:%d and w:%d", toPlace.size(), height, width));
         return toPlace;
     }
 
@@ -189,8 +190,8 @@ public class TileManager {
             for (TiledObject o : arr) {
                 float spriteX = o.getX();
                 float spriteY = o.getY();
-                int spriteH = 1;//o.getH();
-                int spriteW = 1;//o.getW();
+                int spriteH = o.getHeight();
+                int spriteW = o.getWidth();
                 ArrayList<Tile> placeAt = this.placeObject((int) spriteX, (int) spriteY, spriteW, spriteH, o);
 
                 //System.out.println(pos.x + " " + pos.y);

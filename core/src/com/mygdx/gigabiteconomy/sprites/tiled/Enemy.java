@@ -36,8 +36,8 @@ public class Enemy extends MovingSprite {
      * @param x position of Tile (within tile grid) to place sprite
      * @param y position of Tile (within tile grid) to place sprite
      */
-    public Enemy(Weapon weapon, int x, int y) {
-        super(weapon, x, y);
+    public Enemy(Weapon weapon, int x, int y, int height, int width) {
+        super(weapon, x, y, height, width);
 
         movePath = new LinkedList<>();
         movePath.add(DIRECTION.NORTH);

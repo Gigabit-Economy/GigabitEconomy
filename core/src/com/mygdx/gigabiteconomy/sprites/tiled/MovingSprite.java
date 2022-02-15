@@ -48,8 +48,8 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * @param x position of Tile (within tile grid) to place sprite
      * @param y position of Tile (within tile grid) to place sprite
      */
-    public MovingSprite(Weapon weapon, int x, int y) {
-        super(x, y);
+    public MovingSprite(Weapon weapon, int x, int y, int height, int width) {
+        super(x, y, height, width);
 
         setWeapon(weapon);
     }

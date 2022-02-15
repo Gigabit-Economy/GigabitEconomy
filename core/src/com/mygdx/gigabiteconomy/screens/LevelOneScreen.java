@@ -16,10 +16,10 @@ import java.util.ArrayList;
 public class LevelOneScreen extends LevelScreen {
     // Player character
     private static final Weapon PLAYER_WEAPON = Weapon.KNIFE;
-    private static final Player PLAYER = new Player(PLAYER_WEAPON, 0 , 0);
+    private static final Player PLAYER = new Player(PLAYER_WEAPON, 0 , 0, 1, 1);
 
     /* ENEMIES */
-    private static final Enemy ENEMY_ONE = new Enemy(Weapon.KATANA, 2, 2);
+    private static final Enemy ENEMY_ONE = new Enemy(Weapon.KATANA, 2, 2, 1, 1);
     private static final ArrayList<TiledObject> ENEMIES = new ArrayList<TiledObject>(Arrays.asList(ENEMY_ONE));
 
     /* HOUSES */
@@ -31,7 +31,7 @@ public class LevelOneScreen extends LevelScreen {
     private static final ParcelVan PARCEL_VAN = new ParcelVan(15, 3);
 
     /* STATIC SPRITES (FENCES ETC...) */
-    private static final StaticSprite FENCE = new StaticSprite("finished_assets/static_sprites/fence.png", 5, 0);
+    private static final StaticSprite FENCE = new StaticSprite("finished_assets/static_sprites/fence.png", 5, 0, 1, 3);
     private static final ArrayList<TiledObject> STATIC_SPRITES = new ArrayList<TiledObject>(Arrays.asList(FENCE));
 
     // Level screen background texture

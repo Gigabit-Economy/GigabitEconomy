@@ -25,8 +25,8 @@ public class Player extends MovingSprite {
      * @param x position of Tile (within tile grid) to place sprite
      * @param y position of Tile (within tile grid) to place sprite
      */
-    public Player(Weapon weapon, int x, int y) {
-        super(weapon, x, y);
+    public Player(Weapon weapon, int x, int y, int height, int width) {
+        super(weapon, x, y, height, width);
     }
 
     /**
