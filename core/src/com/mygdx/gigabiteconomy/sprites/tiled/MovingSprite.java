@@ -249,16 +249,36 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         private DIRECTION(float dx, float dy) {
             this.dx = dx; this.dy = dy;
         }
+
+        /**
+         * For getting opposite direction of enum. Used for reversing path of entity.
+         * e.g. NORTH.getOpposite() returns SOUTH
+         *
+         * @return Opposite of enum called on
+         */
+        public DIRECTION getOpposite() {
+            return this.dx == 0 ? DIRECTION.values()[this.ordinal()+1] : DIRECTION.values()[this.ordinal()-1];
+        }
     }
 
     /**
-     * Get the direction the sprite is currently facing (i.e. move direction)
+     * Get the direction the sprite is currently moving
      *
      * @return direction enum of the sprite
      */
     public DIRECTION getDirectionMoving()
     {
         return directionMoving;
+    }
+
+    /**
+     * Get the direction the sprite is currently facing
+     *
+     * @return direction enum of the sprite
+     */
+    public DIRECTION getDirectionFacing()
+    {
+        return directionFacing;
     }
 
     /**
@@ -297,14 +317,14 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      */
     public void launchAttack() {
         Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), directionFacing, 1);
-        if (adjacentTile == null) return; //Trying to attack invalid Tile
+        if (adjacentTile == null) return; // trying to attack invalid Tile
 
         // if adjacent tile is occupied by sprite which can be attacked, attack
         TiledObject adjacentSprite = adjacentTile.getOccupiedBy();
         if (adjacentSprite instanceof MovingSprite) {
             ((MovingSprite) adjacentSprite).attack(weapon);
+            setAttacking(true);
         }
-        setAttacking(true);
     }
 
     /**

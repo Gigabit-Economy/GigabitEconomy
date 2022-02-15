@@ -1,15 +1,22 @@
 package com.mygdx.gigabiteconomy.sprites.tiled;
 
 import com.badlogic.gdx.Input;
+import com.mygdx.gigabiteconomy.exceptions.ParcelException;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
+
+import java.util.Random;
 
 /**
  * Class representing a player sprite (one per level)
  */
 public class Player extends MovingSprite {
+    private static final Random RANDOM = new Random();
+
     private LevelScreen level;
+
+    private Parcel parcel;
 
     /**
      * Create a new Player sprite (MovingSprite)
@@ -21,7 +28,6 @@ public class Player extends MovingSprite {
     public Player(Weapon weapon, int x, int y) {
         super(weapon, x, y);
     }
-
 
     /**
      * Set the level the Player is in
@@ -108,6 +114,42 @@ public class Player extends MovingSprite {
     }
 
     /**
+     * Launch an attack using the sprite's weapon (using launchAttack() in MovingSprite) OR collect a parcel from the parcel van.
+     */
+    @Override
+    public void launchAttack() {
+        // if Player already has a parcel, don't allow to collect another
+        if (this.parcel != null) {
+            Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), getDirectionFacing(), 1);
+            if (adjacentTile == null) return; // trying to attack invalid Tile
+
+            // if adjacent tile is occupied by a parcel van, collect parcel
+            TiledObject adjacentSprite = adjacentTile.getOccupiedBy();
+            if (adjacentSprite instanceof ParcelVan) {
+                this.parcel = new Parcel();
+            }
+        }
+
+        super.launchAttack();
+    }
+
+    /**
+     * Open the Player's Parcel to get the weapon
+     *
+     * @throws ParcelException if no parcel is being carried by the Player
+     */
+    public void openParcel() throws ParcelException {
+        if (parcel == null) {
+            throw new ParcelException("No parcel is being carried");
+        }
+
+        this.parcel = null;
+
+        Weapon parcelWeapon = parcel.open();
+        setWeapon(parcelWeapon);
+    }
+
+    /**
      * Destroy the player & end the current level.
      * Called when the player's health reaches 0 or less.
      */
@@ -118,5 +160,40 @@ public class Player extends MovingSprite {
         }
 
         super.destroy();
+    }
+
+    private class Parcel {
+        private MovingSprite.Weapon weapon;
+        private boolean isFinalParcel;
+
+        /**
+         * Create a new Parcel to be carried by the Player
+         */
+        public Parcel() {
+            // pick a random Weapon from the enum values
+            this.weapon = MovingSprite.Weapon.values()[RANDOM.nextInt(MovingSprite.Weapon.values().length)];
+            // if level is onto final parcel, set as final parcel
+            this.isFinalParcel = (level.getParcels() == 1);
+
+            level.decrementParcels();
+
+            // if final parcel, switch van to van with no parcels
+            if (isFinalParcel) {
+                level.getParcelVan().setToEmpty();
+            }
+        }
+
+        /**
+         * Open the parcel to get the Weapon inside the parcel
+         *
+         * @return the Weapon inside the parcel
+         */
+        public Weapon open() throws ParcelException {
+            if (isFinalParcel) {
+                throw new ParcelException("The final parcel must be delivered and cannot be opened");
+            }
+
+            return weapon;
+        }
     }
 }

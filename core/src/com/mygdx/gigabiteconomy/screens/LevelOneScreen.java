@@ -4,10 +4,7 @@ import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.gigabiteconomy.sprites.GameObject;
 import com.mygdx.gigabiteconomy.sprites.House;
-import com.mygdx.gigabiteconomy.sprites.tiled.Enemy;
-import com.mygdx.gigabiteconomy.sprites.tiled.Player;
-import com.mygdx.gigabiteconomy.sprites.tiled.StaticSprite;
-import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
+import com.mygdx.gigabiteconomy.sprites.tiled.*;
 import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite.Weapon;
 
 import java.util.Arrays;
@@ -27,7 +24,11 @@ public class LevelOneScreen extends LevelScreen {
 
     /* HOUSES */
     private static final House HOUSE_ONE = new House(House.HouseType.DETACHED, 640, 480);
-    private static final ArrayList<House> HOUSES = new ArrayList<House>(Arrays.asList(HOUSE_ONE));
+    private static final House HOUSE_TWO = new House(House.HouseType.TWO_STORY, 1050, 480);
+    private static final ArrayList<House> HOUSES = new ArrayList<House>(Arrays.asList(HOUSE_ONE, HOUSE_TWO));
+
+    // Parcel van (for Player to collect parcels from)
+    private static final ParcelVan PARCEL_VAN = new ParcelVan(15, 3);
 
     /* STATIC SPRITES (FENCES ETC...) */
     private static final StaticSprite FENCE = new StaticSprite("finished_assets/static_sprites/fence.png", 5, 0);
@@ -43,7 +44,7 @@ public class LevelOneScreen extends LevelScreen {
      * @param director the instance of the game director
      */
     public LevelOneScreen(GigabitEconomy director) {
-        super(director, PLAYER, ENEMIES, HOUSES, STATIC_SPRITES, BACKGROUND_TEXTURE);
+        super(director, PLAYER, ENEMIES, HOUSES, PARCEL_VAN, STATIC_SPRITES, BACKGROUND_TEXTURE);
 
         PLAYER.setLevel(this);
     }
