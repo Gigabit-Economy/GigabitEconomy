@@ -22,7 +22,8 @@ public class House extends GameObject {
     }
 
     public enum HouseType {
-        DETACHED
+        DETACHED,
+        TWO_STORY
     }
 
     /**
