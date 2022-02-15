@@ -64,6 +64,37 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     }
 
     /**
+     * Update the sprite's texture regions (texture atlases being shown as the sprite)
+     * based on its directionFacing & weapon.
+     * Called when directionFacing or weapon is changed.
+     */
+    public void updateTextureRegions() {
+        String spriteDirection;
+        switch (directionFacing) {
+            case NORTH: //direction at start should always be east
+            case SOUTH:
+                return;
+            case WEST:
+                spriteDirection = "Left";
+                break;
+            case EAST:
+            default:
+                spriteDirection = "Right";
+        }
+
+        String selectedWeapon = weapon.name().toLowerCase();
+        String movementConfig = String.format("finished_assets/player/movement/%s%s.txt", selectedWeapon, spriteDirection);
+        String attackingConfig = String.format("finished_assets/player/attacks/%s%s.txt", selectedWeapon, spriteDirection);
+
+        this.ta = new TextureAtlas(movementConfig);
+        this.regions = ta.getRegions();
+        this.textureRegion = regions.get(0);
+
+        this.movementAnimation = new MovingAnimation<TextureRegion>(1/14f, regions, true);
+        this.attackAnimation = new MovingAnimation<TextureRegion>(1/14f, new TextureAtlas(attackingConfig).getRegions(), false);
+    }
+
+    /**
      * Set the direction the sprite is facing (and therefore moves in).
      *
      * @param dir the direction enum to move in
@@ -77,6 +108,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         }
         directionFacing = dir;
         deltaMove.x = dir.dx; deltaMove.y = dir.dy;
+
     }
 
     /**
@@ -208,6 +240,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
                 targetTiles = null;
                 return false;
             }
+            updateTextureRegions();
         }
 
         /**
@@ -285,26 +318,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
 
-        String direction;
-        switch (directionFacing) {
-            case WEST:
-                direction = "Left";
-            case EAST:
-                direction = "Right";
-            default:
-                direction = "Right";
-        }
-
-        String selectedWeapon = weapon.name().toLowerCase();
-        String movementConfig = String.format("finished_assets/player/movement/%s%s.txt", selectedWeapon, direction);
-        String attackingConfig = String.format("finished_assets/player/attacks/%s%s.txt", selectedWeapon, direction);
-
-        this.ta = new TextureAtlas(movementConfig);
-        this.regions = ta.getRegions();
-        this.textureRegion = regions.get(0);
-
-        this.movementAnimation = new MovingAnimation<TextureRegion>(1/14f, regions, true);
-        this.attackAnimation = new MovingAnimation<TextureRegion>(1/14f, new TextureAtlas(attackingConfig).getRegions(), false);
+        updateTextureRegions();
     }
 
     /**
