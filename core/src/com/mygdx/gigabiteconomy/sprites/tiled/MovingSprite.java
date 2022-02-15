@@ -48,8 +48,8 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * @param x position of Tile (within tile grid) to place sprite
      * @param y position of Tile (within tile grid) to place sprite
      */
-    public MovingSprite(Weapon weapon, int x, int y) {
-        super(x, y);
+    public MovingSprite(Weapon weapon, int x, int y, int height, int width) {
+        super(x, y, height, width);
 
         setWeapon(weapon);
     }
@@ -61,6 +61,37 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      */
     public TextureRegion getTextureRegion() {
         return textureRegion;
+    }
+
+    /**
+     * Update the sprite's texture regions (texture atlases being shown as the sprite)
+     * based on its directionFacing & weapon.
+     * Called when directionFacing or weapon is changed.
+     */
+    public void updateTextureRegions() {
+        String spriteDirection;
+        switch (directionFacing) {
+            case NORTH: //direction at start should always be east
+            case SOUTH:
+                return;
+            case WEST:
+                spriteDirection = "Left";
+                break;
+            case EAST:
+            default:
+                spriteDirection = "Right";
+        }
+
+        String selectedWeapon = weapon.name().toLowerCase();
+        String movementConfig = String.format("finished_assets/player/movement/%s%s.txt", selectedWeapon, spriteDirection);
+        String attackingConfig = String.format("finished_assets/player/attacks/%s%s.txt", selectedWeapon, spriteDirection);
+
+        this.ta = new TextureAtlas(movementConfig);
+        this.regions = ta.getRegions();
+        this.textureRegion = regions.get(0);
+
+        this.movementAnimation = new MovingAnimation<TextureRegion>(1/14f, regions, true);
+        this.attackAnimation = new MovingAnimation<TextureRegion>(1/14f, new TextureAtlas(attackingConfig).getRegions(), false);
     }
 
     /**
@@ -77,8 +108,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         }
         directionFacing = dir;
         deltaMove.x = dir.dx; deltaMove.y = dir.dy;
-        if (this instanceof Player)
-            System.out.println("Direction movement set to " + dir.name());
+
     }
 
     /**
@@ -210,6 +240,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
                 targetTiles = null;
                 return false;
             }
+            updateTextureRegions();
         }
 
         /**
@@ -224,9 +255,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
             targetTiles = null;
             return true;
         }
-        if (this instanceof Player) {
-            System.out.println("I want to move!" + deltaMove.toString() + " " + directionMoving.name());
-        }
+
         //Not made it yet!
         //Keep on moving
         addToPos(deltaMove);
@@ -289,26 +318,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
 
-        String direction;
-        switch (directionFacing) {
-            case WEST:
-                direction = "Left";
-            case EAST:
-                direction = "Right";
-            default:
-                direction = "Right";
-        }
-
-        String selectedWeapon = weapon.name().toLowerCase();
-        String movementConfig = String.format("finished_assets/player/movement/%s%s.txt", selectedWeapon, direction);
-        String attackingConfig = String.format("finished_assets/player/attacks/%s%s.txt", selectedWeapon, direction);
-
-        this.ta = new TextureAtlas(movementConfig);
-        this.regions = ta.getRegions();
-        this.textureRegion = regions.get(0);
-
-        this.movementAnimation = new MovingAnimation<TextureRegion>(1/14f, regions, true);
-        this.attackAnimation = new MovingAnimation<TextureRegion>(1/14f, new TextureAtlas(attackingConfig).getRegions(), false);
+        updateTextureRegions();
     }
 
     /**
@@ -316,6 +326,8 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * Will call attack() and detract from health of any surrounding sprite.
      */
     public void launchAttack() {
+        setAttacking(true);
+
         Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), directionFacing, 1);
         if (adjacentTile == null) return; // trying to attack invalid Tile
 
@@ -323,7 +335,6 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         TiledObject adjacentSprite = adjacentTile.getOccupiedBy();
         if (adjacentSprite instanceof MovingSprite) {
             ((MovingSprite) adjacentSprite).attack(weapon);
-            setAttacking(true);
         }
     }
 
