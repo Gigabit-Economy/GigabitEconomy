@@ -42,13 +42,37 @@ public class Enemy extends MovingSprite {
         movePath = new LinkedList<>();
         movePath.add(DIRECTION.NORTH);
         movePath.add(DIRECTION.EAST);
+        movePath.add(DIRECTION.EAST);
+        movePath.add(DIRECTION.EAST);
+        movePath.add(DIRECTION.EAST);
+        movePath.add(DIRECTION.SOUTH);
+        movePath.add(DIRECTION.SOUTH);
         movePath.add(DIRECTION.SOUTH);
         movePath.add(DIRECTION.WEST);
+        movePath.add(DIRECTION.WEST);
+        movePath.add(DIRECTION.WEST);
+        movePath.add(DIRECTION.WEST);
+        movePath.add(DIRECTION.NORTH);
+        movePath.add(DIRECTION.NORTH);
+
+        agroMovePath = new LinkedList<>();
+        agroMovePath.add(DIRECTION.NORTH);
+        agroMovePath.add(DIRECTION.NORTH);
+        agroMovePath.add(DIRECTION.NORTH);
+        agroMovePath.add(DIRECTION.NORTH);
+        agroMovePath.add(DIRECTION.NORTH);
+        agroMovePath.add(DIRECTION.SOUTH);
+        agroMovePath.add(DIRECTION.SOUTH);
+        agroMovePath.add(DIRECTION.SOUTH);
+        agroMovePath.add(DIRECTION.SOUTH);
+        agroMovePath.add(DIRECTION.SOUTH);
+        agroMovePath.add(DIRECTION.SOUTH);
+        agroMovePath.add(DIRECTION.SOUTH);
 
         movementPaths.put("move", movePath);
         movementPaths.put("agro", agroMovePath);
 
-        setPath("move");
+        setPath("agro");
 
         setMoving(true);
     }
