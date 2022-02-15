@@ -208,11 +208,6 @@ public class TileManager {
 
                 o.setCurrentTiles(placeAt); //Setting current tiles should be done within player
                 o.setTileManager(this);
-
-                if (o instanceof StaticSprite) {
-                    System.out.println("Current tile coords: " + placeAt.get(0).getTileCoords()[0] + " " + placeAt.get(0).getTileCoords()[1]);
-                    System.out.println(String.format("Current pos %f %f", o.getX(), o.getY()));
-                }
             }
         }
     }

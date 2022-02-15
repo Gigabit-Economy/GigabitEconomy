@@ -77,8 +77,6 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         }
         directionFacing = dir;
         deltaMove.x = dir.dx; deltaMove.y = dir.dy;
-        if (this instanceof Player)
-            System.out.println("Direction movement set to " + dir.name());
     }
 
     /**
@@ -228,9 +226,6 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         //Not made it yet!
         //Keep on moving
         addToPos(deltaMove);
-        if (this instanceof Player) {
-            System.out.println(String.format("Now at %f %f", getX(), getY()));
-        }
         textureRegion = (TextureRegion) movementAnimation.runAnimation(delta);
         return false;
     }
