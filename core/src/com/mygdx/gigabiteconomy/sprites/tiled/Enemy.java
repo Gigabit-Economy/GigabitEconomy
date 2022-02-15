@@ -2,6 +2,7 @@ package com.mygdx.gigabiteconomy.sprites.tiled;
 
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.Tile;
+import com.mygdx.gigabiteconomy.screens.TileManager;
 import com.mygdx.gigabiteconomy.sprites.GameObject;
 import sun.awt.image.ImageWatched;
 
@@ -22,10 +23,10 @@ public class Enemy extends MovingSprite {
     private HashMap<String, Queue<DIRECTION>> movementPaths = new HashMap<>(); //Allows n paths for n behaviours
     private Queue<DIRECTION> currentPath;
 
-    int[][] agroDistance; //[[+x, -x], [+y, -y]] tiles to cause agro
+    int[][] agroTilePos; //Fixed tile coords in following format: [ [curr-x, curr+x] , [curr+y, curr-y] ]
     boolean agro = false;
 
-    GameObject targetEntity;
+    TiledObject targetEntity;
 
     /**
      * Create a new Enemy sprite (MovingSprite)
@@ -36,7 +37,7 @@ public class Enemy extends MovingSprite {
      * @param height of Tiles to occupy
      * @param width of Tiles to occupy
      */
-    public Enemy(Weapon weapon, int x, int y, int height, int width) {
+    public Enemy(Weapon weapon, int x, int y, int height, int width, Player targetEntity) {
         super(weapon, x, y, height, width);
 
         movePath = new LinkedList<>();
@@ -64,6 +65,8 @@ public class Enemy extends MovingSprite {
 
         setPath("agro");
 
+        this.targetEntity = targetEntity;
+
         setMoving(true);
     }
 
@@ -85,7 +88,17 @@ public class Enemy extends MovingSprite {
      * @param player
      * @return
      */
-    public boolean checkAgro(MovingSprite player) {
+    public boolean checkAgro() {
+        if (agroTilePos == null) {
+            TileManager tm = getTileManager();
+            Tile currTile = getCurrentTiles().get(0);
+            System.out.println(tm + " " + currTile);
+            agroTilePos = new int[][]{
+                    {tm.getAdjacentTile(currTile, DIRECTION.EAST, 5).getPositionTile()[0], tm.getAdjacentTile(currTile, DIRECTION.WEST, 5).getPositionTile()[0]},
+                    {tm.getAdjacentTile(currTile, DIRECTION.NORTH, 5).getPositionTile()[1], tm.getAdjacentTile(currTile, DIRECTION.SOUTH, 5).getPositionTile()[1]}
+            };
+        }
+
         /**
          * If player square position is within agroDistance (see TileManager methods)
          * -> Set agro to true
@@ -95,9 +108,10 @@ public class Enemy extends MovingSprite {
          *
          * Check whether Player is within agro square
          */
-        targetEntity = player;
         Tile currTile = getCurrentTiles().get(0);
-        Tile currPlayerTile = player.getCurrentTiles().get(0);
+        Tile currPlayerTile = targetEntity.getCurrentTiles().get(0);
+
+        System.out.println(currPlayerTile + " " + currTile);
 
         /**
          * Both blocks below check for the same condition (that player is within agro square
@@ -106,24 +120,13 @@ public class Enemy extends MovingSprite {
         /** */
         /** */
         /** */
-        int i=0;
-        for (DIRECTION dir : new DIRECTION[]{DIRECTION.EAST, DIRECTION.NORTH}) {
-            agro |= (currPlayerTile.getPositionTile()[0] > getTileManager().getAdjacentTile(currTile, dir, agroDistance[i][0]).getPositionTile()[i]);
-            agro |= (currPlayerTile.getPositionTile()[0] > getTileManager().getAdjacentTile(currTile, dir.getOpposite(), agroDistance[i][1]).getPositionTile()[i]);
-            i++;
+
+        for (int i=0; i<agroTilePos.length; i++) {
+            agro |= (currPlayerTile.getPositionTile()[i] > agroTilePos[i][0]) && (currPlayerTile.getPositionTile()[i] < agroTilePos[i][1]);
         }
         /** */
         /** */
         /** */
-        if (
-                (currPlayerTile.getPositionTile()[0] > getTileManager().getAdjacentTile(currTile, DIRECTION.EAST, agroDistance[0][0]).getPositionTile()[0])
-            &&  (currPlayerTile.getPositionTile()[0] < getTileManager().getAdjacentTile(currTile, DIRECTION.WEST, agroDistance[0][1]).getPositionTile()[0])
-            &&  (currPlayerTile.getPositionTile()[1] < getTileManager().getAdjacentTile(currTile, DIRECTION.NORTH, agroDistance[1][0]).getPositionTile()[1])
-            &&  (currPlayerTile.getPositionTile()[1] < getTileManager().getAdjacentTile(currTile, DIRECTION.SOUTH, agroDistance[1][1]).getPositionTile()[1])
-        ) {
-            /** !!! AGRO !!! */
-            agro = true;
-        }
         /** */
         /** */
         /** */
@@ -163,6 +166,12 @@ public class Enemy extends MovingSprite {
          * -> Find new path with TileManager: Queue<Tile> findShortestPathBetween(Tile from, Tile to);
          * -> Set new targetSquare from Queue (for next move();
          */
+
+        if (agro) {
+            setPath("agro");
+        } else {
+            checkAgro();
+        }
         //Must also check for distance condition
 //        DIRECTION dirPlayerIn;
 //        if (agro && ((dirPlayerIn = tm.findDirectionFrom(currentTile, targetEntity.getCurrentTile())) != null)) {

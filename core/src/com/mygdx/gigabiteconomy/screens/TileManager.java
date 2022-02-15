@@ -72,6 +72,10 @@ public class TileManager {
      */
     public Tile getAdjacentTile(Tile tileFrom, MovingSprite.DIRECTION direction, int distance) {
         if (tileFrom == null) return null;
+        if (distance == 0) {
+            System.out.println("Distance 0");
+            return tileFrom;
+        }
 
         int[] pos = tileFrom.getPositionTile();
         Tile ret;
