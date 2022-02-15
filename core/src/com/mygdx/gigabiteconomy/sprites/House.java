@@ -48,7 +48,7 @@ public class House extends GameObject {
     }
 
     /**
-     * Unmark the House as the delivery location for a level
+     * Un-mark the House as the delivery location for a level
      */
     public void unmarkAsDeliveryLocation() {
         this.tile.setOwned(null);
