@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
@@ -44,7 +43,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     private ParcelVan parcelVan;
     private ArrayList<TiledObject> staticSprites;
 
-    private ScoreSystem score = new ScoreSystem();
+    private int score = 0;
     private int parcels = 5;
 
     private BitmapFont font;
@@ -169,16 +168,14 @@ public abstract class LevelScreen implements Screen, InputProcessor {
             }
         }
 
-        String scoreText = String.format("score: %d", score.alterScore(0));
+        String scoreText = String.format("score: %d", score);
         String parcelText = String.format("parcels remaining: %d", parcels);
         String healthText = String.format("health: %d", player.getHealth());
 
-        Vector3 cam = director.getCameraPos();
-
         font.setColor(Color.CORAL);
-        font.draw(batch, scoreText, (cam.x - 900), 1040);
-        font.draw(batch, parcelText, (cam.x - 900), 1020);
-        font.draw(batch, healthText, (cam.x - 900), 1000);
+        font.draw(batch, scoreText, 25, 1040);
+        font.draw(batch, parcelText, 25, 1020);
+        font.draw(batch, healthText, 25, 1000);
 
         if (this.errorCountdown > 0 && this.errorText != null && this.errorText.length() != 0) {
             font.draw(batch, this.errorText, 25, 980);
