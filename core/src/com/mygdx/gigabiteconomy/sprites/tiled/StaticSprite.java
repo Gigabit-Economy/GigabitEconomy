@@ -18,8 +18,8 @@ public class StaticSprite extends TiledObject {
      * @param x position of Tile (within tile grid) to place sprite
      * @param y position of Tile (within tile grid) to place sprite
      */
-    public StaticSprite(String png, int x, int y) {
-        super(x, y);
+    public StaticSprite(String png, int x, int y, int height, int width) {
+        super(x, y, height, width);
 
         // Create texture & assign to TextureRegion
         texture = new Texture(png);

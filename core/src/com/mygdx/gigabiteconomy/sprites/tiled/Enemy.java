@@ -30,14 +30,14 @@ public class Enemy extends MovingSprite {
     /**
      * Create a new Enemy sprite (MovingSprite)
      *
-     * @param movementConfig path of texture atlas movement config file (.txt)
-     * @param attackingConfig path of texture atlas attacking config file (.txt)
      * @param weapon the weapon the Enemy is carrying
      * @param x position of Tile (within tile grid) to place sprite
      * @param y position of Tile (within tile grid) to place sprite
+     * @param height of Tiles to occupy
+     * @param width of Tiles to occupy
      */
-    public Enemy(Weapon weapon, int x, int y) {
-        super(weapon, x, y);
+    public Enemy(Weapon weapon, int x, int y, int height, int width) {
+        super(weapon, x, y, height, width);
 
         movePath = new LinkedList<>();
         movePath.add(DIRECTION.NORTH);

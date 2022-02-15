@@ -13,7 +13,7 @@ public class ParcelVan extends StaticSprite {
      * @param y position of Tile (within tile grid) to place sprite
      */
     public ParcelVan(int x, int y) {
-        super(W_PARCELS_PNG, x, y);
+        super(W_PARCELS_PNG, x, y, 1, 1);
     }
 
     /**
