@@ -224,12 +224,13 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
             targetTiles = null;
             return true;
         }
-        if (this instanceof Player) {
-            System.out.println("I want to move!" + deltaMove.toString() + " " + directionMoving.name());
-        }
+
         //Not made it yet!
         //Keep on moving
         addToPos(deltaMove);
+        if (this instanceof Player) {
+            System.out.println(String.format("Now at %f %f", getX(), getY()));
+        }
         textureRegion = (TextureRegion) movementAnimation.runAnimation(delta);
         return false;
     }

@@ -2,6 +2,7 @@ package com.mygdx.gigabiteconomy.screens;
 
 import com.mygdx.gigabiteconomy.sprites.GameObject;
 import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
+import com.mygdx.gigabiteconomy.sprites.tiled.StaticSprite;
 import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
 import java.util.ArrayList;
@@ -115,8 +116,8 @@ public class TileManager {
 
     public ArrayList<Tile> placeObject(int x, int y, int width, int height, TiledObject objectToPlace) {
         ArrayList<Tile> toPlace = new ArrayList<>();
-        for (int i=0; i<width; i++) {
-            for (int ii=0; ii<height; ii++) {
+        for (int i=width-1; i>=0; i--) {
+            for (int ii=height-1; ii>=0; ii--) {
                 Tile toAdd = getTile(x+i, y+ii);
                 if ((toAdd != null ? toPlace.add(toAdd) : toPlace.add(null))) {
                     placeObject(toAdd, objectToPlace);
@@ -199,7 +200,10 @@ public class TileManager {
                 o.setCurrentTiles(placeAt); //Setting current tiles should be done within player
                 o.setTileManager(this);
 
-                System.out.println("Current tile coords: " + placeAt.get(0).getTileCoords()[0] + " " + placeAt.get(0).getTileCoords()[1]);
+                if (o instanceof StaticSprite) {
+                    System.out.println("Current tile coords: " + placeAt.get(0).getTileCoords()[0] + " " + placeAt.get(0).getTileCoords()[1]);
+                    System.out.println(String.format("Current pos %f %f", o.getX(), o.getY()));
+                }
             }
         }
     }
