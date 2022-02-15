@@ -129,6 +129,7 @@ public class Player extends MovingSprite {
             TiledObject adjacentSprite = adjacentTile.getOccupiedBy();
             if (adjacentSprite instanceof ParcelVan) {
                 this.parcel = new Parcel();
+                return;
             }
         }
 
