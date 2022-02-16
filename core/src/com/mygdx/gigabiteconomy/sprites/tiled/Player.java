@@ -1,11 +1,15 @@
 package com.mygdx.gigabiteconomy.sprites.tiled;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.mygdx.gigabiteconomy.exceptions.ParcelException;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
+import com.mygdx.gigabiteconomy.sprites.GameObject;
+import com.mygdx.gigabiteconomy.sprites.House;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -120,16 +124,25 @@ public class Player extends MovingSprite {
      */
     @Override
     public void launchAttack() {
-        // if Player already has a parcel, don't allow to collect another
-        if (this.parcel != null) {
-            Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), getDirectionFacing(), 1);
-            if (adjacentTile == null) return; // trying to attack invalid Tile
+        // get Tile adjacent to Player
+        Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), getDirectionFacing(), 1);
+        if (adjacentTile == null) return; // trying to attack invalid Tile
 
+        // if Player doesn't yet have a Parcel, check if next to a parcel van to collect one
+        if (this.parcel == null) {
             // if adjacent tile is occupied by a parcel van, collect parcel
             TiledObject adjacentSprite = adjacentTile.getOccupiedBy();
             if (adjacentSprite instanceof ParcelVan) {
                 this.parcel = new Parcel();
                 return;
+            }
+        }
+        // if Player does have a Parcel, check if next to House to be delivered to
+        else {
+            // if adjacent tile is owned by a House, deliver parcel
+            GameObject adjacentObject = adjacentTile.getOwnedBy();
+            if (adjacentObject != null && adjacentObject instanceof House) {
+                parcel.deliver();
             }
         }
 
@@ -167,15 +180,27 @@ public class Player extends MovingSprite {
 
     private class Parcel {
         private MovingSprite.Weapon weapon;
+        private House house;
         private boolean isFinalParcel;
 
         /**
          * Create a new Parcel to be carried by the Player
          */
         public Parcel() {
-            // pick a random Weapon from the enum values
+            // pick a random Weapon from the enum values to be weapon inside parcel (if it's opened)
             this.weapon = MovingSprite.Weapon.values()[RANDOM.nextInt(MovingSprite.Weapon.values().length)];
-            // if level is onto final parcel, set as final parcel
+
+            // pick a random House from the level's houses to be house to be delivered to
+            ArrayList<House> levelHouses = level.getHouses();
+            this.house = levelHouses.get((RANDOM.nextInt(levelHouses.size())));
+            try {
+                this.house.markAsDeliveryLocation(level);
+            } catch (Exception ex) {
+                Gdx.app.error("Exception", "Error assigning House as delivery location", ex);
+                System.exit(-1);
+            }
+
+            // if level is onto final parcel, mark as such
             this.isFinalParcel = (level.getParcels() == 1);
 
             level.decrementParcels();
@@ -183,6 +208,21 @@ public class Player extends MovingSprite {
             // if final parcel, switch van to van with no parcels
             if (isFinalParcel) {
                 level.getParcelVan().setToEmpty();
+            }
+        }
+
+        /**
+         * Deliver the parcel in exchange for level points
+         */
+        public void deliver() {
+            parcel = null;
+
+            level.addToScore(1);
+
+            house.unmarkAsDeliveryLocation();
+
+            if (isFinalParcel) {
+                level.complete();
             }
         }
 

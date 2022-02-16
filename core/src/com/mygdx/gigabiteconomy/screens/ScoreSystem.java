@@ -9,12 +9,10 @@ import java.io.FileWriter;
 import java.io.BufferedWriter;
 
 public class ScoreSystem {
-
     private int score;
     private File f;
 
     public ScoreSystem() {
-        
         score = 0;
 
         try {
@@ -30,10 +28,8 @@ public class ScoreSystem {
     }
 
     public int alterScore(int addAmount) {
-        
         score += addAmount;
         return score;
-    
     }
 
     public void submitScore() {

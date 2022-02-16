@@ -70,6 +70,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         this.player = player;
         this.houses = houses;
         this.enemies = enemies;
+        this.parcelVan = parcelVan;
         this.staticSprites = staticSprites;
         this.backgroundTexture = backgroundTexture;
 
@@ -85,7 +86,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
                 backgroundTextureWidth, 0, 0);
 
         // Initialise each sprite's position on tiles using the tile manager
-        ArrayList<TiledObject> playerList = new ArrayList<TiledObject>(Arrays.asList(player));
+        ArrayList<TiledObject> playerList = new ArrayList<TiledObject>(Arrays.asList(player, parcelVan));
         tileManager.initObjects(playerList, staticSprites, enemies); // in priority order
     }
 
@@ -111,6 +112,8 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         sprites.addAll(staticSprites);
         // Add houses
         sprites.addAll(houses);
+        // Add parcel van
+        sprites.add(parcelVan);
         // Add player
         sprites.add(player);
         // Add enemies
@@ -166,7 +169,12 @@ public abstract class LevelScreen implements Screen, InputProcessor {
                 StaticSprite staticSprite = (StaticSprite) sprite;
 
                 batch.draw(staticSprite.getTexture(), staticSprite.getX(), staticSprite.getY());
+            } else if (sprite instanceof House) {
+                House house = (House) sprite;
+
+                batch.draw(house.getTexture(), house.getX(), house.getY());
             }
+
         }
 
         String scoreText = String.format("score: %d", score.alterScore(0));
@@ -196,6 +204,25 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     }
 
     /**
+     * Get the level's TileManager instance
+     *
+     * @return the level's TileManager instance
+     */
+    public TileManager getTileManager() {
+        return tileManager;
+    }
+
+    /**
+     * Get the level's Houses
+     *
+     * @return an ArrayList containing all the level's Houses
+     */
+    public ArrayList<House> getHouses()
+    {
+        return houses;
+    }
+
+    /**
      * Get the level's player van
      *
      * @return the level's PlayerVan
@@ -218,6 +245,15 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      */
     public void decrementParcels() {
         parcels--;
+    }
+
+    /**
+     * Add to the score points count
+     *
+     * @param points the number of points to add
+     */
+    public void addToScore(int points) {
+        score.alterScore(points);
     }
 
     /**
@@ -340,6 +376,19 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         }
 
         hide();
+    }
+
+    /**
+     * Complete the level (called when the level is complete i.e. the final parcel is delivered)
+     */
+    public void complete() {
+        score.submitScore();
+
+        try {
+            director.switchScreen("levelComplete");
+        } catch (ScreenException ex) {
+            Gdx.app.error("Exception", "The screen could not be switched when level complete", ex);
+        }
     }
 
     /**
