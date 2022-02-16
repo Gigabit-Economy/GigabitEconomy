@@ -85,10 +85,12 @@ public class Enemy extends MovingSprite {
 
     /**
      * Method takes Player and sets agro if within the defined distance
-     * @param player
+     * @param
      * @return
      */
     public boolean checkAgro() {
+        if (agro) return false;
+
         if (agroTilePos == null) {
             System.out.println("SHould only be running once");
             TileManager tm = getTileManager();
@@ -139,7 +141,7 @@ public class Enemy extends MovingSprite {
         /** */
         /** */
 
-        return false;
+        return agro;
     }
     
     @Override
@@ -152,11 +154,6 @@ public class Enemy extends MovingSprite {
     @Override
     public boolean move(float delta) throws TileMovementException {
         boolean ret = super.move(delta); //Checks if we've arrived else moved
-//        if (ret) {
-//            targetTile = tm.getAdjecentTile(currentTile, directionMoving.name(), 1);
-//            setDeltaMove(directionMoving);
-//            setMoving(true);
-//        }
 
         if (ret) setMoving(false);
 
@@ -175,21 +172,15 @@ public class Enemy extends MovingSprite {
          * -> Set new targetSquare from Queue (for next move();
          */
 
-        if (agro) {
+        if (checkAgro()) {
             System.out.println("Agro set to true");
             setPath("agro");
-        } else {
-            checkAgro();
+            super.setNextTiles();
         }
-        //Must also check for distance condition
-//        DIRECTION dirPlayerIn;
-//        if (agro && ((dirPlayerIn = tm.findDirectionFrom(currentTile, targetEntity.getCurrentTile())) != null)) {
-//            //Start agro path
-//            directionMoving = dirPlayerIn;
-//        } else {
-//            //Resume agro path
-//        }
-
+        if (agro) {
+            //Check if player is on the row
+            //Move in that direction
+        }
 
 
         /**
