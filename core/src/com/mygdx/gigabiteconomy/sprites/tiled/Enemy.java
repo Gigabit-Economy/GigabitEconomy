@@ -63,7 +63,7 @@ public class Enemy extends MovingSprite {
         movementPaths.put("move", movePath);
         movementPaths.put("agro", agroMovePath);
 
-        setPath("agro");
+        setPath("move");
 
         this.targetEntity = targetEntity;
 
@@ -90,8 +90,15 @@ public class Enemy extends MovingSprite {
      */
     public boolean checkAgro() {
         if (agroTilePos == null) {
+            System.out.println("SHould only be running once");
             TileManager tm = getTileManager();
             Tile currTile = getCurrentTiles().get(0);
+//            System.out.println(tm.getAdjacentTile(currTile, DIRECTION.EAST, 5).getPositionTile()[0]);
+//            System.out.println(tm.getAdjacentTile(currTile, DIRECTION.WEST, 5).getPositionTile()[0]);
+//            System.out.println(tm.getAdjacentTile(currTile, DIRECTION.NORTH, 5).getPositionTile()[1]);
+//            System.out.println(tm.getAdjacentTile(currTile, DIRECTION.SOUTH, 5));
+
+
             System.out.println(tm + " " + currTile);
             agroTilePos = new int[][]{
                     {tm.getAdjacentTile(currTile, DIRECTION.EAST, 5).getPositionTile()[0], tm.getAdjacentTile(currTile, DIRECTION.WEST, 5).getPositionTile()[0]},
@@ -111,7 +118,6 @@ public class Enemy extends MovingSprite {
         Tile currTile = getCurrentTiles().get(0);
         Tile currPlayerTile = targetEntity.getCurrentTiles().get(0);
 
-        System.out.println(currPlayerTile + " " + currTile);
 
         /**
          * Both blocks below check for the same condition (that player is within agro square
@@ -122,8 +128,10 @@ public class Enemy extends MovingSprite {
         /** */
 
         for (int i=0; i<agroTilePos.length; i++) {
-            agro |= (currPlayerTile.getPositionTile()[i] > agroTilePos[i][0]) && (currPlayerTile.getPositionTile()[i] < agroTilePos[i][1]);
+            //System.out.println(String.format("Checking %d > %d and < %d", currPlayerTile.getPositionTile()[i], agroTilePos[i][0], agroTilePos[i][1]));
+            agro |= (currPlayerTile.getPositionTile()[i] < agroTilePos[i][0]) && (currPlayerTile.getPositionTile()[i] > agroTilePos[i][1]);
         }
+
         /** */
         /** */
         /** */
@@ -168,6 +176,7 @@ public class Enemy extends MovingSprite {
          */
 
         if (agro) {
+            System.out.println("Agro set to true");
             setPath("agro");
         } else {
             checkAgro();

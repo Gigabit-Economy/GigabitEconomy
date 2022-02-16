@@ -55,11 +55,7 @@ public class TileManager {
     }
 
     private Tile getTile(int x, int y) {
-        try {
-            return tileArray[x][y];
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return null;
-        }
+        return tileArray[x][y]; //This will need to TileMovementException
     }
 
     /**
@@ -93,8 +89,10 @@ public class TileManager {
                     break;
                 case SOUTH:
                     ret = getTile(pos[0], pos[1]-distance);
+                    System.out.println("gutten tag " + ret);
                     break;
                 default:
+                    System.out.println("Not hre mate");
                     return null;
             }
         } catch (ArrayIndexOutOfBoundsException e) { return getAdjacentTile(tileFrom, direction, distance-1); }
