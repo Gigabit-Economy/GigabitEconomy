@@ -166,7 +166,12 @@ public abstract class LevelScreen implements Screen, InputProcessor {
                 StaticSprite staticSprite = (StaticSprite) sprite;
 
                 batch.draw(staticSprite.getTexture(), staticSprite.getX(), staticSprite.getY());
+            } else if (sprite instanceof House) {
+                House house = (House) sprite;
+
+                batch.draw(house.getTexture(), house.getX(), house.getY());
             }
+
         }
 
         String scoreText = String.format("score: %d", score.alterScore(0));

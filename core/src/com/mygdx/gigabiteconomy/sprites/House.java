@@ -57,6 +57,15 @@ public class House extends GameObject {
         this.isDeliveryLocation = false;
     }
 
+    /**
+     * Get the House's Texture (a single png)
+     *
+     * @return the House's Texture
+     */
+    public Texture getTexture() {
+        return texture;
+    }
+
     public enum HouseType {
         DETACHED,
         TWO_STORY
