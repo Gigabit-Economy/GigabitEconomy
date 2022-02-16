@@ -70,6 +70,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         this.player = player;
         this.houses = houses;
         this.enemies = enemies;
+        this.parcelVan = parcelVan;
         this.staticSprites = staticSprites;
         this.backgroundTexture = backgroundTexture;
 
