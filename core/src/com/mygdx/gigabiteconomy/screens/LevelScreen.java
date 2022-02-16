@@ -111,6 +111,8 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         sprites.addAll(staticSprites);
         // Add houses
         sprites.addAll(houses);
+        // Add parcel van
+        sprites.add(parcelVan);
         // Add player
         sprites.add(player);
         // Add enemies
