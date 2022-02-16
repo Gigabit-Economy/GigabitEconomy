@@ -286,7 +286,18 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
          * @return Opposite of enum called on
          */
         public DIRECTION getOpposite() {
-            return this.dx == 0 ? DIRECTION.values()[this.ordinal()+1] : DIRECTION.values()[this.ordinal()-1];
+            //return this.dx == 0 ? DIRECTION.values()[this.ordinal()+2] : DIRECTION.values()[this.ordinal()-2];
+            switch (this) {
+                case NORTH:
+                    return SOUTH;
+                case SOUTH:
+                    return NORTH;
+                case EAST:
+                    return WEST;
+                case WEST:
+                default:
+                    return EAST;
+            }
         }
     }
 
