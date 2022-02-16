@@ -1,44 +1,79 @@
 golfRight.png
-size: 368, 1440
+size: 736, 1440
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-PipeLeftAttack1
+nineIronRightAttack1
   rotate: false
   xy: 0, 0
   size: 368, 240
   orig: 368, 240
   offset: 0, 0
   index: -1
-PipeLeftAttack2
+nineIronRightAttack2
+  rotate: false
+  xy: 368, 0
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+nineIronRightAttack3
   rotate: false
   xy: 0, 240
   size: 368, 240
   orig: 368, 240
   offset: 0, 0
   index: -1
-PipeLeftAttack3
+nineIronRightAttack4
+  rotate: false
+  xy: 368, 240
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+nineIronRightAttack5
   rotate: false
   xy: 0, 480
   size: 368, 240
   orig: 368, 240
   offset: 0, 0
   index: -1
-PipeLeftAttack4
+nineIronRightAttack6
+  rotate: false
+  xy: 368, 480
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+nineIronRightAttack7
   rotate: false
   xy: 0, 720
   size: 368, 240
   orig: 368, 240
   offset: 0, 0
   index: -1
-PipeLeftAttack5
+nineIronRightAttack8
+  rotate: false
+  xy: 368, 720
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+nineIronRightAttack9
   rotate: false
   xy: 0, 960
   size: 368, 240
   orig: 368, 240
   offset: 0, 0
   index: -1
-PipeLeftAttack6
+nineIronRightAttack10
+  rotate: false
+  xy: 368, 960
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+nineIronRightAttack11
   rotate: false
   xy: 0, 1200
   size: 368, 240
