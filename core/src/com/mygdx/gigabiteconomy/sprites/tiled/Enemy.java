@@ -34,24 +34,10 @@ public class Enemy extends MovingSprite {
      * @param height of Tiles to occupy
      * @param width of Tiles to occupy
      */
-    public Enemy(Weapon weapon, int x, int y, int height, int width, Player targetEntity) {
+    public Enemy(Weapon weapon, int x, int y, int height, int width, Player targetEntity, LinkedList<DIRECTION> movePath) {
         super(weapon, x, y, height, width);
 
-        movePath = new LinkedList<>();
-        movePath.add(DIRECTION.NORTH);
-        movePath.add(DIRECTION.EAST);
-        movePath.add(DIRECTION.EAST);
-        movePath.add(DIRECTION.EAST);
-        movePath.add(DIRECTION.EAST);
-        movePath.add(DIRECTION.SOUTH);
-        movePath.add(DIRECTION.SOUTH);
-        movePath.add(DIRECTION.SOUTH);
-        movePath.add(DIRECTION.WEST);
-        movePath.add(DIRECTION.WEST);
-        movePath.add(DIRECTION.WEST);
-        movePath.add(DIRECTION.WEST);
-        movePath.add(DIRECTION.NORTH);
-        movePath.add(DIRECTION.NORTH);
+        this.movePath = movePath;
 
         agroMovePath = new LinkedList<>();
         for (int i=0; i<5; i++) agroMovePath.add(DIRECTION.NORTH);
