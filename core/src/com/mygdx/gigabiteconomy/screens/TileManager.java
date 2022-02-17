@@ -150,7 +150,8 @@ public class TileManager {
      */
     public ArrayList<Tile> getSelectiveDir(int x, int y, MovingSprite.DIRECTION direction) {
         ArrayList<Tile> ret = new ArrayList<>();
-        while (true) {
+
+        for (int i=0; i<gridWidth; i++) {
             try {
                 ret.add(tileArray[x][y]);
                 //System.out.println(String.format("%d %d", x, y));
@@ -160,6 +161,7 @@ public class TileManager {
                 return ret;
             }
         }
+        return null;
     }
 
     /**
