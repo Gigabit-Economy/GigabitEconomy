@@ -254,9 +254,6 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
             setCurrentTiles(targetTiles);
             snap(delta);
             targetTiles = null;
-            if (this instanceof Enemy) {
-                System.out.println("ret is true");
-            }
             return true;
         }
 
@@ -302,6 +299,10 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
                 default:
                     return EAST;
             }
+        }
+
+        public DIRECTION getNext() {
+            return DIRECTION.values()[(this.ordinal()+1) % DIRECTION.values().length];
         }
     }
 

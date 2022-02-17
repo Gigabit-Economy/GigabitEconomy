@@ -90,10 +90,8 @@ public class TileManager {
                     break;
                 case SOUTH:
                     ret = getTile(pos[0], pos[1]-distance);
-                    System.out.println("gutten tag " + ret);
                     break;
                 default:
-                    System.out.println("Not hre mate");
                     return null;
             }
         } catch (ArrayIndexOutOfBoundsException e) { return getAdjacentTile(tileFrom, direction, distance-1); }

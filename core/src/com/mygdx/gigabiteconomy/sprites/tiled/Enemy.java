@@ -171,6 +171,7 @@ public class Enemy extends MovingSprite {
          * -> Set new targetSquare from Queue (for next move();
          */
 
+        //Only run following code if we are still
         if (ret) {
             if (checkAgro()) {
                 System.out.println("Agro set to true");
@@ -184,15 +185,25 @@ public class Enemy extends MovingSprite {
                 DIRECTION dirTo = tm.findDirectionFrom(getCurrentTiles().get(0), targetEntity.getCurrentTiles().get(0));
 
                 if (dirTo != null) {
-                    System.out.println(dirTo);
-                    super.setDirectionMovement(dirTo);
-                    currentPath = new LinkedList<>(Arrays.asList(dirTo, dirTo));
-                    setNextDirection();
+                    setPath(new LinkedList<>(Arrays.asList(dirTo, dirTo)));
                 } else {
                     setPath("agro");
+
+
+                }
+                TiledObject to = getTileManager().getAdjacentTile(getCurrentTiles().get(0), getDirectionMoving(), 1).getOccupiedBy();
+
+                if (to instanceof StaticSprite) {
+                    currentPath.add(currentPath.peek().getNext()); //Adding a **sprinkle** of random to movement
+                    //currentPath.add(currentPath.remove().getNext()); //Adding a **sprinkle** of random to movement
+                    System.out.println("Adding " + currentPath.peek().getNext());
+                    //setDirectionMovement(currentPath.peek());
                 }
 
             }
+
+        } else {
+
         }
 
 
