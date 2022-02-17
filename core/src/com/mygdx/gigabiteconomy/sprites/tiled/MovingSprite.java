@@ -162,6 +162,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      */
     public void setTargetTiles(ArrayList<Tile> targetTiles) {
         this.targetTiles = targetTiles;
+        if (targetTiles == null) return;
         if (targetTiles.contains(0)) return;
         //Setting tile occupation in foreach
         for (Tile t : targetTiles) {
@@ -253,6 +254,9 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
             setCurrentTiles(targetTiles);
             snap(delta);
             targetTiles = null;
+            if (this instanceof Enemy) {
+                System.out.println("ret is true");
+            }
             return true;
         }
 
@@ -300,6 +304,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
             }
         }
     }
+
 
     /**
      * Get the direction the sprite is currently moving

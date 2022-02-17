@@ -150,26 +150,35 @@ public class TileManager {
      */
     public ArrayList<Tile> getSelectiveDir(int x, int y, MovingSprite.DIRECTION direction) {
         ArrayList<Tile> ret = new ArrayList<>();
-        try {
-            while (true) {
+
+        for (int i=0; i<gridWidth; i++) {
+            try {
                 ret.add(tileArray[x][y]);
-                x = (direction.dx < 0) && (direction.dx != 0) ? x-- : x++;
-                y = (direction.dy < 0) && (direction.dy != 0) ? y-- : y++;
+                //System.out.println(String.format("%d %d", x, y));
+                if (direction.dy == 0) x = (direction.dx < 0) ? x-1 : x+1;
+                if (direction.dx == 0) y = (direction.dy < 0) ? y-1 : y+1;
+            } catch (ArrayIndexOutOfBoundsException e) {
+                return ret;
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return ret;
         }
+        return null;
     }
 
     /**
+     * @param curr Tile to search from
+     * @param next Tile to search for
      * @return MovingSprite.DIRECTION of next from curr. E.g. Which direction is Player relative to Enemy?
      */
     public MovingSprite.DIRECTION findDirectionFrom(Tile curr, Tile next) {
         // For each direction, we need to find corresponding row or col, then see if that's contained
 
+        //System.out.println(String.format("Initiating search from [%d, %d] to [%d, %d]", curr.getPositionTile()[0], curr.getPositionTile()[1], next.getPositionTile()[0], next.getPositionTile()[1]));
+
         for (MovingSprite.DIRECTION direction : MovingSprite.DIRECTION.values()) {
+            //System.out.println("ON DIRECTION" + direction);
             ArrayList<Tile> toSearch = getSelectiveDir(curr.getPositionTile()[0], curr.getPositionTile()[1], direction);
             if (toSearch.contains(next)) {
+                //System.out.println("In direction: " + direction);
                 return direction;
             }
         }

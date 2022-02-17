@@ -6,10 +6,7 @@ import com.mygdx.gigabiteconomy.screens.TileManager;
 import com.mygdx.gigabiteconomy.sprites.GameObject;
 import sun.awt.image.ImageWatched;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Class representing an enemy sprite (many per level)
@@ -70,6 +67,9 @@ public class Enemy extends MovingSprite {
         setMoving(true);
     }
 
+    public void setPath(Queue<DIRECTION> pathList) {
+        currentPath = pathList;
+    }
 
     /**
      * Method to set path of enemy from hashmap of defined paths
@@ -79,7 +79,6 @@ public class Enemy extends MovingSprite {
         if ((currentPath = movementPaths.get(pathID)) == null) {
             new Exception("Movement path does not exist");
         }
-
         setDirectionMovement(currentPath.peek());
     }
 
@@ -172,15 +171,30 @@ public class Enemy extends MovingSprite {
          * -> Set new targetSquare from Queue (for next move();
          */
 
-        if (checkAgro()) {
-            System.out.println("Agro set to true");
-            setPath("agro");
-            super.setNextTiles();
+        if (ret) {
+            if (checkAgro()) {
+                System.out.println("Agro set to true");
+                setPath("agro");
+                setNextDirection();
+            }
+            if (agro) {
+                //Check if player is on the row
+                //Move in that direction
+                TileManager tm = getTileManager();
+                DIRECTION dirTo = tm.findDirectionFrom(getCurrentTiles().get(0), targetEntity.getCurrentTiles().get(0));
+
+                if (dirTo != null) {
+                    System.out.println(dirTo);
+                    super.setDirectionMovement(dirTo);
+                    currentPath = new LinkedList<>(Arrays.asList(dirTo, dirTo));
+                    setNextDirection();
+                } else {
+                    setPath("agro");
+                }
+
+            }
         }
-        if (agro) {
-            //Check if player is on the row
-            //Move in that direction
-        }
+
 
 
         /**
