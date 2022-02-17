@@ -159,10 +159,10 @@ public class Player extends MovingSprite {
             throw new ParcelException("No parcel is being carried");
         }
 
-        this.parcel = null;
-
         Weapon parcelWeapon = parcel.open();
         setWeapon(parcelWeapon);
+
+        this.parcel = null;
     }
 
     /**
