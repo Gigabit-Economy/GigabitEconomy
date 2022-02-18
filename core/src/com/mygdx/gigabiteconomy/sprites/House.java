@@ -12,9 +12,7 @@ import com.mygdx.gigabiteconomy.sprites.tiled.TileIndicator;
  * Class representing a house
  */
 public class House extends StaticSprite {
-    private static final int DOOR_TILE = 2;
-
-    private boolean isDeliveryLocation = false;
+    private static final int HEIGHT = 5;
 
     private Tile deliveryTile;
     private TileIndicator deliveryTileIndicator;
@@ -24,10 +22,9 @@ public class House extends StaticSprite {
      *
      * @param type the type of house (HouseType enum)
      * @param x position of Tile (within tile grid) to place sprite
-     * @param y position of Tile (within tile grid) to place sprite
      */
-    public House(HouseType type, int x, int y) {
-        super(String.format("finished_assets/houses/%s.png", type.name().toLowerCase()), x, y, 1, 6);
+    public House(HouseType type, int x) {
+        super(String.format("finished_assets/houses/%s.png", type.name().toLowerCase()), x, HEIGHT, 1, 6);
     }
 
     /**
@@ -38,14 +35,13 @@ public class House extends StaticSprite {
      */
     public void markAsDeliveryLocation(LevelScreen level) {
         // get tile nearest to House coordinates and mark as House's delivery tile
+        System.out.println(getCurrentTiles());
         this.deliveryTile = getCurrentTiles().get(2);
         this.deliveryTile.setOwned(this);
 
         float[] tilePosition = this.deliveryTile.getTileCoords();
         this.deliveryTileIndicator = new TileIndicator((int) tilePosition[0], (int) tilePosition[1]);
         level.addSprite(deliveryTileIndicator);
-
-        this.isDeliveryLocation = true;
     }
 
     /**
@@ -57,8 +53,6 @@ public class House extends StaticSprite {
 
         level.removeSprite(deliveryTileIndicator);
         this.deliveryTileIndicator = null;
-
-        this.isDeliveryLocation = false;
     }
 
     public enum HouseType {
