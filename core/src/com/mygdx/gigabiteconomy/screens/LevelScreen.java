@@ -369,7 +369,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      */
     public void end() {
         try {
-            director.switchScreen("levelFailed");
+            director.switchScreen("levelfailed");
         } catch (ScreenException ex) {
             Gdx.app.error("Exception", "The screen could not be switched when level failed", ex);
         }
@@ -384,7 +384,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         score.saveScore();
 
         try {
-            director.switchScreen("levelComplete");
+            director.switchScreen("levelcomplete");
         } catch (ScreenException ex) {
             Gdx.app.error("Exception", "The screen could not be switched when level complete", ex);
         }
