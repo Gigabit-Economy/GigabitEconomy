@@ -1,8 +1,5 @@
 package com.mygdx.gigabiteconomy.screens;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -14,20 +11,21 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ArrayMap;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
+import com.mygdx.gigabiteconomy.ScoreSystem;
 
 public class LevelCompleteScreen implements Screen {
     private GigabitEconomy director;
 
     private Stage stage;
-    private Table levelComepletedTable;
+    private Table levelCompletedTable;
+
+    private ScoreSystem levelScores;
 
     public LevelCompleteScreen(GigabitEconomy director) {
         this.director = director;
         this.stage = new Stage(director.getViewport());
-
+        this.levelScores = new ScoreSystem(director.getLastPlayedLevel());
     }
 
     @Override
@@ -36,38 +34,38 @@ public class LevelCompleteScreen implements Screen {
         // Skin defined in UI skin (commodore - hopefully we can use, looks really cool)
         Skin style = new Skin(Gdx.files.internal("uiskin.json"));
 
-        levelComepletedTable = new Table();
-        levelComepletedTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        levelCompletedTable = new Table();
+        levelCompletedTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         Label congratulationsLabel = new Label("CONGRATULATIONS!", style);
-        levelComepletedTable.add(congratulationsLabel).size(40);
-        levelComepletedTable.row();
+        levelCompletedTable.add(congratulationsLabel).size(40);
+        levelCompletedTable.row();
 
         Label passedThisLevelLabel = new Label("YOU HAVE PASSED THIS LEVEL!", style);
-        levelComepletedTable.add(passedThisLevelLabel).size(40);
-        levelComepletedTable.row();
+        levelCompletedTable.add(passedThisLevelLabel).size(40);
+        levelCompletedTable.row();
 
         int scoreTestNumber = 45656465;
         Label yourScoreWasLabel = new Label("YOUR SCORE WAS: " + scoreTestNumber, style);
-        levelComepletedTable.add(yourScoreWasLabel).size(40);
-        levelComepletedTable.row();
+        levelCompletedTable.add(yourScoreWasLabel).size(40);
+        levelCompletedTable.row();
 
         Label yourPastScoresLabel = new Label("YOUR PAST SCORES:", style);
-        levelComepletedTable.add(yourPastScoresLabel).padLeft(-600);
+        levelCompletedTable.add(yourPastScoresLabel).padLeft(-600);
 
         TextButton levelCompletedMainMenuButton = new TextButton("MAIN MENU", style);
         levelCompletedMainMenuButton.setName("menu");
-        levelComepletedTable.add(levelCompletedMainMenuButton);
+        levelCompletedTable.add(levelCompletedMainMenuButton);
 
         TextButton levelCompletedNextLevelButton = new TextButton("NEXT LEVEL", style);
         levelCompletedNextLevelButton.setName("nextlevelscreen");
-        levelComepletedTable.add(levelCompletedNextLevelButton).padRight(-300);
-        levelComepletedTable.row();
+        levelCompletedTable.add(levelCompletedNextLevelButton).padRight(-300);
+        levelCompletedTable.row();
 
         String[] examples15 = { "Firstexample", "Second example", "54864886", "Example Number4" };
         List<String> levelCompletedScoreList = new List<String>(style);
         levelCompletedScoreList.setItems(examples15);
-        levelComepletedTable.add(levelCompletedScoreList).padLeft(-600);
+        levelCompletedTable.add(levelCompletedScoreList).padLeft(-600);
 
         // Add click listener for buttons
         ClickListener buttonsListener = new ClickListener() {
@@ -89,7 +87,7 @@ public class LevelCompleteScreen implements Screen {
         };
         levelCompletedNextLevelButton.addListener(buttonsListener);
         levelCompletedMainMenuButton.addListener(buttonsListener);
-        stage.addActor(levelComepletedTable);
+        stage.addActor(levelCompletedTable);
 
     }
 
@@ -98,7 +96,7 @@ public class LevelCompleteScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
         stage.draw();
-        levelComepletedTable.setBounds(0, 0, Gdx.graphics.getWidth() + 180, Gdx.graphics.getHeight());
+        levelCompletedTable.setBounds(0, 0, Gdx.graphics.getWidth() + 180, Gdx.graphics.getHeight());
 
     }
 

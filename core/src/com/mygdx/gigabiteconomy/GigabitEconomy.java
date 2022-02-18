@@ -6,11 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.gigabiteconomy.exceptions.ScreenException;
-import com.mygdx.gigabiteconomy.screens.MenuScreen;
-import com.mygdx.gigabiteconomy.screens.PauseMenu;
-import com.mygdx.gigabiteconomy.screens.LevelFailedScreen;
-import com.mygdx.gigabiteconomy.screens.LevelCompleteScreen;
-import com.mygdx.gigabiteconomy.screens.LevelOneScreen;
+import com.mygdx.gigabiteconomy.screens.*;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.Gdx;
 
@@ -22,6 +18,8 @@ public class GigabitEconomy extends Game {
     private ScreenViewport viewport;
 
     private static HashMap<String, Screen> screens = new HashMap<>();
+
+    private LevelScreen lastPlayedLevel;
 
     @Override
     public void create() {
@@ -81,10 +79,19 @@ public class GigabitEconomy extends Game {
             throw new ScreenException(String.format("Tried to switch to invalid screen %s", name));
         }
 
+        // if a LevelScreen, record as lastPlayedLevel
+        if (toSwitch instanceof LevelScreen) {
+            this.lastPlayedLevel = (LevelScreen) toSwitch;
+        }
+
         setScreen(toSwitch);
     }
 
     public ScreenViewport getViewport() {
         return viewport;
+    }
+
+    public LevelScreen getLastPlayedLevel() {
+        return this.lastPlayedLevel;
     }
 }
