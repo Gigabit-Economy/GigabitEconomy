@@ -158,19 +158,10 @@ public class Player extends MovingSprite {
     }
 
     /**
-     * Open the Player's Parcel to get the weapon
-     *
-     * @throws ParcelException if no parcel is being carried by the Player
+     * Open the Parcel the Player is currently carrying (if any)
      */
     public void openParcel() throws ParcelException {
-        if (parcel == null) {
-            throw new ParcelException("No parcel is being carried");
-        }
-
-        Weapon parcelWeapon = parcel.open();
-        setWeapon(parcelWeapon);
-
-        this.parcel = null;
+        parcel.open();
     }
 
     /**
@@ -235,18 +226,24 @@ public class Player extends MovingSprite {
         }
 
         /**
-         * Open the parcel to get the Weapon inside the parcel
+         * Open the parcel and replace Player's Weapon with the Weapon inside the parcel
          *
-         * @return the Weapon inside the parcel
+         * @throws ParcelException if no Parcel is being carried or Parcel is final parcel
          */
-        public Weapon open() throws ParcelException {
+        public void open() throws ParcelException {
+            if (parcel == null) {
+                throw new ParcelException("No parcel is being carried");
+            }
+
             if (isFinalParcel) {
                 throw new ParcelException("The final parcel must be delivered and cannot be opened");
             }
 
+            setWeapon(this.weapon);
+
             house.unmarkAsDeliveryLocation(level);
 
-            return weapon;
+            parcel = null;
         }
     }
 }
