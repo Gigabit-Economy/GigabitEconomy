@@ -200,7 +200,7 @@ public class Player extends MovingSprite {
             }
 
             // if level is onto final parcel, mark as such
-            this.isFinalParcel = (level.getParcels() == 1);
+            this.isFinalParcel = (level.getParcels() <= 1);
 
             level.decrementParcels();
 
