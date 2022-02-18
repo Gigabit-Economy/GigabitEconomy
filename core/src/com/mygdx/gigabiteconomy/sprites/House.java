@@ -1,8 +1,5 @@
 package com.mygdx.gigabiteconomy.sprites;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.gigabiteconomy.exceptions.TileException;
 import com.mygdx.gigabiteconomy.screens.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.sprites.tiled.StaticSprite;
@@ -13,6 +10,7 @@ import com.mygdx.gigabiteconomy.sprites.tiled.TileIndicator;
  */
 public class House extends StaticSprite {
     private static final int HEIGHT = 9;
+    private static final int DOOR_INDEX = 2;
 
     private Tile deliveryTile;
     private TileIndicator deliveryTileIndicator;
@@ -25,6 +23,12 @@ public class House extends StaticSprite {
      */
     public House(HouseType type, int x) {
         super(String.format("finished_assets/houses/%s.png", type.name().toLowerCase()), x, HEIGHT, 1, 6);
+
+        // set delivery tile to tile covering door
+        this.deliveryTile = getCurrentTiles().get(DOOR_INDEX);
+        // set delivery tile indicator to match coordinates of delivery tile
+        float[] tilePosition = this.deliveryTile.getTileCoords();
+        this.deliveryTileIndicator = new TileIndicator((int) tilePosition[0], (int) tilePosition[1]);
     }
 
     /**
@@ -34,13 +38,9 @@ public class House extends StaticSprite {
      * @param level the level the House is to be a delivery location in
      */
     public void markAsDeliveryLocation(LevelScreen level) {
-        // get tile nearest to House coordinates and mark as House's delivery tile
-        System.out.println(getCurrentTiles());
-        this.deliveryTile = getCurrentTiles().get(2);
+        // get delivery tile to be owned by House (so it's deliverable to)
         this.deliveryTile.setOwned(this);
 
-        float[] tilePosition = this.deliveryTile.getTileCoords();
-        this.deliveryTileIndicator = new TileIndicator((int) tilePosition[0], (int) tilePosition[1]);
         level.addSprite(deliveryTileIndicator);
     }
 
@@ -49,10 +49,8 @@ public class House extends StaticSprite {
      */
     public void unmarkAsDeliveryLocation(LevelScreen level) {
         this.deliveryTile.setOwned(null);
-        this.deliveryTile = null;
 
         level.removeSprite(deliveryTileIndicator);
-        this.deliveryTileIndicator = null;
     }
 
     public enum HouseType {
