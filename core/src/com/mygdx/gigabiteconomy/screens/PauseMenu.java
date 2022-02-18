@@ -13,6 +13,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -69,13 +70,13 @@ public class PauseMenu implements Screen, InputProcessor {
 
             pauseMenuTable.row();
 
-            TextButton volumeControlButton = new TextButton("AUDIO", style);
-            pauseMenuTable.add(volumeControlButton);
+            Label volumeControlLabel = new Label("AUDIO", style);
+            volumeControlLabel.setSize(10, 50);
+            pauseMenuTable.add(volumeControlLabel);
 
             Slider volumeControlSlider = new Slider(-40, 6, 2, false, style);
             volumeControlSlider.setName("volumeSlider");
-            volumeControlSlider.setWidth(300);
-            volumeControlSlider.setHeight(500);
+            volumeControlSlider.setOriginX(volumeControlLabel.getX());
             pauseMenuTable.add(volumeControlSlider);
 
             pauseMenuTable.row();
@@ -89,7 +90,7 @@ public class PauseMenu implements Screen, InputProcessor {
             TextButton res1920Button = new TextButton("1920 x 1080", style);
             res1920Button.setName("res1920");
             pauseMenuTable.add(res1920Button);
-
+            
             pauseMenuTable.row();
 
             TextButton res1366Button = new TextButton("1366 x 768", style);

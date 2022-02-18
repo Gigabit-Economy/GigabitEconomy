@@ -8,6 +8,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.gigabiteconomy.exceptions.ScreenException;
 import com.mygdx.gigabiteconomy.screens.MenuScreen;
 import com.mygdx.gigabiteconomy.screens.PauseMenu;
+import com.mygdx.gigabiteconomy.screens.DeathScreen;
+import com.mygdx.gigabiteconomy.screens.LevelCompleteScreen;
 import com.mygdx.gigabiteconomy.screens.LevelOneScreen;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.Gdx;
@@ -31,6 +33,8 @@ public class GigabitEconomy extends Game {
         screens.put("menu", new MenuScreen(this));
         screens.put("level1", new LevelOneScreen(this));
         screens.put("pausemenu", new PauseMenu(this));
+        screens.put("levelpassedscreen", new LevelCompleteScreen(this));
+        screens.put("deathscreen", new DeathScreen(this));
 
         // Set active screen to main menu
         setScreen(screens.get("menu"));
