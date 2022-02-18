@@ -140,9 +140,16 @@ public class Player extends MovingSprite {
         }
         // if Player does have a Parcel, check if next to House to be delivered to
         else {
-            // if adjacent tile is owned by a House, deliver parcel
+            // if current tile or adjacent tile is owned by a House (door), deliver parcel
+            GameObject currentObject;
+            try {
+                currentObject = getCurrentTiles().get(0).getOwnedBy();
+            } catch (NullPointerException ex) {
+                currentObject = null;
+            }
             GameObject adjacentObject = adjacentTile.getOwnedBy();
-            if (adjacentObject != null && adjacentObject instanceof House) {
+            if ((adjacentObject != null && adjacentObject instanceof House) ||
+                    (currentObject != null) && currentObject instanceof House) {
                 parcel.deliver();
             }
         }

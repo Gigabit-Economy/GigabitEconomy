@@ -2,15 +2,13 @@ package com.mygdx.gigabiteconomy.sprites.tiled;
 
 import com.mygdx.gigabiteconomy.screens.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
-import com.mygdx.gigabiteconomy.sprites.tiled.StaticSprite;
-import com.mygdx.gigabiteconomy.sprites.tiled.TileIndicator;
 
 /**
- * Class representing a house
+ * Class representing a house (where Parcels are delivered to by the Player)
  */
 public class House extends StaticSprite {
-    private static final int HEIGHT = 8;
-    private static final int DOOR_INDEX = 2;
+    private static final int Y = 8; // Y coordinate of the highest row of Tiles in the tile grid
+    private static final int DOOR_INDEX = 2; // the number of Tiles to the door area (from the right side of the House)
 
     private Tile deliveryTile;
     private TileIndicator deliveryTileIndicator;
@@ -22,7 +20,7 @@ public class House extends StaticSprite {
      * @param x position of Tile (within tile grid) to place sprite
      */
     public House(HouseType type, int x) {
-        super(String.format("finished_assets/houses/%s.png", type.name().toLowerCase()), x, HEIGHT, 1, 6);
+        super(String.format("finished_assets/houses/%s.png", type.name().toLowerCase()), x, Y, 1, 6);
     }
 
     /**
@@ -51,6 +49,8 @@ public class House extends StaticSprite {
 
     /**
      * Un-mark the House as the delivery location for a level
+     *
+     * @param level the level the House was a delivery location in (i.e. is to be removed from)
      */
     public void unmarkAsDeliveryLocation(LevelScreen level) {
         if (this.deliveryTile != null) {
