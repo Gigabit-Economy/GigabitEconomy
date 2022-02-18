@@ -15,7 +15,7 @@ public class ScoreSystem {
     private String scoreId;
 
     public ScoreSystem(LevelScreen level) {
-        this.levelName = level.getClass().toString();
+        this.levelName = level.getClass().getName();
         this.levelScores = Gdx.app.getPreferences(String.format("%sScores", levelName));
 
         this.scoreId = Integer.toString(getAllScores().size() + 1);
