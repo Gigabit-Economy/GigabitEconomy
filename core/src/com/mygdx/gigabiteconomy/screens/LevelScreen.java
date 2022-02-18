@@ -154,7 +154,17 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
         // Move (if moving sprite) & draw sprites
         for (GameObject sprite : sprites) {
-            if (sprite instanceof MovingSprite) {
+            if (sprite instanceof House) {
+                House house = (House) sprite;
+
+                batch.draw(house.getTexture(), house.getX(), house.getY());
+            }
+            else if (sprite instanceof StaticSprite) {
+                StaticSprite staticSprite = (StaticSprite) sprite;
+
+                batch.draw(staticSprite.getTexture(), staticSprite.getX(), staticSprite.getY());
+            }
+            else if (sprite instanceof MovingSprite) {
                 MovingSprite movingSprite = (MovingSprite) sprite;
 
                 try {
@@ -165,16 +175,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
                 }
 
                 batch.draw(movingSprite.getTextureRegion(), movingSprite.getX(), movingSprite.getY());
-            } else if (sprite instanceof StaticSprite) {
-                StaticSprite staticSprite = (StaticSprite) sprite;
-
-                batch.draw(staticSprite.getTexture(), staticSprite.getX(), staticSprite.getY());
-            } else if (sprite instanceof House) {
-                House house = (House) sprite;
-
-                batch.draw(house.getTexture(), house.getX(), house.getY());
             }
-
         }
 
         String scoreText = String.format("score: %d", score.alterScore(0));
