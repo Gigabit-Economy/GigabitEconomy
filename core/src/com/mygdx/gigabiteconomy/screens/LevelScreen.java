@@ -155,7 +155,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
             if (sprite instanceof House) {
                 House house = (House) sprite;
 
-                batch.draw(house.getTexture(), house.getX(), house.getY());
+                batch.draw(house.getTexture(), house.getX()-(getTileManager().getSideLength()*house.getWidth()/2), house.getY());
             }
             else if (sprite instanceof StaticSprite) {
                 StaticSprite staticSprite = (StaticSprite) sprite;

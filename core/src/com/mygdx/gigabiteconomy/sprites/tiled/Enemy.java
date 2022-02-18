@@ -128,7 +128,7 @@ public class Enemy extends MovingSprite {
 
         return agro;
     }
-    
+
     @Override
     public DIRECTION setNextDirection() {
         super.setDirectionMovement(currentPath.remove());
