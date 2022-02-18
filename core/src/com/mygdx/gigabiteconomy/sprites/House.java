@@ -43,6 +43,7 @@ public class House extends StaticSprite {
         }
 
         // get delivery tile to be owned by House (so it's deliverable to)
+        this.deliveryTile.setOccupied(null);
         this.deliveryTile.setOwned(this);
 
         level.addSprite(deliveryTileIndicator);
@@ -53,6 +54,7 @@ public class House extends StaticSprite {
      */
     public void unmarkAsDeliveryLocation(LevelScreen level) {
         if (this.deliveryTile != null) {
+            this.deliveryTile.setOccupied(this);
             this.deliveryTile.setOwned(null);
         }
 
