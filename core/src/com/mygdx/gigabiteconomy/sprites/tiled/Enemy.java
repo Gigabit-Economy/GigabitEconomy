@@ -190,16 +190,6 @@ public class Enemy extends MovingSprite {
                     setPath("agro");
                 }
 
-                //If we've arrived at a tile and are blocked
-                TiledObject to = getTileManager().getAdjacentTile(getCurrentTiles().get(0), getDirectionMoving(), 1).getOccupiedBy();
-
-                if (to instanceof StaticSprite) {
-                    currentPath.add(currentPath.peek().getNext()); //Adding a **sprinkle** of random to movement
-                    //currentPath.add(currentPath.remove().getNext()); //Adding a **sprinkle** of random to movement
-                    System.out.println("Adding " + currentPath.peek().getNext());
-                    setDirectionMovement(currentPath.remove());
-                }
-
             }
 
         } else {
