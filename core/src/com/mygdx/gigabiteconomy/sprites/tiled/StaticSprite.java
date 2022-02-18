@@ -17,6 +17,8 @@ public class StaticSprite extends TiledObject {
      * @param png the .png file of the sprite's texture
      * @param x position of Tile (within tile grid) to place sprite
      * @param y position of Tile (within tile grid) to place sprite
+     * @param height the height of the sprite (in Tiles)
+     * @param width the width of the sprite (in Tiles)
      */
     public StaticSprite(String png, int x, int y, int height, int width) {
         super(x, y, height, width);

@@ -42,6 +42,8 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     private boolean attacking = false;
     private Weapon weapon;
 
+    public int textureOffset = 126;//Pixel offset of texture
+
     /**
      * Create a new moving sprite
      *
