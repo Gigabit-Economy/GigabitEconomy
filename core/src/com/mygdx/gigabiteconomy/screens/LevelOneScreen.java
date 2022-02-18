@@ -2,8 +2,7 @@ package com.mygdx.gigabiteconomy.screens;
 
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.gigabiteconomy.sprites.GameObject;
-import com.mygdx.gigabiteconomy.sprites.House;
+import com.mygdx.gigabiteconomy.sprites.tiled.House;
 import com.mygdx.gigabiteconomy.sprites.tiled.*;
 import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite.Weapon;
 

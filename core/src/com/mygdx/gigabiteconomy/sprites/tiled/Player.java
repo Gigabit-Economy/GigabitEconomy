@@ -7,7 +7,6 @@ import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.sprites.GameObject;
-import com.mygdx.gigabiteconomy.sprites.House;
 
 import java.util.ArrayList;
 import java.util.Random;

@@ -1,4 +1,4 @@
-package com.mygdx.gigabiteconomy.sprites;
+package com.mygdx.gigabiteconomy.sprites.tiled;
 
 import com.mygdx.gigabiteconomy.screens.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
