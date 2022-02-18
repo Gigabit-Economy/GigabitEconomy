@@ -184,11 +184,11 @@ public class Enemy extends MovingSprite {
                 TileManager tm = getTileManager();
                 DIRECTION dirTo = tm.findDirectionFrom(getCurrentTiles().get(0), targetEntity.getCurrentTiles().get(0));
 
+
                 if (dirTo != null) {
                     setPath(new LinkedList<>(Arrays.asList(dirTo, dirTo)));
-                } else {
-                    setPath("agro");
                 }
+
 
             }
 
