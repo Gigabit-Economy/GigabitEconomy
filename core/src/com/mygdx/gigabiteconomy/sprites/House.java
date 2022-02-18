@@ -23,12 +23,6 @@ public class House extends StaticSprite {
      */
     public House(HouseType type, int x) {
         super(String.format("finished_assets/houses/%s.png", type.name().toLowerCase()), x, HEIGHT, 1, 6);
-
-        // set delivery tile to tile covering door
-        this.deliveryTile = getCurrentTiles().get(DOOR_INDEX);
-        // set delivery tile indicator to match coordinates of delivery tile
-        float[] tilePosition = this.deliveryTile.getTileCoords();
-        this.deliveryTileIndicator = new TileIndicator((int) tilePosition[0], (int) tilePosition[1]);
     }
 
     /**
@@ -38,6 +32,16 @@ public class House extends StaticSprite {
      * @param level the level the House is to be a delivery location in
      */
     public void markAsDeliveryLocation(LevelScreen level) {
+        // if not yet defined, set delivery tile to tile covering door
+        if (this.deliveryTile == null) {
+            this.deliveryTile = getCurrentTiles().get(DOOR_INDEX);
+        }
+        // if not yet defined, set delivery tile indicator to match coordinates of delivery tile
+        if (this.deliveryTileIndicator == null) {
+            float[] tilePosition = this.deliveryTile.getTileCoords();
+            this.deliveryTileIndicator = new TileIndicator((int) tilePosition[0], (int) tilePosition[1]);
+        }
+
         // get delivery tile to be owned by House (so it's deliverable to)
         this.deliveryTile.setOwned(this);
 
@@ -48,9 +52,13 @@ public class House extends StaticSprite {
      * Un-mark the House as the delivery location for a level
      */
     public void unmarkAsDeliveryLocation(LevelScreen level) {
-        this.deliveryTile.setOwned(null);
+        if (this.deliveryTile != null) {
+            this.deliveryTile.setOwned(null);
+        }
 
-        level.removeSprite(deliveryTileIndicator);
+        if (this.deliveryTileIndicator != null) {
+            level.removeSprite(deliveryTileIndicator);
+        }
     }
 
     public enum HouseType {
