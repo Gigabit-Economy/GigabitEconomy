@@ -64,18 +64,18 @@ public abstract class TiledObject extends GameObject {
     }
 
     /**
-     * Get the tile the sprite currently occupies
+     * Get the Tile(s) the sprite currently occupies
      *
-     * @return the Tile instance of the current tile
+     * @return the Tile instance(s) of the current tile
      */
     public ArrayList<Tile> getCurrentTiles() {
         return currentTiles;
     }
 
     /**
-     * Set the tile the sprite the currently occupies
+     * Set the Tile(s) the sprite the currently occupies
      *
-     * @param currentTiles the new Tiles for the sprite to occupy
+     * @param currentTiles the new Tile(s) for the sprite to occupy
      */
     public void setCurrentTiles(ArrayList<Tile> currentTiles) {
         if (currentTiles.contains(null)) {

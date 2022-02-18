@@ -126,8 +126,9 @@ public class TileManager {
      */
     public ArrayList<Tile> placeObject(int x, int y, int width, int height, TiledObject objectToPlace) {
         ArrayList<Tile> toPlace = new ArrayList<>();
-        for (int i=width-1; i>=0; i--) {
-            for (int ii=height-1; ii>=0; ii--) {
+
+        for (int i=0; i<width; i++) {
+            for (int ii=0; ii<height; ii++) {
                 Tile toAdd = getTile(x+i, y+ii);
                 if ((toAdd != null ? toPlace.add(toAdd) : toPlace.add(null))) {
                     placeObject(toAdd, objectToPlace);

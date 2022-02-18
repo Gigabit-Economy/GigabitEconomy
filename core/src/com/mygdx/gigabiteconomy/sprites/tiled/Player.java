@@ -7,7 +7,6 @@ import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.sprites.GameObject;
-import com.mygdx.gigabiteconomy.sprites.House;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -21,6 +20,7 @@ public class Player extends MovingSprite {
     private LevelScreen level;
 
     private Parcel parcel;
+
 
     /**
      * Create a new Player sprite (MovingSprite)
@@ -103,6 +103,7 @@ public class Player extends MovingSprite {
     @Override
     public boolean move(float delta) throws TileMovementException  {
         boolean ret = super.move(delta);
+
         if (!ret) return false;
 
         /**
@@ -139,9 +140,16 @@ public class Player extends MovingSprite {
         }
         // if Player does have a Parcel, check if next to House to be delivered to
         else {
-            // if adjacent tile is owned by a House, deliver parcel
+            // if current tile or adjacent tile is owned by a House (door), deliver parcel
+            GameObject currentObject;
+            try {
+                currentObject = getCurrentTiles().get(0).getOwnedBy();
+            } catch (NullPointerException ex) {
+                currentObject = null;
+            }
             GameObject adjacentObject = adjacentTile.getOwnedBy();
-            if (adjacentObject != null && adjacentObject instanceof House) {
+            if ((adjacentObject != null && adjacentObject instanceof House) ||
+                    (currentObject != null) && currentObject instanceof House) {
                 parcel.deliver();
             }
         }
@@ -150,19 +158,10 @@ public class Player extends MovingSprite {
     }
 
     /**
-     * Open the Player's Parcel to get the weapon
-     *
-     * @throws ParcelException if no parcel is being carried by the Player
+     * Open the Parcel the Player is currently carrying (if any)
      */
     public void openParcel() throws ParcelException {
-        if (parcel == null) {
-            throw new ParcelException("No parcel is being carried");
-        }
-
-        Weapon parcelWeapon = parcel.open();
-        setWeapon(parcelWeapon);
-
-        this.parcel = null;
+        parcel.open();
     }
 
     /**
@@ -201,7 +200,7 @@ public class Player extends MovingSprite {
             }
 
             // if level is onto final parcel, mark as such
-            this.isFinalParcel = (level.getParcels() == 1);
+            this.isFinalParcel = (level.getParcels() <= 1);
 
             level.decrementParcels();
 
@@ -219,7 +218,7 @@ public class Player extends MovingSprite {
 
             level.addToScore(1);
 
-            house.unmarkAsDeliveryLocation();
+            house.unmarkAsDeliveryLocation(level);
 
             if (isFinalParcel) {
                 level.complete();
@@ -227,16 +226,24 @@ public class Player extends MovingSprite {
         }
 
         /**
-         * Open the parcel to get the Weapon inside the parcel
+         * Open the parcel and replace Player's Weapon with the Weapon inside the parcel
          *
-         * @return the Weapon inside the parcel
+         * @throws ParcelException if no Parcel is being carried or Parcel is final parcel
          */
-        public Weapon open() throws ParcelException {
+        public void open() throws ParcelException {
+            if (parcel == null) {
+                throw new ParcelException("No parcel is being carried");
+            }
+
             if (isFinalParcel) {
                 throw new ParcelException("The final parcel must be delivered and cannot be opened");
             }
 
-            return weapon;
+            setWeapon(this.weapon);
+
+            house.unmarkAsDeliveryLocation(level);
+
+            parcel = null;
         }
     }
 }

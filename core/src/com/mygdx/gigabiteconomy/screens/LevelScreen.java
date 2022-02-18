@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -64,7 +65,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      *                          fences etc.) for the level
      * @param backgroundTexture the background graphic of the level
      */
-    public LevelScreen(GigabitEconomy director, Player player, ArrayList<TiledObject> enemies, ArrayList<House> houses, ParcelVan parcelVan, ArrayList<TiledObject> staticSprites, Texture backgroundTexture) {
+    public LevelScreen(GigabitEconomy director, Player player, ArrayList<TiledObject> enemies, ParcelVan parcelVan, ArrayList<TiledObject> staticSprites, Texture backgroundTexture) {
         this.director = director;
         this.player = player;
         this.houses = houses;
@@ -104,13 +105,12 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
         // Add background
         backgroundSprite = new Sprite(backgroundTexture);
+
         System.out.println(
                 "Texture dimensions: h:" + backgroundTexture.getHeight() + " w:" + backgroundTexture.getWidth());
 
         // Add static sprites
         sprites.addAll(staticSprites);
-        // Add houses
-        sprites.addAll(houses);
         // Add parcel van
         sprites.add(parcelVan);
         // Add player
@@ -149,11 +149,22 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         batch.begin();
 
         // Draw the background
-        backgroundSprite.draw(batch);
+        //backgroundSprite.draw(batch);
+        batch.draw(backgroundSprite.getTexture(), 0, 0);
 
         // Move (if moving sprite) & draw sprites
         for (GameObject sprite : sprites) {
-            if (sprite instanceof MovingSprite) {
+            if (sprite instanceof House) {
+                House house = (House) sprite;
+
+                batch.draw(house.getTexture(), house.getX(), house.getY());
+            }
+            else if (sprite instanceof StaticSprite) {
+                StaticSprite staticSprite = (StaticSprite) sprite;
+
+                batch.draw(staticSprite.getTexture(), staticSprite.getX(), staticSprite.getY());
+            }
+            else if (sprite instanceof MovingSprite) {
                 MovingSprite movingSprite = (MovingSprite) sprite;
 
                 try {
@@ -163,17 +174,9 @@ public abstract class LevelScreen implements Screen, InputProcessor {
                     System.out.println("Sprite was blocked");
                 }
 
-                batch.draw(movingSprite.getTextureRegion(), movingSprite.getX(), movingSprite.getY());
-            } else if (sprite instanceof StaticSprite) {
-                StaticSprite staticSprite = (StaticSprite) sprite;
-
-                batch.draw(staticSprite.getTexture(), staticSprite.getX(), staticSprite.getY());
-            } else if (sprite instanceof House) {
-                House house = (House) sprite;
-
-                batch.draw(house.getTexture(), house.getX(), house.getY());
+                float offsetX = ((TextureAtlas.AtlasRegion)movingSprite.getTextureRegion()).offsetX;
+                batch.draw(movingSprite.getTextureRegion(), movingSprite.getX()-offsetX, movingSprite.getY());
             }
-
         }
 
         String scoreText = String.format("score: %d", score.getScore());
@@ -196,6 +199,29 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         batch.end();
     }
 
+    /**
+     * Add a sprite to the level
+     *
+     * @param sprite the GameObject representing the sprite
+     */
+    public void addSprite(GameObject sprite) {
+        sprites.add(sprite);
+    }
+
+    /**
+     * Remove a sprite from the level
+     *
+     * @param sprite the GameObject representing the sprite
+     */
+    public void removeSprite(GameObject sprite) {
+        sprites.remove(sprite);
+    }
+
+    /**
+     * Show an error message to the user
+     *
+     * @param error the error message
+     */
     public void showErrorText(String error) {
         this.errorText = error;
         // set for error to display for 5 seconds
@@ -218,6 +244,14 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      */
     public ArrayList<House> getHouses()
     {
+        ArrayList<House> houses = new ArrayList<House>();
+
+        for (TiledObject sprite : staticSprites) {
+            if (sprite instanceof House) {
+                houses.add((House) sprite);
+            }
+        }
+
         return houses;
     }
 
