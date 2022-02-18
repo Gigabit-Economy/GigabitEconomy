@@ -155,6 +155,10 @@ public abstract class LevelScreen implements Screen, InputProcessor {
             if (sprite instanceof House) {
                 House house = (House) sprite;
 
+                //System.out.println(String.format("House being drawn at %f %f", house.getX(), house.getY()));
+                //Tile tileToDraw = house.getCurrentTiles().get(0);
+                //System.out.println(String.format("House tile %d %d to draw is at %f %f", tileToDraw.getPositionTile()[0], tileToDraw.getPositionTile()[1], tileToDraw.getTileCoords()[0], tileToDraw.getTileCoords()[1]));
+                //System.out.println(String.format("Correct x coord: %f", house.getX()-(getTileManager().getSideLength()*house.getWidth()/2)));
                 batch.draw(house.getTexture(), house.getX()-(getTileManager().getSideLength()*house.getWidth()/2), house.getY());
             }
             else if (sprite instanceof StaticSprite) {
