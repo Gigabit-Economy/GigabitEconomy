@@ -5,20 +5,19 @@ import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.gigabiteconomy.exceptions.TileException;
 import com.mygdx.gigabiteconomy.screens.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
+import com.mygdx.gigabiteconomy.sprites.tiled.StaticSprite;
 import com.mygdx.gigabiteconomy.sprites.tiled.TileIndicator;
 
 /**
  * Class representing a house
  */
-public class House extends GameObject {
-    private static final int DOOR_WIDTH = 268;
-
-    private Texture texture;
+public class House extends StaticSprite {
+    private static final int DOOR_TILE = 2;
 
     private boolean isDeliveryLocation = false;
 
-    private Tile tile;
-    private TileIndicator tileIndiactor;
+    private Tile deliveryTile;
+    private TileIndicator deliveryTileIndicator;
 
     /**
      * Create a new House game object
@@ -28,9 +27,7 @@ public class House extends GameObject {
      * @param y position of Tile (within tile grid) to place sprite
      */
     public House(HouseType type, int x, int y) {
-        super (x, y);
-
-        texture = new Texture(String.format("finished_assets/houses/%s.png", type.name().toLowerCase()));
+        super(String.format("finished_assets/houses/%s.png", type.name().toLowerCase()), x, y, 1, 6);
     }
 
     /**
@@ -41,17 +38,12 @@ public class House extends GameObject {
      */
     public void markAsDeliveryLocation(LevelScreen level) {
         // get tile nearest to House coordinates and mark as House's delivery tile
-        try {
-            this.tile = level.getTileManager().getNearestTileToCoords(getX() + DOOR_WIDTH, getY());
-        } catch (TileException ex) {
-            Gdx.app.error("Exception", "Error trying to mark House as delivery location", ex);
-            System.exit(-1);
-        }
-        this.tile.setOwned(this);
+        this.deliveryTile = getCurrentTiles().get(2);
+        this.deliveryTile.setOwned(this);
 
-        float[] tilePosition = this.tile.getTileCoords();
-        this.tileIndiactor = new TileIndicator((int) tilePosition[0], (int) tilePosition[1]);
-        level.addSprite(tileIndiactor);
+        float[] tilePosition = this.deliveryTile.getTileCoords();
+        this.deliveryTileIndicator = new TileIndicator((int) tilePosition[0], (int) tilePosition[1]);
+        level.addSprite(deliveryTileIndicator);
 
         this.isDeliveryLocation = true;
     }
@@ -60,33 +52,17 @@ public class House extends GameObject {
      * Un-mark the House as the delivery location for a level
      */
     public void unmarkAsDeliveryLocation(LevelScreen level) {
-        this.tile.setOwned(null);
-        this.tile = null;
+        this.deliveryTile.setOwned(null);
+        this.deliveryTile = null;
 
-        level.removeSprite(tileIndiactor);
-        this.tileIndiactor = null;
+        level.removeSprite(deliveryTileIndicator);
+        this.deliveryTileIndicator = null;
 
         this.isDeliveryLocation = false;
-    }
-
-    /**
-     * Get the House's Texture (a single png)
-     *
-     * @return the House's Texture
-     */
-    public Texture getTexture() {
-        return texture;
     }
 
     public enum HouseType {
         DETACHED,
         TWO_STORY
-    }
-
-    /**
-     * Remove the House's texture from memory once the sprite is no longer needed
-     */
-    public void dispose() {
-        texture.dispose();
     }
 }
