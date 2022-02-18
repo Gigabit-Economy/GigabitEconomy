@@ -47,7 +47,7 @@ public class House extends GameObject {
         }
         this.tile.setOwned(this);
 
-        float[] tilePosition = this.tile.getPosition();
+        float[] tilePosition = this.tile.getTileCoords();
         this.tileIndiactor = new TileIndicator((int) tilePosition[0], (int) tilePosition[1]);
         level.addSprite(tileIndiactor);
 

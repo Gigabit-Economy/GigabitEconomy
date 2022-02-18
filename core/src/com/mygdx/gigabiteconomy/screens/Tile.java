@@ -111,11 +111,4 @@ public class Tile {
         }
         return null;
     }
-
-    /**
-     * Get the x, y coordinates of the Tile
-     */
-    public float[] getPosition() {
-        return position;
-    }
 }
