@@ -420,7 +420,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         batch.dispose();
         font.dispose();
 
-        // dispose of moving sprites (to dispose their texture atlas)
+        // dispose of sprites (to dispose their texture/texture atlas)
         for (GameObject sprite : sprites) {
             sprite.dispose();
         }
