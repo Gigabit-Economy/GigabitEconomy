@@ -65,7 +65,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      *                          fences etc.) for the level
      * @param backgroundTexture the background graphic of the level
      */
-    public LevelScreen(GigabitEconomy director, Player player, ArrayList<TiledObject> enemies, ArrayList<House> houses, ParcelVan parcelVan, ArrayList<TiledObject> staticSprites, Texture backgroundTexture) {
+    public LevelScreen(GigabitEconomy director, Player player, ArrayList<TiledObject> enemies, ParcelVan parcelVan, ArrayList<TiledObject> staticSprites, Texture backgroundTexture) {
         this.director = director;
         this.player = player;
         this.houses = houses;
@@ -108,8 +108,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         System.out.println(
                 "Texture dimensions: h:" + backgroundTexture.getHeight() + " w:" + backgroundTexture.getWidth());
 
-        // Add houses
-        sprites.addAll(houses);
         // Add static sprites
         sprites.addAll(staticSprites);
         // Add parcel van
