@@ -173,6 +173,8 @@ public class Enemy extends MovingSprite {
 
                 if (dirTo != null) {
                     setPath(new LinkedList<>(Arrays.asList(dirTo, dirTo)));
+                } else {
+                    setPath("agro");
                 }
 
 
