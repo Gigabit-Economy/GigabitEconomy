@@ -67,7 +67,7 @@ public class LevelCompleteScreen implements Screen {
         levelCompletedTable.add(levelCompletedNextLevelButton).padRight(-300);
         levelCompletedTable.row();
 
-        String[] prevScores = (String[]) levelScores.getAllScores().values().toArray();
+        String[] prevScores = levelScores.getAllScores();
         List<String> levelCompletedScoreList = new List<String>(style);
         levelCompletedScoreList.setItems(prevScores);
         levelCompletedTable.add(levelCompletedScoreList).padLeft(-600);

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.mygdx.gigabiteconomy.screens.LevelScreen;
 
+import java.util.List;
 import java.util.Map;
 
 public class ScoreSystem {
@@ -18,7 +19,7 @@ public class ScoreSystem {
         this.levelName = level.getClass().getName();
         this.levelScores = Gdx.app.getPreferences(String.format("%sScores", levelName));
 
-        this.scoreId = Integer.toString(getAllScores().size() + 1);
+        this.scoreId = Integer.toString(getAllScores().length + 1);
     }
 
     /**
@@ -60,10 +61,10 @@ public class ScoreSystem {
     /**
      * Get all scores for the level
      *
-     * @return a map containing all the level's recorded scores
+     * @return a List containing all the level's recorded scores as strings
      */
-    public Map<String, ?> getAllScores() {
-        return levelScores.get();
+    public String[] getAllScores() {
+        return (String[]) levelScores.get().values().toArray();
     }
 
     /**
