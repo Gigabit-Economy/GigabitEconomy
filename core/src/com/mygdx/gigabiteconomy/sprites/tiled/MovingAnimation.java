@@ -23,7 +23,6 @@ public class MovingAnimation<T> extends Animation {
     }
 
     public boolean isFinished(float delta) {
-        System.out.println(movementTime+delta);
         if (this.isAnimationFinished(movementTime+delta)) {
             movementTime = 0f;
             return true;

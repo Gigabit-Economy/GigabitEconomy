@@ -4,32 +4,47 @@ import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.gigabiteconomy.sprites.GameObject;
 import com.mygdx.gigabiteconomy.sprites.House;
-import com.mygdx.gigabiteconomy.sprites.tiled.Enemy;
-import com.mygdx.gigabiteconomy.sprites.tiled.Player;
-import com.mygdx.gigabiteconomy.sprites.tiled.StaticSprite;
-import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
+import com.mygdx.gigabiteconomy.sprites.tiled.*;
+import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite.Weapon;
 
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Level 1 screen
  */
 public class LevelOneScreen extends LevelScreen {
     // Player character
-    private static final Player PLAYER = new Player("finished_assets/player/movement/katanaRightMv.txt", "finished_assets/player/attacks/katanaRightAt.txt", 0 , 0);
+    private static final Weapon PLAYER_WEAPON = Weapon.KNIFE;
+    private static final Player PLAYER = new Player(PLAYER_WEAPON, 0 , 0, 1, 1);
 
     /* ENEMIES */
-    private static final Enemy ENEMY_ONE = new Enemy("finished_assets/player/attacks/golfRightAt.txt", "finished_assets/player/attacks/golfRightAt.txt", 2, 2);
+    private static final Enemy ENEMY_ONE = new Enemy(Weapon.KATANA, 20, 3, 1, 1, PLAYER,
+            new LinkedList<>(
+                    Arrays.asList(MovingSprite.DIRECTION.NORTH,MovingSprite.DIRECTION.NORTH,
+                                  MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
+                                  MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
+                                  MovingSprite.DIRECTION.SOUTH,MovingSprite.DIRECTION.SOUTH,
+                                  MovingSprite.DIRECTION.SOUTH,MovingSprite.DIRECTION.SOUTH,
+                                  MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.WEST,
+                                  MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.WEST,
+                                  MovingSprite.DIRECTION.NORTH,MovingSprite.DIRECTION.NORTH)
+            ));
+
     private static final ArrayList<TiledObject> ENEMIES = new ArrayList<TiledObject>(Arrays.asList(ENEMY_ONE));
 
     /* HOUSES */
     private static final House HOUSE_ONE = new House(House.HouseType.DETACHED, 640, 480);
-    private static final ArrayList<House> HOUSES = new ArrayList<House>(Arrays.asList(HOUSE_ONE));
+    private static final House HOUSE_TWO = new House(House.HouseType.TWO_STORY, 1050, 480);
+    private static final ArrayList<House> HOUSES = new ArrayList<House>(Arrays.asList(HOUSE_ONE, HOUSE_TWO));
+
+    // Parcel van (for Player to collect parcels from)
+    private static final ParcelVan PARCEL_VAN = new ParcelVan(15, 3);
 
     /* STATIC SPRITES (FENCES ETC...) */
-    private static final StaticSprite FENCE = new StaticSprite("finished_assets/static_sprites/fence.png", 5, 0);
-    private static final ArrayList<GameObject> STATIC_SPRITES = new ArrayList<GameObject>(Arrays.asList(FENCE));
+    private static final StaticSprite FENCE = new StaticSprite("finished_assets/static_sprites/fence.png", 5, 0, 1, 3);
+    private static final ArrayList<TiledObject> STATIC_SPRITES = new ArrayList<TiledObject>(Arrays.asList(FENCE));
 
     // Level screen background texture
     private static final Texture BACKGROUND_TEXTURE = new Texture("finished_assets/levels/level1.png");
@@ -41,6 +56,8 @@ public class LevelOneScreen extends LevelScreen {
      * @param director the instance of the game director
      */
     public LevelOneScreen(GigabitEconomy director) {
-        super(director, PLAYER, ENEMIES, HOUSES, STATIC_SPRITES, BACKGROUND_TEXTURE);
+        super(director, PLAYER, ENEMIES, HOUSES, PARCEL_VAN, STATIC_SPRITES, BACKGROUND_TEXTURE);
+
+        PLAYER.setLevel(this);
     }
 }

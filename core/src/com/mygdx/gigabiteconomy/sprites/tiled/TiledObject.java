@@ -8,6 +8,8 @@ import com.mygdx.gigabiteconomy.screens.TileManager;
 import com.mygdx.gigabiteconomy.sprites.GameObject;
 
 import java.lang.Exception;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /**
  * Abstract class which all tiled sprites/game objects derive from.
@@ -16,11 +18,30 @@ import java.lang.Exception;
 public abstract class TiledObject extends GameObject {
     private TileManager tileManager;
 
-    private Tile currentTile;
+    //private Tile currentTile;
+    private ArrayList<Tile> currentTiles;
+    private int height;
+    private int width;
 
-    public TiledObject(float x, float y)
-    {
+    public TiledObject(float x, float y, int height, int width) {
         super(x, y);
+
+        this.height = height <= 0 ? 1 : height; //Implement a max h/w?
+        this.width = width <= 0 ? 1 : width;
+    }
+
+    /**
+     * @return Height of Tiles occupied
+     */
+    public int getHeight() {
+        return height;
+    }
+
+    /**
+     * @return Width of Tiles occupied
+     */
+    public int getWidth() {
+        return width;
     }
 
     /**
@@ -47,23 +68,22 @@ public abstract class TiledObject extends GameObject {
      *
      * @return the Tile instance of the current tile
      */
-    public Tile getCurrentTile() {
-        return currentTile;
+    public ArrayList<Tile> getCurrentTiles() {
+        return currentTiles;
     }
 
     /**
      * Set the tile the sprite the currently occupies
      *
-     * @param tile the new Tile instance for the sprite to occupy
+     * @param currentTiles the new Tiles for the sprite to occupy
      */
-    public void setCurrentTile(Tile tile) {
-        if (tile == null) {
+    public void setCurrentTiles(ArrayList<Tile> currentTiles) {
+        if (currentTiles.contains(null)) {
             return;
         }
 
-        currentTile = tile;
+        this.currentTiles = currentTiles;
 
-        setPos(currentTile.getTileCoords()[0] ,currentTile.getTileCoords()[1]);
-        System.out.println("Setting position to " + getX() + " " + getY());
+        setPos(currentTiles.get(0).getTileCoords()[0], currentTiles.get(0).getTileCoords()[1]);
     }
 }
