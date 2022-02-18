@@ -90,10 +90,8 @@ public class TileManager {
                     break;
                 case SOUTH:
                     ret = getTile(pos[0], pos[1]-distance);
-                    System.out.println("gutten tag " + ret);
                     break;
                 default:
-                    System.out.println("Not hre mate");
                     return null;
             }
         } catch (ArrayIndexOutOfBoundsException e) { return getAdjacentTile(tileFrom, direction, distance-1); }
@@ -151,15 +149,21 @@ public class TileManager {
     public ArrayList<Tile> getSelectiveDir(int x, int y, MovingSprite.DIRECTION direction) {
         ArrayList<Tile> ret = new ArrayList<>();
 
-        for (int i=0; i<=gridWidth; i++) {
-            try {
-                ret.add(tileArray[x][y]);
+
+        try {
+            for (int i=0; i<=gridWidth; i++) {
+                Tile toAdd = tileArray[x][y];
+                ret.add(toAdd);
+                if (toAdd.getOccupiedBy() instanceof StaticSprite) {
+                    return ret;
+                }
                 //System.out.println(String.format("%d %d", x, y));
                 if (direction.dy == 0) x = (direction.dx < 0) ? x-1 : x+1;
                 if (direction.dx == 0) y = (direction.dy < 0) ? y-1 : y+1;
-            } catch (ArrayIndexOutOfBoundsException e) {
-                return ret;
             }
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return ret;
         }
         return null;
     }

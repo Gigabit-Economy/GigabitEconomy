@@ -128,7 +128,7 @@ public class Enemy extends MovingSprite {
 
         return agro;
     }
-    
+
     @Override
     public DIRECTION setNextDirection() {
         super.setDirectionMovement(currentPath.remove());
@@ -157,6 +157,7 @@ public class Enemy extends MovingSprite {
          * -> Set new targetSquare from Queue (for next move();
          */
 
+        //Only run following code if we are still
         if (ret) {
             if (checkAgro()) {
                 System.out.println("Agro set to true");
@@ -169,16 +170,16 @@ public class Enemy extends MovingSprite {
                 TileManager tm = getTileManager();
                 DIRECTION dirTo = tm.findDirectionFrom(getCurrentTiles().get(0), targetEntity.getCurrentTiles().get(0));
 
+
                 if (dirTo != null) {
-                    System.out.println(dirTo);
-                    super.setDirectionMovement(dirTo);
-                    currentPath = new LinkedList<>(Arrays.asList(dirTo, dirTo));
-                    setNextDirection();
-                } else {
-                    setPath("agro");
+                    setPath(new LinkedList<>(Arrays.asList(dirTo, dirTo)));
                 }
 
+
             }
+
+        } else {
+
         }
 
 
