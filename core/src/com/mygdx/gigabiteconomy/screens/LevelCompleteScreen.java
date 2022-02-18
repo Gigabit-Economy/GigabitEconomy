@@ -25,11 +25,12 @@ public class LevelCompleteScreen implements Screen {
     public LevelCompleteScreen(GigabitEconomy director) {
         this.director = director;
         this.stage = new Stage(director.getViewport());
-        this.levelScores = new ScoreSystem(director.getLastPlayedLevel());
     }
 
     @Override
     public void show() {
+        this.levelScores = new ScoreSystem(director.getLastPlayedLevel());
+
         Gdx.input.setInputProcessor(stage);
         // Skin defined in UI skin (commodore - hopefully we can use, looks really cool)
         Skin style = new Skin(Gdx.files.internal("uiskin.json"));
