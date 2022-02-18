@@ -11,6 +11,8 @@ import com.mygdx.gigabiteconomy.sprites.tiled.TileIndicator;
  * Class representing a house
  */
 public class House extends GameObject {
+    private static final int DOOR_WIDTH = 268;
+
     private Texture texture;
 
     private boolean isDeliveryLocation = false;
@@ -40,7 +42,7 @@ public class House extends GameObject {
     public void markAsDeliveryLocation(LevelScreen level) {
         // get tile nearest to House coordinates and mark as House's delivery tile
         try {
-            this.tile = level.getTileManager().getNearestTileToCoords(getX(), getY());
+            this.tile = level.getTileManager().getNearestTileToCoords(getX() + DOOR_WIDTH, getY());
         } catch (TileException ex) {
             Gdx.app.error("Exception", "Error trying to mark House as delivery location", ex);
             System.exit(-1);
