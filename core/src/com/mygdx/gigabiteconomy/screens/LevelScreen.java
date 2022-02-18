@@ -158,17 +158,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
             if (sprite instanceof House) {
                 House house = (House) sprite;
 
-
-
-//                Tile tileToDraw = house.getCurrentTiles().get(0);
-//                for (int i=0; i<house.getCurrentTiles().size(); i++) {
-//                    Tile currTileHere = house.getCurrentTiles().get(i);
-//                    System.out.println(String.format("Tile %d is at %d %d with coords %f %f", i, currTileHere.getPositionTile()[0], currTileHere.getPositionTile()[1],
-//                                                    currTileHere.getTileCoords()[0], currTileHere.getTileCoords()[1]));
-//                }
-//                System.out.println(String.format("House being drawn at %f %f", house.getX(), house.getY()));
-//                System.out.println(String.format("House tile %d %d to draw is at %f %f", tileToDraw.getPositionTile()[0], tileToDraw.getPositionTile()[1], tileToDraw.getTileCoords()[0], tileToDraw.getTileCoords()[1]));
-//                System.out.println(String.format("Correct x coord: %f", house.getX()-(getTileManager().getSideLength()*house.getWidth()/2)));
                 batch.draw(house.getTexture(), house.getX(), house.getY());
             }
             else if (sprite instanceof StaticSprite) {
@@ -184,10 +173,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
                 } catch (TileMovementException ex) {
                     // ignore exception (could act on it and display message to user etc. later)
                     System.out.println("Sprite was blocked");
-                }
-
-                if (movingSprite instanceof Player) {
-                    System.out.println(String.format("Drawing player at %f %f", movingSprite.getX(), movingSprite.getY()));
                 }
 
                 float offsetX = ((TextureAtlas.AtlasRegion)movingSprite.getTextureRegion()).offsetX;

@@ -105,9 +105,6 @@ public class Player extends MovingSprite {
     public boolean move(float delta) throws TileMovementException  {
         boolean ret = super.move(delta);
 
-        System.out.println(String.format("Player being drawn at %f %f on tile %d %d", getX(), getY(),
-                                          getCurrentTiles().get(0).getPositionTile()[0], getCurrentTiles().get(0).getPositionTile()[1]));
-
         if (!ret) return false;
 
         /**
