@@ -241,6 +241,14 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      */
     public ArrayList<House> getHouses()
     {
+        ArrayList<House> houses = new ArrayList<House>();
+
+        for (TiledObject sprite : staticSprites) {
+            if (sprite instanceof House) {
+                houses.add((House) sprite);
+            }
+        }
+
         return houses;
     }
 
