@@ -239,7 +239,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
             if (setNextTiles() == null /**|| targetTile.getOccupiedBy() != this */) { //If we are still then get next tile
                 //Making sure targetTile contains null will cause this loop to run again, checking if we are still blocked
                 targetTiles = null;
-                return false;
+                return true;
             }
             updateTextureRegions();
         }

@@ -142,7 +142,7 @@ public class Enemy extends MovingSprite {
 
         return agro;
     }
-    
+
     @Override
     public DIRECTION setNextDirection() {
         super.setDirectionMovement(currentPath.remove());
@@ -188,16 +188,16 @@ public class Enemy extends MovingSprite {
                     setPath(new LinkedList<>(Arrays.asList(dirTo, dirTo)));
                 } else {
                     setPath("agro");
-
-
                 }
+
+                //If we've arrived at a tile and are blocked
                 TiledObject to = getTileManager().getAdjacentTile(getCurrentTiles().get(0), getDirectionMoving(), 1).getOccupiedBy();
 
                 if (to instanceof StaticSprite) {
                     currentPath.add(currentPath.peek().getNext()); //Adding a **sprinkle** of random to movement
                     //currentPath.add(currentPath.remove().getNext()); //Adding a **sprinkle** of random to movement
                     System.out.println("Adding " + currentPath.peek().getNext());
-                    //setDirectionMovement(currentPath.peek());
+                    setDirectionMovement(currentPath.remove());
                 }
 
             }
