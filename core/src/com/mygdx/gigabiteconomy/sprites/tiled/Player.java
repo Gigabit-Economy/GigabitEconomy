@@ -236,6 +236,8 @@ public class Player extends MovingSprite {
                 throw new ParcelException("The final parcel must be delivered and cannot be opened");
             }
 
+            house.unmarkAsDeliveryLocation(level);
+
             return weapon;
         }
     }

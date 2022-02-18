@@ -108,10 +108,10 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         System.out.println(
                 "Texture dimensions: h:" + backgroundTexture.getHeight() + " w:" + backgroundTexture.getWidth());
 
-        // Add static sprites
-        sprites.addAll(staticSprites);
         // Add houses
         sprites.addAll(houses);
+        // Add static sprites
+        sprites.addAll(staticSprites);
         // Add parcel van
         sprites.add(parcelVan);
         // Add player
