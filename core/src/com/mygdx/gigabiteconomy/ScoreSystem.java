@@ -60,9 +60,18 @@ public class ScoreSystem {
     /**
      * Get all scores for the level
      *
-     * @return a map containing all the level's scores as values
+     * @return a map containing all the level's recorded scores
      */
     public Map<String, ?> getAllScores() {
         return levelScores.get();
+    }
+
+    /**
+     * Get the highest score for the level
+     *
+     * @return the level's recorded highest score
+     */
+    public int getHighestScore() {
+        return levelScores.getInteger(HIGH_SCORE, 0); // returns 0 if a score for level hasn't yet been set
     }
 }

@@ -54,6 +54,10 @@ public class LevelCompleteScreen implements Screen {
         Label yourPastScoresLabel = new Label("YOUR PAST SCORES:", style);
         levelCompletedTable.add(yourPastScoresLabel).padLeft(-600);
 
+        String highestScoreText = String.format("YOUR HIGHEST SCORE: %d", levelScores.getHighestScore());
+        Label yourHighestScoreLabel = new Label(highestScoreText, style);
+        levelCompletedTable.add(yourHighestScoreLabel).padLeft(-600);
+
         TextButton levelCompletedMainMenuButton = new TextButton("MAIN MENU", style);
         levelCompletedMainMenuButton.setName("menu");
         levelCompletedTable.add(levelCompletedMainMenuButton);
@@ -63,9 +67,9 @@ public class LevelCompleteScreen implements Screen {
         levelCompletedTable.add(levelCompletedNextLevelButton).padRight(-300);
         levelCompletedTable.row();
 
-        String[] examples15 = { "Firstexample", "Second example", "54864886", "Example Number4" };
+        String[] prevScores = (String[]) levelScores.getAllScores().values().toArray();
         List<String> levelCompletedScoreList = new List<String>(style);
-        levelCompletedScoreList.setItems(examples15);
+        levelCompletedScoreList.setItems(prevScores);
         levelCompletedTable.add(levelCompletedScoreList).padLeft(-600);
 
         // Add click listener for buttons
