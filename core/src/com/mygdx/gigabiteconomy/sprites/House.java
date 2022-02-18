@@ -12,7 +12,7 @@ import com.mygdx.gigabiteconomy.sprites.tiled.TileIndicator;
  * Class representing a house
  */
 public class House extends StaticSprite {
-    private static final int HEIGHT = 5;
+    private static final int HEIGHT = 10;
 
     private Tile deliveryTile;
     private TileIndicator deliveryTileIndicator;
