@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -105,6 +106,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
         // Add background
         backgroundSprite = new Sprite(backgroundTexture);
+
         System.out.println(
                 "Texture dimensions: h:" + backgroundTexture.getHeight() + " w:" + backgroundTexture.getWidth());
 
@@ -148,17 +150,25 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         batch.begin();
 
         // Draw the background
-        backgroundSprite.draw(batch);
+        //backgroundSprite.draw(batch);
+        batch.draw(backgroundSprite.getTexture(), 0, 0);
 
         // Move (if moving sprite) & draw sprites
         for (GameObject sprite : sprites) {
             if (sprite instanceof House) {
                 House house = (House) sprite;
 
-                //System.out.println(String.format("House being drawn at %f %f", house.getX(), house.getY()));
-                //Tile tileToDraw = house.getCurrentTiles().get(0);
-                //System.out.println(String.format("House tile %d %d to draw is at %f %f", tileToDraw.getPositionTile()[0], tileToDraw.getPositionTile()[1], tileToDraw.getTileCoords()[0], tileToDraw.getTileCoords()[1]));
-                //System.out.println(String.format("Correct x coord: %f", house.getX()-(getTileManager().getSideLength()*house.getWidth()/2)));
+
+
+//                Tile tileToDraw = house.getCurrentTiles().get(0);
+//                for (int i=0; i<house.getCurrentTiles().size(); i++) {
+//                    Tile currTileHere = house.getCurrentTiles().get(i);
+//                    System.out.println(String.format("Tile %d is at %d %d with coords %f %f", i, currTileHere.getPositionTile()[0], currTileHere.getPositionTile()[1],
+//                                                    currTileHere.getTileCoords()[0], currTileHere.getTileCoords()[1]));
+//                }
+//                System.out.println(String.format("House being drawn at %f %f", house.getX(), house.getY()));
+//                System.out.println(String.format("House tile %d %d to draw is at %f %f", tileToDraw.getPositionTile()[0], tileToDraw.getPositionTile()[1], tileToDraw.getTileCoords()[0], tileToDraw.getTileCoords()[1]));
+//                System.out.println(String.format("Correct x coord: %f", house.getX()-(getTileManager().getSideLength()*house.getWidth()/2)));
                 batch.draw(house.getTexture(), house.getX()-(getTileManager().getSideLength()*house.getWidth()/2), house.getY());
             }
             else if (sprite instanceof StaticSprite) {
@@ -176,7 +186,12 @@ public abstract class LevelScreen implements Screen, InputProcessor {
                     System.out.println("Sprite was blocked");
                 }
 
-                batch.draw(movingSprite.getTextureRegion(), movingSprite.getX(), movingSprite.getY());
+                if (movingSprite instanceof Player) {
+                    System.out.println(String.format("Drawing player at %f %f", movingSprite.getX(), movingSprite.getY()));
+                }
+
+                float offsetX = ((TextureAtlas.AtlasRegion)movingSprite.getTextureRegion()).offsetX;
+                batch.draw(movingSprite.getTextureRegion(), movingSprite.getX()-offsetX, movingSprite.getY());
             }
         }
 

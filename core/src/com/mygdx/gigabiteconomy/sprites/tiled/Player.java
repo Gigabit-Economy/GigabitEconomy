@@ -22,6 +22,7 @@ public class Player extends MovingSprite {
 
     private Parcel parcel;
 
+
     /**
      * Create a new Player sprite (MovingSprite)
      *
@@ -103,6 +104,10 @@ public class Player extends MovingSprite {
     @Override
     public boolean move(float delta) throws TileMovementException  {
         boolean ret = super.move(delta);
+
+        System.out.println(String.format("Player being drawn at %f %f on tile %d %d", getX(), getY(),
+                                          getCurrentTiles().get(0).getPositionTile()[0], getCurrentTiles().get(0).getPositionTile()[1]));
+
         if (!ret) return false;
 
         /**
