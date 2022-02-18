@@ -219,7 +219,7 @@ public class Player extends MovingSprite {
 
             level.addToScore(1);
 
-            house.unmarkAsDeliveryLocation();
+            house.unmarkAsDeliveryLocation(level);
 
             if (isFinalParcel) {
                 level.complete();

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.gigabiteconomy.exceptions.TileException;
 import com.mygdx.gigabiteconomy.screens.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
+import com.mygdx.gigabiteconomy.sprites.tiled.TileIndicator;
 
 /**
  * Class representing a house
@@ -13,7 +14,9 @@ public class House extends GameObject {
     private Texture texture;
 
     private boolean isDeliveryLocation = false;
+
     private Tile tile;
+    private TileIndicator tileIndiactor;
 
     /**
      * Create a new House game object
@@ -44,15 +47,22 @@ public class House extends GameObject {
         }
         this.tile.setOwned(this);
 
+        float[] tilePosition = this.tile.getPosition();
+        this.tileIndiactor = new TileIndicator((int) tilePosition[0], (int) tilePosition[1]);
+        level.addSprite(tileIndiactor);
+
         this.isDeliveryLocation = true;
     }
 
     /**
      * Un-mark the House as the delivery location for a level
      */
-    public void unmarkAsDeliveryLocation() {
+    public void unmarkAsDeliveryLocation(LevelScreen level) {
         this.tile.setOwned(null);
         this.tile = null;
+
+        level.removeSprite(tileIndiactor);
+        this.tileIndiactor = null;
 
         this.isDeliveryLocation = false;
     }

@@ -197,6 +197,29 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         batch.end();
     }
 
+    /**
+     * Add a sprite to the level
+     *
+     * @param sprite the GameObject representing the sprite
+     */
+    public void addSprite(GameObject sprite) {
+        sprites.add(sprite);
+    }
+
+    /**
+     * Remove a sprite from the level
+     *
+     * @param sprite the GameObject representing the sprite
+     */
+    public void removeSprite(GameObject sprite) {
+        sprites.remove(sprite);
+    }
+
+    /**
+     * Show an error message to the user
+     *
+     * @param error the error message
+     */
     public void showErrorText(String error) {
         this.errorText = error;
         // set for error to display for 5 seconds
