@@ -38,8 +38,8 @@ public class LevelOneScreen extends LevelScreen {
     private static final ParcelVan PARCEL_VAN = new ParcelVan(15, 3);
 
     /* STATIC SPRITES (HOUSES, FENCES ETC...) */
-    private static final House HOUSE_ONE = new House(House.HouseType.DETACHED, 10);
-    private static final House HOUSE_TWO = new House(House.HouseType.TWO_STORY, 20);
+    private static final House HOUSE_ONE = new House(House.HouseType.DETACHED, 0);
+    private static final House HOUSE_TWO = new House(House.HouseType.TWO_STORY, 10);
     private static final StaticSprite FENCE = new StaticSprite("finished_assets/static_sprites/fence.png", 5, 0, 1, 3);
     private static final ArrayList<TiledObject> STATIC_SPRITES = new ArrayList<TiledObject>(Arrays.asList(HOUSE_ONE, HOUSE_TWO, FENCE));
 
