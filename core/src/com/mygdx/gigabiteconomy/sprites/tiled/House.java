@@ -8,7 +8,7 @@ import com.mygdx.gigabiteconomy.screens.Tile;
  */
 public class House extends StaticSprite {
     private static final int Y = 8; // Y coordinate of the highest row of Tiles in the tile grid
-    private static final int DOOR_INDEX = 2; // the number of Tiles to the door area (from the right side of the House)
+    private static final int DOOR_INDEX = 3; // the number of Tiles to the door area (from the left side of the House)
 
     private Tile deliveryTile;
     private TileIndicator deliveryTileIndicator;
