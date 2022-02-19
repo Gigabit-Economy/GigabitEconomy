@@ -20,6 +20,7 @@ public class LevelOneScreen extends LevelScreen {
 
     /* ENEMIES */
     private static final Enemy ENEMY_ONE = new Enemy(Weapon.KATANA, 20, 3, 1, 1, PLAYER,
+            5f, 1f,
             new LinkedList<>(
                     Arrays.asList(MovingSprite.DIRECTION.NORTH,MovingSprite.DIRECTION.NORTH,
                                   MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,

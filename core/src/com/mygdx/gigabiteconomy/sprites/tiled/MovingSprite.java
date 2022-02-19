@@ -28,10 +28,10 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     private DIRECTION directionFacing = DIRECTION.EAST;
 
     private boolean moving;
+    // Velocity for this moving object
+    private Vector2 velocity = new Vector2(0, 0);
     // Vector we add to position with every move
     private Vector2 deltaMove = new Vector2(0, 0);
-    private static float deltaVert = 3F;
-    private static float deltaHoriz = 3.5F;
     //private Tile targetTile;
     private ArrayList<Tile> targetTiles;
 
@@ -50,8 +50,13 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * @param x position of Tile (within tile grid) to place sprite
      * @param y position of Tile (within tile grid) to place sprite
      */
-    public MovingSprite(Weapon weapon, int x, int y, int height, int width) {
+    public MovingSprite(Weapon weapon, int x, int y, int height, int width, float deltaHoriz, float deltaVert) {
         super(x, y, height, width);
+
+        velocity.x = deltaHoriz;
+        velocity.y = deltaVert;
+
+        System.out.println(String.format("Setting velocity to %f %f", deltaHoriz, deltaVert));
 
         setWeapon(weapon);
     }
@@ -109,7 +114,9 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
             return;
         }
         directionFacing = dir;
-        deltaMove.x = dir.dx; deltaMove.y = dir.dy;
+
+        deltaMove.x = velocity.x * dir.dxMult; deltaMove.y = velocity.y * dir.dyMult;
+
 
     }
 
@@ -270,16 +277,17 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * Enum which maps direction to velocity vector with instance variables defined above
      */
     public enum DIRECTION {
-        NORTH (0, deltaVert),
-        EAST (deltaHoriz, 0),
-        SOUTH (0, -deltaVert),
-        WEST (-deltaHoriz, 0);
+        NORTH (0, 1),
+        EAST (1, 0),
+        SOUTH (0, -1),
+        WEST (-1, 0);
 
-        public final float dx;
-        public final float dy;
+        public final int dxMult;
+        public final int dyMult;
 
-        private DIRECTION(float dx, float dy) {
-            this.dx = dx; this.dy = dy;
+
+        private DIRECTION(int dxMult, int dyMult) {
+            this.dxMult = dxMult; this.dyMult = dyMult;
         }
 
         /**

@@ -159,8 +159,8 @@ public class TileManager {
                     return ret;
                 }
                 //System.out.println(String.format("%d %d", x, y));
-                if (direction.dy == 0) x = (direction.dx < 0) ? x-1 : x+1;
-                if (direction.dx == 0) y = (direction.dy < 0) ? y-1 : y+1;
+                if (direction.dyMult == 0) x = (direction.dxMult < 0) ? x-1 : x+1;
+                if (direction.dxMult == 0) y = (direction.dyMult < 0) ? y-1 : y+1;
             }
 
         } catch (ArrayIndexOutOfBoundsException e) {
