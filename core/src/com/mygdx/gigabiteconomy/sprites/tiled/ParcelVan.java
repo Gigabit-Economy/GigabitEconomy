@@ -6,6 +6,9 @@ public class ParcelVan extends StaticSprite {
     private static final String PNG = "finished_assets/static_sprites/van.png";
     private static final String W_PARCELS_PNG = "finished_assets/static_sprites/vanWParcels.png";
 
+    private static final int HEIGHT = 3; // the height of the parcel van sprite in Tiles
+    private static final int WIDTH = 7; // the width of the parcel van sprite in Tiles
+
     /**
      * Create a new ParcelVan (StaticSprite)
      *
@@ -13,7 +16,7 @@ public class ParcelVan extends StaticSprite {
      * @param y position of Tile (within tile grid) to place sprite
      */
     public ParcelVan(int x, int y) {
-        super(W_PARCELS_PNG, x, y, 1, 1);
+        super(W_PARCELS_PNG, x, y, HEIGHT, WIDTH);
     }
 
     /**

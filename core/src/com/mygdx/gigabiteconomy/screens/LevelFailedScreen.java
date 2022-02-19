@@ -1,7 +1,6 @@
 package com.mygdx.gigabiteconomy.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -13,14 +12,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 
-public class DeathScreen implements Screen{
+public class LevelFailedScreen implements Screen{
 
     private GigabitEconomy director;
 
     private Stage stage;
     private Table deathScreenTable;
 
-    public DeathScreen(GigabitEconomy director) {
+    public LevelFailedScreen(GigabitEconomy director) {
         this.director = director;
         this.stage = new Stage(director.getViewport());
     }

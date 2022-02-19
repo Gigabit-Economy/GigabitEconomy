@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
+import com.mygdx.gigabiteconomy.ScoreSystem;
 import com.mygdx.gigabiteconomy.exceptions.ParcelException;
 import com.mygdx.gigabiteconomy.exceptions.ScreenException;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
@@ -32,8 +33,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
     private TileManager tileManager;
 
-    private Stage stage;
-
     private Texture backgroundTexture;
     private Sprite backgroundSprite;
 
@@ -45,7 +44,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     private ParcelVan parcelVan;
     private ArrayList<TiledObject> staticSprites;
 
-    private ScoreSystem score = new ScoreSystem();
+    private ScoreSystem score = new ScoreSystem(this);
     private int parcels = 5;
 
     private BitmapFont font;
@@ -180,7 +179,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
             }
         }
 
-        String scoreText = String.format("score: %d", score.alterScore(0));
+        String scoreText = String.format("score: %d", score.getScore());
         String parcelText = String.format("parcels remaining: %d", parcels);
         String healthText = String.format("health: %d", player.getHealth());
 
@@ -287,7 +286,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      * @param points the number of points to add
      */
     public void addToScore(int points) {
-        score.alterScore(points);
+        score.addToScore(points);
     }
 
     /**
@@ -404,7 +403,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      */
     public void end() {
         try {
-            director.switchScreen("levelFailed");
+            director.switchScreen("levelfailed");
         } catch (ScreenException ex) {
             Gdx.app.error("Exception", "The screen could not be switched when level failed", ex);
         }
@@ -416,10 +415,10 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      * Complete the level (called when the level is complete i.e. the final parcel is delivered)
      */
     public void complete() {
-        score.submitScore();
+        score.saveScore();
 
         try {
-            director.switchScreen("levelComplete");
+            director.switchScreen("levelcomplete");
         } catch (ScreenException ex) {
             Gdx.app.error("Exception", "The screen could not be switched when level complete", ex);
         }
@@ -455,7 +454,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         batch.dispose();
         font.dispose();
 
-        // dispose of moving sprites (to dispose their texture atlas)
+        // dispose of sprites (to dispose their texture/texture atlas)
         for (GameObject sprite : sprites) {
             sprite.dispose();
         }
