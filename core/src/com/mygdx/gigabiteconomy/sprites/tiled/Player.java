@@ -161,6 +161,10 @@ public class Player extends MovingSprite {
      * Open the Parcel the Player is currently carrying (if any)
      */
     public void openParcel() throws ParcelException {
+        if (parcel == null) {
+            throw new ParcelException("No parcel is being carried");
+        }
+
         parcel.open();
     }
 
@@ -231,10 +235,6 @@ public class Player extends MovingSprite {
          * @throws ParcelException if no Parcel is being carried or Parcel is final parcel
          */
         public void open() throws ParcelException {
-            if (parcel == null) {
-                throw new ParcelException("No parcel is being carried");
-            }
-
             if (isFinalParcel) {
                 throw new ParcelException("The final parcel must be delivered and cannot be opened");
             }

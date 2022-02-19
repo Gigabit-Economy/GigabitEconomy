@@ -55,7 +55,7 @@ public class LevelCompleteScreen implements Screen {
 
         String highestScoreText = String.format("YOUR HIGHEST SCORE: %d", levelScores.getHighestScore());
         Label yourHighestScoreLabel = new Label(highestScoreText, style);
-        levelCompletedTable.add(yourHighestScoreLabel).padLeft(-500);
+        levelCompletedTable.add(yourHighestScoreLabel).padLeft(-200);
 
         TextButton levelCompletedMainMenuButton = new TextButton("MAIN MENU", style);
         levelCompletedMainMenuButton.setName("menu");
