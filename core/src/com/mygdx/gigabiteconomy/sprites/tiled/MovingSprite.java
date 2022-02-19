@@ -385,7 +385,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         this.health = health;
 
         if (health <= 0) {
-            destroy();
+            //destroy();
         }
     }
 
