@@ -42,12 +42,11 @@ public class LevelCompleteScreen implements Screen {
         levelCompletedTable.add(congratulationsLabel).size(40);
         levelCompletedTable.row();
 
-        Label passedThisLevelLabel = new Label("YOU HAVE PASSED THIS LEVEL!", style);
+        Label passedThisLevelLabel = new Label("YOU HAVE COMPLETED THIS LEVEL!", style);
         levelCompletedTable.add(passedThisLevelLabel).size(40);
         levelCompletedTable.row();
 
-        int scoreTestNumber = 45656465;
-        Label yourScoreWasLabel = new Label("YOUR SCORE WAS: " + scoreTestNumber, style);
+        Label yourScoreWasLabel = new Label("YOUR SCORE WAS: " + levelScores.getLatestScore(), style);
         levelCompletedTable.add(yourScoreWasLabel).size(40);
         levelCompletedTable.row();
 
@@ -77,7 +76,6 @@ public class LevelCompleteScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 String buttonName = event.getListenerActor().getName();
-                System.out.println(buttonName);
 
                 // Switch to selected level screen via. director
                 if (buttonName == "menu" || buttonName == "") {
@@ -93,45 +91,37 @@ public class LevelCompleteScreen implements Screen {
         levelCompletedNextLevelButton.addListener(buttonsListener);
         levelCompletedMainMenuButton.addListener(buttonsListener);
         stage.addActor(levelCompletedTable);
-
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         stage.act(delta);
         stage.draw();
-        levelCompletedTable.setBounds(0, 0, Gdx.graphics.getWidth() + 180, Gdx.graphics.getHeight());
 
+        levelCompletedTable.setBounds(0, 0, Gdx.graphics.getWidth() + 180, Gdx.graphics.getHeight());
     }
 
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
-
     }
 
     @Override
-    public void pause() {
-        // TODO Auto-generated method stub
-
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
-        // TODO Auto-generated method stub
-
-    }
+    public void resume() {}
 
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);
-
+        dispose();
     }
 
     @Override
     public void dispose() {
         stage.dispose();
-
     }
 }

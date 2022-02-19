@@ -67,8 +67,8 @@ public class ScoreSystem {
     public String[] getAllScores() {
         Object[] scores = levelScores.get().values().toArray();
 
-        String scoresT = Arrays.toString(scores);
-        return scoresT.substring(1, scoresT.length() - 1).split(", ");
+        String scoresString = Arrays.toString(scores);
+        return scoresString.substring(1, scoresString.length() - 1).split(", ");
     }
 
     /**
@@ -78,5 +78,9 @@ public class ScoreSystem {
      */
     public int getHighestScore() {
         return levelScores.getInteger(HIGH_SCORE, 0); // returns 0 if a score for level hasn't yet been set
+    }
+
+    public int getLatestScore() {
+        return levelScores.getInteger(Integer.toString(getAllScores().length));
     }
 }
