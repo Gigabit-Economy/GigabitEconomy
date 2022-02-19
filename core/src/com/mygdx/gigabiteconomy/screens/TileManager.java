@@ -1,15 +1,11 @@
 package com.mygdx.gigabiteconomy.screens;
 
 import com.mygdx.gigabiteconomy.exceptions.TileException;
-import com.mygdx.gigabiteconomy.sprites.GameObject;
 import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
 import com.mygdx.gigabiteconomy.sprites.tiled.StaticSprite;
 import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  * Class used to hold and manage all Tiles.
@@ -70,7 +66,6 @@ public class TileManager {
     public Tile getAdjacentTile(Tile tileFrom, MovingSprite.DIRECTION direction, int distance) {
         if (tileFrom == null) return null;
         if (distance == 0) {
-            System.out.println("Distance 0");
             return tileFrom;
         }
 
@@ -105,12 +100,7 @@ public class TileManager {
      */
     private Tile placeObject(Tile toTile, TiledObject objectToPlace) {
         if (toTile.getOccupiedBy() != null) return null;
-//        Tile objTile = objectToPlace.getCurrentTile();
-//        //Clearing old tile
-//        if (objTile != null) {
-//            objTile.setOccupied(null);
-//            objectToPlace.setCurrentTile(null);
-//        }
+
         toTile.setOccupied(objectToPlace);
         return toTile;
     }

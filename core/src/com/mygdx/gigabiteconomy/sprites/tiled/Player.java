@@ -148,8 +148,8 @@ public class Player extends MovingSprite {
                 currentObject = null;
             }
             GameObject adjacentObject = adjacentTile.getOwnedBy();
-            if ((adjacentObject != null && adjacentObject instanceof House) ||
-                    (currentObject != null) && currentObject instanceof House) {
+            if ((adjacentObject instanceof House) ||
+                    currentObject instanceof House) {
                 parcel.deliver();
             }
         }
