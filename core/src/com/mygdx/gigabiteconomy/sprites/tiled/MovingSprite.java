@@ -7,10 +7,8 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.badlogic.gdx.utils.Disposable;
-import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  * Class representing a sprite shown on screen, ready to be drawn with batch.draw(); in MainScreen class.
@@ -172,42 +170,28 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     public void setTargetTiles(ArrayList<Tile> targetTiles) {
         this.targetTiles = targetTiles;
         if (targetTiles == null) return;
-        if (targetTiles.contains(0)) return;
-        //Setting tile occupation in foreach
-        for (Tile t : targetTiles) {
-            t.setOccupied(this);
-        }
+        // Not sure what this line is doing
+        // If this method breaks, we know why haha
+        // if (targetTiles.contains(0)) return;
+
+        getTileManager().placeObject(this, targetTiles);
     }
 
-    public boolean onTargetTiles() {
-        if (targetTiles.contains(null)) return false;
-        boolean ret = false;
-        for (Tile t : targetTiles) {
-            ret |= t.withinTile(this);
-        }
-        return ret;
-    }
-
-    public abstract DIRECTION setNextDirection();
+    public abstract void setNextDirection();
 
     /**
      * Class for setting next tiles, creates an ArrayList of next Tiles from currentTiles
-     * @return
+     * @return ArrayList of next tiles
      */
     public ArrayList<Tile> setNextTiles() {
         //Setting next direction
         setNextDirection();
 
-        ArrayList<Tile> toSet = new ArrayList<>();
+        ArrayList<Tile> toSet = getTileManager().getNextTiles(this, getDirectionMoving(), 1);
 
-        for (int i=0; i<getCurrentTiles().size(); i++) {
-            Tile tileToAdd = getTileManager().getAdjacentTile(getCurrentTiles().get(i), getDirectionMoving(), 1);
-            if (tileToAdd == null || (tileToAdd.getOccupiedBy() != null && tileToAdd.getOccupiedBy() != this)) {
-                targetTiles = null;
-                return null;
-            }
-
-            toSet.add(tileToAdd); //Add next tile
+        if (toSet == null) {
+            targetTiles = null;
+            return null;
         }
 
         setTargetTiles(toSet); //Set target tile to one we want to go to
@@ -258,10 +242,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         /**
          * Commence movement logic by checking if we've arrived at the targetTile
          */
-        if (this.onTargetTiles()) {
-            for (Tile t : getCurrentTiles()) {
-                t.setOccupied(null);
-            }
+        if (getTileManager().withinTileBounds(this, getTargetTiles())) {
             setCurrentTiles(targetTiles);
             snap(delta);
             targetTiles = null;

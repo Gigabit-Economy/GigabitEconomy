@@ -127,10 +127,9 @@ public class Enemy extends MovingSprite {
     }
 
     @Override
-    public DIRECTION setNextDirection() {
+    public void setNextDirection() {
         super.setDirectionMovement(currentPath.remove());
         currentPath.add(getDirectionMoving());
-        return getDirectionMoving();
     }
 
     @Override
@@ -164,18 +163,16 @@ public class Enemy extends MovingSprite {
             if (agro) {
                 TileManager tm = getTileManager();
                 //Check if player is on adjecent tiles
-                for (Tile t : tm.getAdjacentTiles(this.getCurrentTiles().get(0))) {
-                    if (t.isOccupiedBy(targetEntity) && !isAttacking()) {
-                        System.out.println(targetEntity);
-                        super.launchAttack();
-                        setAttacking(true);
-                    }
+                if (getTileManager().isGroupOccupiedBy(targetEntity, new ArrayList<>(Arrays.asList(tm.getAdjacentTiles(this.getCurrentTiles().get(0)))))) {
+                    System.out.println(targetEntity);
+                    super.launchAttack();
+                    setAttacking(true);
                 }
+
                 //Check if player is on the row
                 //Move in that direction
 
                 DIRECTION dirTo = tm.findDirectionFrom(getCurrentTiles().get(0), targetEntity.getCurrentTiles().get(0));
-
 
                 if (dirTo != null) {
                     setPath(new LinkedList<>(Arrays.asList(dirTo, dirTo)));
