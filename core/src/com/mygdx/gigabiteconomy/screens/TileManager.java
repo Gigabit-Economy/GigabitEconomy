@@ -98,18 +98,33 @@ public class TileManager {
     }
 
     /**
+     * Deprecated? - This method is useless now!
      * Place given object on given single Tile
      * @param toTile Tile to place given object on
      * @param objectToPlace Object to place on given Tile
      */
     private Tile placeObject(Tile toTile, TiledObject objectToPlace) {
-        if (toTile.getOccupiedBy() != null) return null;
-
         toTile.setOccupied(objectToPlace);
         return toTile;
     }
 
     /**
+     * Method to place an object on a group of Tiles
+     * @param to TiledObject to place
+     * @param toPlace ArrayList of Tiles to place on
+     * @return
+     */
+    public ArrayList<Tile> placeObject(TiledObject to, ArrayList<Tile> toPlace) {
+        for (Tile t : toPlace) {
+            t.setOccupied(to);
+        }
+        return toPlace;
+    }
+
+    /**
+     * !!
+     * Change below to use above!!
+     * !!
      * Returns ArrayList of unoccupied tiles between coordinates given
      * @param x bottom left coord of where to start
      * @param y bottom left coord of where to start
@@ -124,15 +139,13 @@ public class TileManager {
         for (int i=0; i<width; i++) {
             for (int ii=0; ii<height; ii++) {
                 Tile toAdd = getTile(x+i, y+ii);
-                if ((toAdd != null ? toPlace.add(toAdd) : toPlace.add(null))) {
-                    placeObject(toAdd, objectToPlace);
-                } else {
+                if (!(toAdd != null ? toPlace.add(toAdd) : toPlace.add(null))) {
                     return null;
                 }
             }
         }
         System.out.println(String.format("Length %d for h:%d and w:%d", toPlace.size(), height, width));
-        return toPlace;
+        return placeObject(objectToPlace, toPlace);
     }
 
     /**
@@ -223,23 +236,13 @@ public class TileManager {
         }
     }
 
-//    /**
-//     * Method to move an entity from one tile to another
-//     * @param tileFrom Tile from which to move the GameObject
-//     * @param direction New direction to place the GameObject
-//     * @param distance How far to move the GameObject
-//     */
-//    public Tile moveFromTile(Tile tileFrom, MovingSprite.DIRECTION direction, int distance) {
-//        TiledObject occupier = tileFrom.getOccupiedBy();
-//        Tile nextTile = getAdjacentTile(tileFrom, direction, distance);
-//
-//        if (nextTile != null) {
-//            placeObject(tileFrom, null);
-//            placeObject(nextTile, occupier);
-//        }
-//        return nextTile!=null ? nextTile : tileFrom;
-//    }
-
+    /**
+     * Method to get group of next tiles to move to
+     * @param mo MovingSprite on which to act on
+     * @param dirIn Direction to move MovingSprite in
+     * @param distance How much are we moving by? (Usually 1)
+     * @return ArrayList of tiles to move to
+     */
     public ArrayList<Tile> getNextTiles(MovingSprite mo, MovingSprite.DIRECTION dirIn, int distance) {
         ArrayList<Tile> toSet = new ArrayList<>();
 
@@ -252,6 +255,21 @@ public class TileManager {
             toSet.add(tileToAdd);
         }
         return toSet;
+    }
+
+    /**
+     * Method to check whether passed MovingSprite is within the bounds of a group of Tiles
+     * @param mo MovingSprite to check
+     * @param toCheck ArrayList of Tiles to check bounds of
+     * @return True: Yes, within bounds ; False: No
+     */
+    public boolean withinTileBounds(MovingSprite mo, ArrayList<Tile> toCheck) {
+        if (toCheck.contains(null)) return false;
+        boolean ret = false;
+        for (Tile t : toCheck) {
+            ret |= t.withinTile(mo);
+        }
+        return ret;
     }
 
     /**
@@ -291,13 +309,6 @@ public class TileManager {
             return getTileFromCoords(x, y);
         }
     }
-
-//    /**
-//     * Method to move an entity by only one space
-//     */
-//    public Tile moveFromTile(Tile tileFrom, MovingSprite.DIRECTION direction) {
-//        return moveFromTile(tileFrom, direction, 1);
-//    }
 
     public int getSideLength() {
         return sideLength;
