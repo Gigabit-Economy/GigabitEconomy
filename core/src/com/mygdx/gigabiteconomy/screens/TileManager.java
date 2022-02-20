@@ -112,7 +112,7 @@ public class TileManager {
      * Method to place an object on a group of Tiles
      * @param to TiledObject to place
      * @param toPlace ArrayList of Tiles to place on
-     * @return
+     * @return toPlace
      */
     public ArrayList<Tile> placeObject(TiledObject to, ArrayList<Tile> toPlace) {
         for (Tile t : toPlace) {
@@ -234,6 +234,19 @@ public class TileManager {
                 o.setTileManager(this);
             }
         }
+    }
+
+    /**
+     * Method to return whether 'to' is present in 'tiles'
+     * @param to
+     * @param tiles
+     * @return True: Yes ; False: No
+     */
+    public boolean isGroupOccupiedBy(TiledObject to, ArrayList<Tile> tiles) {
+        for (Tile t : tiles) {
+            if (t.isOccupiedBy(to)) return true;
+        }
+        return false;
     }
 
     /**

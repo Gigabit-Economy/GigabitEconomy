@@ -173,19 +173,8 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         this.targetTiles = targetTiles;
         if (targetTiles == null) return;
         if (targetTiles.contains(0)) return;
-        //Setting tile occupation in foreach
-        for (Tile t : targetTiles) {
-            t.setOccupied(this);
-        }
-    }
 
-    public boolean onTargetTiles() {
-        if (targetTiles.contains(null)) return false;
-        boolean ret = false;
-        for (Tile t : targetTiles) {
-            ret |= t.withinTile(this);
-        }
-        return ret;
+        getTileManager().placeObject(this, targetTiles);
     }
 
     public abstract DIRECTION setNextDirection();
