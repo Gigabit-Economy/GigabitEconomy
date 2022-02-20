@@ -53,6 +53,9 @@ public class TileManager {
         }
         //Creating array to store objects in order
         rowArray = new ArrayList[gridHeight];
+        for (int i=0; i<gridHeight; i++) {
+            rowArray[i] = new ArrayList<>();
+        }
     }
 
     private Tile getTile(int x, int y) {
@@ -115,9 +118,21 @@ public class TileManager {
      * @return toPlace
      */
     public ArrayList<Tile> placeObject(TiledObject to, ArrayList<Tile> toPlace) {
+        //Removing instance from rowArray if present
+        for (ArrayList<TiledObject> row : rowArray)
+            row.remove(this);
+
+
+        int lowestRow = gridHeight;
         for (Tile t : toPlace) {
+            int tileRow = t.getPositionTile()[1];
+            if (lowestRow > tileRow) lowestRow = tileRow;
             t.setOccupied(to);
         }
+
+        //Adding to correct row array
+        rowArray[lowestRow].add(to);
+
         return toPlace;
     }
 
