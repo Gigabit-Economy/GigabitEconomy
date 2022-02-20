@@ -19,6 +19,8 @@ public class TileManager {
     int initialX, initialY; //Where the Tiles begin (bottom left) - don't really need to worry about this since all ours start at 0,0 for the time being
     private int gridHeight; private int gridWidth;
 
+    private ArrayList<TiledObject>[] rowArray;
+
     /**
      * Constructor to create a number of tiles for the game screen
      * @param sideLength Side length of each tile to create
@@ -48,7 +50,8 @@ public class TileManager {
                 //System.out.println("Tile created at " + (i) + " " + (ii));
             }
         }
-
+        //Creating array to store objects in order
+        rowArray = new ArrayList[gridHeight];
     }
 
     private Tile getTile(int x, int y) {
