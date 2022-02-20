@@ -34,8 +34,8 @@ public class Enemy extends MovingSprite {
      * @param height of Tiles to occupy
      * @param width of Tiles to occupy
      */
-    public Enemy(Weapon weapon, int x, int y, int height, int width, Player targetEntity, LinkedList<DIRECTION> movePath) {
-        super(weapon, x, y, height, width);
+    public Enemy(Weapon weapon, int x, int y, int height, int width, Player targetEntity, float deltaHoriz, float deltaVert, LinkedList<DIRECTION> movePath) {
+        super(weapon, x, y, height, width, deltaHoriz, deltaVert);
 
         this.movePath = movePath;
 
