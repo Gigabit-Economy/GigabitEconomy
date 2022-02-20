@@ -5,6 +5,7 @@ import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
 import com.mygdx.gigabiteconomy.sprites.tiled.StaticSprite;
 import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -222,21 +223,35 @@ public class TileManager {
         }
     }
 
-    /**
-     * Method to move an entity from one tile to another
-     * @param tileFrom Tile from which to move the GameObject
-     * @param direction New direction to place the GameObject
-     * @param distance How far to move the GameObject
-     */
-    public Tile moveFromTile(Tile tileFrom, MovingSprite.DIRECTION direction, int distance) {
-        TiledObject occupier = tileFrom.getOccupiedBy();
-        Tile nextTile = getAdjacentTile(tileFrom, direction, distance);
+//    /**
+//     * Method to move an entity from one tile to another
+//     * @param tileFrom Tile from which to move the GameObject
+//     * @param direction New direction to place the GameObject
+//     * @param distance How far to move the GameObject
+//     */
+//    public Tile moveFromTile(Tile tileFrom, MovingSprite.DIRECTION direction, int distance) {
+//        TiledObject occupier = tileFrom.getOccupiedBy();
+//        Tile nextTile = getAdjacentTile(tileFrom, direction, distance);
+//
+//        if (nextTile != null) {
+//            placeObject(tileFrom, null);
+//            placeObject(nextTile, occupier);
+//        }
+//        return nextTile!=null ? nextTile : tileFrom;
+//    }
 
-        if (nextTile != null) {
-            placeObject(tileFrom, null);
-            placeObject(nextTile, occupier);
+    public ArrayList<Tile> getNextTiles(MovingSprite mo, MovingSprite.DIRECTION dirIn, int distance) {
+        ArrayList<Tile> toSet = new ArrayList<>();
+
+        ArrayList<Tile> toCurrTiles = mo.getCurrentTiles();
+        for (int i=0; i<toCurrTiles.size(); i++) {
+            Tile tileToAdd = getAdjacentTile(toCurrTiles.get(i), mo.getDirectionMoving(), distance);
+            if (tileToAdd == null || (tileToAdd.getOccupiedBy() != mo && tileToAdd.getOccupiedBy() != null)) {
+                return null;
+            }
+            toSet.add(tileToAdd);
         }
-        return nextTile!=null ? nextTile : tileFrom;
+        return toSet;
     }
 
     /**
@@ -277,12 +292,12 @@ public class TileManager {
         }
     }
 
-    /**
-     * Method to move an entity by only one space
-     */
-    public Tile moveFromTile(Tile tileFrom, MovingSprite.DIRECTION direction) {
-        return moveFromTile(tileFrom, direction, 1);
-    }
+//    /**
+//     * Method to move an entity by only one space
+//     */
+//    public Tile moveFromTile(Tile tileFrom, MovingSprite.DIRECTION direction) {
+//        return moveFromTile(tileFrom, direction, 1);
+//    }
 
     public int getSideLength() {
         return sideLength;
