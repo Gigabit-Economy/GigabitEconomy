@@ -235,6 +235,8 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
             if (attackAnimation.isFinished(delta)) {
                 System.out.println("Finished attacking");
                 setAttacking(false);
+            } else {
+                return false;
             }
         }
 
