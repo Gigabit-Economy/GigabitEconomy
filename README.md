@@ -1,5 +1,20 @@
 # GigabitEconomy
-## Branch policy
+
+
+## GamePlay Instruction
+
+### Description
+You are a delivery driver aiming to do your round. Deliver to all the houses you can without falling victim to the dangers of suburbia. If worst comes to worst though you can always _borrow_ what the content of your parcels. Just remember in the gig-economy the deliveries you make (and the ones you don't) affect the score your company gives you at the end of the day. 
+
+### Controls
+- move using `W/A/S/D` or the `arrow-keys`
+- attack with `spacebar`
+- open parcels with `tab`
+- open the pause menu with `esc`
+
+## Dev Info
+
+### Branch policy
 **No commits should be made directly to main branch.**
 
 - Commit to a feature branch *(feature/[name])* and then open a pull request once functionality is complete
@@ -7,7 +22,7 @@
 - Do not independently push / merge to main without having your code reviewed
 - Remember to interact with and update the issue pages. This helps keep a clear log of progress
 
-## File breakdown 
+### File breakdown 
 - **GigabitEconomy.java** is used to control what's actually shown and active essentially and extends the Game LibGDX class. This is where we set the active screen etc.
 - **screens/LevelScreen.java** is used as an abstract class for all level classes to inherit from (includes all the code shared between levels such as hit collision and adding background textures etc). _screens/MenuScreen_ doesn't inherit from it as it is just a Scene2d UI screen
 - **sprites/tiled/MovingSprite.java** is used as an abstract class for all moving sprite classes (currently Player and Enemy) to inherit from
