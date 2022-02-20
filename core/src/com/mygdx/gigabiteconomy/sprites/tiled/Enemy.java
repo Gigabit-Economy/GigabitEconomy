@@ -3,8 +3,6 @@ package com.mygdx.gigabiteconomy.sprites.tiled;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.screens.TileManager;
-import com.mygdx.gigabiteconomy.sprites.GameObject;
-import sun.awt.image.ImageWatched;
 
 import java.util.*;
 
@@ -23,7 +21,7 @@ public class Enemy extends MovingSprite {
     int[][] agroTilePos; //Fixed tile coords in following format: [ [curr-x, curr+x] , [curr+y, curr-y] ]
     boolean agro = false;
 
-    TiledObject targetEntity;
+    private TiledObject targetEntity;
 
     /**
      * Create a new Enemy sprite (MovingSprite)
@@ -105,7 +103,6 @@ public class Enemy extends MovingSprite {
         Tile currTile = getCurrentTiles().get(0);
         Tile currPlayerTile = targetEntity.getCurrentTiles().get(0);
 
-
         /**
          * Both blocks below check for the same condition (that player is within agro square
          */
@@ -165,9 +162,18 @@ public class Enemy extends MovingSprite {
                 setNextDirection();
             }
             if (agro) {
+                TileManager tm = getTileManager();
+                //Check if player is on adjecent tiles
+                for (Tile t : tm.getAdjacentTiles(this.getCurrentTiles().get(0))) {
+                    if (t.isOccupiedBy(targetEntity) && !isAttacking()) {
+                        System.out.println(targetEntity);
+                        super.launchAttack();
+                        setAttacking(true);
+                    }
+                }
                 //Check if player is on the row
                 //Move in that direction
-                TileManager tm = getTileManager();
+
                 DIRECTION dirTo = tm.findDirectionFrom(getCurrentTiles().get(0), targetEntity.getCurrentTiles().get(0));
 
 
@@ -179,8 +185,6 @@ public class Enemy extends MovingSprite {
 
 
             }
-
-        } else {
 
         }
 

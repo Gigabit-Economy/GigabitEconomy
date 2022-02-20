@@ -1,6 +1,7 @@
 package com.mygdx.gigabiteconomy.screens;
 
 import com.mygdx.gigabiteconomy.sprites.GameObject;
+import com.mygdx.gigabiteconomy.sprites.tiled.Player;
 import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
 /**
@@ -66,6 +67,9 @@ public class Tile {
      * @param occupying GameObject to occupy current Tile
      */
     public void setOccupied(TiledObject occupying) {
+        if (occupying instanceof Player) {
+            System.out.println(String.format("Player occupying %d %d", positionTile[0], positionTile[1]));
+        }
         this.occupiedBy = occupying;
     }
 
@@ -88,7 +92,7 @@ public class Tile {
     }
 
     public boolean isOccupiedBy(GameObject o) {
-        return getOccupiedBy() != o;
+        return getOccupiedBy() == o;
     }
 
     public boolean withinTile(GameObject o) {
