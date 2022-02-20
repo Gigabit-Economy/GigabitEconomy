@@ -230,8 +230,8 @@ public class TileManager {
 
                 //System.out.println(pos.x + " " + pos.y);
 
-                o.setCurrentTiles(placeAt); //Setting current tiles should be done within player
                 o.setTileManager(this);
+                o.setCurrentTiles(placeAt); //Setting current tiles should be done within player
             }
         }
     }

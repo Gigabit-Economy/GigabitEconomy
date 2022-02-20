@@ -243,9 +243,6 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
          * Commence movement logic by checking if we've arrived at the targetTile
          */
         if (getTileManager().withinTileBounds(this, getTargetTiles())) {
-
-            getTileManager().placeObject(null, getCurrentTiles());
-
             setCurrentTiles(targetTiles);
             snap(delta);
             targetTiles = null;

@@ -74,11 +74,12 @@ public abstract class TiledObject extends GameObject {
 
     /**
      * Set the Tile(s) the sprite the currently occupies
-     *
+     * If currentTiles is already set, method occupies those to null before changing
      * @param currentTiles the new Tile(s) for the sprite to occupy
      */
     public void setCurrentTiles(ArrayList<Tile> currentTiles) {
-        if (currentTiles.contains(null)) {
+        if (this.currentTiles != null) tileManager.placeObject(null, this.currentTiles);
+        if (tileManager.placeObject(this, currentTiles) == null) {
             return;
         }
 
