@@ -7,10 +7,8 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.badlogic.gdx.utils.Disposable;
-import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  * Class representing a sprite shown on screen, ready to be drawn with batch.draw(); in MainScreen class.
@@ -172,16 +170,18 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     public void setTargetTiles(ArrayList<Tile> targetTiles) {
         this.targetTiles = targetTiles;
         if (targetTiles == null) return;
-        if (targetTiles.contains(0)) return;
+        // Not sure what this line is doing
+        // If this method breaks, we know why haha
+        // if (targetTiles.contains(0)) return;
 
         getTileManager().placeObject(this, targetTiles);
     }
 
-    public abstract DIRECTION setNextDirection();
+    public abstract void setNextDirection();
 
     /**
      * Class for setting next tiles, creates an ArrayList of next Tiles from currentTiles
-     * @return
+     * @return ArrayList of next tiles
      */
     public ArrayList<Tile> setNextTiles() {
         //Setting next direction

@@ -90,8 +90,7 @@ public class Player extends MovingSprite {
     }
 
     @Override
-    public DIRECTION setNextDirection() {
-        return getDirectionMoving();
+    public void setNextDirection() {
     }
 
     /**

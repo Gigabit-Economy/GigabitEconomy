@@ -127,10 +127,9 @@ public class Enemy extends MovingSprite {
     }
 
     @Override
-    public DIRECTION setNextDirection() {
+    public void setNextDirection() {
         super.setDirectionMovement(currentPath.remove());
         currentPath.add(getDirectionMoving());
-        return getDirectionMoving();
     }
 
     @Override
