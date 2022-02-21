@@ -73,6 +73,17 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         staticSprites.add(parcelVan);
 
         player.setLevel(this);
+
+        // Create Tile Manager for level
+        int backgroundTextureHeight = backgroundTexture.getHeight();
+        int backgroundTextureWidth = backgroundTexture.getWidth();
+        int numberOfTilesHigh = 18;
+        tileManager = new TileManager(backgroundTextureHeight / numberOfTilesHigh, backgroundTextureHeight / 2,
+                backgroundTextureWidth, 0, 0);
+
+        // Initialise each sprite's position on Tiles using the Tile Manager
+        ArrayList<TiledObject> playerList = new ArrayList<TiledObject>(Arrays.asList(player));
+        tileManager.initObjects(playerList, staticSprites, enemies); // in priority order
     }
 
     /**
@@ -92,17 +103,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
         batch = new SpriteBatch();
         font = new BitmapFont();
-
-        // Create Tile Manager for level
-        int backgroundTextureHeight = backgroundTexture.getHeight();
-        int backgroundTextureWidth = backgroundTexture.getWidth();
-        int numberOfTilesHigh = 18;
-        tileManager = new TileManager(backgroundTextureHeight / numberOfTilesHigh, backgroundTextureHeight / 2,
-                backgroundTextureWidth, 0, 0);
-
-        // Initialise each sprite's position on Tiles using the Tile Manager
-        ArrayList<TiledObject> playerList = new ArrayList<TiledObject>(Arrays.asList(player));
-        tileManager.initObjects(playerList, staticSprites, enemies); // in priority order
     }
 
     /**
