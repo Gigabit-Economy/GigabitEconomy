@@ -28,3 +28,15 @@ You are a delivery driver aiming to do your round. Deliver to all the houses you
 - **sprites/tiled/MovingSprite.java** is used as an abstract class for all moving sprite classes (currently Player and Enemy) to inherit from
 - **sprites/tiled/StaticSprite.java** is used as a superclass for all static sprites, but unlike *MovingSprite* can be instantiated itself without any subclass
 - **sprites/GameObject.java** is used as a superclass for any game objects using screen coordinates as opposed to tiles for placement; these are always static and cannot be moved once first placed
+
+### Adding elements to a level
+Each level should extend the _LevelScreen_ class, passing the following arguments to super()'s constructor:
+- **director**          the instance of the game director (GigabitEconomy.java)
+- **player**            the player character for the level (Player)
+- **enemies**           an ArrayList containing all enemy characters for the level
+- **staticSprites**     an ArrayList containing all static sprites, including Houses, for the level
+- **backgroundTexture** the background graphic (png texture) of the level
+
+Each of these should be instantiated as constant properties in your subclass to LevelScreen.
+
+The screen can then be added to the _game director (GigabitEconomy.java)_ class's `create()` method by adding it to the `screens` hashmap. To show the screen to the user, use `switchScreen()` in the same game director class, passing the name of the screen as defined in the hashmap.
