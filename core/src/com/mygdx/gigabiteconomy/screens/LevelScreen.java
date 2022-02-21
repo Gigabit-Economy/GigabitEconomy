@@ -93,7 +93,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
                 backgroundTextureWidth, 0, 0);
 
         // Initialise each sprite's position on tiles using the tile manager
-        ArrayList<TiledObject> playerList = new ArrayList<TiledObject>(Arrays.asList(player, parcelVan));
+        ArrayList<TiledObject> playerList = new ArrayList<TiledObject>(Arrays.asList(player));
         tileManager.initObjects(playerList, staticSprites, enemies); // in priority order
     }
 
