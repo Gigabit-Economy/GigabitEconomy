@@ -382,13 +382,13 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      * End the level (called when Player is destroyed)
      */
     public void end() {
+        hide();
+
         try {
             director.switchScreen("levelfailed");
         } catch (ScreenException ex) {
             Gdx.app.error("Exception", "The screen could not be switched when level failed", ex);
         }
-
-        hide();
     }
 
     /**
@@ -396,6 +396,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      */
     public void complete() {
         score.saveScore();
+        hide();
 
         try {
             director.switchScreen("levelcomplete");
