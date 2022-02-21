@@ -20,6 +20,7 @@ import com.mygdx.gigabiteconomy.sprites.tiled.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 
 /**
  * Abstract class which acts as a base class for all level screens.
@@ -151,30 +152,10 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         //backgroundSprite.draw(batch);
         batch.draw(backgroundSprite.getTexture(), 0, 0);
 
-        // Move (if moving sprite) & draw sprites
-        for (GameObject sprite : sprites) {
-            if (sprite instanceof House) {
-                House house = (House) sprite;
-
-                batch.draw(house.getTexture(), house.getX(), house.getY());
-            }
-            else if (sprite instanceof StaticSprite) {
-                StaticSprite staticSprite = (StaticSprite) sprite;
-
-                batch.draw(staticSprite.getTexture(), staticSprite.getX(), staticSprite.getY());
-            }
-            else if (sprite instanceof MovingSprite) {
-                MovingSprite movingSprite = (MovingSprite) sprite;
-
-                try {
-                    movingSprite.move(delta);
-                } catch (TileMovementException ex) {
-                    // ignore exception (could act on it and display message to user etc. later)
-                    System.out.println("Sprite was blocked");
-                }
-
-                float offsetX = ((TextureAtlas.AtlasRegion)movingSprite.getTextureRegion()).offsetX;
-                batch.draw(movingSprite.getTextureRegion(), movingSprite.getX()-offsetX, movingSprite.getY());
+        //For each TiledObject in array, call drawOn abstract method
+        for (ArrayList<TiledObject> toArray : tileManager.getRowArray()) {
+            for (TiledObject to : toArray) {
+                if (to!=null)to.drawOn(batch, delta);
             }
         }
 

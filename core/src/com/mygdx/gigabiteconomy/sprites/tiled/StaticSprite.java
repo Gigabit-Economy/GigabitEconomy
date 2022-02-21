@@ -1,6 +1,8 @@
 package com.mygdx.gigabiteconomy.sprites.tiled;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
 /**
@@ -44,6 +46,10 @@ public class StaticSprite extends TiledObject {
      */
     public void setTexture(Texture texture) {
         this.texture = texture;
+    }
+
+    public void drawOn(SpriteBatch batch, float delta) {
+        batch.draw(texture, getX(), getY());
     }
 
     /**
