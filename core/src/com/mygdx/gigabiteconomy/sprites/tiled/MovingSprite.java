@@ -118,17 +118,14 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * @param dir the direction enum to move in
      */
     public void setDirectionMovement(MovingSprite.DIRECTION dir) {
-        directionMoving = dir;
+        directionFacing = directionMoving = dir;
         if (directionMoving == null) {
             deltaMove.x = 0;
             deltaMove.y = 0;
             return;
         }
-        directionFacing = dir;
 
         deltaMove.x = velocity.x * dir.dxMult; deltaMove.y = velocity.y * dir.dyMult;
-
-
     }
 
     /**
@@ -243,13 +240,12 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         //Target tile is null when movement restarts (targetTile has been reached), we must get new Tile
         if (targetTiles == null) {
             //If getting new tile results in null or new tile is occupied by something other than this, we are blocked
-
+            updateTextureRegions();
             if (setNextTiles() == null /**|| targetTile.getOccupiedBy() != this */) { //If we are still then get next tile
                 //Making sure targetTile contains null will cause this loop to run again, checking if we are still blocked
                 targetTiles = null;
                 return true;
             }
-            updateTextureRegions();
         }
 
         /**
