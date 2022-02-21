@@ -17,8 +17,8 @@ import java.util.Random;
 public class Player extends MovingSprite {
     private static final Random RANDOM = new Random();
 
+    private LevelScreen level;
     private Parcel parcel;
-
 
     /**
      * Create a new Player sprite (MovingSprite)
@@ -31,6 +31,15 @@ public class Player extends MovingSprite {
      */
     public Player(Weapon weapon, int x, int y, int height, int width) {
         super(weapon, x, y, height, width, 3.5f, 3f);
+    }
+
+    /**
+     * Set the level the MovingSprite is in
+     *
+     * @param level the level the MovingSprite is in
+     */
+    public void setLevel(LevelScreen level) {
+        this.level = level;
     }
 
     /**
@@ -162,8 +171,8 @@ public class Player extends MovingSprite {
      */
     @Override
     public void destroy() {
-        if (getLevel() != null) {
-            getLevel().end();
+        if (level != null) {
+            level.end();
         }
 
         super.destroy();
@@ -182,23 +191,23 @@ public class Player extends MovingSprite {
             this.weapon = MovingSprite.Weapon.values()[RANDOM.nextInt(MovingSprite.Weapon.values().length)];
 
             // pick a random House from the level's houses to be house to be delivered to
-            ArrayList<House> levelHouses = getLevel().getHouses();
+            ArrayList<House> levelHouses = level.getHouses();
             this.house = levelHouses.get((RANDOM.nextInt(levelHouses.size())));
             try {
-                this.house.markAsDeliveryLocation(getLevel());
+                this.house.markAsDeliveryLocation(level);
             } catch (Exception ex) {
                 Gdx.app.error("Exception", "Error assigning House as delivery location", ex);
                 System.exit(-1);
             }
 
             // if level is onto final parcel, mark as such
-            this.isFinalParcel = (getLevel().getParcels() <= 1);
+            this.isFinalParcel = (level.getParcels() <= 1);
 
-            getLevel().decrementParcels();
+            level.decrementParcels();
 
             // if final parcel, switch van to van with no parcels
             if (isFinalParcel) {
-                getLevel().getParcelVan().setToEmpty();
+                level.getParcelVan().setToEmpty();
             }
         }
 
@@ -208,12 +217,12 @@ public class Player extends MovingSprite {
         public void deliver() {
             parcel = null;
 
-            getLevel().addToScore(1);
+            level.addToScore(1);
 
-            house.unmarkAsDeliveryLocation(getLevel());
+            house.unmarkAsDeliveryLocation(level);
 
             if (isFinalParcel) {
-                getLevel().complete();
+                level.complete();
             }
         }
 
@@ -229,7 +238,7 @@ public class Player extends MovingSprite {
 
             setWeapon(this.weapon);
 
-            house.unmarkAsDeliveryLocation(getLevel());
+            house.unmarkAsDeliveryLocation(level);
 
             parcel = null;
         }

@@ -6,21 +6,17 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.ScoreSystem;
 import com.mygdx.gigabiteconomy.exceptions.ParcelException;
 import com.mygdx.gigabiteconomy.exceptions.ScreenException;
-import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.sprites.*;
 import com.mygdx.gigabiteconomy.sprites.tiled.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 
 /**
  * Abstract class which acts as a base class for all level screens.
@@ -77,9 +73,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         staticSprites.add(parcelVan);
 
         player.setLevel(this);
-        for (Enemy enemy : enemies) {
-            enemy.setLevel(this);
-        }
 
         // Create tile manager instance (stated variables explicitly here in case we
         // want to mess about with them)
@@ -111,13 +104,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
         System.out.println(
                 "Texture dimensions: h:" + backgroundTexture.getHeight() + " w:" + backgroundTexture.getWidth());
-
-        // Add static sprites
-        sprites.addAll(staticSprites);
-        // Add player
-        sprites.add(player);
-        // Add enemies
-        sprites.addAll(enemies);
 
         batch = new SpriteBatch();
         font = new BitmapFont();
@@ -181,21 +167,22 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     }
 
     /**
-     * Add a sprite to the level
+     * Add a sprite (TiledObject) to the level
      *
-     * @param sprite the GameObject representing the sprite
+     * @param sprite the TiledObject representing the sprite
      */
-    public void addSprite(GameObject sprite) {
-        sprites.add(sprite);
+    public void addSprite(TiledObject sprite) {
+        ArrayList<TiledObject> spriteList = new ArrayList<TiledObject>(Arrays.asList(sprite));
+        tileManager.initObjects(spriteList);
     }
 
     /**
-     * Remove a sprite from the level
+     * Remove a sprite (TiledObject) from the level
      *
-     * @param sprite the GameObject (sprite) to be removed
+     * @param sprite the TiledObject (sprite) to be removed
      */
-    public void removeSprite(GameObject sprite) {
-        sprites.remove(sprite);
+    public void removeSprite(TiledObject sprite) {
+        tileManager.removeFromRows(sprite);
     }
 
     /**
