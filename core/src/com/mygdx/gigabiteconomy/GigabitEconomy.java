@@ -19,7 +19,7 @@ public class GigabitEconomy extends Game {
 
     private static HashMap<String, Screen> screens = new HashMap<>();
 
-    private LevelScreen lastPlayedLevel;
+    private String lastPlayedLevel;
 
     @Override
     public void create() {
@@ -28,12 +28,13 @@ public class GigabitEconomy extends Game {
 
         // Define screens
         screens.put("menu", new MenuScreen(this));
-        screens.put("level1", new LevelOneScreen(this));
         screens.put("pausemenu", new PauseMenu(this));
         screens.put("levelcomplete", new LevelCompleteScreen(this));
         screens.put("levelfailed", new LevelFailedScreen(this));
 
-        // Set active screen to main menu
+        screens.put("LevelOneScreen", new LevelOneScreen(this));
+
+        // Set initial active screen to main menu
         setScreen(screens.get("menu"));
     }
 
@@ -81,7 +82,7 @@ public class GigabitEconomy extends Game {
 
         // if a LevelScreen, record as lastPlayedLevel
         if (toSwitch instanceof LevelScreen) {
-            this.lastPlayedLevel = (LevelScreen) toSwitch;
+            this.lastPlayedLevel = toSwitch.getClass().getSimpleName();
         }
 
         setScreen(toSwitch);
@@ -91,7 +92,7 @@ public class GigabitEconomy extends Game {
         return viewport;
     }
 
-    public LevelScreen getLastPlayedLevel() {
+    public String getLastPlayedLevel() {
         return this.lastPlayedLevel;
     }
 }

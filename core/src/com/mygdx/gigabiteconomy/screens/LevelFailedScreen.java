@@ -39,7 +39,7 @@ public class LevelFailedScreen implements Screen{
         deathScreenTable.row();
 
         TextButton tryAgainButton = new TextButton("TRY AGAIN", style);
-        tryAgainButton.setName(director.getLastPlayedLevel().getClass().getName());
+        tryAgainButton.setName(director.getLastPlayedLevel());
         deathScreenTable.add(tryAgainButton).space(20);
 
         TextButton deathScreenMainMenuButton = new TextButton("MAIN MENU", style);

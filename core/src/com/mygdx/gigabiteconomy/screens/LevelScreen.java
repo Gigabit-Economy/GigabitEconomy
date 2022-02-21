@@ -40,7 +40,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     private ParcelVan parcelVan;
     private ArrayList<StaticSprite> staticSprites;
 
-    private ScoreSystem score = new ScoreSystem(this);
+    private ScoreSystem score = new ScoreSystem(this.getClass().getSimpleName());
     private int parcels = 5;
 
     private BitmapFont font;

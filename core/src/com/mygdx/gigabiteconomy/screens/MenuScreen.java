@@ -62,7 +62,7 @@ public class MenuScreen implements Screen {
 
         //add buttons
         ImageButton level1Button = new ImageButton(drawable);
-        level1Button.setName("level1");
+        level1Button.setName("LevelOneScreen");
         buttons.add(level1Button);
 
         // Add click listener for buttons
