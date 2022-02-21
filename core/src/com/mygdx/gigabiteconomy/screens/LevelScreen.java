@@ -73,21 +73,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         staticSprites.add(parcelVan);
 
         player.setLevel(this);
-
-        // Create tile manager instance (stated variables explicitly here in case we
-        // want to mess about with them)
-        // -> Might need to move creating tileManager to other method (after we add
-        // level switching)
-        // -> One TileManager per level sounds like the cleanest option
-        int backgroundTextureHeight = backgroundTexture.getHeight();
-        int backgroundTextureWidth = backgroundTexture.getWidth();
-        int numberOfTilesHigh = 18;
-        tileManager = new TileManager(backgroundTextureHeight / numberOfTilesHigh, backgroundTextureHeight / 2,
-                backgroundTextureWidth, 0, 0);
-
-        // Initialise each sprite's position on tiles using the tile manager
-        ArrayList<TiledObject> playerList = new ArrayList<TiledObject>(Arrays.asList(player));
-        tileManager.initObjects(playerList, staticSprites, enemies); // in priority order
     }
 
     /**
@@ -107,6 +92,17 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
         batch = new SpriteBatch();
         font = new BitmapFont();
+
+        // Create Tile Manager for level
+        int backgroundTextureHeight = backgroundTexture.getHeight();
+        int backgroundTextureWidth = backgroundTexture.getWidth();
+        int numberOfTilesHigh = 18;
+        tileManager = new TileManager(backgroundTextureHeight / numberOfTilesHigh, backgroundTextureHeight / 2,
+                backgroundTextureWidth, 0, 0);
+
+        // Initialise each sprite's position on Tiles using the Tile Manager
+        ArrayList<TiledObject> playerList = new ArrayList<TiledObject>(Arrays.asList(player));
+        tileManager.initObjects(playerList, staticSprites, enemies); // in priority order
     }
 
     /**
@@ -123,23 +119,17 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // stage.act(delta);
-        // stage.draw();
         // Set screen's projection matrix to director's ortho camera
         batch.setProjectionMatrix(director.getCameraCombined());
-
-        // This should only take place when player gets to a certain position in camera
-        // view
-        // update camera position to follow player
+        Vector3 cam = director.getCameraPos();
         director.updateCameraPos(player.getX(), player.getY());
 
         batch.begin();
 
         // Draw the background
-        //backgroundSprite.draw(batch);
         batch.draw(backgroundSprite.getTexture(), 0, 0);
 
-        //For each TiledObject in array, call drawOn abstract method
+        // For each TiledObject initialised in Tile Manager, call its drawOn to draw it with sprite batch
         for (ArrayList<TiledObject> toArray : tileManager.getRowArray()) {
             for (TiledObject to : toArray) {
                 if (to!=null) to.drawOn(batch, delta);
@@ -150,17 +140,16 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         String parcelText = String.format("parcels remaining: %d", parcels);
         String healthText = String.format("health: %d", player.getHealth());
 
-        Vector3 cam = director.getCameraPos();
-
         font.setColor(Color.CORAL);
         font.draw(batch, scoreText, (cam.x - 900), 1040);
         font.draw(batch, parcelText, (cam.x - 900), 1020);
         font.draw(batch, healthText, (cam.x - 900), 1000);
 
+        // if one is set, display error message
         if (this.errorCountdown > 0 && this.errorText != null && this.errorText.length() != 0) {
             font.draw(batch, this.errorText, 25, 980);
-            // decrement error countdown by seconds passed in prev render
-            errorCountdown -= 1 * delta;
+
+            errorCountdown -= 1 * delta; // decrement error countdown by seconds passed in prev render
         }
 
         batch.end();
