@@ -122,9 +122,7 @@ public class TileManager {
      * @return toPlace
      */
     public ArrayList<Tile> placeObject(TiledObject to, ArrayList<Tile> toPlace) {
-        //Removing instance from rowArray if present
-        for (ArrayList<TiledObject> row : rowArray)
-            row.remove(to);
+        removeFromRows(to);
 
         int lowestRow = gridHeight;
         for (Tile t : toPlace) {
@@ -134,15 +132,12 @@ public class TileManager {
         }
 
         //Adding to correct row array
-        rowArray[lowestRow].add(to);
+        if (to != null) rowArray[lowestRow].add(to);
 
         return toPlace;
     }
 
     /**
-     * !!
-     * Change below to use above!!
-     * !!
      * Returns ArrayList of unoccupied tiles between coordinates given
      * @param x bottom left coord of where to start
      * @param y bottom left coord of where to start
@@ -363,6 +358,17 @@ public class TileManager {
             }
         }
         System.out.println(occupied);
+    }
+
+    /**
+     * Removes TiledObject passed from rows
+     * @param to TiledObject to remove from rows
+     */
+    public boolean removeFromRows(TiledObject to) {
+        boolean ret = false;
+        for (ArrayList<TiledObject> row : rowArray)
+            ret |= row.remove(to);
+        return ret;
     }
 
     /**

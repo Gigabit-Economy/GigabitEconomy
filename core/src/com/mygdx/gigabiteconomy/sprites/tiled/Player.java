@@ -125,6 +125,7 @@ public class Player extends MovingSprite {
     @Override
     public void launchAttack() {
         // get Tile adjacent to Player
+        System.out.println(getDirectionFacing());
         Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), getDirectionFacing(), 1);
         if (adjacentTile == null) return; // trying to attack invalid Tile
 
