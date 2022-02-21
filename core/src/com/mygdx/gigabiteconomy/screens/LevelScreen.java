@@ -180,8 +180,15 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 //            }
 //        }
 
-        for (GameObject to : sprites) {
-            ((TiledObject)to).drawOn(batch, delta);
+//        for (GameObject to : sprites) {
+//            ((TiledObject)to).drawOn(batch, delta);
+//        }
+
+        for (ArrayList<TiledObject> toArray : tileManager.getRowArray()) {
+            for (TiledObject to : toArray) {
+                if (to!=null)to.drawOn(batch, delta);
+                //if (to != null) System.out.println(String.format("%s being drawn from x:%d y:%d", to.getClass().getName(), to.getCurrentTiles().get(0).getPositionTile()[0], to.getCurrentTiles().get(0).getPositionTile()[1]));
+            }
         }
 
         String scoreText = String.format("score: %d", score.getScore());

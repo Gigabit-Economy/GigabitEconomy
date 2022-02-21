@@ -6,7 +6,7 @@ public class ParcelVan extends StaticSprite {
     private static final String PNG = "finished_assets/static_sprites/van.png";
     private static final String W_PARCELS_PNG = "finished_assets/static_sprites/vanWParcels.png";
 
-    private static final int HEIGHT = 3; // the height of the parcel van sprite in Tiles
+    private static final int HEIGHT = 1; // the height of the parcel van sprite in Tiles
     private static final int WIDTH = 7; // the width of the parcel van sprite in Tiles
 
     /**

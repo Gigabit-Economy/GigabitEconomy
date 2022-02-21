@@ -368,7 +368,7 @@ public class TileManager {
     public ArrayList<TiledObject>[] getRowArray() {
         ArrayList<TiledObject>[] cloned = new ArrayList[rowArray.length];
         for (int i=0; i<rowArray.length; i++) {
-            cloned[i] = (ArrayList<TiledObject>)rowArray[i].clone();
+            cloned[i] = (ArrayList<TiledObject>)rowArray[rowArray.length-i-1].clone();
         }
         return cloned;
     }
