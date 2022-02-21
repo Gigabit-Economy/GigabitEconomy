@@ -402,7 +402,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
             System.out.println("Thats a lotta damage!" + this.health);
         }
 
-        if (health <= 0 && !(this instanceof Player)) {
+        if (health <= 0) {
             destroy();
         }
     }

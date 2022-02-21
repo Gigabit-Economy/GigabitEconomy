@@ -106,10 +106,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     public void show() {
         Gdx.input.setInputProcessor(this);
 
-        if (paused) {
-            return;
-        }
-
         // Add background
         backgroundSprite = new Sprite(backgroundTexture);
 
@@ -160,7 +156,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         //For each TiledObject in array, call drawOn abstract method
         for (ArrayList<TiledObject> toArray : tileManager.getRowArray()) {
             for (TiledObject to : toArray) {
-                if (to!=null)to.drawOn(batch, delta);
+                if (to!=null) to.drawOn(batch, delta);
             }
         }
 
@@ -398,8 +394,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      * End the level (called when Player is destroyed)
      */
     public void end() {
-        hide();
-
         try {
             director.switchScreen("levelfailed");
         } catch (ScreenException ex) {
@@ -412,7 +406,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      */
     public void complete() {
         score.saveScore();
-        hide();
 
         try {
             director.switchScreen("levelcomplete");
