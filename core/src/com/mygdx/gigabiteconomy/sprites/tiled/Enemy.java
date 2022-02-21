@@ -111,9 +111,10 @@ public class Enemy extends MovingSprite {
         /** */
         /** */
 
+        agro = true;
         for (int i=0; i<agroTilePos.length; i++) {
             //System.out.println(String.format("Checking %d > %d and < %d", currPlayerTile.getPositionTile()[i], agroTilePos[i][0], agroTilePos[i][1]));
-            agro |= (currPlayerTile.getPositionTile()[i] < agroTilePos[i][0]) && (currPlayerTile.getPositionTile()[i] > agroTilePos[i][1]);
+            agro &= (currPlayerTile.getPositionTile()[i] < agroTilePos[i][0]) && (currPlayerTile.getPositionTile()[i] > agroTilePos[i][1]);
         }
 
         /** */
