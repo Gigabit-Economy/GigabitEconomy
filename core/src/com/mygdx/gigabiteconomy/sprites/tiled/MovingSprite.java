@@ -381,7 +381,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
             System.out.println("Thats a lotta damage!" + this.health);
         }
 
-        if (health <= 0 && !(this instanceof Player)) {
+        if (health <= 0) {
             destroy();
         }
     }
@@ -432,7 +432,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * Called when the sprite's health reaches 0 or less.
      */
     public void destroy() {
-        // dispose of the sprite from memory
+        // remove the sprite from the level & dispose it from memory
         System.out.println(getTileManager().removeFromRows(this));
         getTileManager().placeObject(null, getCurrentTiles());
         dispose();
