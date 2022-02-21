@@ -5,5 +5,8 @@ public class TileIndicator extends StaticSprite {
 
     public TileIndicator(int x, int y) {
         super(PNG, x, y, 1, 1);
+
+        // TODO: set Tile as unoccupied to allow sprites to access it
+        //getCurrentTiles().get(0).setOccupied(null);
     }
 }

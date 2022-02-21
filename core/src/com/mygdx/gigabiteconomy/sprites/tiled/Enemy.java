@@ -195,4 +195,18 @@ public class Enemy extends MovingSprite {
 
         return ret;
     }
+
+    /**
+     * Destroy the Enemy & remove from the level.
+     * Called when the Enemy's health reaches 0 or less.
+     */
+    @Override
+    public void destroy() {
+        // remove the sprite from the level and clear its tile
+        getTileManager().placeObject(null, getCurrentTiles());
+        getTileManager().removeFromRows(this);
+
+        // dispose of the sprite from memory
+        dispose();
+    }
 }

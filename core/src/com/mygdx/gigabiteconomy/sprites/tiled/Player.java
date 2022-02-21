@@ -166,16 +166,14 @@ public class Player extends MovingSprite {
     }
 
     /**
-     * Destroy the player & end the current level.
-     * Called when the player's health reaches 0 or less.
+     * Destroy the Player & end the current level.
+     * Called when the Player's health reaches 0 or less.
      */
     @Override
     public void destroy() {
         if (level != null) {
             level.end();
         }
-
-        super.destroy();
     }
 
     private class Parcel {

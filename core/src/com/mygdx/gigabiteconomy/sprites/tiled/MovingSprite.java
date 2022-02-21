@@ -431,13 +431,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * Destroy the sprite.
      * Called when the sprite's health reaches 0 or less.
      */
-    public void destroy() {
-        // remove the sprite from the level and clear its tile
-        getTileManager().placeObject(null, getCurrentTiles());
-
-        // dispose of the sprite from memory
-        dispose();
-    }
+    public abstract void destroy();
 
     /**
      * Remove the sprite's texture atlas from memory once the sprite is no longer needed
