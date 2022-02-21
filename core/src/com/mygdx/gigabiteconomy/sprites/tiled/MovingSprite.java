@@ -118,13 +118,14 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * @param dir the direction enum to move in
      */
     public void setDirectionMovement(MovingSprite.DIRECTION dir) {
-        directionFacing = directionMoving = dir;
+        directionMoving = dir;
         if (directionMoving == null) {
             deltaMove.x = 0;
             deltaMove.y = 0;
             return;
         }
-
+        directionFacing = dir;
+        
         deltaMove.x = velocity.x * dir.dxMult; deltaMove.y = velocity.y * dir.dyMult;
     }
 
