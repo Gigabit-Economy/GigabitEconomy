@@ -2,6 +2,7 @@ package com.mygdx.gigabiteconomy.screens;
 
 import com.mygdx.gigabiteconomy.exceptions.TileException;
 import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
+import com.mygdx.gigabiteconomy.sprites.tiled.Player;
 import com.mygdx.gigabiteconomy.sprites.tiled.StaticSprite;
 import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
@@ -159,8 +160,7 @@ public class TileManager {
                 }
             }
         }
-        System.out.println(String.format("Length %d for h:%d and w:%d", toPlace.size(), height, width));
-        return placeObject(objectToPlace, toPlace);
+        return toPlace;
     }
 
     /**
