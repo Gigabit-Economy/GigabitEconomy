@@ -153,41 +153,10 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         //backgroundSprite.draw(batch);
         batch.draw(backgroundSprite.getTexture(), 0, 0);
 
-//         Move (if moving sprite) & draw sprites
-//        for (GameObject sprite : sprites) {
-//            if (sprite instanceof House) {
-//                House house = (House) sprite;
-//
-//                batch.draw(house.getTexture(), house.getX(), house.getY());
-//            }
-//            else if (sprite instanceof StaticSprite) {
-//                StaticSprite staticSprite = (StaticSprite) sprite;
-//
-//                batch.draw(staticSprite.getTexture(), staticSprite.getX(), staticSprite.getY());
-//            }
-//            else if (sprite instanceof MovingSprite) {
-//                MovingSprite movingSprite = (MovingSprite) sprite;
-//
-//                try {
-//                    movingSprite.move(delta);
-//                } catch (TileMovementException ex) {
-//                    // ignore exception (could act on it and display message to user etc. later)
-//                    System.out.println("Sprite was blocked");
-//                }
-//
-//                float offsetX = ((TextureAtlas.AtlasRegion)movingSprite.getTextureRegion()).offsetX;
-//                batch.draw(movingSprite.getTextureRegion(), movingSprite.getX()-offsetX, movingSprite.getY());
-//            }
-//        }
-
-//        for (GameObject to : sprites) {
-//            ((TiledObject)to).drawOn(batch, delta);
-//        }
-
+        //For each TiledObject in array, call drawOn abstract method
         for (ArrayList<TiledObject> toArray : tileManager.getRowArray()) {
             for (TiledObject to : toArray) {
                 if (to!=null)to.drawOn(batch, delta);
-                //if (to != null) System.out.println(String.format("%s being drawn from x:%d y:%d", to.getClass().getName(), to.getCurrentTiles().get(0).getPositionTile()[0], to.getCurrentTiles().get(0).getPositionTile()[1]));
             }
         }
 

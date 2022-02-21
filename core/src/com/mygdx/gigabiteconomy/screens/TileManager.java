@@ -115,18 +115,16 @@ public class TileManager {
     }
 
     /**
-     * Method to place an object on a group of Tiles
+     * Method to place an object on a group of Tiles.
+     * Modifies rowArray accordingly
      * @param to TiledObject to place
      * @param toPlace ArrayList of Tiles to place on
      * @return toPlace
      */
     public ArrayList<Tile> placeObject(TiledObject to, ArrayList<Tile> toPlace) {
         //Removing instance from rowArray if present
-        int i=0;
         for (ArrayList<TiledObject> row : rowArray)
             row.remove(to);
-
-
 
         int lowestRow = gridHeight;
         for (Tile t : toPlace) {
@@ -234,6 +232,8 @@ public class TileManager {
         return adjacentTiles;
     }
 
+    ////NOTE: I wonder if we can change this method to only set tile manager
+    ////      rest seems kinda redundant...
     /**
      * Initialise Sprites on the gameboard
      * @param objsArr ArrayLists of TiledObject to place
@@ -365,9 +365,14 @@ public class TileManager {
         System.out.println(occupied);
     }
 
+    /**
+     *
+     * @return Array of TiledObject ArrayLists defining which Sprites are on which rows
+     */
     public ArrayList<TiledObject>[] getRowArray() {
         ArrayList<TiledObject>[] cloned = new ArrayList[rowArray.length];
         for (int i=0; i<rowArray.length; i++) {
+            //Adding to cloned in reverse order so higher rows are drawn first
             cloned[i] = (ArrayList<TiledObject>)rowArray[rowArray.length-i-1].clone();
         }
         return cloned;

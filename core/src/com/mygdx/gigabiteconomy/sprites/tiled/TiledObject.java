@@ -79,7 +79,6 @@ public abstract class TiledObject extends GameObject {
      */
     public abstract void drawOn(SpriteBatch batch, float delta);
 
-
     /**
      * Set the Tile(s) the sprite the currently occupies
      * If currentTiles is already set, method occupies those to null before changing
