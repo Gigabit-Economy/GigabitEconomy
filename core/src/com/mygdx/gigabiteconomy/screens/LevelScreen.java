@@ -60,7 +60,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      * @param player            the player character for the level
      * @param enemies           an ArrayList containing all enemy characters for the
      *                          level
-     * @param houses            an ArrayList containing all houses for the level
      * @param staticSprites     an ArrayList containing all static sprites (such as
      *                          fences etc.) for the level
      * @param backgroundTexture the background graphic of the level
