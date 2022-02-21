@@ -233,8 +233,8 @@ public class TileManager {
      * Initialise Sprites on the gameboard
      * @param objsArr ArrayLists of TiledObject to place
      */
-    public void initObjects(ArrayList<TiledObject>... objsArr) {
-        for (ArrayList<TiledObject> arr : objsArr) {
+    public void initObjects(ArrayList<? extends TiledObject>... objsArr) {
+        for (ArrayList<? extends TiledObject> arr : objsArr) {
             for (TiledObject o : arr) {
                 float spriteX = o.getX();
                 float spriteY = o.getY();
@@ -242,10 +242,8 @@ public class TileManager {
                 int spriteW = o.getWidth();
                 ArrayList<Tile> placeAt = this.placeObject((int) spriteX, (int) spriteY, spriteW, spriteH, o);
 
-                //System.out.println(pos.x + " " + pos.y);
-
                 o.setTileManager(this);
-                o.setCurrentTiles(placeAt); //Setting current tiles should be done within player
+                o.setCurrentTiles(placeAt);
             }
         }
     }

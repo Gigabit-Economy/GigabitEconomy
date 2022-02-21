@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
+import com.mygdx.gigabiteconomy.screens.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.badlogic.gdx.utils.Disposable;
 
@@ -22,6 +23,8 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     private Array<TextureAtlas.AtlasRegion> regions;
     // Current image being displayed in the movement animation
     private TextureRegion textureRegion;
+
+    private LevelScreen level;
 
     private DIRECTION directionMoving = null;
     private DIRECTION directionFacing = DIRECTION.EAST;
@@ -58,6 +61,24 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         System.out.println(String.format("Setting velocity to %f %f", deltaHoriz, deltaVert));
 
         setWeapon(weapon);
+    }
+
+    /**
+     * Get the level the MovingSprite is in
+     *
+     * @return the level the sprite is in
+     */
+    public LevelScreen getLevel() {
+        return this.level;
+    }
+
+    /**
+     * Set the level the MovingSprite is in
+     *
+     * @param level the level the MovingSprite is in
+     */
+    public void setLevel(LevelScreen level) {
+        this.level = level;
     }
 
     /**
@@ -432,9 +453,16 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * Called when the sprite's health reaches 0 or less.
      */
     public void destroy() {
-        // dispose of the sprite from memory
-        System.out.println(getTileManager().removeFromRows(this));
+        // clear the sprite's Tile
         getTileManager().placeObject(null, getCurrentTiles());
+
+        // remove the sprite from the level
+        level.removeSprite(this);
+        if (this instanceof Enemy) {
+            level.removeEnemy((Enemy) this);
+        }
+
+        // dispose of the sprite from memory
         dispose();
     }
 

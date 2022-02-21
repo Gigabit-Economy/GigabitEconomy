@@ -40,10 +40,9 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     private ArrayList<GameObject> sprites = new ArrayList<GameObject>(); // First sprite is ALWAYS player
     private SpriteBatch batch;
     private Player player;
-    private ArrayList<TiledObject> enemies;
-    private ArrayList<House> houses;
+    private ArrayList<Enemy> enemies;
     private ParcelVan parcelVan;
-    private ArrayList<TiledObject> staticSprites;
+    private ArrayList<StaticSprite> staticSprites;
 
     private ScoreSystem score = new ScoreSystem(this);
     private int parcels = 5;
@@ -61,18 +60,26 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      * @param player            the player character for the level
      * @param enemies           an ArrayList containing all enemy characters for the
      *                          level
+     * @param parcelVan         the parcel van static sprite, which parcels are
+     *                          collected from
      * @param staticSprites     an ArrayList containing all static sprites (such as
      *                          fences etc.) for the level
      * @param backgroundTexture the background graphic of the level
      */
-    public LevelScreen(GigabitEconomy director, Player player, ArrayList<TiledObject> enemies, ParcelVan parcelVan, ArrayList<TiledObject> staticSprites, Texture backgroundTexture) {
+    public LevelScreen(GigabitEconomy director, Player player, ArrayList<Enemy> enemies, ParcelVan parcelVan, ArrayList<StaticSprite> staticSprites, Texture backgroundTexture) {
         this.director = director;
         this.player = player;
-        this.houses = houses;
         this.enemies = enemies;
         this.parcelVan = parcelVan;
         this.staticSprites = staticSprites;
         this.backgroundTexture = backgroundTexture;
+
+        staticSprites.add(parcelVan);
+
+        player.setLevel(this);
+        for (Enemy enemy : enemies) {
+            enemy.setLevel(this);
+        }
 
         // Create tile manager instance (stated variables explicitly here in case we
         // want to mess about with them)
@@ -111,8 +118,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
         // Add static sprites
         sprites.addAll(staticSprites);
-        // Add parcel van
-        sprites.add(parcelVan);
         // Add player
         sprites.add(player);
         // Add enemies
@@ -191,10 +196,21 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     /**
      * Remove a sprite from the level
      *
-     * @param sprite the GameObject representing the sprite
+     * @param sprite the GameObject (sprite) to be removed
      */
     public void removeSprite(GameObject sprite) {
         sprites.remove(sprite);
+    }
+
+    /**
+     * Remove an Enemy from the level.
+     * To be called after removeSprite() to prevent from being re-added if the LevelScreen is hidden and then
+     * re-shown.
+     *
+     * @param enemy the Enemy to be removed
+     */
+    public void removeEnemy(Enemy enemy) {
+        enemies.remove(enemy);
     }
 
     /**
