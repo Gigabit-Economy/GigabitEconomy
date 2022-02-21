@@ -122,8 +122,10 @@ public class TileManager {
      */
     public ArrayList<Tile> placeObject(TiledObject to, ArrayList<Tile> toPlace) {
         //Removing instance from rowArray if present
+        int i=0;
         for (ArrayList<TiledObject> row : rowArray)
-            row.remove(this);
+            row.remove(to);
+
 
 
         int lowestRow = gridHeight;
