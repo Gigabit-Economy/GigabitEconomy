@@ -122,9 +122,7 @@ public class TileManager {
      * @return toPlace
      */
     public ArrayList<Tile> placeObject(TiledObject to, ArrayList<Tile> toPlace) {
-        //Removing instance from rowArray if present
-        for (ArrayList<TiledObject> row : rowArray)
-            row.remove(to);
+        removeFromRows(to);
 
         int lowestRow = gridHeight;
         for (Tile t : toPlace) {
@@ -134,15 +132,12 @@ public class TileManager {
         }
 
         //Adding to correct row array
-        rowArray[lowestRow].add(to);
+        if (to != null) rowArray[lowestRow].add(to);
 
         return toPlace;
     }
 
     /**
-     * !!
-     * Change below to use above!!
-     * !!
      * Returns ArrayList of unoccupied tiles between coordinates given
      * @param x bottom left coord of where to start
      * @param y bottom left coord of where to start
@@ -238,8 +233,8 @@ public class TileManager {
      * Initialise Sprites on the gameboard
      * @param objsArr ArrayLists of TiledObject to place
      */
-    public void initObjects(ArrayList<TiledObject>... objsArr) {
-        for (ArrayList<TiledObject> arr : objsArr) {
+    public void initObjects(ArrayList<? extends TiledObject>... objsArr) {
+        for (ArrayList<? extends TiledObject> arr : objsArr) {
             for (TiledObject o : arr) {
                 float spriteX = o.getX();
                 float spriteY = o.getY();
@@ -247,10 +242,8 @@ public class TileManager {
                 int spriteW = o.getWidth();
                 ArrayList<Tile> placeAt = this.placeObject((int) spriteX, (int) spriteY, spriteW, spriteH, o);
 
-                //System.out.println(pos.x + " " + pos.y);
-
                 o.setTileManager(this);
-                o.setCurrentTiles(placeAt); //Setting current tiles should be done within player
+                o.setCurrentTiles(placeAt);
             }
         }
     }
@@ -363,6 +356,17 @@ public class TileManager {
             }
         }
         System.out.println(occupied);
+    }
+
+    /**
+     * Removes TiledObject passed from rows
+     * @param to TiledObject to remove from rows
+     */
+    public boolean removeFromRows(TiledObject to) {
+        boolean ret = false;
+        for (ArrayList<TiledObject> row : rowArray)
+            ret |= row.remove(to);
+        return ret;
     }
 
     /**

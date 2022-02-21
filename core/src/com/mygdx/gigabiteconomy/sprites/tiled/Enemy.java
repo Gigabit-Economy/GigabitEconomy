@@ -163,11 +163,10 @@ public class Enemy extends MovingSprite {
             }
             if (agro) {
                 TileManager tm = getTileManager();
-                //Check if player is on adjecent tiles
+                //Check if player is on adjacent tiles
                 if (getTileManager().isGroupOccupiedBy(targetEntity, new ArrayList<>(Arrays.asList(tm.getAdjacentTiles(this.getCurrentTiles().get(0)))))) {
                     System.out.println(targetEntity);
                     super.launchAttack();
-                    setAttacking(true);
                 }
 
                 //Check if player is on the row
@@ -195,5 +194,19 @@ public class Enemy extends MovingSprite {
 
 
         return ret;
+    }
+
+    /**
+     * Destroy the Enemy & remove from the level.
+     * Called when the Enemy's health reaches 0 or less.
+     */
+    @Override
+    public void destroy() {
+        // remove the sprite from the level and clear its tile
+        getTileManager().placeObject(null, getCurrentTiles());
+        getTileManager().removeFromRows(this);
+
+        // dispose of the sprite from memory
+        dispose();
     }
 }

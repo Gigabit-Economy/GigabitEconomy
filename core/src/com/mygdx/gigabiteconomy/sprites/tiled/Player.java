@@ -18,9 +18,7 @@ public class Player extends MovingSprite {
     private static final Random RANDOM = new Random();
 
     private LevelScreen level;
-
     private Parcel parcel;
-
 
     /**
      * Create a new Player sprite (MovingSprite)
@@ -36,14 +34,13 @@ public class Player extends MovingSprite {
     }
 
     /**
-     * Set the level the Player is in
+     * Set the level the MovingSprite is in
      *
-     * @param level the level the Player is in
+     * @param level the level the MovingSprite is in
      */
     public void setLevel(LevelScreen level) {
         this.level = level;
     }
-
 
     /**
      * Method to handle movement of the Player
@@ -125,6 +122,7 @@ public class Player extends MovingSprite {
     @Override
     public void launchAttack() {
         // get Tile adjacent to Player
+        System.out.println(getDirectionFacing());
         Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), getDirectionFacing(), 1);
         if (adjacentTile == null) return; // trying to attack invalid Tile
 
@@ -168,16 +166,14 @@ public class Player extends MovingSprite {
     }
 
     /**
-     * Destroy the player & end the current level.
-     * Called when the player's health reaches 0 or less.
+     * Destroy the Player & end the current level.
+     * Called when the Player's health reaches 0 or less.
      */
     @Override
     public void destroy() {
         if (level != null) {
             level.end();
         }
-
-        super.destroy();
     }
 
     private class Parcel {

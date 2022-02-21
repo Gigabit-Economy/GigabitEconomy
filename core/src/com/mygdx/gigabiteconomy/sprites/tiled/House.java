@@ -36,8 +36,8 @@ public class House extends StaticSprite {
         }
         // if not yet defined, set delivery tile indicator to match coordinates of delivery tile
         if (this.deliveryTileIndicator == null) {
-            float[] tilePosition = this.deliveryTile.getTileCoords();
-            this.deliveryTileIndicator = new TileIndicator((int) tilePosition[0], (int) tilePosition[1]);
+            int[] tilePosition = this.deliveryTile.getPositionTile();
+            this.deliveryTileIndicator = new TileIndicator(tilePosition[0], tilePosition[1]);
         }
 
         // get delivery tile to be owned by House (so it's deliverable to)

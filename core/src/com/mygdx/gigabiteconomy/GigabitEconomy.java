@@ -10,31 +10,26 @@ import com.mygdx.gigabiteconomy.screens.*;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.Gdx;
 
-import java.util.HashMap;
 import java.lang.String;
 
 public class GigabitEconomy extends Game {
     private OrthographicCamera camera;
     private ScreenViewport viewport;
 
-    private static HashMap<String, Screen> screens = new HashMap<>();
-
-    private LevelScreen lastPlayedLevel;
+    private String lastPlayedLevel;
 
     @Override
     public void create() {
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new ScreenViewport(camera);
 
-        // Define screens
-        screens.put("menu", new MenuScreen(this));
-        screens.put("level1", new LevelOneScreen(this));
-        screens.put("pausemenu", new PauseMenu(this));
-        screens.put("levelcomplete", new LevelCompleteScreen(this));
-        screens.put("levelfailed", new LevelFailedScreen(this));
-
-        // Set active screen to main menu
-        setScreen(screens.get("menu"));
+        // Set initial active screen to main menu
+        try {
+            switchScreen("menu");
+        } catch (ScreenException ex) {
+            Gdx.app.error("Exception", "The screen could not be switched when level failed", ex);
+            System.exit(-1);
+        }
     }
 
     public Vector3 getCameraPos() {
@@ -74,14 +69,33 @@ public class GigabitEconomy extends Game {
     }
 
     public void switchScreen(String name) throws ScreenException {
-        Screen toSwitch = screens.get(name);
-        if (toSwitch == null) {
-            throw new ScreenException(String.format("Tried to switch to invalid screen %s", name));
+        Screen toSwitch;
+
+        switch (name) {
+            case "menu":
+                toSwitch = new MenuScreen(this);
+                break;
+            case "pausemenu":
+                toSwitch = new PauseMenu(this);
+                break;
+            case "levelcomplete":
+                toSwitch = new LevelCompleteScreen(this);
+                break;
+            case "levelfailed":
+                toSwitch = new LevelFailedScreen(this);
+                break;
+
+            case "LevelOneScreen":
+                toSwitch = new LevelOneScreen(this);
+                break;
+
+            default:
+                throw new ScreenException(String.format("Tried to switch to invalid screen %s", name));
         }
 
         // if a LevelScreen, record as lastPlayedLevel
         if (toSwitch instanceof LevelScreen) {
-            this.lastPlayedLevel = (LevelScreen) toSwitch;
+            this.lastPlayedLevel = toSwitch.getClass().getSimpleName();
         }
 
         setScreen(toSwitch);
@@ -91,7 +105,7 @@ public class GigabitEconomy extends Game {
         return viewport;
     }
 
-    public LevelScreen getLastPlayedLevel() {
+    public String getLastPlayedLevel() {
         return this.lastPlayedLevel;
     }
 }

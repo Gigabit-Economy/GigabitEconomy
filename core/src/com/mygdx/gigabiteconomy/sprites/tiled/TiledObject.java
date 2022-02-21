@@ -19,7 +19,6 @@ import java.util.ArrayList;
 public abstract class TiledObject extends GameObject {
     private TileManager tileManager;
 
-    //private Tile currentTile;
     private ArrayList<Tile> currentTiles;
     private int height;
     private int width;

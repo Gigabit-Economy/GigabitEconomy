@@ -32,7 +32,7 @@ public class LevelOneScreen extends LevelScreen {
                                   MovingSprite.DIRECTION.NORTH,MovingSprite.DIRECTION.NORTH)
             ));
 
-    private static final ArrayList<TiledObject> ENEMIES = new ArrayList<TiledObject>(Arrays.asList(ENEMY_ONE));
+    private static final ArrayList<Enemy> ENEMIES = new ArrayList<Enemy>(Arrays.asList(ENEMY_ONE));
 
     // Parcel van (for Player to collect parcels from)
     private static final ParcelVan PARCEL_VAN = new ParcelVan(15, 3);
@@ -41,7 +41,7 @@ public class LevelOneScreen extends LevelScreen {
     private static final House HOUSE_ONE = new House(House.HouseType.DETACHED, 0);
     private static final House HOUSE_TWO = new House(House.HouseType.TWO_STORY, 10);
     private static final StaticSprite FENCE = new StaticSprite("finished_assets/static_sprites/fence.png", 5, 0, 1, 2);
-    private static final ArrayList<TiledObject> STATIC_SPRITES = new ArrayList<TiledObject>(Arrays.asList(HOUSE_ONE, HOUSE_TWO, FENCE));
+    private static final ArrayList<StaticSprite> STATIC_SPRITES = new ArrayList<StaticSprite>(Arrays.asList(HOUSE_ONE, HOUSE_TWO, FENCE));
 
     // Level screen background texture
     private static final Texture BACKGROUND_TEXTURE = new Texture("finished_assets/levels/level1.png");
@@ -54,7 +54,5 @@ public class LevelOneScreen extends LevelScreen {
      */
     public LevelOneScreen(GigabitEconomy director) {
         super(director, PLAYER, ENEMIES, PARCEL_VAN, STATIC_SPRITES, BACKGROUND_TEXTURE);
-
-        PLAYER.setLevel(this);
     }
 }

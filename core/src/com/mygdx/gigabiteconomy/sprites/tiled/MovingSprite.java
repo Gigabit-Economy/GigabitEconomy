@@ -125,7 +125,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
             return;
         }
         directionFacing = dir;
-        
+
         deltaMove.x = velocity.x * dir.dxMult; deltaMove.y = velocity.y * dir.dyMult;
     }
 
@@ -377,8 +377,12 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     public void setHealth(int health) {
         this.health = health;
 
+        if (this instanceof Enemy) {
+            System.out.println("Thats a lotta damage!" + this.health);
+        }
+
         if (health <= 0) {
-            //destroy();
+            destroy();
         }
     }
 
@@ -427,10 +431,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * Destroy the sprite.
      * Called when the sprite's health reaches 0 or less.
      */
-    public void destroy() {
-        // dispose of the sprite from memory
-        dispose();
-    }
+    public abstract void destroy();
 
     /**
      * Remove the sprite's texture atlas from memory once the sprite is no longer needed

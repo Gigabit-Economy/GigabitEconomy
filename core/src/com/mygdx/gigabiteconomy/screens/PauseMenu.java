@@ -136,9 +136,9 @@ public class PauseMenu implements Screen, InputProcessor {
 
                     if (buttonName == "closepausemenu") {
                         try {
-                            director.switchScreen("level1");
+                            director.switchScreen("LevelOneScreen");
                         } catch (Exception ex) {
-                            Gdx.app.error("Exception", String.format("Error switching screen to %s", "level1"), ex);
+                            Gdx.app.error("Exception", String.format("Error switching screen to LevelOneScreen"), ex);
                             System.exit(-1);
                         }
                     }  
@@ -199,9 +199,9 @@ public class PauseMenu implements Screen, InputProcessor {
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.P || keycode == Input.Keys.ESCAPE) {
             try {
-                director.switchScreen("level1");
+                director.switchScreen("LevelOneScreen");
             } catch (Exception ex) {
-                Gdx.app.error("Exception", String.format("Error switching screen to %s", "level1"), ex);
+                Gdx.app.error("Exception", String.format("Error switching screen to LevelOneScreen"), ex);
                 System.exit(-1);
             }
         }
