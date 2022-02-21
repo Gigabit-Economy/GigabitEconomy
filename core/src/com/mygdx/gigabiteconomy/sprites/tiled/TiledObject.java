@@ -1,6 +1,7 @@
 package com.mygdx.gigabiteconomy.sprites.tiled;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.gigabiteconomy.screens.Tile;
@@ -71,6 +72,13 @@ public abstract class TiledObject extends GameObject {
     public ArrayList<Tile> getCurrentTiles() {
         return currentTiles;
     }
+
+    /**
+     * Abstract method defines how sprite is drawn
+     * @param batch
+     */
+    public abstract void drawOn(SpriteBatch batch, float delta);
+
 
     /**
      * Set the Tile(s) the sprite the currently occupies

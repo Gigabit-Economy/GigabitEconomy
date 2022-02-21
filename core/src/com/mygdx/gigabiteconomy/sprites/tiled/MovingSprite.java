@@ -1,5 +1,6 @@
 package com.mygdx.gigabiteconomy.sprites.tiled;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -66,6 +67,18 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      */
     public TextureRegion getTextureRegion() {
         return textureRegion;
+    }
+
+    @Override
+    public void drawOn(SpriteBatch batch, float delta) {
+        try {
+            move(delta);
+        } catch (TileMovementException ex) {
+            System.out.println("Sprite was blocked");
+        }
+
+        float offsetX = ((TextureAtlas.AtlasRegion)textureRegion).offsetX;
+        batch.draw(textureRegion, getX()-offsetX, getY());
     }
 
     /**

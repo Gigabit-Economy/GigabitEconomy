@@ -8,6 +8,8 @@ import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 
 /**
  * Class used to hold and manage all Tiles.
@@ -359,6 +361,14 @@ public class TileManager {
             }
         }
         System.out.println(occupied);
+    }
+
+    public ArrayList<TiledObject>[] getRowArray() {
+        ArrayList<TiledObject>[] cloned = new ArrayList[rowArray.length];
+        for (int i=0; i<rowArray.length; i++) {
+            cloned[i] = (ArrayList<TiledObject>)rowArray[i].clone();
+        }
+        return cloned;
     }
 
 }
