@@ -71,7 +71,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      */
     public void addPlayer(Player player) {
         this.player = player;
-        player.setLevel(this);
+        this.player.setLevel(this);
 
         addSprite(player);
     }
