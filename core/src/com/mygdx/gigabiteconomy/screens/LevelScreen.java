@@ -30,15 +30,13 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
     private TileManager tileManager;
 
+    private String backgroundTexturePng;
     private Texture backgroundTexture;
     private Sprite backgroundSprite;
-
-    private ArrayList<GameObject> sprites = new ArrayList<GameObject>(); // First sprite is ALWAYS player
     private SpriteBatch batch;
     private Player player;
-    private ArrayList<Enemy> enemies;
+    private ArrayList<Enemy> enemies = new ArrayList<>();
     private ParcelVan parcelVan;
-    private ArrayList<StaticSprite> staticSprites;
 
     private ScoreSystem score = new ScoreSystem(this.getClass().getSimpleName());
     private int parcels = 5;
@@ -49,30 +47,16 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
     /**
      * A template constructor for use by all level screen subclasses. Sets
-     * properties that differ between levels
-     * such as game director, player/enemy character sprites & background texture.
+     * properties that differ between levels such as game director & background texture.
      *
      * @param director          the instance of the game director
-     * @param player            the player character for the level
-     * @param enemies           an ArrayList containing all enemy characters for the
-     *                          level
-     * @param parcelVan         the parcel van static sprite, which parcels are
-     *                          collected from
-     * @param staticSprites     an ArrayList containing all static sprites (such as
-     *                          fences etc.) for the level
-     * @param backgroundTexture the background graphic of the level
+     * @param backgroundTexture the background graphic png of the level
      */
-    public LevelScreen(GigabitEconomy director, Player player, ArrayList<Enemy> enemies, ParcelVan parcelVan, ArrayList<StaticSprite> staticSprites, Texture backgroundTexture) {
+    public LevelScreen(GigabitEconomy director, String backgroundTexturePng) {
         this.director = director;
-        this.player = player;
-        this.enemies = enemies;
-        this.parcelVan = parcelVan;
-        this.staticSprites = staticSprites;
-        this.backgroundTexture = backgroundTexture;
-
-        staticSprites.add(parcelVan);
-
-        player.setLevel(this);
+        this.backgroundTexturePng = backgroundTexturePng;
+        // Add background
+        this.backgroundTexture = new Texture(this.backgroundTexturePng);
 
         // Create Tile Manager for level
         int backgroundTextureHeight = backgroundTexture.getHeight();
@@ -80,10 +64,69 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         int numberOfTilesHigh = 18;
         tileManager = new TileManager(backgroundTextureHeight / numberOfTilesHigh, backgroundTextureHeight / 2,
                 backgroundTextureWidth, 0, 0);
+    }
 
-        // Initialise each sprite's position on Tiles using the Tile Manager
-        ArrayList<TiledObject> playerList = new ArrayList<TiledObject>(Arrays.asList(player));
-        tileManager.initObjects(playerList, staticSprites, enemies); // in priority order
+    /**
+     * Add a Player to the level.
+     * If level already has a Player, as a level can only have one, it'll be overridden.
+     *
+     * @param player the Player to be added to the level
+     */
+    public void addPlayer(Player player) {
+        this.player = player;
+        this.player.setLevel(this);
+
+        addSprite(player);
+    }
+
+    /**
+     * Add Enemies to the level.
+     * Any passed Enemies will be added to the list of existing Enemies already added.
+     *
+     * @param enemies an ArrayList of enemies to be added
+     */
+    public void addEnemies(ArrayList<Enemy> enemies) {
+        this.enemies.addAll(enemies);
+        addSprites(enemies);
+    }
+
+    /**
+     * Add a Parcel Van to the level.
+     * If level already has a Parcel Van, as a level can only have one, it'll be overridden.
+     *
+     * @param parcelVan the Parcel Van to be added to the level
+     */
+    public void addParcelVan(ParcelVan parcelVan) {
+        this.parcelVan = parcelVan;
+        addSprite(parcelVan);
+    }
+
+    /**
+     * Adds ArrayList(s) of sprites to the level, instantiating them with the Tile Manager
+     *
+     * @param objArr ArrayList(s) containing sprites (TiledObjects) - in priority order
+     */
+    public void addSprites(ArrayList<? extends TiledObject>... objArr) {
+        tileManager.initObjects(objArr);
+    }
+
+    /**
+     * Add a sprite (TiledObject) to the level
+     *
+     * @param sprite the TiledObject representing the sprite
+     */
+    public void addSprite(TiledObject sprite) {
+        ArrayList<TiledObject> spriteList = new ArrayList<TiledObject>(Arrays.asList(sprite));
+        tileManager.initObjects(spriteList);
+    }
+
+    /**
+     * Remove a sprite (TiledObject) from the level
+     *
+     * @param sprite the TiledObject (sprite) to be removed
+     */
+    public void removeSprite(TiledObject sprite) {
+        tileManager.removeFromRows(sprite);
     }
 
     /**
@@ -95,14 +138,14 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     public void show() {
         Gdx.input.setInputProcessor(this);
 
-        // Add background
-        backgroundSprite = new Sprite(backgroundTexture);
+
+        this.backgroundSprite = new Sprite(backgroundTexture);
 
         System.out.println(
                 "Texture dimensions: h:" + backgroundTexture.getHeight() + " w:" + backgroundTexture.getWidth());
 
-        batch = new SpriteBatch();
-        font = new BitmapFont();
+        this.batch = new SpriteBatch();
+        this.font = new BitmapFont();
     }
 
     /**
@@ -156,36 +199,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     }
 
     /**
-     * Add a sprite (TiledObject) to the level
-     *
-     * @param sprite the TiledObject representing the sprite
-     */
-    public void addSprite(TiledObject sprite) {
-        ArrayList<TiledObject> spriteList = new ArrayList<TiledObject>(Arrays.asList(sprite));
-        tileManager.initObjects(spriteList);
-    }
-
-    /**
-     * Remove a sprite (TiledObject) from the level
-     *
-     * @param sprite the TiledObject (sprite) to be removed
-     */
-    public void removeSprite(TiledObject sprite) {
-        tileManager.removeFromRows(sprite);
-    }
-
-    /**
-     * Remove an Enemy from the level.
-     * To be called after removeSprite() to prevent from being re-added if the LevelScreen is hidden and then
-     * re-shown.
-     *
-     * @param enemy the Enemy to be removed
-     */
-    public void removeEnemy(Enemy enemy) {
-        enemies.remove(enemy);
-    }
-
-    /**
      * Show an error message to the user
      *
      * @param error the error message
@@ -214,9 +227,11 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     {
         ArrayList<House> houses = new ArrayList<House>();
 
-        for (TiledObject sprite : staticSprites) {
-            if (sprite instanceof House) {
-                houses.add((House) sprite);
+        for (ArrayList<TiledObject> sprites : tileManager.getRowArray()) {
+            for (TiledObject sprite : sprites) {
+                if (sprite instanceof House) {
+                    houses.add((House) sprite);
+                }
             }
         }
 
@@ -418,13 +433,11 @@ public abstract class LevelScreen implements Screen, InputProcessor {
             return;
         }
 
-        backgroundTexture.dispose();
-        batch.dispose();
-        font.dispose();
-
-        // dispose of sprites (to dispose their texture/texture atlas)
-        for (GameObject sprite : sprites) {
-            sprite.dispose();
-        }
+        // dispose of Tile Manager & its sprites (to dispose their texture/texture atlas)
+//        tileManager.dispose();
+//
+//        backgroundTexture.dispose();
+//        batch.dispose();
+//        font.dispose();
     }
 }
