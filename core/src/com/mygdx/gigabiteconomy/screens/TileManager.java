@@ -1,5 +1,6 @@
 package com.mygdx.gigabiteconomy.screens;
 
+import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.gigabiteconomy.exceptions.TileException;
 import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
 import com.mygdx.gigabiteconomy.sprites.tiled.Player;
@@ -16,7 +17,7 @@ import java.util.Iterator;
  * - Each MySprite instance is passed the TileManager it belongs to and sets a Tile to occupy
  * - Then Player position can be retrieved from the Tile it's on (or the bottom leftmost if multiple -- Rat King)
  */
-public class TileManager {
+public class TileManager implements Disposable {
 
     private Tile[][] tileArray;
     private int sideLength;
@@ -382,4 +383,15 @@ public class TileManager {
         return cloned;
     }
 
+    /**
+     * Remove all sprites in the Tile Manager from memory.
+     * To be called when the associated level ends/completes.
+     */
+    public void dispose () {
+        for (ArrayList<TiledObject> sprites : getRowArray()) {
+            for (TiledObject sprite : sprites) {
+                sprite.dispose();
+            }
+        }
+    }
 }

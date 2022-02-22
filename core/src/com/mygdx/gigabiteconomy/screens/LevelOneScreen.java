@@ -14,12 +14,15 @@ import java.util.LinkedList;
  * Level 1 screen
  */
 public class LevelOneScreen extends LevelScreen {
+    // Level screen background texture
+    private static final Texture BACKGROUND_TEXTURE = new Texture("finished_assets/levels/level1.png");
+
     // Player character
-    private static final Weapon PLAYER_WEAPON = Weapon.KNIFE;
-    private static final Player PLAYER = new Player(PLAYER_WEAPON, 0 , 0, 1, 1);
+    private final Weapon playerWeapon = Weapon.KNIFE;
+    private final Player player = new Player(playerWeapon, 0 , 0, 1, 1);
 
     /* ENEMIES */
-    private static final Enemy ENEMY_ONE = new Enemy(Weapon.KATANA, 20, 1, 1, 1, PLAYER,
+    private final Enemy enemyOne = new Enemy(Weapon.KATANA, 20, 1, 1, 1, player,
             5f, 1f,
             new LinkedList<>(
                     Arrays.asList(MovingSprite.DIRECTION.NORTH,MovingSprite.DIRECTION.NORTH,
@@ -32,19 +35,16 @@ public class LevelOneScreen extends LevelScreen {
                                   MovingSprite.DIRECTION.NORTH,MovingSprite.DIRECTION.NORTH)
             ));
 
-    private static final ArrayList<Enemy> ENEMIES = new ArrayList<Enemy>(Arrays.asList(ENEMY_ONE));
+    private final ArrayList<Enemy> enemies = new ArrayList<Enemy>(Arrays.asList(enemyOne));
 
     // Parcel van (for Player to collect parcels from)
-    private static final ParcelVan PARCEL_VAN = new ParcelVan(15, 3);
+    private final ParcelVan parcelVan = new ParcelVan(15, 3);
 
     /* STATIC SPRITES (HOUSES, FENCES ETC...) */
-    private static final House HOUSE_ONE = new House(House.HouseType.DETACHED, 0);
-    private static final House HOUSE_TWO = new House(House.HouseType.TWO_STORY, 10);
-    private static final StaticSprite FENCE = new StaticSprite("finished_assets/static_sprites/fence.png", 5, 0, 1, 2);
-    private static final ArrayList<StaticSprite> STATIC_SPRITES = new ArrayList<StaticSprite>(Arrays.asList(HOUSE_ONE, HOUSE_TWO, FENCE));
-
-    // Level screen background texture
-    private static final Texture BACKGROUND_TEXTURE = new Texture("finished_assets/levels/level1.png");
+    private final House houseOne = new House(House.HouseType.DETACHED, 0);
+    private final House houseTwo = new House(House.HouseType.TWO_STORY, 10);
+    private final StaticSprite fence = new StaticSprite("finished_assets/static_sprites/fence.png", 5, 0, 1, 2);
+    private final ArrayList<StaticSprite> staticSprites = new ArrayList<StaticSprite>(Arrays.asList(houseOne, houseTwo, fence));
 
     /**
      * Creates a new screen instance for Level 1 based off the LevelScreen abstract class, which contains all shared
@@ -53,6 +53,11 @@ public class LevelOneScreen extends LevelScreen {
      * @param director the instance of the game director
      */
     public LevelOneScreen(GigabitEconomy director) {
-        super(director, PLAYER, ENEMIES, PARCEL_VAN, STATIC_SPRITES, BACKGROUND_TEXTURE);
+        super(director, BACKGROUND_TEXTURE);
+
+        addPlayer(player);
+        addEnemies(enemies);
+        addParcelVan(parcelVan);
+        addSprites(staticSprites);
     }
 }
