@@ -39,4 +39,4 @@ Each level should extend the _LevelScreen_ class, passing the following argument
 
 Each of these should be instantiated as constant properties in your subclass to LevelScreen.
 
-The screen can then be added to the _game director (GigabitEconomy.java)_ class's `create()` method by adding it to the `screens` hashmap. To show the screen to the user, use `switchScreen()` in the same game director class, passing the name of the screen as defined in the hashmap.
+The screen can then be added to the _game director (GigabitEconomy.java)_ class's `switchScreen()` statement by adding it to the switch statement. To show the screen to the user, call `switchScreen()`, passing the name of the screen as defined in the switch statement.
