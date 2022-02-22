@@ -23,11 +23,6 @@ public class ParcelVan extends StaticSprite {
      */
     public ParcelVan(int x, int y) {
         super(W_PARCELS_PNG, x, y, HEIGHT, WIDTH);
-
-        int[] tilePosition = this.getCurrentTiles().get((WIDTH -1) / 2).getPositionTile(); // get middle Tile
-        this.tileIndicator = new TileIndicator(tilePosition[0], tilePosition[1]);
-
-        setActive();
     }
 
     /**
@@ -35,6 +30,11 @@ public class ParcelVan extends StaticSprite {
      * A Parcel Van is active when the Player doesn't have a Parcel and has some left to collect.
      */
     public void setActive() {
+        if (this.tileIndicator == null) {
+            int[] tilePosition = this.getCurrentTiles().get((WIDTH -1) / 2).getPositionTile(); // get middle Tile
+            this.tileIndicator = new TileIndicator(tilePosition[0], tilePosition[1]);
+        }
+
         // add tile indicator to Tile
         ArrayList<TileIndicator> tileIndicatorArrayList = new ArrayList<>(Arrays.asList(this.tileIndicator));
         getTileManager().initObjects(tileIndicatorArrayList);
