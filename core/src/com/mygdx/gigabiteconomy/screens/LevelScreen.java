@@ -55,6 +55,8 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     public LevelScreen(GigabitEconomy director, String backgroundTexturePng) {
         this.director = director;
         this.backgroundTexturePng = backgroundTexturePng;
+        // Add background
+        this.backgroundTexture = new Texture(this.backgroundTexturePng);
 
         // Create Tile Manager for level
         int backgroundTextureHeight = backgroundTexture.getHeight();
@@ -136,8 +138,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     public void show() {
         Gdx.input.setInputProcessor(this);
 
-        // Add background
-        this.backgroundTexture = new Texture(this.backgroundTexturePng);
+
         this.backgroundSprite = new Sprite(backgroundTexture);
 
         System.out.println(
