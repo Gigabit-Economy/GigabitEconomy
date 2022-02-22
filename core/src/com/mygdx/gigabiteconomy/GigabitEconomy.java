@@ -18,6 +18,8 @@ public class GigabitEconomy extends Game {
 
     private String lastPlayedLevel;
 
+    private Screen fromPause;
+
     @Override
     public void create() {
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -76,6 +78,7 @@ public class GigabitEconomy extends Game {
                 toSwitch = new MenuScreen(this);
                 break;
             case "pausemenu":
+                fromPause = getScreen();
                 toSwitch = new PauseMenu(this);
                 break;
             case "levelcomplete":
@@ -86,7 +89,13 @@ public class GigabitEconomy extends Game {
                 break;
 
             case "LevelOneScreen":
-                toSwitch = new LevelOneScreen(this);
+                if (fromPause != null) {
+                    setScreen(fromPause);
+                    fromPause = null;
+                    return;
+                } else {
+                    toSwitch = new LevelOneScreen(this);
+                }
                 break;
 
             default:
