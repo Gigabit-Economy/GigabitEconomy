@@ -3,6 +3,9 @@ package com.mygdx.gigabiteconomy.sprites.tiled;
 import com.mygdx.gigabiteconomy.screens.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * Class representing a house (where Parcels are delivered to by the Player)
  */
@@ -26,10 +29,8 @@ public class House extends StaticSprite {
     /**
      * Mark the House as the delivery location for a level's current Parcel.
      * Defines the nearest Tile to the House's screen coordinates as its delivery location.
-     *
-     * @param level the level the House is to be a delivery location in
      */
-    public void markAsDeliveryLocation(LevelScreen level) {
+    public void markAsDeliveryLocation() {
         // if not yet defined, set delivery tile to tile covering door
         if (this.deliveryTile == null) {
             this.deliveryTile = getCurrentTiles().get(DOOR_INDEX);
@@ -44,22 +45,22 @@ public class House extends StaticSprite {
         this.deliveryTile.setOccupied(null);
         this.deliveryTile.setOwned(this);
 
-        level.addSprite(deliveryTileIndicator);
+        // add indicator to Tile
+        ArrayList<TileIndicator> deliveryTileIndicatorArrayList = new ArrayList<>(Arrays.asList(this.deliveryTileIndicator));
+        getTileManager().initObjects(deliveryTileIndicatorArrayList);
     }
 
     /**
      * Un-mark the House as the delivery location for a level
-     *
-     * @param level the level the House was a delivery location in (i.e. is to be removed from)
      */
-    public void unmarkAsDeliveryLocation(LevelScreen level) {
+    public void unmarkAsDeliveryLocation() {
         if (this.deliveryTile != null) {
             this.deliveryTile.setOccupied(this);
             this.deliveryTile.setOwned(null);
         }
 
         if (this.deliveryTileIndicator != null) {
-            level.removeSprite(deliveryTileIndicator);
+            getTileManager().removeFromRows(deliveryTileIndicator);
         }
     }
 
