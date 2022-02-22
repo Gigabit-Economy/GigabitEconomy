@@ -104,17 +104,6 @@ public class TileManager {
     }
 
     /**
-     * Deprecated? - This method is useless now!
-     * Place given object on given single Tile
-     * @param toTile Tile to place given object on
-     * @param objectToPlace Object to place on given Tile
-     */
-    private Tile placeObject(Tile toTile, TiledObject objectToPlace) {
-        toTile.setOccupied(objectToPlace);
-        return toTile;
-    }
-
-    /**
      * Method to place an object on a group of Tiles.
      * Modifies rowArray accordingly
      * @param to TiledObject to place
@@ -143,10 +132,9 @@ public class TileManager {
      * @param y bottom left coord of where to start
      * @param width of tile segment to return
      * @param height of tile segment to return
-     * @param objectToPlace object to place, can be null
      * @return ArrayList of requested tiles
      */
-    public ArrayList<Tile> placeObject(int x, int y, int width, int height, TiledObject objectToPlace) {
+    public ArrayList<Tile> getTiles(int x, int y, int width, int height) {
         ArrayList<Tile> toPlace = new ArrayList<>();
 
         for (int i=0; i<width; i++) {
@@ -227,8 +215,6 @@ public class TileManager {
         return adjacentTiles;
     }
 
-    ////NOTE: I wonder if we can change this method to only set tile manager
-    ////      rest seems kinda redundant...
     /**
      * Initialise Sprites on the gameboard
      * @param objsArr ArrayLists of TiledObject to place
@@ -236,11 +222,12 @@ public class TileManager {
     public void initObjects(ArrayList<? extends TiledObject>... objsArr) {
         for (ArrayList<? extends TiledObject> arr : objsArr) {
             for (TiledObject o : arr) {
+                //Always coordinates of starting tile
                 float spriteX = o.getX();
                 float spriteY = o.getY();
                 int spriteH = o.getHeight();
                 int spriteW = o.getWidth();
-                ArrayList<Tile> placeAt = this.placeObject((int) spriteX, (int) spriteY, spriteW, spriteH, o);
+                ArrayList<Tile> placeAt = this.getTiles((int) spriteX, (int) spriteY, spriteW, spriteH);
 
                 o.setTileManager(this);
                 o.setCurrentTiles(placeAt);
@@ -295,48 +282,6 @@ public class TileManager {
             ret |= t.withinTile(mo);
         }
         return ret;
-    }
-
-    /**
-     * Method returns Tile placed over x, y
-     *
-     * @param x coord within Tile to get
-     * @param y coord within Tile to get
-     * @return Tile which holds [x, y]
-     */
-    public Tile getTileFromCoords(float x, float y) throws TileException {
-        try {
-            return tileArray[(int)x/sideLength][(int)y/sideLength];
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new TileException("Could not find a Tile at " + x + ", " + y);
-        }
-    }
-
-    /**
-     * Get the nearest Tile to passed x, y coordinates
-     *
-     * @param x the x coordinate
-     * @param y the y coordinate
-     * @return the nearest tile to x, y
-     */
-    public Tile getNearestTileToCoords(float x, float y) throws TileException {
-        try {
-            return getTileFromCoords(x, y);
-        } catch (TileException ex) {
-            if (gridWidth > (x / sideLength)) {
-                x = gridWidth;
-            }
-
-            if (gridHeight > (y / sideLength)) {
-                y = gridHeight;
-            }
-
-            return getTileFromCoords(x, y);
-        }
-    }
-
-    public int getSideLength() {
-        return sideLength;
     }
 
     public int getWidth() { return gridWidth; }
