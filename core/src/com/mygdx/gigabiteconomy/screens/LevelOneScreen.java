@@ -15,7 +15,7 @@ import java.util.LinkedList;
  */
 public class LevelOneScreen extends LevelScreen {
     // Level screen background texture
-    private static final Texture BACKGROUND_TEXTURE = new Texture("finished_assets/levels/level1.png");
+    private static final String BACKGROUND_TEXTURE_PNG = "finished_assets/levels/level1.png";
 
     // Player character
     private final Weapon playerWeapon = Weapon.KNIFE;
@@ -53,7 +53,7 @@ public class LevelOneScreen extends LevelScreen {
      * @param director the instance of the game director
      */
     public LevelOneScreen(GigabitEconomy director) {
-        super(director, BACKGROUND_TEXTURE);
+        super(director, BACKGROUND_TEXTURE_PNG);
 
         addPlayer(player);
         addEnemies(enemies);

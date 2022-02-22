@@ -30,6 +30,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
     private TileManager tileManager;
 
+    private String backgroundTexturePng;
     private Texture backgroundTexture;
     private Sprite backgroundSprite;
     private SpriteBatch batch;
@@ -49,11 +50,11 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      * properties that differ between levels such as game director & background texture.
      *
      * @param director          the instance of the game director
-     * @param backgroundTexture the background graphic of the level
+     * @param backgroundTexture the background graphic png of the level
      */
-    public LevelScreen(GigabitEconomy director, Texture backgroundTexture) {
+    public LevelScreen(GigabitEconomy director, String backgroundTexturePng) {
         this.director = director;
-        this.backgroundTexture = backgroundTexture;
+        this.backgroundTexturePng = backgroundTexturePng;
 
         // Create Tile Manager for level
         int backgroundTextureHeight = backgroundTexture.getHeight();
@@ -136,13 +137,14 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(this);
 
         // Add background
-        backgroundSprite = new Sprite(backgroundTexture);
+        this.backgroundTexture = new Texture(this.backgroundTexturePng);
+        this.backgroundSprite = new Sprite(backgroundTexture);
 
         System.out.println(
                 "Texture dimensions: h:" + backgroundTexture.getHeight() + " w:" + backgroundTexture.getWidth());
 
-        batch = new SpriteBatch();
-        font = new BitmapFont();
+        this.batch = new SpriteBatch();
+        this.font = new BitmapFont();
     }
 
     /**
@@ -430,11 +432,11 @@ public abstract class LevelScreen implements Screen, InputProcessor {
             return;
         }
 
+        // dispose of Tile Manager & its sprites (to dispose their texture/texture atlas)
+        tileManager.dispose();
+
         backgroundTexture.dispose();
         batch.dispose();
         font.dispose();
-
-        // dispose of Tile Manager & its sprites (to dispose their texture/texture atlas)
-        tileManager.dispose();
     }
 }
