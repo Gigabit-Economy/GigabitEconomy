@@ -39,15 +39,18 @@ public class House extends StaticSprite {
         if (this.deliveryTileIndicator == null) {
             int[] tilePosition = this.deliveryTile.getPositionTile();
             this.deliveryTileIndicator = new TileIndicator(tilePosition[0], tilePosition[1]);
+            // add indicator to Tile
+            ArrayList<TileIndicator> deliveryTileIndicatorArrayList = new ArrayList<>(Arrays.asList(this.deliveryTileIndicator));
+            getTileManager().initObjects(deliveryTileIndicatorArrayList);
+        } else {
+            getTileManager().placeObject(this.deliveryTileIndicator, this.deliveryTileIndicator.getCurrentTiles());
         }
 
         // get delivery tile to be owned by House (so it's deliverable to)
         this.deliveryTile.setOccupied(null);
         this.deliveryTile.setOwned(this);
 
-        // add indicator to Tile
-        ArrayList<TileIndicator> deliveryTileIndicatorArrayList = new ArrayList<>(Arrays.asList(this.deliveryTileIndicator));
-        getTileManager().initObjects(deliveryTileIndicatorArrayList);
+
     }
 
     /**
