@@ -90,7 +90,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * based on its directionFacing & weapon.
      * Called when directionFacing or weapon is changed.
      */
-    public void updateTextureRegions() {
+    public void updateTextureRegions(DIRECTION directionFacing) {
         String spriteDirection;
         switch (directionFacing) {
             case NORTH: //direction at start should always be east
@@ -108,7 +108,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         String movementConfig = String.format("%s/movement/%s%s.txt", this.basePath, selectedWeapon, spriteDirection);
         String attackingConfig = String.format("%s/attacks/%s%s.txt", this.basePath, selectedWeapon, spriteDirection);
 
-        System.out.println(movementConfig + " " + attackingConfig);
+        System.out.println("Updating to textures for: " + directionFacing + " " + movementConfig + " " + attackingConfig);
         this.ta = new TextureAtlas(movementConfig);
         this.regions = ta.getRegions();
         this.textureRegion = regions.get(0);
@@ -123,12 +123,14 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * @param dir the direction enum to move in
      */
     public void setDirectionMovement(MovingSprite.DIRECTION dir) {
+
         directionMoving = dir;
         if (directionMoving == null) {
             deltaMove.x = 0;
             deltaMove.y = 0;
             return;
         }
+        if (dir != directionFacing) updateTextureRegions(dir);
         directionFacing = dir;
 
         deltaMove.x = velocity.x * dir.dxMult; deltaMove.y = velocity.y * dir.dyMult;
@@ -200,7 +202,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      */
     public ArrayList<Tile> setNextTiles() {
         //Setting next direction
-        updateTextureRegions();
+        //updateTextureRegions();
 
         ArrayList<Tile> toSet = getTileManager().getNextTiles(this, getDirectionMoving(), 1);
 
@@ -341,7 +343,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
 
-        updateTextureRegions();
+        updateTextureRegions(directionFacing);
     }
 
     /**
