@@ -32,8 +32,8 @@ public class Enemy extends MovingSprite {
      * @param height of Tiles to occupy
      * @param width of Tiles to occupy
      */
-    public Enemy(Weapon weapon, int x, int y, int height, int width, Player targetEntity, float deltaHoriz, float deltaVert, LinkedList<DIRECTION> movePath) {
-        super(weapon, x, y, height, width, deltaHoriz, deltaVert);
+    public Enemy(Weapon weapon, int x, int y, int height, int width, Player targetEntity, float deltaHoriz, float deltaVert, String basePath, LinkedList<DIRECTION> movePath) {
+        super(weapon, x, y, height, width, deltaHoriz, deltaVert, basePath);
 
         this.movePath = movePath;
 
@@ -128,12 +128,6 @@ public class Enemy extends MovingSprite {
     }
 
     @Override
-    public void setNextDirection() {
-        super.setDirectionMovement(currentPath.remove());
-        currentPath.add(getDirectionMoving());
-    }
-
-    @Override
     public boolean move(float delta) throws TileMovementException {
         boolean ret = super.move(delta); //Checks if we've arrived else moved
 
@@ -159,8 +153,9 @@ public class Enemy extends MovingSprite {
             if (checkAgro()) {
                 System.out.println("Agro set to true");
                 setPath("agro");
-                setNextDirection();
             }
+            super.setDirectionMovement(currentPath.remove());
+            currentPath.add(getDirectionMoving());
             if (agro) {
                 TileManager tm = getTileManager();
                 //Check if player is on adjacent tiles
@@ -179,8 +174,6 @@ public class Enemy extends MovingSprite {
                 } else {
                     setPath("agro");
                 }
-
-
             }
 
         }

@@ -29,8 +29,8 @@ public class Player extends MovingSprite {
      * @param height of Tiles to occupy
      * @param width of Tiles to occupy
      */
-    public Player(Weapon weapon, int x, int y, int height, int width) {
-        super(weapon, x, y, height, width, 3.5f, 3f);
+    public Player(Weapon weapon, int x, int y, int height, int width, String basePath) {
+        super(weapon, x, y, height, width, 3.5f, 3f, basePath);
     }
 
     /**
@@ -84,10 +84,6 @@ public class Player extends MovingSprite {
      */
     public void stopMovement() {
         setMoving(false);
-    }
-
-    @Override
-    public void setNextDirection() {
     }
 
     /**

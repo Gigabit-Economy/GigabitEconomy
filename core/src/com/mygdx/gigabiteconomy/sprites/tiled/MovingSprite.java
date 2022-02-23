@@ -41,6 +41,8 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     private boolean attacking = false;
     private Weapon weapon;
 
+    private final String basePath;
+
     public int textureOffset = 126;//Pixel offset of texture
 
     /**
@@ -49,8 +51,10 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * @param x position of Tile (within tile grid) to place sprite
      * @param y position of Tile (within tile grid) to place sprite
      */
-    public MovingSprite(Weapon weapon, int x, int y, int height, int width, float deltaHoriz, float deltaVert) {
+    public MovingSprite(Weapon weapon, int x, int y, int height, int width, float deltaHoriz, float deltaVert, String pathToMoveAndAttackMaps) {
         super(x, y, height, width);
+
+        this.basePath = pathToMoveAndAttackMaps;
 
         velocity.x = deltaHoriz;
         velocity.y = deltaVert;
@@ -101,9 +105,10 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         }
 
         String selectedWeapon = weapon.name().toLowerCase();
-        String movementConfig = String.format("finished_assets/player/movement/%s%s.txt", selectedWeapon, spriteDirection);
-        String attackingConfig = String.format("finished_assets/player/attacks/%s%s.txt", selectedWeapon, spriteDirection);
+        String movementConfig = String.format("%s/movement/%s%s.txt", this.basePath, selectedWeapon, spriteDirection);
+        String attackingConfig = String.format("%s/attacks/%s%s.txt", this.basePath, selectedWeapon, spriteDirection);
 
+        System.out.println(movementConfig + " " + attackingConfig);
         this.ta = new TextureAtlas(movementConfig);
         this.regions = ta.getRegions();
         this.textureRegion = regions.get(0);
@@ -188,7 +193,6 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         getTileManager().placeObject(this, targetTiles);
     }
 
-    public abstract void setNextDirection();
 
     /**
      * Class for setting next tiles, creates an ArrayList of next Tiles from currentTiles
@@ -196,7 +200,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      */
     public ArrayList<Tile> setNextTiles() {
         //Setting next direction
-        setNextDirection();
+        updateTextureRegions();
 
         ArrayList<Tile> toSet = getTileManager().getNextTiles(this, getDirectionMoving(), 1);
 
@@ -241,7 +245,6 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         //Target tile is null when movement restarts (targetTile has been reached), we must get new Tile
         if (targetTiles == null) {
             //If getting new tile results in null or new tile is occupied by something other than this, we are blocked
-            updateTextureRegions();
             if (setNextTiles() == null /**|| targetTile.getOccupiedBy() != this */) { //If we are still then get next tile
                 //Making sure targetTile contains null will cause this loop to run again, checking if we are still blocked
                 targetTiles = null;

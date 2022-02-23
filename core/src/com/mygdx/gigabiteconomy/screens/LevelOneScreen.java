@@ -19,11 +19,11 @@ public class LevelOneScreen extends LevelScreen {
 
     // Player character
     private final Weapon playerWeapon = Weapon.KNIFE;
-    private final Player player = new Player(playerWeapon, 0 , 0, 1, 1);
+    private final Player player = new Player(playerWeapon, 0 , 0, 1, 1, "finished_assets/player");
 
     /* ENEMIES */
     private final Enemy enemyOne = new Enemy(Weapon.KATANA, 20, 1, 1, 1, player,
-            5f, 1f,
+            5f, 1f, "finished_assets/player",
             new LinkedList<>(
                     Arrays.asList(MovingSprite.DIRECTION.NORTH,MovingSprite.DIRECTION.NORTH,
                                   MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
