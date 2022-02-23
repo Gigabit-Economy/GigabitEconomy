@@ -20,6 +20,8 @@ public class Player extends MovingSprite {
     private LevelScreen level;
     private Parcel parcel;
 
+    private static final String BASE_PATH = "finished_assets/player";
+
     /**
      * Create a new Player sprite (MovingSprite)
      *
@@ -30,7 +32,7 @@ public class Player extends MovingSprite {
      * @param width of Tiles to occupy
      */
     public Player(Weapon weapon, int x, int y, int height, int width) {
-        super(weapon, x, y, height, width, 3.5f, 3f);
+        super(weapon, x, y, height, width, 3.5f, 3f, BASE_PATH);
     }
 
     /**
@@ -84,10 +86,6 @@ public class Player extends MovingSprite {
      */
     public void stopMovement() {
         setMoving(false);
-    }
-
-    @Override
-    public void setNextDirection() {
     }
 
     /**
