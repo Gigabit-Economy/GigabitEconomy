@@ -19,7 +19,7 @@ public class Tile {
     private int[] positionTile = new int[2]; //Holds relative position on screen
     private int sideLength;
     private boolean occupied; //Makes tile impassible
-    private GameObject ownedBy; //Owned by entity (for homeowners)
+    private TiledObject ownedBy; //Owned by entity (for homeowners)
     private TiledObject occupiedBy; //Impassible or delivery spot!
 
     /**
@@ -78,7 +78,7 @@ public class Tile {
      *
      * @return the GameObject owning the Tile
      */
-    public GameObject getOwnedBy() {
+    public TiledObject getOwnedBy() {
         return ownedBy;
     }
 
@@ -87,32 +87,20 @@ public class Tile {
      *
      * @param owner the owner of the Tile
      */
-    public void setOwned(GameObject owner) {
+    public void setOwned(TiledObject owner) {
         this.ownedBy = owner;
     }
 
-    public boolean isOccupiedBy(GameObject o) {
-        return getOccupiedBy() == o;
-    }
-
-    public boolean withinTile(GameObject o) {
-        return (Math.abs(o.getX()-getTileCoords()[0])<5) && (Math.abs(o.getY()-getTileCoords()[1])<5);
-    }
-
-    public int getSideLength() {
-        return sideLength;
+    public boolean isOccupiedBy(TiledObject to) {
+        return getOccupiedBy() == to;
     }
 
     /**
      * Method to check if sprite passed is within range to be placed in the centre of an object
      *
-     * @return position of Tile on screen if success ; null if failure
+     * @return true: Sprite is on Object
      */
-    public float[] isOnTile(float spriteX, float spriteY) {
-        int offset = 5;
-        if ((Math.abs(spriteX-position[0]) < offset) && (Math.abs(spriteY-position[1]) < offset)) {
-            return position;
-        }
-        return null;
+    public boolean withinTile(TiledObject o) {
+        return (Math.abs(o.getX()-getTileCoords()[0])<5) && (Math.abs(o.getY()-getTileCoords()[1])<5);
     }
 }
