@@ -99,6 +99,8 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     public void addParcelVan(ParcelVan parcelVan) {
         this.parcelVan = parcelVan;
         addSprite(parcelVan);
+
+        parcelVan.setActive();
     }
 
     /**

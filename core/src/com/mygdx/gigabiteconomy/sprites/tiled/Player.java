@@ -192,7 +192,7 @@ public class Player extends MovingSprite {
             ArrayList<House> levelHouses = level.getHouses();
             this.house = levelHouses.get((RANDOM.nextInt(levelHouses.size())));
             try {
-                this.house.markAsDeliveryLocation(level);
+                this.house.markAsDeliveryLocation();
             } catch (Exception ex) {
                 Gdx.app.error("Exception", "Error assigning House as delivery location", ex);
                 System.exit(-1);
@@ -203,6 +203,8 @@ public class Player extends MovingSprite {
 
             level.decrementParcels();
 
+            // set Parcel Van to inactive (no indicator)
+            level.getParcelVan().setInactive();
             // if final parcel, switch van to van with no parcels
             if (isFinalParcel) {
                 level.getParcelVan().setToEmpty();
@@ -217,7 +219,8 @@ public class Player extends MovingSprite {
 
             level.addToScore(1);
 
-            house.unmarkAsDeliveryLocation(level);
+            house.unmarkAsDeliveryLocation();
+            level.getParcelVan().setInactive();
 
             if (isFinalParcel) {
                 level.complete();
@@ -236,7 +239,8 @@ public class Player extends MovingSprite {
 
             setWeapon(this.weapon);
 
-            house.unmarkAsDeliveryLocation(level);
+            house.unmarkAsDeliveryLocation();
+            level.getParcelVan().setInactive();
 
             parcel = null;
         }
