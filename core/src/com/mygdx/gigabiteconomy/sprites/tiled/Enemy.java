@@ -23,6 +23,8 @@ public class Enemy extends MovingSprite {
 
     private TiledObject targetEntity;
 
+    private static final String BASE_PATH = "finished_assets/player";
+
     /**
      * Create a new Enemy sprite (MovingSprite)
      *
@@ -32,8 +34,8 @@ public class Enemy extends MovingSprite {
      * @param height of Tiles to occupy
      * @param width of Tiles to occupy
      */
-    public Enemy(Weapon weapon, int x, int y, int height, int width, Player targetEntity, float deltaHoriz, float deltaVert, String basePath, LinkedList<DIRECTION> movePath) {
-        super(weapon, x, y, height, width, deltaHoriz, deltaVert, basePath);
+    public Enemy(Weapon weapon, int x, int y, int height, int width, Player targetEntity, float deltaHoriz, float deltaVert, LinkedList<DIRECTION> movePath) {
+        super(weapon, x, y, height, width, deltaHoriz, deltaVert, BASE_PATH);
 
         this.movePath = movePath;
 
