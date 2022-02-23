@@ -205,7 +205,6 @@ public class TileManager implements Disposable {
      * @return Tile[4] of Tiles clockwise from given Tile starting with Northern-most
      */
     public Tile[] getAdjacentTiles(Tile tile) {
-        int[] pos = tile.getPositionTile();
 
         Tile[] adjacentTiles = new Tile[4];
         adjacentTiles[0] = getAdjacentTile(tile, MovingSprite.DIRECTION.NORTH, 1);

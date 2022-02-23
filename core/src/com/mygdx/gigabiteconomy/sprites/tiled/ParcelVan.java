@@ -33,11 +33,15 @@ public class ParcelVan extends StaticSprite {
         if (this.tileIndicator == null) {
             int[] tilePosition = this.getCurrentTiles().get((WIDTH -1) / 2).getPositionTile(); // get middle Tile
             this.tileIndicator = new TileIndicator(tilePosition[0], tilePosition[1]);
+            // add tile indicator to Tile
+            ArrayList<TileIndicator> tileIndicatorArrayList = new ArrayList<>(Arrays.asList(this.tileIndicator));
+            getTileManager().initObjects(tileIndicatorArrayList);
+        } else {
+            System.out.println("Placing arrow over tile");
+            getTileManager().placeObject(this.tileIndicator, this.tileIndicator.getCurrentTiles());
         }
 
-        // add tile indicator to Tile
-        ArrayList<TileIndicator> tileIndicatorArrayList = new ArrayList<>(Arrays.asList(this.tileIndicator));
-        getTileManager().initObjects(tileIndicatorArrayList);
+
     }
 
     /**
