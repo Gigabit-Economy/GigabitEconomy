@@ -14,6 +14,7 @@ import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.sprites.GameObject;
+import com.mygdx.gigabiteconomy.sprites.HealthBar;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class Player extends MovingSprite {
 
     private static final String BASE_PATH = "finished_assets/player";
 
-    private HealthBar healthBar = new HealthBar();
+    private HealthBar healthBar;
 
     /**
      * Create a new Player sprite (MovingSprite)
@@ -43,6 +44,7 @@ public class Player extends MovingSprite {
      */
     public Player(Weapon weapon, int x, int y, int height, int width) {
         super(weapon, x, y, height, width, 3.5f, 3f, BASE_PATH);
+        healthBar = new HealthBar();
     }
 
     /**
@@ -260,39 +262,5 @@ public class Player extends MovingSprite {
         }
     }
 
-    private class HealthBar extends GameObject {
 
-        private GigabitEconomy director; // Might need this
-        private ShapeRenderer healthRect;
-        private Texture healthBarTexture;
-        private int[] dimensions; // [ H , W ]
-
-        public HealthBar() {
-            super(50, 900);
-            healthRect = new ShapeRenderer();
-            dimensions = new int[]{318, 72}; // More specific values needed, size of health bar texture
-            healthBarTexture = new Texture("finished_assets/ui_elements/health bar1.png");
-        }
-
-        @Override
-        public void dispose() {
-
-        }
-
-        public void drawOn(SpriteBatch batch) {
-            batch.end();
-
-            healthRect.begin(ShapeRenderer.ShapeType.Filled);
-            healthRect.setColor(Color.RED);
-            healthRect.rect(getX()+100, getY()+39, dimensions[0], dimensions[1]);
-            healthRect.end();
-
-            batch.begin();
-            batch.draw(healthBarTexture, getX(), getY());
-        }
-
-        public void modifyHeath(int dHealth) {
-            dimensions[1]+=dHealth; //Needs to be as proportion
-        }
-    }
 }
