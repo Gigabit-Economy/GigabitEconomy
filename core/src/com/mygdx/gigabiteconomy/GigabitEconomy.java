@@ -77,6 +77,9 @@ public class GigabitEconomy extends Game {
             case "menu":
                 toSwitch = new MenuScreen(this);
                 break;
+            case "TutorialScreen":
+                toSwitch = new TutorialScreen(this);
+                break;
             case "pausemenu":
                 fromPause = getScreen();
                 toSwitch = new PauseMenu(this);
