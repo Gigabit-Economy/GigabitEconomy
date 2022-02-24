@@ -2,12 +2,20 @@ package com.mygdx.gigabiteconomy.sprites.tiled;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.exceptions.ParcelException;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.sprites.GameObject;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -21,6 +29,8 @@ public class Player extends MovingSprite {
     private Parcel parcel;
 
     private static final String BASE_PATH = "finished_assets/player";
+
+    private HealthBar healthBar = new HealthBar();
 
     /**
      * Create a new Player sprite (MovingSprite)
@@ -112,6 +122,12 @@ public class Player extends MovingSprite {
         setMoving(false);
 
         return true;
+    }
+
+    @Override
+    public void drawOn(SpriteBatch batch, float delta) {
+        super.drawOn(batch, delta);
+        healthBar.drawOn(batch);
     }
 
     /**
@@ -241,6 +257,42 @@ public class Player extends MovingSprite {
             level.getParcelVan().setInactive();
 
             parcel = null;
+        }
+    }
+
+    private class HealthBar extends GameObject {
+
+        private GigabitEconomy director; // Might need this
+        private ShapeRenderer healthRect;
+        private Texture healthBarTexture;
+        private int[] dimensions; // [ H , W ]
+
+        public HealthBar() {
+            super(300, 1000);
+            healthRect = new ShapeRenderer();
+            dimensions = new int[]{100, 30}; // More specific values needed, size of health bar texture
+            healthBarTexture = new Texture("finished_assets/ui_elements/health bar1.png");
+        }
+
+        @Override
+        public void dispose() {
+
+        }
+
+        public void drawOn(SpriteBatch batch) {
+            batch.draw(healthBarTexture, getX(), getY());
+            batch.end();
+
+            healthRect.begin(ShapeRenderer.ShapeType.Filled);
+            healthRect.setColor(Color.RED);
+            healthRect.rect(getX()+10, getY(), dimensions[0], dimensions[1]);
+            healthRect.end();
+
+            batch.begin();
+        }
+
+        public void modifyHeath(int dHealth) {
+            dimensions[1]+=dHealth; //Needs to be as proportion
         }
     }
 }
