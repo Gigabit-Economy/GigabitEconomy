@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 
@@ -77,7 +78,17 @@ public class TutorialScreen implements Screen {
         informationScreenTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         Label headerControls = new Label("Controls", style);
-        TextArea bodyControls = new TextArea(CONTROLS, style);
+        Label ctrlMovement = new Label ("Movement: ", style);
+        TextField ctrlMovementBind = new TextField(" W/A/S/D [-or-] arrow-keys", style);
+        Label ctrlAttack = new Label("Attack: ", style);
+        TextField ctrlAttackBind = new TextField("space-bar", style);
+        Label ctrlOpenParcel = new Label("Open Parcels: ", style);
+        TextField ctrlOpenParcelBind = new TextField("tab", style);
+        Label ctrlParcelDelivery = new Label("Parcel collection & delivery: ", style);
+        TextField ctrlParcelDeliveryBind = new TextField("space-bar", style);
+        Label ctrPauseGame = new Label("Pause Game: ", style);
+        TextField ctrlPauseGameBind = new TextField("esc", style);
+
         Label headerDescription = new Label("Description", style);
         TextArea bodyDescriptions = new TextArea(DESCRIPTION, style);
     
@@ -88,15 +99,31 @@ public class TutorialScreen implements Screen {
         informationScreenTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         informationScreenTable.top();
 
-        informationScreenTable.add(headerControls).pad(10);
+        informationScreenTable.add(headerControls).pad(50, 0, 20, 0).center().colspan(2);
         informationScreenTable.row();
-        informationScreenTable.add(bodyControls).size(50).width(600).height(100);
+
+        informationScreenTable.add(ctrlMovement).left().spaceLeft(500);
+        informationScreenTable.add(ctrlMovementBind).left().width(150);
         informationScreenTable.row();
-        informationScreenTable.add(headerDescription).pad(10);
+        informationScreenTable.add(ctrlAttack).left().spaceLeft(500);
+        informationScreenTable.add(ctrlAttackBind).left().width(150);
         informationScreenTable.row();
-        informationScreenTable.add(bodyDescriptions).size(50).width(Gdx.graphics.getWidth()).height(500);
+        informationScreenTable.add(ctrlOpenParcel).left().spaceLeft(500);
+        informationScreenTable.add(ctrlOpenParcelBind).left().width(150);
         informationScreenTable.row();
-        informationScreenTable.add(screenTableMainMenuButton).bottom();
+        informationScreenTable.add(ctrlParcelDelivery).left().spaceLeft(500);
+        informationScreenTable.add(ctrlParcelDeliveryBind).left().width(150);
+        informationScreenTable.row();
+        informationScreenTable.add(ctrPauseGame).left().spaceLeft(500);
+        informationScreenTable.add(ctrlPauseGameBind).width(150);
+        informationScreenTable.row();
+
+        informationScreenTable.add(headerDescription).pad(50, 0, 20, 0).center().colspan(2);
+        informationScreenTable.row();
+        informationScreenTable.add(bodyDescriptions).width(630).height(300).colspan(2);
+        informationScreenTable.row();
+        informationScreenTable.row();
+        informationScreenTable.add(screenTableMainMenuButton).padTop(50).bottom().colspan(2);
         
     
         
