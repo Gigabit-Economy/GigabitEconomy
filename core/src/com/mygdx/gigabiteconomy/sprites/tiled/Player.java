@@ -241,8 +241,6 @@ public class Player extends MovingSprite {
             level.getParcelVan().setInactive();
 
             parcel = null;
-
-            updateTextureRegions(getDirectionFacing());
         }
     }
 }
