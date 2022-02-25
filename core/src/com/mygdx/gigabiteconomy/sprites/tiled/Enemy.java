@@ -23,7 +23,7 @@ public class Enemy extends MovingSprite {
 
     private TiledObject targetEntity;
 
-    private static final String BASE_PATH = "finished_assets/player";
+    private static final String BASE_PATH = "finished_assets/enemies/level1";
 
     /**
      * Create a new Enemy sprite (MovingSprite)
@@ -80,10 +80,6 @@ public class Enemy extends MovingSprite {
             System.out.println("SHould only be running once");
             TileManager tm = getTileManager();
             Tile currTile = getCurrentTiles().get(0);
-//            System.out.println(tm.getAdjacentTile(currTile, DIRECTION.EAST, 5).getPositionTile()[0]);
-//            System.out.println(tm.getAdjacentTile(currTile, DIRECTION.WEST, 5).getPositionTile()[0]);
-//            System.out.println(tm.getAdjacentTile(currTile, DIRECTION.NORTH, 5).getPositionTile()[1]);
-//            System.out.println(tm.getAdjacentTile(currTile, DIRECTION.SOUTH, 5));
 
 
             System.out.println(tm + " " + currTile);

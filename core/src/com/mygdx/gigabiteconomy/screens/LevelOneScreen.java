@@ -22,7 +22,7 @@ public class LevelOneScreen extends LevelScreen {
     private final Player player = new Player(playerWeapon, 0 , 0, 1, 1);
 
     /* ENEMIES */
-    private final Enemy enemyOne = new Enemy(Weapon.KATANA, 20, 1, 1, 1, player,
+    private final Enemy enemyOne = new Enemy(Weapon.BAT, 20, 1, 1, 1, player,
             5f, 1f,
             new LinkedList<>(
                     Arrays.asList(MovingSprite.DIRECTION.NORTH,MovingSprite.DIRECTION.NORTH,
@@ -34,7 +34,7 @@ public class LevelOneScreen extends LevelScreen {
                                   MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.WEST,
                                   MovingSprite.DIRECTION.NORTH,MovingSprite.DIRECTION.NORTH)
             ));
-    private final Enemy enemyTwo = new Enemy(Weapon.PIPE, 20, 1, 1, 1, player,
+    private final Enemy enemyTwo = new Enemy(Weapon.DOG, 25, 5, 1, 1, player,
             1.5f, 1f,
             new LinkedList<>(
                     Arrays.asList(MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,

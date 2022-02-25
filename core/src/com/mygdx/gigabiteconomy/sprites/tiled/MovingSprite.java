@@ -414,7 +414,11 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         KNIFE (1),
         GOLF (2),
         PIPE (3),
-        KATANA (5);
+        KATANA (5),
+        //Enemies
+        NONE (1),
+        DOG (2),
+        BAT (3);
 
         private int hitMultiplier;
 
