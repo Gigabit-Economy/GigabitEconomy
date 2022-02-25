@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.gigabiteconomy.sprites.tiled.House;
 import com.mygdx.gigabiteconomy.sprites.tiled.*;
 import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite.Weapon;
+import com.mygdx.gigabiteconomy.sprites.tiled.enemies.BatGuy;
+import com.mygdx.gigabiteconomy.sprites.tiled.enemies.Dog;
 
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ import java.util.LinkedList;
  * Level 1 screen
  */
 public class LevelOneScreen extends LevelScreen {
-    // Level screen background texture
+    // Level screen backgro1.5und texture
     private static final String BACKGROUND_TEXTURE_PNG = "finished_assets/levels/level1.png";
 
     // Player character
@@ -22,26 +24,9 @@ public class LevelOneScreen extends LevelScreen {
     private final Player player = new Player(playerWeapon, 0 , 0, 1, 1);
 
     /* ENEMIES */
-    private final Enemy enemyOne = new Enemy(Weapon.BAT, 20, 1, 1, 1, player,
-            5f, 1f,
-            new LinkedList<>(
-                    Arrays.asList(MovingSprite.DIRECTION.NORTH,MovingSprite.DIRECTION.NORTH,
-                                  MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
-                                  MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
-                                  MovingSprite.DIRECTION.SOUTH,MovingSprite.DIRECTION.SOUTH,
-                                  MovingSprite.DIRECTION.SOUTH,MovingSprite.DIRECTION.SOUTH,
-                                  MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.WEST,
-                                  MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.WEST,
-                                  MovingSprite.DIRECTION.NORTH,MovingSprite.DIRECTION.NORTH)
-            ));
-    private final Enemy enemyTwo = new Enemy(Weapon.DOG, 25, 5, 1, 1, player,
-            1.5f, 1f,
-            new LinkedList<>(
-                    Arrays.asList(MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
-                            MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
-                            MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.WEST,
-                            MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.WEST)
-            ));
+    private final Enemy enemyOne = new BatGuy(25, 3, player);
+
+    private final Enemy enemyTwo = new Dog(5, 1, player);
 
     private final ArrayList<Enemy> enemies = new ArrayList<Enemy>(Arrays.asList(enemyOne, enemyTwo));
 
