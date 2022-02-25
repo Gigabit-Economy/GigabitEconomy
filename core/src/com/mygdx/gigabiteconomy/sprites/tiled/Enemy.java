@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * Class representing an enemy sprite (many per level)
  */
-public class Enemy extends MovingSprite {
+public abstract class Enemy extends MovingSprite {
 
     private Queue<DIRECTION> movePath;
     private Queue<DIRECTION> agroMovePath;

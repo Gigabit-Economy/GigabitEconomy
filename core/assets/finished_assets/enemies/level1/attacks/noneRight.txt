@@ -1,4 +1,4 @@
-unarmedRight.png
+noneRight.png
 size: 1840, 240
 format: RGBA8888
 filter: Linear,Linear

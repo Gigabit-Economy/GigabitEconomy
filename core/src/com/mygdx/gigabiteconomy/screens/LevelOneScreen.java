@@ -5,8 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.gigabiteconomy.sprites.tiled.House;
 import com.mygdx.gigabiteconomy.sprites.tiled.*;
 import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite.Weapon;
-import com.mygdx.gigabiteconomy.sprites.tiled.enemies.BatGuy;
-import com.mygdx.gigabiteconomy.sprites.tiled.enemies.Dog;
+import com.mygdx.gigabiteconomy.sprites.tiled.enemies.*;
 
 import java.util.Arrays;
 import java.util.ArrayList;
