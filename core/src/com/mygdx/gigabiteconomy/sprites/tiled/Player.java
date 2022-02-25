@@ -184,7 +184,9 @@ public class Player extends MovingSprite {
          */
         public Parcel() {
             // pick a random Weapon from the enum values to be weapon inside parcel (if it's opened)
-            this.weapon = MovingSprite.Weapon.values()[RANDOM.nextInt(MovingSprite.Weapon.values().length)];
+            //Weapon assignedWeapon = MovingSprite.Weapon.values()[RANDOM.nextInt(Weapon.values().length)];
+            Weapon randomWeapon[] = {Weapon.GOLF, Weapon.PIPE, Weapon.KNIFE, Weapon.KATANA};
+            this.weapon = randomWeapon[RANDOM.nextInt(randomWeapon.length)];
 
             // pick a random House from the level's houses to be house to be delivered to
             ArrayList<House> levelHouses = level.getHouses();
