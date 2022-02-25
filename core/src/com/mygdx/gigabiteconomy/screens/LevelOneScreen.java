@@ -34,8 +34,16 @@ public class LevelOneScreen extends LevelScreen {
                                   MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.WEST,
                                   MovingSprite.DIRECTION.NORTH,MovingSprite.DIRECTION.NORTH)
             ));
+    private final Enemy enemyTwo = new Enemy(Weapon.PIPE, 20, 1, 1, 1, player,
+            1.5f, 1f,
+            new LinkedList<>(
+                    Arrays.asList(MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
+                            MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
+                            MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.WEST,
+                            MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.WEST)
+            ));
 
-    private final ArrayList<Enemy> enemies = new ArrayList<Enemy>(Arrays.asList(enemyOne));
+    private final ArrayList<Enemy> enemies = new ArrayList<Enemy>(Arrays.asList(enemyOne, enemyTwo));
 
     // Parcel van (for Player to collect parcels from)
     private final ParcelVan parcelVan = new ParcelVan(15, 3);
@@ -43,8 +51,10 @@ public class LevelOneScreen extends LevelScreen {
     /* STATIC SPRITES (HOUSES, FENCES ETC...) */
     private final House houseOne = new House(House.HouseType.DETACHED, 0);
     private final House houseTwo = new House(House.HouseType.TWO_STORY, 10);
+    private final House houseThree = new House(House.HouseType.TWO_STORY, 20);
+    private final House houseFour = new House(House.HouseType.DETACHED, 36);
     private final StaticSprite fence = new StaticSprite("finished_assets/static_sprites/fence.png", 5, 0, 1, 2);
-    private final ArrayList<StaticSprite> staticSprites = new ArrayList<StaticSprite>(Arrays.asList(houseOne, houseTwo, fence));
+    private final ArrayList<StaticSprite> staticSprites = new ArrayList<StaticSprite>(Arrays.asList(houseOne, houseTwo, houseThree, houseFour, fence));
 
     /**
      * Creates a new screen instance for Level 1 based off the LevelScreen abstract class, which contains all shared
