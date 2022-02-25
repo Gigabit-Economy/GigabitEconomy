@@ -22,12 +22,14 @@ public class LevelOneScreen extends LevelScreen {
     private final Weapon playerWeapon = Weapon.KNIFE;
     private final Player player = new Player(playerWeapon, 0 , 7, 1, 1);
 
+    private final Enemy enemyThree = new Dog(25, 3, player);
+
     /* ENEMIES */
-    private final Enemy enemyOne = new BatGuy(25, 3, player);
-
-    private final Enemy enemyTwo = new Dog(5, 1, player);
-
-    private final ArrayList<Enemy> enemies = new ArrayList<Enemy>(Arrays.asList(enemyOne, enemyTwo));
+    private final ArrayList<Enemy> enemies = new ArrayList<Enemy>(Arrays.asList(
+            new BatGuy(5, 3, player),
+            new Fighter(15, 7, player, 3.4f, 2.8f, new LinkedList<MovingSprite.DIRECTION>(Arrays.asList(MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.EAST))),
+            new Dog(25, 3, player)
+    ));
 
     // Parcel van (for Player to collect parcels from)
     private final ParcelVan parcelVan = new ParcelVan(0, 0);
