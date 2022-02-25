@@ -1,4 +1,4 @@
-baseballLeft..png
+batLeft.png
 size: 368, 1680
 format: RGBA8888
 filter: Linear,Linear

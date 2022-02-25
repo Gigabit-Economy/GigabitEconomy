@@ -1,51 +1,51 @@
-baseBallLeft.png
+batRight.png
 size: 368, 1680
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-baseballLeftAttack1
+baseballRightWalk1
   rotate: false
   xy: 0, 0
   size: 368, 240
   orig: 368, 240
   offset: 0, 0
   index: -1
-baseballLeftAttack2
+baseballRightWalk2
   rotate: false
   xy: 0, 240
   size: 368, 240
   orig: 368, 240
   offset: 0, 0
   index: -1
-baseballLeftAttack3
+baseballRightWalk3
   rotate: false
   xy: 0, 480
   size: 368, 240
   orig: 368, 240
   offset: 0, 0
   index: -1
-baseballLeftAttack4
+baseballRightWalk4
   rotate: false
   xy: 0, 720
   size: 368, 240
   orig: 368, 240
   offset: 0, 0
   index: -1
-baseballLeftAttack5
+baseballRightWalk5
   rotate: false
   xy: 0, 960
   size: 368, 240
   orig: 368, 240
   offset: 0, 0
   index: -1
-baseballLeftAttack6
+baseballRightWalk6
   rotate: false
   xy: 0, 1200
   size: 368, 240
   orig: 368, 240
   offset: 0, 0
   index: -1
-baseballLeftAttack7
+baseballRightWalk7
   rotate: false
   xy: 0, 1440
   size: 368, 240
