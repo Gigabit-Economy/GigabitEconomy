@@ -1,7 +1,6 @@
 package com.mygdx.gigabiteconomy.sprites.tiled;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.gigabiteconomy.screens.LevelScreen;
 
 import java.util.ArrayList;
 import java.util.Arrays;
