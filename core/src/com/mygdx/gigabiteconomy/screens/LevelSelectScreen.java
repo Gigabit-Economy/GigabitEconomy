@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -19,8 +20,9 @@ public class LevelSelectScreen implements Screen {
     private Stage stage;
     private Table levelSelectTable;
 
-    private ScoreSystem score = new ScoreSystem(this.getClass().getSimpleName());
-
+    private ScoreSystem score1 = new ScoreSystem("LevelOneScreen");
+    private ScoreSystem score2 = new ScoreSystem("LevelTwoScreen");
+    private ScoreSystem score3 = new ScoreSystem("LevelThreeScreen");
     private int pauseCount = 0;
 
     public LevelSelectScreen(GigabitEconomy director) {
@@ -37,7 +39,7 @@ public class LevelSelectScreen implements Screen {
         levelSelectTable = new Table();
         levelSelectTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        Label selectFirstLevelLabel = new Label("Record score: "+ score.getHighestScore(), style);
+        Label selectFirstLevelLabel = new Label("Record score: "+ score1.getHighestScore(), style);
         levelSelectTable.add(selectFirstLevelLabel).padLeft(-200);
 
         TextButton selectFirstLevelTextButton = new TextButton("Level 1", style);
@@ -46,20 +48,25 @@ public class LevelSelectScreen implements Screen {
 
         levelSelectTable.row();
 
-        Label selectSecondLevelLabel = new Label("Record score: "+ score.getHighestScore(), style);
+        Label selectSecondLevelLabel = new Label("Record score: "+ score2.getHighestScore(), style);
         levelSelectTable.add(selectSecondLevelLabel).padLeft(-200);
 
         TextButton selectSecondLevelTextButton = new TextButton("Level 2", style);
-        selectFirstLevelTextButton.setName("LevelOneScreen");
+        selectSecondLevelTextButton.setName("LevelTwocreen");
+        if(score2.getHighestScore() == 0)
+        selectSecondLevelTextButton.setTouchable(Touchable.disabled);
+
         levelSelectTable.add(selectSecondLevelTextButton).padRight(-200);
         
         levelSelectTable.row();
 
-        Label selectThirdLevelLabel = new Label("Record score: "+score.getHighestScore(), style);
+        Label selectThirdLevelLabel = new Label("Record score: "+score3.getHighestScore(), style);
         levelSelectTable.add(selectThirdLevelLabel).padLeft(-200);
 
         TextButton selectThirdLevelTextButton = new TextButton("Level 3", style);
-        selectFirstLevelTextButton.setName("LevelOneScreen");
+        selectThirdLevelTextButton.setName("LevelThreeScreen");
+        if(score3.getHighestScore() == 0)
+        selectThirdLevelTextButton.setTouchable(Touchable.disabled);
         levelSelectTable.add(selectThirdLevelTextButton).padRight(-200);
 
         // Add click listener for buttons
@@ -85,7 +92,7 @@ public class LevelSelectScreen implements Screen {
         selectFirstLevelTextButton.addListener(buttonsListener);
         selectSecondLevelTextButton.addListener(buttonsListener);
         selectThirdLevelTextButton.addListener(buttonsListener);
-
+        selectThirdLevelLabel.addListener(buttonsListener);
         stage.addActor(levelSelectTable);
         
     }
