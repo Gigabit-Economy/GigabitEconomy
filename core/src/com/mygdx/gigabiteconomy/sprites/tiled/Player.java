@@ -242,7 +242,7 @@ public class Player extends MovingSprite {
 
             parcel = null;
 
-            updateTextureRegions();
+            updateTextureRegions(getDirectionFacing());
         }
     }
 }
