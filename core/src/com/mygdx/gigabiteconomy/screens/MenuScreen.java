@@ -59,11 +59,19 @@ public class MenuScreen implements Screen {
         regions = ta.getRegions();
         current = regions.get(6);
         Drawable drawable = new TextureRegionDrawable(current);
+        current = regions.get(1);
+        Drawable drawable2 = new TextureRegionDrawable(current);
 
         //add buttons
         ImageButton level1Button = new ImageButton(drawable);
         level1Button.setName("LevelOneScreen");
         buttons.add(level1Button);
+
+        
+        // add tutorial button
+        ImageButton tutorialButton = new ImageButton(drawable2);
+        tutorialButton.setName("TutorialScreen");
+        buttons.add(tutorialButton);
 
         // Add click listener for buttons
         ClickListener buttonsListener = new ClickListener() {
@@ -82,6 +90,7 @@ public class MenuScreen implements Screen {
             }
         };
         level1Button.addListener(buttonsListener);
+        tutorialButton.addListener(buttonsListener);
 
         stage.addActor(buttons);
     }

@@ -3,6 +3,7 @@ package com.mygdx.gigabiteconomy.screens;
 import java.util.function.IntPredicate;
 
 import javax.swing.plaf.basic.BasicSplitPaneUI.KeyboardDownRightHandler;
+import javax.swing.text.StyledEditorKit.StyledTextAction;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -85,6 +86,10 @@ public class PauseMenu implements Screen, InputProcessor {
             backToMainMenuButton.setName("menu");
             pauseMenuTable.add(backToMainMenuButton);
 
+            TextButton tutorialButton = new TextButton("HELP", style);
+            tutorialButton.setName("TutorialScreen");
+            pauseMenuTable.add(tutorialButton);
+
             pauseMenuTable.row();
 
             TextButton res1920Button = new TextButton("1920 x 1080", style);
@@ -111,6 +116,15 @@ public class PauseMenu implements Screen, InputProcessor {
                     System.out.println(buttonName);
 
                     if (buttonName == "menu") {
+                        try {
+                            director.switchScreen(buttonName);
+                        } catch (Exception ex) {
+                            Gdx.app.error("Exception", String.format("Error switching screen to %s", "menu"), ex);
+                            System.exit(-1);
+                        }
+                    }
+
+                    if (buttonName == "TutorialScreen") {
                         try {
                             director.switchScreen(buttonName);
                         } catch (Exception ex) {
@@ -146,6 +160,7 @@ public class PauseMenu implements Screen, InputProcessor {
             };
             pauseMenuTable.debug();
             backToMainMenuButton.addListener(buttonsListener);
+            tutorialButton.addListener(buttonsListener);
             res1280Button.addListener(buttonsListener);
             res1366Button.addListener(buttonsListener);
             res1920Button.addListener(buttonsListener);
