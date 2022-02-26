@@ -421,6 +421,10 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         private Weapon(int hitMultiplier) {
             this.hitMultiplier = hitMultiplier;
         }
+
+        public int getHitMultiplier() {
+            return hitMultiplier;
+        }
     }
 
     /**

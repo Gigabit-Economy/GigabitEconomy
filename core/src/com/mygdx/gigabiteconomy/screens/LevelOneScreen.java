@@ -56,6 +56,7 @@ public class LevelOneScreen extends LevelScreen {
         super(director, BACKGROUND_TEXTURE_PNG);
 
         addPlayer(player);
+        player.new PlayerHealthBar(director);
         addEnemies(enemies);
         addParcelVan(parcelVan);
         addSprites(staticSprites);
