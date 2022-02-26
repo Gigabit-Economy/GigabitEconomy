@@ -1,43 +1,23 @@
 package com.mygdx.gigabiteconomy.sprites;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.mygdx.gigabiteconomy.GigabitEconomy;
 
-public class HealthBar extends GameObject {
+public abstract class HealthBar extends GameObject/* implements GameObject for getX() and getY() */ {
 
-    private GigabitEconomy director; // Might need this
-    private ShapeRenderer healthRect;
-    private Texture healthBarTexture;
-    private int[] dimensions; // [ H , W ]
+    public ShapeRenderer renderer;
 
-    public HealthBar() {
-        super(50, 900);
-        healthRect = new ShapeRenderer();
-        dimensions = new int[]{318, 72}; // More specific values needed, size of health bar texture
-        healthBarTexture = new Texture("finished_assets/ui_elements/health bar1.png");
+    /**
+     * Constructor to create a new GameObject (sets the x and y coordinates for subclasses).
+     *
+     * @param x the game object's X coordinate
+     * @param y the game object's Y coordinate
+     */
+    public HealthBar(float x, float y) {
+        super(x, y);
     }
 
-    @Override
-    public void dispose() {
+    public abstract void drawOn(SpriteBatch batch);
 
-    }
 
-    public void drawOn(SpriteBatch batch) {
-        batch.end();
-
-        healthRect.begin(ShapeRenderer.ShapeType.Filled);
-        healthRect.setColor(Color.RED);
-        healthRect.rect(getX()+100, getY()+39, dimensions[0], dimensions[1]);
-        healthRect.end();
-
-        batch.begin();
-        batch.draw(healthBarTexture, getX(), getY());
-    }
-
-    public void modifyHeath(int dHealth) {
-        dimensions[1]+=dHealth; //Needs to be as proportion
-    }
 }
