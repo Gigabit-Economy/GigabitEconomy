@@ -53,6 +53,7 @@ public abstract class Enemy extends MovingSprite {
 
     public void setPath(Queue<DIRECTION> pathList) {
         currentPath = pathList;
+        setDirectionMovement(currentPath.peek());
     }
 
     /**
