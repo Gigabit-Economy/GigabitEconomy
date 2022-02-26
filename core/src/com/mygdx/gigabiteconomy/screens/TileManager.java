@@ -297,8 +297,7 @@ public class TileManager implements Disposable {
         for (Tile[] tileX : tileArray) {
             for (Tile tile : tileX) {
                 if (tile.getOccupiedBy() != null) {
-                    if (tile.getOccupiedBy() instanceof Player || tile.getOccupiedBy() instanceof Enemy)
-                        occupied += "[" + tile.getTileCoords()[0] + "," + tile.getTileCoords()[1] + "] ";
+                    occupied += "[" + tile.getTileCoords()[0] + "," + tile.getTileCoords()[1] + "] ";
                 }
             }
         }
