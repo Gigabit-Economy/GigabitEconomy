@@ -181,19 +181,19 @@ public class Player extends MovingSprite {
     public class PlayerHealthBar implements IHealthBar  {
 
         private ShapeRenderer healthRect;
-        private Texture healthBarTexture;
+        private Texture healthBarTexture = new Texture("finished_assets/ui_elements/health bar1.png");;
+        private Texture parcelIcon = new Texture("finished_assets/ui_elements/parcelicon.png");
         private int[] dimensions;
-        private Vector2 pos = new Vector2(50, 800);
+        private Vector2 pos = new Vector2();
         private Vector3 cam;
 
         public PlayerHealthBar(GigabitEconomy director) {
             cam = director.getCameraPos();
             healthBar = this;
-            pos.set(cam.x-900+100, cam.y+370+39);
+            pos.set(cam.x-900, cam.y+370);
 
             healthRect = new ShapeRenderer();
             dimensions = new int[]{318, 72}; // More specific values needed, size of health bar texture
-            healthBarTexture = new Texture("finished_assets/ui_elements/health bar1.png");
         }
 
         @Override
@@ -202,11 +202,15 @@ public class Player extends MovingSprite {
 
             healthRect.begin(ShapeRenderer.ShapeType.Filled);
             healthRect.setColor(Color.RED);
-            healthRect.rect(pos.x, pos.y, dimensions[0], dimensions[1]);
+            healthRect.rect(pos.x+100, pos.y+39, dimensions[0], dimensions[1]);
             healthRect.end();
 
             batch.begin();
-            batch.draw(healthBarTexture, cam.x-900, cam.y+370);
+            batch.draw(healthBarTexture, pos.x, pos.y);
+
+            for (int i=0; i<level.getParcels(); i++) {
+                batch.draw(parcelIcon, pos.x+100+(1.15f*i*(parcelIcon.getWidth())), pos.y);
+            }
         }
 
         @Override
