@@ -97,8 +97,8 @@ public class Player extends MovingSprite {
     @Override
     public boolean move(float delta) throws TileMovementException  {
         boolean ret = super.move(delta);
-        if (!ret) return false;
 
+        if (!ret) return false;
 
         /**
          * Still holding down key, reset direction

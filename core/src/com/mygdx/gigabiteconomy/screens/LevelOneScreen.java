@@ -22,6 +22,7 @@ public class LevelOneScreen extends LevelScreen {
     private final Weapon playerWeapon = Weapon.KNIFE;
     private final Player player = new Player(playerWeapon, 0 , 7, 1, 1);
 
+    private final Enemy enemyThree = new Dog(25, 3, player);
 
     /* ENEMIES */
     private final ArrayList<Enemy> enemies = new ArrayList<Enemy>(Arrays.asList(

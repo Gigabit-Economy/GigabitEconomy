@@ -2,7 +2,10 @@ package com.mygdx.gigabiteconomy.screens;
 
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.gigabiteconomy.exceptions.TileException;
-import com.mygdx.gigabiteconomy.sprites.tiled.*;
+import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
+import com.mygdx.gigabiteconomy.sprites.tiled.Player;
+import com.mygdx.gigabiteconomy.sprites.tiled.StaticSprite;
+import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -240,17 +243,13 @@ public class TileManager implements Disposable {
      */
     public boolean isGroupOccupiedBy(TiledObject to, ArrayList<Tile> tiles) {
         for (Tile t : tiles) {
-            if (t.isOccupiedBy(to)) {
-                System.out.println(String.format("%d %d is occupied by player!", t.getPositionTile()[0], t.getPositionTile()[1]));
-                return true;
-            }
+            if (t.isOccupiedBy(to)) return true;
         }
         return false;
     }
 
     /**
      * Method to get group of next tiles to move to
-     * Will only select tiles that are not occupied
      * @param mo MovingSprite on which to act on
      * @param dirIn Direction to move MovingSprite in
      * @param distance How much are we moving by? (Usually 1)
