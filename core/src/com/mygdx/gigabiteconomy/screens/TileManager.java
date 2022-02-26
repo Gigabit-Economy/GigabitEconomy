@@ -2,10 +2,7 @@ package com.mygdx.gigabiteconomy.screens;
 
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.gigabiteconomy.exceptions.TileException;
-import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
-import com.mygdx.gigabiteconomy.sprites.tiled.Player;
-import com.mygdx.gigabiteconomy.sprites.tiled.StaticSprite;
-import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
+import com.mygdx.gigabiteconomy.sprites.tiled.*;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -243,13 +240,17 @@ public class TileManager implements Disposable {
      */
     public boolean isGroupOccupiedBy(TiledObject to, ArrayList<Tile> tiles) {
         for (Tile t : tiles) {
-            if (t.isOccupiedBy(to)) return true;
+            if (t.isOccupiedBy(to)) {
+                System.out.println(String.format("%d %d is occupied by player!", t.getPositionTile()[0], t.getPositionTile()[1]));
+                return true;
+            }
         }
         return false;
     }
 
     /**
      * Method to get group of next tiles to move to
+     * Will only select tiles that are not occupied
      * @param mo MovingSprite on which to act on
      * @param dirIn Direction to move MovingSprite in
      * @param distance How much are we moving by? (Usually 1)
@@ -296,7 +297,8 @@ public class TileManager implements Disposable {
         for (Tile[] tileX : tileArray) {
             for (Tile tile : tileX) {
                 if (tile.getOccupiedBy() != null) {
-                    occupied += "[" + tile.getTileCoords()[0] + "," + tile.getTileCoords()[1] + "] ";
+                    if (tile.getOccupiedBy() instanceof Player || tile.getOccupiedBy() instanceof Enemy)
+                        occupied += "[" + tile.getTileCoords()[0] + "," + tile.getTileCoords()[1] + "] ";
                 }
             }
         }
