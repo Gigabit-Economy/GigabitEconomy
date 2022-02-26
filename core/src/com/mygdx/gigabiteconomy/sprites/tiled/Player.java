@@ -206,10 +206,10 @@ public class Player extends MovingSprite {
             healthRect.end();
 
             batch.begin();
-            batch.draw(healthBarTexture, pos.x, pos.y);
+            batch.draw(healthBarTexture, cam.x-900, cam.y+370);
 
             for (int i=0; i<level.getParcels(); i++) {
-                batch.draw(parcelIcon, pos.x+100+(1.15f*i*(parcelIcon.getWidth())), pos.y);
+                batch.draw(parcelIcon, cam.x-900+100+(1.15f*i*(parcelIcon.getWidth())), cam.y+370);
             }
         }
 
