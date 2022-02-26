@@ -70,6 +70,10 @@ public class GigabitEconomy extends Game {
         return camera.combined;
     }
 
+    public OrthographicCamera getCamera() {
+        return camera;
+    }
+
     public void switchScreen(String name) throws ScreenException {
         Screen toSwitch;
 

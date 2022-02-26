@@ -43,7 +43,7 @@ public class Player extends MovingSprite {
      * @param width of Tiles to occupy
      */
     public Player(Weapon weapon, int x, int y, int height, int width) {
-        super(weapon, x, y, height, width, 5f, 5f, BASE_PATH);
+        super(weapon, x, y, height, width, 3.5f, 3f, BASE_PATH);
     }
 
     /**
@@ -194,7 +194,6 @@ public class Player extends MovingSprite {
             healthRect = new ShapeRenderer();
             dimensions = new int[]{318, 72}; // More specific values needed, size of health bar texture
             healthBarTexture = new Texture("finished_assets/ui_elements/health bar1.png");
-
         }
 
         @Override
@@ -213,7 +212,6 @@ public class Player extends MovingSprite {
         @Override
         public void modifyHealth(int dhealth) {
             if ((dimensions[0] -= (dhealth*3.18)) <= 0) dimensions[0] = 0;
-            System.out.println("Width now: " + dimensions[0]);
         }
 
         @Override
