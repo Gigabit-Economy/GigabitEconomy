@@ -1,0 +1,40 @@
+noneRight.png
+size: 1840, 240
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+unarmedRightAttack1
+  rotate: false
+  xy: 0, 0
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+unarmedRightAttack2
+  rotate: false
+  xy: 368, 0
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+unarmedRightAttack3
+  rotate: false
+  xy: 736, 0
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+unarmedRightAttack4
+  rotate: false
+  xy: 1104, 0
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+unarmedRightAttack5
+  rotate: false
+  xy: 1472, 0
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1

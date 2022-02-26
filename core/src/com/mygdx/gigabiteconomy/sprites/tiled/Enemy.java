@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * Class representing an enemy sprite (many per level)
  */
-public class Enemy extends MovingSprite {
+public abstract class Enemy extends MovingSprite {
 
     private Queue<DIRECTION> movePath;
     private Queue<DIRECTION> agroMovePath;
@@ -23,8 +23,6 @@ public class Enemy extends MovingSprite {
 
     private TiledObject targetEntity;
 
-    private static final String BASE_PATH = "finished_assets/player";
-
     /**
      * Create a new Enemy sprite (MovingSprite)
      *
@@ -34,7 +32,7 @@ public class Enemy extends MovingSprite {
      * @param height of Tiles to occupy
      * @param width of Tiles to occupy
      */
-    public Enemy(Weapon weapon, int x, int y, int height, int width, Player targetEntity, float deltaHoriz, float deltaVert, LinkedList<DIRECTION> movePath) {
+    public Enemy(String BASE_PATH, Weapon weapon, int x, int y, int height, int width, Player targetEntity, float deltaHoriz, float deltaVert, LinkedList<DIRECTION> movePath) {
         super(weapon, x, y, height, width, deltaHoriz, deltaVert, BASE_PATH);
 
         this.movePath = movePath;
@@ -80,10 +78,6 @@ public class Enemy extends MovingSprite {
             System.out.println("SHould only be running once");
             TileManager tm = getTileManager();
             Tile currTile = getCurrentTiles().get(0);
-//            System.out.println(tm.getAdjacentTile(currTile, DIRECTION.EAST, 5).getPositionTile()[0]);
-//            System.out.println(tm.getAdjacentTile(currTile, DIRECTION.WEST, 5).getPositionTile()[0]);
-//            System.out.println(tm.getAdjacentTile(currTile, DIRECTION.NORTH, 5).getPositionTile()[1]);
-//            System.out.println(tm.getAdjacentTile(currTile, DIRECTION.SOUTH, 5));
 
 
             System.out.println(tm + " " + currTile);
