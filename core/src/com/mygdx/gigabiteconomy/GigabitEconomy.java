@@ -100,6 +100,9 @@ public class GigabitEconomy extends Game {
                     toSwitch = new LevelOneScreen(this);
                 }
                 break;
+            case "levelSelectScreen":
+                toSwitch = new LevelSelectScreen(this);
+                break;    
 
             default:
                 throw new ScreenException(String.format("Tried to switch to invalid screen %s", name));
