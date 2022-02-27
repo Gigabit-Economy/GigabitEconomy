@@ -1,8 +1,16 @@
 package com.mygdx.gigabiteconomy.sprites.tiled;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector3;
+import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.screens.TileManager;
+import com.mygdx.gigabiteconomy.sprites.IHealthBar;
 
 import java.util.*;
 
@@ -10,6 +18,8 @@ import java.util.*;
  * Class representing an enemy sprite (many per level)
  */
 public abstract class Enemy extends MovingSprite {
+
+    private EnemyHealthBar healthBar;
 
     private Queue<DIRECTION> movePath;
     private Queue<DIRECTION> agroMovePath;
@@ -49,6 +59,14 @@ public abstract class Enemy extends MovingSprite {
         this.targetEntity = targetEntity;
 
         setMoving(true);
+
+
+    }
+
+    @Override
+    public void drawOn(SpriteBatch batch, float delta) {
+        super.drawOn(batch, delta);
+        healthBar.drawOn(batch);
     }
 
     public void setPath(Queue<DIRECTION> pathList) {
@@ -65,6 +83,72 @@ public abstract class Enemy extends MovingSprite {
             new Exception("Movement path does not exist");
         }
         setDirectionMovement(currentPath.peek());
+    }
+
+    @Override
+    public void attack(Weapon weapon) {
+        super.attack(weapon);
+        healthBar.modifyHealth(5*weapon.getHitMultiplier());
+    }
+
+    /**
+     * Class that manages the display of enemy health
+     */
+    public class EnemyHealthBar implements IHealthBar {
+
+        private final int DEFAULT_WIDTH = 69;
+        private final int DEFAULT_HEIGHT = 7;
+
+        private ShapeRenderer healthEllipse;
+        private int[] dimensions = new int[2];
+        private Vector3 pos;
+
+        private OrthographicCamera cam;
+
+        //Custom health bar for bigger enemies
+        public EnemyHealthBar(GigabitEconomy director, int width, int height) {
+            healthBar = this;
+            cam = director.getCamera(); //Need to use .project for drawing shape
+            dimensions[0] = width; dimensions[1] = height;
+            healthEllipse = new ShapeRenderer();
+        }
+
+        public EnemyHealthBar(GigabitEconomy director) {
+            healthBar = this;
+            cam = director.getCamera();
+            dimensions[0] = DEFAULT_WIDTH; dimensions[1] = DEFAULT_HEIGHT;
+            healthEllipse = new ShapeRenderer();
+        }
+
+        @Override
+        public void drawOn(SpriteBatch batch) {
+            batch.end();
+
+            healthEllipse.begin(ShapeRenderer.ShapeType.Filled);
+            healthEllipse.setColor(Color.RED);
+            //Ellipse is always centred over middle of texture
+            pos = cam.project(new Vector3(
+                    /* Mess around with these to centre health bar over enemy */
+                    getX()+(((TextureAtlas.AtlasRegion)getTextureRegion()).offsetX-dimensions[0])/2,
+                    getY()+(getTextureRegion().getRegionHeight())-dimensions[1],
+                    0
+                    ));
+            healthEllipse.ellipse(pos.x, pos.y, dimensions[0], dimensions[1]);
+            healthEllipse.end();
+
+            batch.begin();
+        }
+
+        @Override
+        public void modifyHealth(int dhealth) {
+            if ((dimensions[0] -= (dhealth*(dimensions[1]/100))) <= 0) dimensions[0] = 0;
+            System.out.println("Width now: " + dimensions[0]);
+        }
+
+        @Override
+        public void remove() {
+
+        }
     }
 
     /**

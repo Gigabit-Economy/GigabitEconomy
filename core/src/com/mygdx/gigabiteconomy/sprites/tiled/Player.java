@@ -2,11 +2,20 @@ package com.mygdx.gigabiteconomy.sprites.tiled;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.exceptions.ParcelException;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.sprites.GameObject;
+import com.mygdx.gigabiteconomy.sprites.HealthBar;
+import com.mygdx.gigabiteconomy.sprites.IHealthBar;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -21,6 +30,8 @@ public class Player extends MovingSprite {
     private Parcel parcel;
 
     private static final String BASE_PATH = "finished_assets/player";
+
+    private PlayerHealthBar healthBar;
 
     /**
      * Create a new Player sprite (MovingSprite)
@@ -114,6 +125,12 @@ public class Player extends MovingSprite {
         return true;
     }
 
+    @Override
+    public void drawOn(SpriteBatch batch, float delta) {
+        super.drawOn(batch, delta);
+        healthBar.drawOn(batch);
+    }
+
     /**
      * Launch an attack using the sprite's weapon (using launchAttack() in MovingSprite) OR collect a parcel from the parcel van.
      */
@@ -150,6 +167,62 @@ public class Player extends MovingSprite {
         }
 
         super.launchAttack();
+    }
+
+    @Override
+    public void attack(Weapon weapon) {
+        super.attack(weapon);
+        healthBar.modifyHealth(5 * weapon.getHitMultiplier());
+    }
+
+    /**
+     * Class for displaying and controlling Player health bar in top left of the screen
+     */
+    public class PlayerHealthBar implements IHealthBar  {
+
+        private ShapeRenderer healthRect;
+        private Texture healthBarTexture = new Texture("finished_assets/ui_elements/health bar1.png");;
+        private Texture parcelIcon = new Texture("finished_assets/ui_elements/parcelicon.png");
+        private int[] dimensions;
+        private Vector2 pos = new Vector2();
+        private Vector3 cam;
+
+        public PlayerHealthBar(GigabitEconomy director) {
+            cam = director.getCameraPos();
+            healthBar = this;
+            pos.set(cam.x-900, cam.y+370);
+
+            healthRect = new ShapeRenderer();
+            dimensions = new int[]{318, 72}; // More specific values needed, size of health bar texture
+        }
+
+        @Override
+        public void drawOn(SpriteBatch batch) {
+            batch.end();
+
+            healthRect.begin(ShapeRenderer.ShapeType.Filled);
+            healthRect.setColor(Color.RED);
+            healthRect.rect(pos.x+100, pos.y+39, dimensions[0], dimensions[1]);
+            healthRect.end();
+
+            batch.begin();
+            batch.draw(healthBarTexture, cam.x-900, cam.y+370);
+
+            for (int i=0; i<level.getParcels(); i++) {
+                batch.draw(parcelIcon, cam.x-900+100+(1.15f*i*(parcelIcon.getWidth())), cam.y+370);
+            }
+        }
+
+        @Override
+        public void modifyHealth(int dhealth) {
+            if ((dimensions[0] -= (dhealth*3.18)) <= 0) dimensions[0] = 0;
+        }
+
+        @Override
+        public void remove() {
+
+        }
+
     }
 
     /**
@@ -245,4 +318,6 @@ public class Player extends MovingSprite {
             parcel = null;
         }
     }
+
+
 }
