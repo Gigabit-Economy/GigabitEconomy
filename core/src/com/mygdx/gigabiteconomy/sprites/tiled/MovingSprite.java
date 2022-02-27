@@ -104,7 +104,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
                 spriteDirection = "Right";
         }
 
-        String selectedWeapon = weapon.name().toLowerCase();
+        String selectedWeapon = this.weapon.name().toLowerCase();
         String movementConfig = String.format("%s/movement/%s%s.txt", this.basePath, selectedWeapon, spriteDirection);
         String attackingConfig = String.format("%s/attacks/%s%s.txt", this.basePath, selectedWeapon, spriteDirection);
 
@@ -129,7 +129,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
             deltaMove.y = 0;
             return;
         }
-        updateTextureRegions(dir);
+        if (dir != directionFacing) updateTextureRegions(dir);
         directionFacing = dir;
 
         deltaMove.x = velocity.x * dir.dxMult; deltaMove.y = velocity.y * dir.dyMult;
