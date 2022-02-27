@@ -8,33 +8,33 @@ unarmedLeftAttack1
   xy: 0, 0
   size: 368, 240
   orig: 368, 240
-  offset: 0, 0
+  offset: 126, 0
   index: -1
 unarmedLeftAttack2
   rotate: false
   xy: 368, 0
   size: 368, 240
   orig: 368, 240
-  offset: 0, 0
+  offset: 126, 0
   index: -1
 unarmedLeftAttack3
   rotate: false
   xy: 736, 0
   size: 368, 240
   orig: 368, 240
-  offset: 0, 0
+  offset: 126, 0
   index: -1
 unarmedLeftAttack4
   rotate: false
   xy: 1104, 0
   size: 368, 240
   orig: 368, 240
-  offset: 0, 0
+  offset: 126, 0
   index: -1
 unarmedLeftAttack5
   rotate: false
   xy: 1472, 0
   size: 368, 240
   orig: 368, 240
-  offset: 0, 0
+  offset: 126, 0
   index: -1
