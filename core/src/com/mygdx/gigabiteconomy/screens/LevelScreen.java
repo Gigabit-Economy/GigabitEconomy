@@ -1,6 +1,7 @@
 package com.mygdx.gigabiteconomy.screens;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -30,6 +31,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
     private TileManager tileManager;
 
+    private Music levelMusic;
     private String backgroundTexturePng;
     private Texture backgroundTexture;
     private Sprite backgroundSprite;
@@ -52,7 +54,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      * @param director          the instance of the game director
      * @param backgroundTexture the background graphic png of the level
      */
-    public LevelScreen(GigabitEconomy director, String backgroundTexturePng) {
+    public LevelScreen(GigabitEconomy director, String backgroundTexturePng, String levelMusic) {
         this.director = director;
         this.backgroundTexturePng = backgroundTexturePng;
         // Add background
@@ -64,6 +66,10 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         int numberOfTilesHigh = 18;
         tileManager = new TileManager(backgroundTextureHeight / numberOfTilesHigh, backgroundTextureHeight / 2,
                 backgroundTextureWidth, 0, 0);
+        //add music
+        this.levelMusic = Gdx.audio.newMusic(Gdx.files.internal("finished_assets/music/"+levelMusic+".wav"));
+        this.levelMusic.setLooping(true);
+        this.levelMusic.play();
     }
 
     /**
@@ -418,7 +424,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     @Override
     public void hide() {
        Gdx.input.setInputProcessor(null);
-
+        levelMusic.stop();
        if (!paused) {
            dispose();
        }

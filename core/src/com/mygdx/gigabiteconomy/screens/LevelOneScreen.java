@@ -65,8 +65,8 @@ public class LevelOneScreen extends LevelScreen {
      *
      * @param director the instance of the game director
      */
-    public LevelOneScreen(GigabitEconomy director) {
-        super(director, BACKGROUND_TEXTURE_PNG);
+    public LevelOneScreen(GigabitEconomy director, String levelMusic) {
+        super(director, BACKGROUND_TEXTURE_PNG,levelMusic);
 
         for (int[] coords : fenceCoords) {
             fences.add(new StaticSprite("finished_assets/static_sprites/fence.png", coords[0], coords[1], 1, 1));

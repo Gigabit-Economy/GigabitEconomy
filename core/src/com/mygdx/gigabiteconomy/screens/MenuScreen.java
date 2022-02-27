@@ -2,6 +2,8 @@ package com.mygdx.gigabiteconomy.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -27,7 +29,7 @@ public class MenuScreen implements Screen {
     private GigabitEconomy director;
     private Stage stage;
     private Table buttons;
-
+    private Music menuMusic;
     private Sprite backgroundSprite;
     private static final Texture backgroundTexture = new Texture("finished_assets/ui_elements/gigabitEconomyHomeScreen.png");
 
@@ -36,9 +38,15 @@ public class MenuScreen implements Screen {
     private Array<TextureAtlas.AtlasRegion> regions;
     private TextureRegion current;
 
-    public MenuScreen(GigabitEconomy director) {
+
+
+
+    public MenuScreen(GigabitEconomy director, String menuMusic) {
         this.director = director;
         this.stage = new Stage(director.getViewport());
+        this.menuMusic = Gdx.audio.newMusic(Gdx.files.internal("finished_assets/music/adventure.wav"));
+        this.menuMusic.setLooping(true);
+        this.menuMusic.play();
     }
 
     @Override
@@ -52,7 +60,7 @@ public class MenuScreen implements Screen {
         //add background
         buttons.setBackground(new TextureRegionDrawable(new TextureRegion(backgroundTexture)));
         buttons.setFillParent(true);
-        buttons.bottom();
+        buttons.center();
 
         //add button images
         ta = new TextureAtlas("finished_assets/ui_elements/icons.txt");
@@ -125,6 +133,7 @@ public class MenuScreen implements Screen {
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);
+        menuMusic.stop();
     }
 
     @Override

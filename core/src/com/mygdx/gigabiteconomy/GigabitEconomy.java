@@ -76,10 +76,9 @@ public class GigabitEconomy extends Game {
 
     public void switchScreen(String name) throws ScreenException {
         Screen toSwitch;
-
         switch (name) {
             case "menu":
-                toSwitch = new MenuScreen(this);
+                toSwitch = new MenuScreen(this, "adventure");
                 break;
             case "TutorialScreen":
                 toSwitch = new TutorialScreen(this);
@@ -101,7 +100,7 @@ public class GigabitEconomy extends Game {
                     fromPause = null;
                     return;
                 } else {
-                    toSwitch = new LevelOneScreen(this);
+                    toSwitch = new LevelOneScreen(this, "theChase");
                 }
                 break;
             case "levelSelectScreen":
