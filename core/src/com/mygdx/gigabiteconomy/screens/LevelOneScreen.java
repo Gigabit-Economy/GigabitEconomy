@@ -35,11 +35,11 @@ public class LevelOneScreen extends LevelScreen {
     private final ParcelVan parcelVan = new ParcelVan(0, 0);
 
     /* STATIC SPRITES (HOUSES, FENCES ETC...) */
-    private final House houseOne = new House(House.HouseType.DETACHED, 0);
-    private final House houseTwo = new House(House.HouseType.TWO_STORY, 10);
-    private final House houseThree = new House(House.HouseType.DETACHED, 20);
-    private final House houseFour = new House(House.HouseType.TWO_STORY, 31);
-    private final House houseFive = new House(House.HouseType.DETACHED, 38);
+    private final House houseOne = new House(House.HouseType.DETACHED, 0, "level1");
+    private final House houseTwo = new House(House.HouseType.TWO_STORY, 10, "level1");
+    private final House houseThree = new House(House.HouseType.DETACHED, 20, "level1");
+    private final House houseFour = new House(House.HouseType.TWO_STORY, 31, "level1");
+    private final House houseFive = new House(House.HouseType.DETACHED, 38, "level1");
 
     private final ArrayList<StaticSprite> fences = new ArrayList<>();
     private final ArrayList<StaticSprite> cans = new ArrayList<>();

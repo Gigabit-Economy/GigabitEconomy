@@ -22,8 +22,8 @@ public class House extends StaticSprite {
      * @param type the type of house (HouseType enum)
      * @param x position of Tile (within tile grid) to place sprite
      */
-    public House(HouseType type, int x) {
-        super(String.format("finished_assets/houses/%s.png", type.name().toLowerCase()), x, Y, 1, 6);
+    public House(HouseType type, int x, String level) {
+        super(String.format("finished_assets/houses/"+level+"/%s.png", type.name().toLowerCase()), x, Y, 1, 6);
     }
 
     /**
