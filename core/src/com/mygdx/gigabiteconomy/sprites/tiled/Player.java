@@ -177,8 +177,7 @@ public class Player extends MovingSprite {
     /**
      * Class for displaying and controlling Player health bar in top left of the screen
      */
-    public class PlayerHealthBar implements IHealthBar  {
-
+    public class PlayerHealthBar implements IHealthBar {
         private ShapeRenderer healthRect;
         private Texture healthBarTexture = new Texture("finished_assets/ui_elements/health bar1.png");;
         private Texture parcelIcon = new Texture("finished_assets/ui_elements/parcelicon.png");
@@ -218,12 +217,6 @@ public class Player extends MovingSprite {
             System.out.println("Width now: " + dimensions[0]);
 
         }
-
-        @Override
-        public void remove() {
-
-        }
-
     }
 
     /**

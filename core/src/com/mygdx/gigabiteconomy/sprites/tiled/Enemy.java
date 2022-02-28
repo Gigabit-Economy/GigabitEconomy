@@ -95,7 +95,6 @@ public abstract class Enemy extends MovingSprite {
      * Class that manages the display of enemy health
      */
     public class EnemyHealthBar implements IHealthBar {
-
         private float INIT_WIDTH = 69;
         private float INIT_HEIGHT = 7;
 
@@ -143,11 +142,6 @@ public abstract class Enemy extends MovingSprite {
         public void modifyHealth(int dhealth) {
             if ((dimensions[0] -= (dhealth*(INIT_WIDTH/100))) <= 0) dimensions[0] = 0;
             System.out.println("Width now: " + dimensions[0]);
-        }
-
-        @Override
-        public void remove() {
-
         }
     }
 
