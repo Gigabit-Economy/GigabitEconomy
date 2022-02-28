@@ -69,11 +69,11 @@ public class LevelOneScreen extends LevelScreen {
         super(director, BACKGROUND_TEXTURE_PNG,levelMusic);
 
         for (int[] coords : fenceCoords) {
-            fences.add(new StaticSprite("finished_assets/static_sprites/fence.png", coords[0], coords[1], 1, 1));
+            fences.add(new StaticSprite("finished_assets/static_sprites/level1/fence.png", coords[0], coords[1], 1, 1));
         }
 
         for (int[] coords : canCoords) {
-            cans.add(new StaticSprite("finished_assets/static_sprites/trashcan.png", coords[0], coords[1], 1, 1));
+            cans.add(new StaticSprite("finished_assets/static_sprites/level1/trashcan.png", coords[0], coords[1], 1, 1));
         }
 
         addPlayer(player);
