@@ -97,7 +97,9 @@ public abstract class Enemy extends MovingSprite {
     @Override
     public void attack(Weapon weapon) {
         super.attack(weapon);
-        healthBar.modifyHealth(5*weapon.getHitMultiplier());
+
+        // deduct -10 (base health detraction) multiplied by hit multiplier of the used weapon from sprite
+        healthBar.modifyHealth(10 * weapon.getHitMultiplier());
     }
 
     /**
