@@ -52,10 +52,10 @@ public class LevelCompleteScreen implements Screen {
 
         String highestScoreText = String.format("HIGHEST SCORE: %d", levelScores.getHighestScore());
         Label yourHighestScoreLabel = new Label(highestScoreText, style);
-        levelCompletedTable.add(yourHighestScoreLabel).colspan(2);
+        levelCompletedTable.add(yourHighestScoreLabel).colspan(2).padBottom(10);
         levelCompletedTable.row();
 
-        Label yourPastScoresLabel = new Label("TOP SCORES:", style);
+        Label yourPastScoresLabel = new Label("PREVIOUS SCORES:", style);
         levelCompletedTable.add(yourPastScoresLabel).colspan(2);
         levelCompletedTable.row();
         
