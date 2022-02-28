@@ -60,8 +60,8 @@ public class LevelOneScreen extends LevelScreen {
      *
      * @param director the instance of the game director
      */
-    public LevelOneScreen(GigabitEconomy director, String levelMusic) {
-        super(director, BACKGROUND_TEXTURE_PNG,levelMusic);
+    public LevelOneScreen(GigabitEconomy director) {
+        super(director, BACKGROUND_TEXTURE_PNG);
 
         for (int[] coords : fenceCoords) {
             fences.add(new StaticSprite("finished_assets/static_sprites/level1/fence.png", coords[0], coords[1], 1, 1));
@@ -73,6 +73,7 @@ public class LevelOneScreen extends LevelScreen {
 
         player.addHealthBar(director);
         addPlayer(player);
+
 
         addEnemies(enemies);
         for (Enemy enemy : enemies) {

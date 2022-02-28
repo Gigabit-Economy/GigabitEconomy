@@ -74,7 +74,7 @@ public class PauseMenu implements Screen, InputProcessor {
             pauseMenuTable.row();
 
             TextButton backToMainMenuButton = new TextButton("BACK TO MAIN MENU", style);
-            backToMainMenuButton.setName("menu");
+            backToMainMenuButton.setName("MenuScreen");
             pauseMenuTable.add(backToMainMenuButton);
 
             TextButton tutorialButton = new TextButton("HELP", style);

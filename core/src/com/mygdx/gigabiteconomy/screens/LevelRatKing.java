@@ -49,8 +49,8 @@ public class LevelRatKing extends LevelScreen {
      *
      * @param director the instance of the game director
      */
-    public LevelRatKing(GigabitEconomy director, String levelMusic) {
-        super(director, BACKGROUND_TEXTURE_PNG,levelMusic);
+    public LevelRatKing(GigabitEconomy director) {
+        super(director, BACKGROUND_TEXTURE_PNG);
 
         for (int[] coords : fenceCoords) {
             fences.add(new StaticSprite("finished_assets/static_sprites/level1/fence.png", coords[0], coords[1], 1, 1));
