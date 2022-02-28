@@ -29,6 +29,9 @@ public abstract class Enemy extends MovingSprite {
     private Queue<DIRECTION> currentPath;
 
     int[][] agroTilePos; //Fixed tile coords in following format: [ [curr-x, curr+x] , [curr+y, curr-y] ]
+    int horizAgroTiles;
+    int vertAgroTiles;
+
     boolean agro = false;
 
     private TiledObject targetEntity;
@@ -36,13 +39,18 @@ public abstract class Enemy extends MovingSprite {
     /**
      * Create a new Enemy sprite (MovingSprite)
      *
+     * @param BASE_PATH of texture
      * @param weapon the weapon the Enemy is carrying
      * @param x position of Tile (within tile grid) to place sprite
      * @param y position of Tile (within tile grid) to place sprite
      * @param height of Tiles to occupy
      * @param width of Tiles to occupy
+     * @param deltaHoriz horizontal speed
+     * @param deltaVert vertical speed
+     * @param horizAgroTiles number of horizontal tiles either side of starting position to protect
+     * @param vertAgroTiles number of vertical tiles either size of starting position to protect
      */
-    public Enemy(String BASE_PATH, Weapon weapon, int x, int y, int height, int width, Player targetEntity, float deltaHoriz, float deltaVert, LinkedList<DIRECTION> movePath) {
+    public Enemy(String BASE_PATH, Weapon weapon, int x, int y, int height, int width, Player targetEntity, float deltaHoriz, float deltaVert, int horizAgroTiles, int vertAgroTiles, LinkedList<DIRECTION> movePath) {
         super(weapon, x, y, height, width, deltaHoriz, deltaVert, BASE_PATH);
 
         this.movePath = movePath;
@@ -98,8 +106,10 @@ public abstract class Enemy extends MovingSprite {
         private float INIT_WIDTH = 69;
         private float INIT_HEIGHT = 7;
 
+
         private ShapeRenderer healthEllipse;
         private float[] dimensions = new float[2];
+
         private Vector3 pos;
 
         private OrthographicCamera cam;
@@ -128,7 +138,9 @@ public abstract class Enemy extends MovingSprite {
             //Ellipse is always centred over middle of texture
             pos = cam.project(new Vector3(
                     /* Mess around with these to centre health bar over enemy */
+
                     getX()+(((TextureAtlas.AtlasRegion)getTextureRegion()).offsetX-INIT_WIDTH)/2,
+
                     getY()+(getTextureRegion().getRegionHeight())-dimensions[1],
                     0
                     ));
@@ -234,9 +246,11 @@ public abstract class Enemy extends MovingSprite {
             if (agro) {
                 TileManager tm = getTileManager();
                 //Check if player is on adjacent tiles
+
                 if (getTileManager().isGroupOccupiedBy(targetEntity, new ArrayList<>(Arrays.asList(tm.getAdjacentTiles(this.getCurrentTiles().get(0)))))) {
                     //super.launchAttack();
                     setAttacking(true);
+
                 }
 
                 //Check if player is on the row
