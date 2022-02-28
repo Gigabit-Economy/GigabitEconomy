@@ -34,17 +34,17 @@ public class LevelFailedScreen implements Screen{
         deathScreenTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         Label diedLabel = new Label("YOU HAVE DIED!", style);
-        deathScreenTable.add(diedLabel).size(40);
+        deathScreenTable.add(diedLabel).colspan(2);
 
         deathScreenTable.row();
 
         TextButton tryAgainButton = new TextButton("TRY AGAIN", style);
         tryAgainButton.setName(director.getLastPlayedLevel());
-        deathScreenTable.add(tryAgainButton).space(20);
+        deathScreenTable.add(tryAgainButton).left().pad(20);
 
         TextButton deathScreenMainMenuButton = new TextButton("MAIN MENU", style);
         deathScreenMainMenuButton.setName("MenuScreen");
-        deathScreenTable.add(deathScreenMainMenuButton).space(20);
+        deathScreenTable.add(deathScreenMainMenuButton).right().pad(20);
         
         // Add click listener for buttons
         ClickListener buttonsListener = new ClickListener() {
