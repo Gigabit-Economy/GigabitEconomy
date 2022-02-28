@@ -122,7 +122,7 @@ public abstract class Enemy extends MovingSprite {
         private Vector3 pos = new Vector3();
 
         public EnemyHealthBar(GigabitEconomy director) {
-            super(WIDTH, HEIGHT);
+            super(HEIGHT, WIDTH);
 
             this.cam = director.getCamera();
 

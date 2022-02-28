@@ -7,10 +7,15 @@ public abstract class HealthBar {
     private ShapeRenderer ellipse;
 
     private float[] dimensions = new float[2];
+    private final float INIT_HEIGHT;
+    private final float INIT_WIDTH;
 
-    public HealthBar(float width, float height) {
+    public HealthBar(float height, float width) {
         dimensions[0] = width; dimensions[1] = height;
         ellipse = new ShapeRenderer();
+
+        INIT_HEIGHT = height;
+        INIT_WIDTH = width;
     }
 
     public abstract void drawOn(SpriteBatch batch);
@@ -21,7 +26,8 @@ public abstract class HealthBar {
      * @param health the new health value
      */
     public void setHealth(float health) {
-        float newHealth = dimensions[0] - (health * (dimensions[0]/100));
+        System.out.println(health);
+        float newHealth = (health * (INIT_WIDTH/100));
 
         if (newHealth <= 0) {
             dimensions[0] = 0;

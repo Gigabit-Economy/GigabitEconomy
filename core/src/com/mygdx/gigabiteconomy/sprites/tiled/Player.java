@@ -216,7 +216,7 @@ public class Player extends MovingSprite {
 
             getEllipse().begin(ShapeRenderer.ShapeType.Filled);
             getEllipse().setColor(Color.RED);
-            getEllipse().rect(pos.x+100, pos.y+39, getDimensions()[1], getDimensions()[0]);
+            getEllipse().rect(pos.x+100, pos.y+39, getDimensions()[0], getDimensions()[1]);
             getEllipse().end();
 
             batch.begin();
