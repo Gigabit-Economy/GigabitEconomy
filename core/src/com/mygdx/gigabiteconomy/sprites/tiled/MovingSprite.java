@@ -10,6 +10,8 @@ import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.badlogic.gdx.utils.Disposable;
 
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.ArrayList;
 
 /**
@@ -212,8 +214,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         //updateTextureRegions();
 
         ArrayList<Tile> toSet = getTileManager().getNextTiles(this, getDirectionMoving(), 1);
-
-        if (toSet == null) {
+        if (toSet.contains(null)) {
             targetTiles = null;
             return null;
         }
