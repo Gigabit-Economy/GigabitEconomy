@@ -121,7 +121,7 @@ public class GigabitEconomy extends Game {
                     this.fromPause = null;
                     return;
                 } else {
-                    toSwitch = new LevelRatKing(this, "theChase");
+                    toSwitch = new LevelRatKing(this);
                 }
                 break;
 
