@@ -55,23 +55,27 @@ public class LevelCompleteScreen implements Screen {
         levelCompletedTable.add(yourHighestScoreLabel).colspan(2);
         levelCompletedTable.row();
 
-        Label yourPastScoresLabel = new Label("RECENT SCORES:", style);
+        Label yourPastScoresLabel = new Label("TOP SCORES:", style);
         levelCompletedTable.add(yourPastScoresLabel).colspan(2);
         levelCompletedTable.row();
         
         String[] prevScores = levelScores.getAllScores();
+        String[] lastFewScores = new String[5];
+        for (int i = 0; i < 5; i++) {
+            lastFewScores[i] = prevScores [i];
+        }
         List<String> levelCompletedScoreList = new List<String>(style);
-        levelCompletedScoreList.setItems(prevScores);
+        levelCompletedScoreList.setItems(lastFewScores);
         levelCompletedTable.add(levelCompletedScoreList).colspan(2);
         levelCompletedTable.row();
 
         TextButton levelCompletedMainMenuButton = new TextButton("MAIN MENU", style);
         levelCompletedMainMenuButton.setName("menu");
-        levelCompletedTable.add(levelCompletedMainMenuButton).bottom().padTop(50).left();
+        levelCompletedTable.add(levelCompletedMainMenuButton).bottom().padTop(50);
 
         TextButton levelCompletedNextLevelButton = new TextButton("NEXT LEVEL", style);
         levelCompletedNextLevelButton.setName("nextlevelscreen");
-        levelCompletedTable.add(levelCompletedNextLevelButton).bottom().padTop(50).right();
+        levelCompletedTable.add(levelCompletedNextLevelButton).bottom().padTop(50);
         levelCompletedTable.row();
 
 
