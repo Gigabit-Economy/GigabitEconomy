@@ -28,7 +28,7 @@ public class LevelOneScreen extends LevelScreen {
     private final ArrayList<Enemy> enemies = new ArrayList<Enemy>(Arrays.asList(
             new BatGuy(5, 3, player),
             /* Example of completely custom fighter */
-            new Fighter(15, 7, player, 3.4f, 2.8f, 95f, new LinkedList<MovingSprite.DIRECTION>(Arrays.asList(MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.EAST)));
+            new Fighter(15, 7, player, 3.4f, 2.8f, 95f, new LinkedList<MovingSprite.DIRECTION>(Arrays.asList(MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.EAST))),
             new Dog(25, 3, player)
     ));
 

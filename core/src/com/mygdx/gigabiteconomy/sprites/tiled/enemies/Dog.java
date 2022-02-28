@@ -10,6 +10,11 @@ import java.util.LinkedList;
 public class Dog extends Enemy {
 
     private static final String BASE_PATH = "finished_assets/enemies/level1";
+    private static final float DEFAULT_HEALTH = 50f;
+    private static final float DEFAULT_DELTAHORIZ = 4f;
+    private static final float DEFAULT_DELTAVERT = 3.25f;
+    private static final int DEFAULT_WIDTH = 3;
+    private static final int DEFAULT_HEIGHT = 1;
 
     /**
      * Create a new Enemy sprite (MovingSprite)
@@ -19,7 +24,7 @@ public class Dog extends Enemy {
      * @param targetEntity
      */
     public Dog(int x, int y, Player targetEntity) {
-        super(BASE_PATH, Weapon.DOG, x, y, 1, 1, targetEntity, 4f, 3.25f, 50f, new LinkedList<>(
+        super(BASE_PATH, Weapon.DOG, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, DEFAULT_DELTAHORIZ, DEFAULT_DELTAVERT, DEFAULT_HEALTH, new LinkedList<>(
 
                 Arrays.asList(MovingSprite.DIRECTION.NORTH,MovingSprite.DIRECTION.NORTH,
                         MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
