@@ -13,7 +13,6 @@ import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.ScoreSystem;
 import com.mygdx.gigabiteconomy.exceptions.ParcelException;
 import com.mygdx.gigabiteconomy.exceptions.ScreenException;
-import com.mygdx.gigabiteconomy.sprites.*;
 import com.mygdx.gigabiteconomy.sprites.tiled.*;
 
 import java.util.ArrayList;
@@ -70,6 +69,15 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         this.levelMusic = Gdx.audio.newMusic(Gdx.files.internal("finished_assets/music/"+levelMusic+".wav"));
         this.levelMusic.setLooping(true);
         this.levelMusic.play();
+    }
+
+    /**
+     * Get the game director (GigabitEconomy)
+     *
+     * @return the current game director class (GigabitEconomy) instance
+     */
+    public GigabitEconomy getDirector() {
+        return this.director;
     }
 
     /**
@@ -188,13 +196,9 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         }
 
         String scoreText = String.format("score: %d", score.getScore());
-        String parcelText = String.format("parcels remaining: %d", parcels);
-        String healthText = String.format("health: %d", player.getHealth());
 
         font.setColor(Color.CORAL);
         font.draw(batch, scoreText, (cam.x - 900), 1040);
-        font.draw(batch, parcelText, (cam.x - 900), 1020);
-        font.draw(batch, healthText, (cam.x - 900), 1000);
 
         // if one is set, display error message
         if (this.errorCountdown > 0 && this.errorText != null && this.errorText.length() != 0) {

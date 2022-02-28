@@ -60,7 +60,11 @@ public class TileManager implements Disposable {
     }
 
     private Tile getTile(int x, int y) {
-        return tileArray[x][y]; //This will need to TileMovementException
+        try {
+            return tileArray[x][y]; //This will need to TileMovementException
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
     /**
@@ -80,24 +84,24 @@ public class TileManager implements Disposable {
         int[] pos = tileFrom.getPositionTile();
         Tile ret;
 
-        try {
-            switch (direction) {
-                case WEST:
-                    ret = getTile(pos[0]-distance, pos[1]);
-                    break;
-                case EAST:
-                    ret = getTile(pos[0]+distance, pos[1]);
-                    break;
-                case NORTH:
-                    ret = getTile(pos[0], pos[1]+distance);
-                    break;
-                case SOUTH:
-                    ret = getTile(pos[0], pos[1]-distance);
-                    break;
-                default:
-                    return null;
-            }
-        } catch (ArrayIndexOutOfBoundsException e) { return getAdjacentTile(tileFrom, direction, distance-1); }
+
+        switch (direction) {
+            case WEST:
+                ret = getTile(pos[0]-distance, pos[1]);
+                break;
+            case EAST:
+                ret = getTile(pos[0]+distance, pos[1]);
+                break;
+            case NORTH:
+                ret = getTile(pos[0], pos[1]+distance);
+                break;
+            case SOUTH:
+                ret = getTile(pos[0], pos[1]-distance);
+                break;
+            default:
+                return null;
+        }
+
         return ret;
     }
 
@@ -279,7 +283,7 @@ public class TileManager implements Disposable {
         for (int i=0; i<toCurrTiles.size(); i++) {
             Tile tileToAdd = getAdjacentTile(toCurrTiles.get(i), mo.getDirectionMoving(), distance);
             if (tileToAdd == null || (tileToAdd.getOccupiedBy() != mo && tileToAdd.getOccupiedBy() != null)) {
-                return null;
+                toSet.add(null);
             }
             toSet.add(tileToAdd);
         }

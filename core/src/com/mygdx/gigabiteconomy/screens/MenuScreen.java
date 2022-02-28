@@ -39,8 +39,6 @@ public class MenuScreen implements Screen {
     private TextureRegion current;
 
 
-
-
     public MenuScreen(GigabitEconomy director, String menuMusic) {
         this.director = director;
         this.stage = new Stage(director.getViewport());
@@ -108,10 +106,6 @@ public class MenuScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
         stage.draw();
-
-   /*     batch.begin();
-        backgroundSprite.draw(batch);
-        batch.end();*/
     }
 
     @Override
@@ -121,14 +115,10 @@ public class MenuScreen implements Screen {
     }
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() {}
 
     @Override
     public void hide() {

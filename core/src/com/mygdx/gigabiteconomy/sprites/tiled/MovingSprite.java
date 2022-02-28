@@ -5,10 +5,13 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.badlogic.gdx.utils.Disposable;
 
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
@@ -39,7 +42,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     private MovingAnimation<TextureRegion> movementAnimation;
     private MovingAnimation<TextureRegion> attackAnimation;
 
-    private int health = 100;
+    private float health = 100;
     private boolean attacking = false;
     private Weapon weapon;
 
@@ -53,8 +56,9 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * @param x position of Tile (within tile grid) to place sprite
      * @param y position of Tile (within tile grid) to place sprite
      */
-    public MovingSprite(Weapon weapon, int x, int y, int height, int width, float deltaHoriz, float deltaVert, String pathToMoveAndAttackMaps) {
+    public MovingSprite(Weapon weapon, int x, int y, int height, int width, float deltaHoriz, float deltaVert, float health, String pathToMoveAndAttackMaps) {
         super(x, y, height, width);
+        this.health = health;
 
         this.basePath = pathToMoveAndAttackMaps;
 
@@ -65,6 +69,13 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
 
         setWeapon(weapon);
     }
+
+    /**
+     * Add a health bar to the sprite
+     *
+     * @param director the level's director class
+     */
+    public abstract void addHealthBar(GigabitEconomy director);
 
     /**
      * Get the texture region of the sprite
@@ -205,8 +216,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         //updateTextureRegions();
 
         ArrayList<Tile> toSet = getTileManager().getNextTiles(this, getDirectionMoving(), 1);
-
-        if (toSet == null) {
+        if (toSet.contains(null)) {
             targetTiles = null;
             return null;
         }
@@ -384,17 +394,14 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      *
      * @param weapon the weapon the attacking sprite is currently carrying
      */
-    public void attack(Weapon weapon) {
-        // deduct -5 (base health detraction) multiplied by hit multiplier of the used weapon from sprite
-        setHealth(health - (5 * weapon.hitMultiplier));
-    }
+    public abstract void attack(Weapon weapon);
 
     /**
      * Set the health of the sprite
      *
      * @param health the sprite's new health value
      */
-    public void setHealth(int health) {
+    public void setHealth(float health) {
         this.health = health;
 
         if (health <= 0) {
@@ -422,22 +429,22 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     }
 
     public enum Weapon {
-        KNIFE (1),
-        GOLF (2),
-        PIPE (3),
-        KATANA (5),
+        KNIFE (2f),
+        GOLF (3f),
+        PIPE (4f),
+        KATANA (5f),
         //Enemies
-        NONE (1),
-        DOG (2),
-        BAT (3);
+        NONE (0.5f),
+        DOG (1.25f),
+        BAT (1.5f);
 
-        private int hitMultiplier;
+        private float hitMultiplier;
 
-        private Weapon(int hitMultiplier) {
+        private Weapon(float hitMultiplier) {
             this.hitMultiplier = hitMultiplier;
         }
 
-        public int getHitMultiplier() {
+        public float getHitMultiplier() {
             return hitMultiplier;
         }
     }
@@ -447,7 +454,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      *
      * @return the sprite's health (as a percentage i.e. out of 100)
      */
-    public int getHealth() {
+    public float getHealth() {
         return this.health;
     }
 

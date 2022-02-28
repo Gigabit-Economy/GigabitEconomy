@@ -9,6 +9,11 @@ import java.util.LinkedList;
 
 public class Fighter extends Enemy {
     private static final String BASE_PATH = "finished_assets/enemies/level1";
+    private static final float DEFAULT_HEALTH = 85f;
+    private static final float DEFAULT_DELTAHORIZ = 2f;
+    private static final float DEFAULT_DELTAVERT = 1.5f;
+    private static final int DEFAULT_WIDTH = 1;
+    private static final int DEFAULT_HEIGHT = 1;
 
     /**
      * Create a new Enemy sprite (MovingSprite)
@@ -19,6 +24,7 @@ public class Fighter extends Enemy {
      */
     public Fighter(int x, int y, Player targetEntity) {
         super(BASE_PATH, MovingSprite.Weapon.NONE, x, y, 1, 1, targetEntity, 2f, 1.5f, 6, 2, DIRECTION.randomPath(6));
+
     }
 
     /**
@@ -29,7 +35,8 @@ public class Fighter extends Enemy {
      * @param movementPath define a specific movement path
      * @param targetEntity
      */
-    public Fighter(int x, int y, Player targetEntity, float deltaHoriz, float deltaVert, int horizAgroTiles, int vertAgroTiles, LinkedList<MovingSprite.DIRECTION> movementPath) {
-        super(BASE_PATH, MovingSprite.Weapon.NONE, x, y, 1, 1, targetEntity, deltaHoriz, deltaVert, horizAgroTiles, vertAgroTiles, movementPath);
+    public Fighter(int x, int y, Player targetEntity, float deltaHoriz, float deltaVert, float health, LinkedList<MovingSprite.DIRECTION> movementPath) {
+        super(BASE_PATH, MovingSprite.Weapon.NONE, x, y, 1, 1, targetEntity, deltaHoriz, deltaVert, health, movementPath);
+
     }
 }
