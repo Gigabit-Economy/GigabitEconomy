@@ -2,6 +2,7 @@ package com.mygdx.gigabiteconomy;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -9,6 +10,7 @@ import com.mygdx.gigabiteconomy.exceptions.ScreenException;
 import com.mygdx.gigabiteconomy.screens.*;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.Gdx;
+import jdk.vm.ci.code.RegisterAttributes;
 
 import java.lang.String;
 
@@ -20,6 +22,9 @@ public class GigabitEconomy extends Game {
 
     private Screen fromPause;
 
+    private static final String MUSIC_BASE_PATH = "finished_assets/music/";
+    private Music backgroundMusic;
+
     @Override
     public void create() {
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -27,7 +32,7 @@ public class GigabitEconomy extends Game {
 
         // Set initial active screen to main menu
         try {
-            switchScreen("menu");
+            switchScreen("MenuScreen");
         } catch (ScreenException ex) {
             Gdx.app.error("Exception", "The screen could not be switched when level failed", ex);
             System.exit(-1);
@@ -77,21 +82,27 @@ public class GigabitEconomy extends Game {
     public void switchScreen(String name) throws ScreenException {
         Screen toSwitch;
         switch (name) {
-            case "menu":
-                toSwitch = new MenuScreen(this, "adventure");
+            case "MenuScreen":
+                toSwitch = new MenuScreen(this);
+                setMusic("Menu");
+                break;
+            case "LevelSelectScreen":
+                toSwitch = new LevelSelectScreen(this);
                 break;
             case "TutorialScreen":
                 toSwitch = new TutorialScreen(this);
                 break;
-            case "pausemenu":
+            case "PauseMenu":
                 fromPause = getScreen();
                 toSwitch = new PauseMenu(this);
                 break;
-            case "levelcomplete":
+            case "LevelComplete":
                 toSwitch = new LevelCompleteScreen(this);
+                setMusic("Menu");
                 break;
-            case "levelfailed":
+            case "LevelFailed":
                 toSwitch = new LevelFailedScreen(this);
+                setMusic("Menu");
                 break;
 
             case "LevelOneScreen":
@@ -100,12 +111,19 @@ public class GigabitEconomy extends Game {
                     this.fromPause = null;
                     return;
                 } else {
-                    toSwitch = new LevelOneScreen(this, "theChase");
+                    toSwitch = new LevelOneScreen(this);
+                    setMusic("LevelOne");
                 }
                 break;
-            case "levelSelectScreen":
-                toSwitch = new LevelSelectScreen(this);
-                break;    
+            case "LevelThreeScreen":
+                if (fromPause != null) {
+                    setScreen(fromPause);
+                    this.fromPause = null;
+                    return;
+                } else {
+                    toSwitch = new LevelRatKing(this);
+                }
+                break;
 
             default:
                 throw new ScreenException(String.format("Tried to switch to invalid screen %s", name));
@@ -124,11 +142,49 @@ public class GigabitEconomy extends Game {
         setScreen(toSwitch);
     }
 
+    /**
+     * Set the playing background music
+     *
+     * @param name the music file name in "[MUSIC_BASE_PATH]/[...].wav"
+     */
+    public void setMusic(String name) {
+        if (this.backgroundMusic != null) {
+            this.backgroundMusic.stop();
+        }
+
+        this.backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal(String.format("%s/%s.wav", MUSIC_BASE_PATH, name)));
+
+        this.backgroundMusic.setLooping(true);
+        this.backgroundMusic.play();
+    }
+
     public ScreenViewport getViewport() {
         return viewport;
     }
 
+    /**
+     * Get the recorded last played level
+     *
+     * @return the lastPlayedLevel (currently playing level)
+     */
     public String getLastPlayedLevel() {
         return this.lastPlayedLevel;
+    }
+
+    /**
+     * Get the next level to the recorded last played level
+     *
+     * @return the next level after lastPlayedLevel
+     */
+    public String getNextLevel() {
+        switch (this.lastPlayedLevel) {
+            case "LevelOneScreen":
+                return "LevelTwoScreen";
+            case "LevelTwoScreen":
+                return "LevelThreeScreen";
+
+            default:
+                return "LevelSelectScreen";
+        }
     }
 }

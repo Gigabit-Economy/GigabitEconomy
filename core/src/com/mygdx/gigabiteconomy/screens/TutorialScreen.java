@@ -63,7 +63,7 @@ public class TutorialScreen implements Screen {
         TextButton screenTableReturnToLevelButton = new TextButton("RETURN TO LEVEL", style);
         screenTableReturnToLevelButton.setName(lastPlayedLevel);
         TextButton screenTableMainMenuButton = new TextButton("MAIN MENU", style);
-        screenTableMainMenuButton.setName("menu");
+        screenTableMainMenuButton.setName("MenuScreen");
 
         informationScreenTable = new Table();
         informationScreenTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

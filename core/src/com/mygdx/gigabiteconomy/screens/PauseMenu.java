@@ -74,7 +74,7 @@ public class PauseMenu implements Screen, InputProcessor {
             pauseMenuTable.row();
 
             TextButton backToMainMenuButton = new TextButton("BACK TO MAIN MENU", style);
-            backToMainMenuButton.setName("menu");
+            backToMainMenuButton.setName("MenuScreen");
             pauseMenuTable.add(backToMainMenuButton);
 
             TextButton tutorialButton = new TextButton("HELP", style);
@@ -150,7 +150,6 @@ public class PauseMenu implements Screen, InputProcessor {
 
         pauseCount++;
     }
-    
 
     @Override
     public void render(float delta) {
@@ -187,9 +186,10 @@ public class PauseMenu implements Screen, InputProcessor {
                 System.exit(-1);
             }
         }
-        else{
+        else {
             return false;
         }
+
         return true;
     }
 

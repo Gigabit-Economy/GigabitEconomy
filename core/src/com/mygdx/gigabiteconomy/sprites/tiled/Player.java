@@ -13,9 +13,7 @@ import com.mygdx.gigabiteconomy.exceptions.ParcelException;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
-import com.mygdx.gigabiteconomy.sprites.GameObject;
 import com.mygdx.gigabiteconomy.sprites.HealthBar;
-import com.mygdx.gigabiteconomy.sprites.IHealthBar;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -31,6 +29,7 @@ public class Player extends MovingSprite {
 
     private static final String BASE_PATH = "finished_assets/player";
 
+    private static final int BASE_HEALTH_DETRACTION = 5;
     private PlayerHealthBar healthBar;
 
     /**
@@ -43,7 +42,16 @@ public class Player extends MovingSprite {
      * @param width of Tiles to occupy
      */
     public Player(Weapon weapon, int x, int y, int height, int width) {
-        super(weapon, x, y, height, width, 3.5f, 3f, BASE_PATH);
+        super(weapon, x, y, height, width, 3.5f, 3f, 100f, BASE_PATH);
+    }
+
+    /**
+     * Add a health bar to be displayed in the top left corner of the level screen
+     *
+     * @param director the level's director class
+     */
+    public void addHealthBar(GigabitEconomy director) {
+        this.healthBar = new PlayerHealthBar(director);
     }
 
     /**
@@ -128,7 +136,10 @@ public class Player extends MovingSprite {
     @Override
     public void drawOn(SpriteBatch batch, float delta) {
         super.drawOn(batch, delta);
-        healthBar.drawOn(batch);
+
+        if (this.healthBar != null) {
+            this.healthBar.drawOn(batch);
+        }
     }
 
     /**
@@ -146,6 +157,7 @@ public class Player extends MovingSprite {
             // if adjacent tile is occupied by a parcel van, collect parcel
             TiledObject adjacentSprite = adjacentTile.getOccupiedBy();
             if (adjacentSprite instanceof ParcelVan) {
+                level.getParcelVan().setInactive();
                 this.parcel = new Parcel();
                 return;
             }
@@ -153,13 +165,13 @@ public class Player extends MovingSprite {
         // if Player does have a Parcel, check if next to House to be delivered to
         else {
             // if current tile or adjacent tile is owned by a House (door), deliver parcel
-            GameObject currentObject;
+            TiledObject currentObject;
             try {
                 currentObject = getCurrentTiles().get(0).getOwnedBy();
             } catch (NullPointerException ex) {
                 currentObject = null;
             }
-            GameObject adjacentObject = adjacentTile.getOwnedBy();
+            TiledObject adjacentObject = adjacentTile.getOwnedBy();
             if ((adjacentObject instanceof House) ||
                     currentObject instanceof House) {
                 parcel.deliver();
@@ -171,60 +183,49 @@ public class Player extends MovingSprite {
 
     @Override
     public void attack(Weapon weapon) {
-        super.attack(weapon);
-        healthBar.modifyHealth(5 * weapon.getHitMultiplier());
+        // deduct -5 (base health detraction for Player) multiplied by hit multiplier of the used weapon from sprite
+        setHealth(getHealth() - (BASE_HEALTH_DETRACTION * weapon.getHitMultiplier()));
+
+        // update health bar value
+        healthBar.setHealth(getHealth());
     }
 
     /**
      * Class for displaying and controlling Player health bar in top left of the screen
      */
-    public class PlayerHealthBar implements IHealthBar  {
+    public class PlayerHealthBar extends HealthBar {
+        private final Texture HEALTH_BAR_TEXTURE = new Texture("finished_assets/ui_elements/health bar1.png");
+        private final Texture PARCEL_ICON = new Texture("finished_assets/ui_elements/parcelicon.png");
 
-        private ShapeRenderer healthRect;
-        private Texture healthBarTexture = new Texture("finished_assets/ui_elements/health bar1.png");;
-        private Texture parcelIcon = new Texture("finished_assets/ui_elements/parcelicon.png");
-        private float[] dimensions;
-        private Vector2 pos = new Vector2();
+        private static final float WIDTH = 318f;
+        private static final float HEIGHT = 72f;
+
         private Vector3 cam;
+        private Vector2 pos = new Vector2();
 
         public PlayerHealthBar(GigabitEconomy director) {
-            cam = director.getCameraPos();
-            healthBar = this;
-            pos.set(cam.x-900, cam.y+370);
+            super(HEIGHT, WIDTH);
 
-            healthRect = new ShapeRenderer();
-            dimensions = new float[]{318f, 72f}; // More specific values needed, size of health bar texture
+            this.cam = director.getCameraPos();
+            pos.set(cam.x-900, cam.y+370);
         }
 
         @Override
         public void drawOn(SpriteBatch batch) {
             batch.end();
 
-            healthRect.begin(ShapeRenderer.ShapeType.Filled);
-            healthRect.setColor(Color.RED);
-            healthRect.rect(pos.x+100, pos.y+39, dimensions[0], dimensions[1]);
-            healthRect.end();
+            getEllipse().begin(ShapeRenderer.ShapeType.Filled);
+            getEllipse().setColor(Color.RED);
+            getEllipse().rect(pos.x+100, pos.y+39, getDimensions()[0], getDimensions()[1]);
+            getEllipse().end();
 
             batch.begin();
-            batch.draw(healthBarTexture, cam.x-900, cam.y+370);
+            batch.draw(HEALTH_BAR_TEXTURE, cam.x-900, cam.y+370);
 
             for (int i=0; i<level.getParcels(); i++) {
-                batch.draw(parcelIcon, cam.x-900+100+(1.15f*i*(parcelIcon.getWidth())), cam.y+370);
+                batch.draw(PARCEL_ICON, cam.x-900+100+(1.15f*i*(PARCEL_ICON.getWidth())), cam.y+370);
             }
         }
-
-        @Override
-        public void modifyHealth(int dhealth) {
-            if ((dimensions[0] -= (dhealth*(318/100))) <= 0) dimensions[0] = 0;
-            System.out.println("Width now: " + dimensions[0]);
-
-        }
-
-        @Override
-        public void remove() {
-
-        }
-
     }
 
     /**
@@ -260,7 +261,7 @@ public class Player extends MovingSprite {
         public Parcel() {
             // pick a random Weapon from the enum values to be weapon inside parcel (if it's opened)
             //Weapon assignedWeapon = MovingSprite.Weapon.values()[RANDOM.nextInt(Weapon.values().length)];
-            Weapon randomWeapon[] = {Weapon.GOLF, Weapon.PIPE, Weapon.KNIFE, Weapon.KATANA};
+            Weapon[] randomWeapon = {Weapon.GOLF, Weapon.PIPE, Weapon.KNIFE, Weapon.KATANA};
             this.weapon = randomWeapon[RANDOM.nextInt(randomWeapon.length)];
 
             // pick a random House from the level's houses to be house to be delivered to
@@ -295,7 +296,9 @@ public class Player extends MovingSprite {
             level.addToScore(1);
 
             house.unmarkAsDeliveryLocation();
-            level.getParcelVan().setInactive();
+            if (level.getParcels() >= 1) {
+                level.getParcelVan().setActive();
+            }
 
             if (isFinalParcel) {
                 level.complete();
@@ -315,11 +318,11 @@ public class Player extends MovingSprite {
             setWeapon(this.weapon);
 
             house.unmarkAsDeliveryLocation();
-            level.getParcelVan().setInactive();
+            if (level.getParcels() >= 1) {
+                level.getParcelVan().setActive();
+            }
 
             parcel = null;
         }
     }
-
-
 }
