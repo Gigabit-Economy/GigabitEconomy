@@ -146,6 +146,7 @@ public class Player extends MovingSprite {
             // if adjacent tile is occupied by a parcel van, collect parcel
             TiledObject adjacentSprite = adjacentTile.getOccupiedBy();
             if (adjacentSprite instanceof ParcelVan) {
+                level.getParcelVan().setInactive();
                 this.parcel = new Parcel();
                 return;
             }
@@ -295,7 +296,9 @@ public class Player extends MovingSprite {
             level.addToScore(1);
 
             house.unmarkAsDeliveryLocation();
-            level.getParcelVan().setInactive();
+            if (level.getParcels() >= 1) {
+                level.getParcelVan().setActive();
+            }
 
             if (isFinalParcel) {
                 level.complete();
@@ -315,11 +318,11 @@ public class Player extends MovingSprite {
             setWeapon(this.weapon);
 
             house.unmarkAsDeliveryLocation();
-            level.getParcelVan().setInactive();
+            if (level.getParcels() >= 1) {
+                level.getParcelVan().setActive();
+            }
 
             parcel = null;
         }
     }
-
-
 }
