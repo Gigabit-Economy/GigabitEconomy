@@ -351,14 +351,30 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     public void launchAttack() {
         setAttacking(true);
 
-        Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), directionFacing, getWidth());
-        if (adjacentTile == null) return; // trying to attack invalid Tile
+        //Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), directionFacing, getWidth());
+        //Find which tile to check to attack
+        //Start at starting position
+        //work up to width
+        for (int i=getWidth(); i>0; i--) {
+            Tile tempAdjTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), directionFacing, i);
 
-        // if adjacent tile is occupied by sprite which can be attacked, attack
-        TiledObject adjacentSprite = adjacentTile.getOccupiedBy();
-        if (adjacentSprite instanceof MovingSprite) {
-            ((MovingSprite) adjacentSprite).attack(weapon);
+            TiledObject adjacentSprite = tempAdjTile.getOccupiedBy();
+            if (adjacentSprite instanceof MovingSprite && adjacentSprite != this) {
+                if (this instanceof Enemy) {
+                    System.out.println(String.format("Trying to attack %d %d", tempAdjTile.getPositionTile()[0], tempAdjTile.getPositionTile()[1]));
+                }
+                ((MovingSprite) adjacentSprite).attack(weapon);
+            }
         }
+
+
+//        if (adjacentTile == null) return; // trying to attack invalid Tile
+//
+//        // if adjacent tile is occupied by sprite which can be attacked, attack
+//        TiledObject adjacentSprite = adjacentTile.getOccupiedBy();
+//        if (adjacentSprite instanceof MovingSprite && adjacentSprite != this) {
+//            ((MovingSprite) adjacentSprite).attack(weapon);
+//        }
     }
 
     /**
