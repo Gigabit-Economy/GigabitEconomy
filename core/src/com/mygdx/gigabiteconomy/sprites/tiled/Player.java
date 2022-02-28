@@ -146,8 +146,8 @@ public class Player extends MovingSprite {
             // if adjacent tile is occupied by a parcel van, collect parcel
             TiledObject adjacentSprite = adjacentTile.getOccupiedBy();
             if (adjacentSprite instanceof ParcelVan) {
-                this.parcel = new Parcel();
                 level.getParcelVan().setInactive();
+                this.parcel = new Parcel();
                 return;
             }
         }
