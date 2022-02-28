@@ -1,6 +1,5 @@
 package com.mygdx.gigabiteconomy.screens;
 
-import com.mygdx.gigabiteconomy.sprites.GameObject;
 import com.mygdx.gigabiteconomy.sprites.tiled.Player;
 import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
 
