@@ -425,6 +425,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     public void hide() {
        Gdx.input.setInputProcessor(null);
         levelMusic.stop();
+
        if (!paused) {
            dispose();
        }
@@ -442,10 +443,10 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         }
 
         // dispose of Tile Manager & its sprites (to dispose their texture/texture atlas)
-//        tileManager.dispose();
-//
-//        backgroundTexture.dispose();
-//        batch.dispose();
-//        font.dispose();
+        tileManager.dispose();
+
+        backgroundTexture.dispose();
+        batch.dispose();
+        font.dispose();
     }
 }
