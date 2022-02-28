@@ -9,6 +9,11 @@ import java.util.LinkedList;
 
 public class BatGuy extends Enemy {
     private static final String BASE_PATH = "finished_assets/enemies/level1";
+    private static final float DEFAULT_HEALTH = 65f;
+    private static final float DEFAULT_DELTAHORIZ = 2f;
+    private static final float DEFAULT_DELTAVERT = 1.5f;
+    private static final int DEFAULT_WIDTH = 1;
+    private static final int DEFAULT_HEIGHT = 1;
 
     /**
      * Create a new Enemy sprite (MovingSprite)
@@ -17,7 +22,9 @@ public class BatGuy extends Enemy {
      * @param y            position of Tile (within tile grid) to place sprite
      */
     public BatGuy(int x, int y, Player targetEntity) {
-        super(BASE_PATH, MovingSprite.Weapon.BAT, x, y, 1, 1, targetEntity, 2f, 1.5f, 3, 2, new LinkedList<>(
+
+        super(BASE_PATH, Weapon.BAT, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, DEFAULT_DELTAHORIZ, DEFAULT_DELTAVERT, DEFAULT_HEALTH, new LinkedList<>(
+
                 Arrays.asList(MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
                         MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
                         MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.WEST,
@@ -32,7 +39,8 @@ public class BatGuy extends Enemy {
      * @param y            position of Tile (within tile grid) to place sprite
      * @param movementPath define a specific movement path
      */
-    public BatGuy(int x, int y, Player targetEntity, float deltaHoriz, float deltaVert, int horizAgroTiles, int vertAgroTiles, LinkedList<MovingSprite.DIRECTION> movementPath) {
-        super(BASE_PATH, MovingSprite.Weapon.BAT, x, y, 1, 1, targetEntity, deltaHoriz, deltaVert, horizAgroTiles, vertAgroTiles, movementPath);
+    public BatGuy(int x, int y, Player targetEntity, float deltaHoriz, float deltaVert, float health, LinkedList<MovingSprite.DIRECTION> movementPath) {
+        super(BASE_PATH, MovingSprite.Weapon.BAT, x, y, 1, 1, targetEntity, deltaHoriz, deltaVert, health, movementPath);
+
     }
 }

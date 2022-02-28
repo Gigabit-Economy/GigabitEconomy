@@ -150,7 +150,6 @@ public class PauseMenu implements Screen, InputProcessor {
 
         pauseCount++;
     }
-    
 
     @Override
     public void render(float delta) {
@@ -187,9 +186,10 @@ public class PauseMenu implements Screen, InputProcessor {
                 System.exit(-1);
             }
         }
-        else{
+        else {
             return false;
         }
+
         return true;
     }
 
