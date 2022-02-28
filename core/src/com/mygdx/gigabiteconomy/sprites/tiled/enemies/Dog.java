@@ -19,7 +19,7 @@ public class Dog extends Enemy {
      * @param targetEntity
      */
     public Dog(int x, int y, Player targetEntity) {
-        super(BASE_PATH, Weapon.DOG, x, y, 1, 1, targetEntity, 4f, 3.25f, 5, 2, new LinkedList<>(
+        super(BASE_PATH, Weapon.DOG, x, y, 1, 2, targetEntity, 4f, 3.25f, 5, 2, new LinkedList<>(
                 Arrays.asList(MovingSprite.DIRECTION.NORTH,MovingSprite.DIRECTION.NORTH,
                         MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
                         MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
