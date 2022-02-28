@@ -50,8 +50,9 @@ public abstract class Enemy extends MovingSprite {
      * @param horizAgroTiles number of horizontal tiles either side of starting position to protect
      * @param vertAgroTiles number of vertical tiles either size of starting position to protect
      */
-    public Enemy(String BASE_PATH, Weapon weapon, int x, int y, int height, int width, Player targetEntity, float deltaHoriz, float deltaVert, int horizAgroTiles, int vertAgroTiles, LinkedList<DIRECTION> movePath) {
-        super(weapon, x, y, height, width, deltaHoriz, deltaVert, BASE_PATH);
+    public Enemy(String BASE_PATH, Weapon weapon, int x, int y, int height, int width, Player targetEntity, float deltaHoriz, float deltaVert, float health, LinkedList<DIRECTION> movePath) {
+        super(weapon, x, y, height, width, deltaHoriz, deltaVert, health, BASE_PATH);
+
 
         this.movePath = movePath;
 
@@ -151,7 +152,7 @@ public abstract class Enemy extends MovingSprite {
         }
 
         @Override
-        public void modifyHealth(int dhealth) {
+        public void modifyHealth(float dhealth) {
             if ((dimensions[0] -= (dhealth*(INIT_WIDTH/100))) <= 0) dimensions[0] = 0;
             System.out.println("Width now: " + dimensions[0]);
         }

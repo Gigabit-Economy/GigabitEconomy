@@ -19,7 +19,7 @@ public class LevelOneScreen extends LevelScreen {
     private static final String BACKGROUND_TEXTURE_PNG = "finished_assets/levels/level1.png";
 
     // Player character
-    private final Weapon playerWeapon = Weapon.KATANA;
+    private final Weapon playerWeapon = Weapon.KNIFE;
     private final Player player = new Player(playerWeapon, 0 , 7, 1, 1);
 
     private final Enemy enemyThree = new Dog(25, 3, player);
@@ -28,7 +28,7 @@ public class LevelOneScreen extends LevelScreen {
     private final ArrayList<Enemy> enemies = new ArrayList<Enemy>(Arrays.asList(
             new BatGuy(5, 3, player),
             /* Example of completely custom fighter */
-            new Fighter(15, 7, player, 3.4f, 2.8f, 7, 4, new LinkedList<MovingSprite.DIRECTION>(Arrays.asList(MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.EAST))),
+            new Fighter(15, 7, player, 3.4f, 2.8f, 95f, new LinkedList<MovingSprite.DIRECTION>(Arrays.asList(MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.EAST))),
             new Dog(25, 3, player)
     ));
 
