@@ -39,37 +39,41 @@ public class LevelCompleteScreen implements Screen {
         levelCompletedTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         Label congratulationsLabel = new Label("CONGRATULATIONS!", style);
-        levelCompletedTable.add(congratulationsLabel).size(40);
+        levelCompletedTable.add(congratulationsLabel).colspan(2);
         levelCompletedTable.row();
 
         Label passedThisLevelLabel = new Label("YOU HAVE COMPLETED THIS LEVEL!", style);
-        levelCompletedTable.add(passedThisLevelLabel).size(40);
+        levelCompletedTable.add(passedThisLevelLabel).colspan(2).padBottom(50);
         levelCompletedTable.row();
 
         Label yourScoreWasLabel = new Label("YOUR SCORE WAS: " + levelScores.getLatestScore(), style);
-        levelCompletedTable.add(yourScoreWasLabel).size(40);
+        levelCompletedTable.add(yourScoreWasLabel).colspan(2).pad(30);
         levelCompletedTable.row();
 
-        Label yourPastScoresLabel = new Label("YOUR PAST SCORES:", style);
-        levelCompletedTable.add(yourPastScoresLabel).padLeft(-600);
-
-        String highestScoreText = String.format("YOUR HIGHEST SCORE: %d", levelScores.getHighestScore());
+        String highestScoreText = String.format("HIGHEST SCORE: %d", levelScores.getHighestScore());
         Label yourHighestScoreLabel = new Label(highestScoreText, style);
-        levelCompletedTable.add(yourHighestScoreLabel).padLeft(-200);
-
-        TextButton levelCompletedMainMenuButton = new TextButton("MAIN MENU", style);
-        levelCompletedMainMenuButton.setName("menu");
-        levelCompletedTable.add(levelCompletedMainMenuButton);
-
-        TextButton levelCompletedNextLevelButton = new TextButton("NEXT LEVEL", style);
-        levelCompletedNextLevelButton.setName("nextlevelscreen");
-        levelCompletedTable.add(levelCompletedNextLevelButton).padRight(-300);
+        levelCompletedTable.add(yourHighestScoreLabel).colspan(2);
         levelCompletedTable.row();
 
+        Label yourPastScoresLabel = new Label("RECENT SCORES:", style);
+        levelCompletedTable.add(yourPastScoresLabel).colspan(2);
+        levelCompletedTable.row();
+        
         String[] prevScores = levelScores.getAllScores();
         List<String> levelCompletedScoreList = new List<String>(style);
         levelCompletedScoreList.setItems(prevScores);
-        levelCompletedTable.add(levelCompletedScoreList).padLeft(-600);
+        levelCompletedTable.add(levelCompletedScoreList).colspan(2);
+        levelCompletedTable.row();
+
+        TextButton levelCompletedMainMenuButton = new TextButton("MAIN MENU", style);
+        levelCompletedMainMenuButton.setName("menu");
+        levelCompletedTable.add(levelCompletedMainMenuButton).bottom().padTop(50).left();
+
+        TextButton levelCompletedNextLevelButton = new TextButton("NEXT LEVEL", style);
+        levelCompletedNextLevelButton.setName("nextlevelscreen");
+        levelCompletedTable.add(levelCompletedNextLevelButton).bottom().padTop(50).right();
+        levelCompletedTable.row();
+
 
         // Add click listener for buttons
         ClickListener buttonsListener = new ClickListener() {
