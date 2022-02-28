@@ -138,6 +138,10 @@ public class GigabitEconomy extends Game {
      * @param name the music file name in "[MUSIC_BASE_PATH]/[...].wav"
      */
     public void setMusic(String name) {
+        if (this.backgroundMusic != null) {
+            this.backgroundMusic.stop();
+        }
+
         this.backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal(String.format("%s/%s.wav", MUSIC_BASE_PATH, name)));
 
         this.backgroundMusic.setLooping(true);
