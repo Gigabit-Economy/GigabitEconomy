@@ -1,7 +1,6 @@
 package com.mygdx.gigabiteconomy.screens;
 
 import com.mygdx.gigabiteconomy.GigabitEconomy;
-import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.gigabiteconomy.sprites.tiled.House;
 import com.mygdx.gigabiteconomy.sprites.tiled.*;
 import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite.Weapon;
@@ -15,14 +14,11 @@ import java.util.LinkedList;
  * Level 1 screen
  */
 public class LevelOneScreen extends LevelScreen {
-    // Level screen backgro1.5und texture
+    // Background texture
     private static final String BACKGROUND_TEXTURE_PNG = "finished_assets/levels/level1.png";
 
     // Player character
-    private final Weapon playerWeapon = Weapon.KNIFE;
-    private final Player player = new Player(playerWeapon, 0 , 7, 1, 1);
-
-    private final Enemy enemyThree = new Dog(25, 3, player);
+    private final Player player = new Player(Weapon.KNIFE, 0 , 7, 1, 1);
 
     /* ENEMIES */
     private final ArrayList<Enemy> enemies = new ArrayList<Enemy>(Arrays.asList(
@@ -75,12 +71,13 @@ public class LevelOneScreen extends LevelScreen {
             cans.add(new StaticSprite("finished_assets/static_sprites/level1/trashcan.png", coords[0], coords[1], 1, 1));
         }
 
+        player.addHealthBar(director);
         addPlayer(player);
-        player.new PlayerHealthBar(director);
+
 
         addEnemies(enemies);
         for (Enemy enemy : enemies) {
-            enemy.new EnemyHealthBar(director);
+            enemy.addHealthBar(director);
         }
 
         addParcelVan(parcelVan);
