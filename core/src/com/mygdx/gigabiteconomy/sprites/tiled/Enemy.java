@@ -18,11 +18,11 @@ import java.util.*;
  * Class representing an enemy sprite (many per level)
  */
 public abstract class Enemy extends MovingSprite {
+    private static final int BASE_HEALTH_DETRACTION = 10;
     private EnemyHealthBar healthBar;
 
     private Queue<DIRECTION> movePath;
     private Queue<DIRECTION> agroMovePath;
-    private Tile pathBegin; //Bottom leftmost tile
 
     private HashMap<String, Queue<DIRECTION>> movementPaths = new HashMap<>(); //Allows n paths for n behaviours
     private Queue<DIRECTION> currentPath;
@@ -93,9 +93,10 @@ public abstract class Enemy extends MovingSprite {
 
     @Override
     public void attack(Weapon weapon) {
-        super.attack(weapon);
+        // deduct -10 (base health detraction for Enemies) multiplied by hit multiplier of the used weapon from sprite
+        setHealth(getHealth() - (BASE_HEALTH_DETRACTION * weapon.getHitMultiplier()));
 
-        // Update health bar value
+        // update health bar value
         healthBar.setHealth(getHealth());
     }
 

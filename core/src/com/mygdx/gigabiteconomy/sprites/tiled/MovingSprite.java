@@ -372,10 +372,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      *
      * @param weapon the weapon the attacking sprite is currently carrying
      */
-    public void attack(Weapon weapon) {
-        // deduct -5 (base health detraction) multiplied by hit multiplier of the used weapon from sprite
-        setHealth(health - (5 * weapon.hitMultiplier));
-    }
+    public abstract void attack(Weapon weapon);
 
     /**
      * Set the health of the sprite

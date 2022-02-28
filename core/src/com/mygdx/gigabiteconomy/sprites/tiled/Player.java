@@ -29,6 +29,7 @@ public class Player extends MovingSprite {
 
     private static final String BASE_PATH = "finished_assets/player";
 
+    private static final int BASE_HEALTH_DETRACTION = 5;
     private PlayerHealthBar healthBar;
 
     /**
@@ -170,7 +171,8 @@ public class Player extends MovingSprite {
 
     @Override
     public void attack(Weapon weapon) {
-        super.attack(weapon);
+        // deduct -5 (base health detraction for Player) multiplied by hit multiplier of the used weapon from sprite
+        setHealth(getHealth() - (BASE_HEALTH_DETRACTION * weapon.getHitMultiplier()));
 
         // update health bar value
         healthBar.setHealth(getHealth());
