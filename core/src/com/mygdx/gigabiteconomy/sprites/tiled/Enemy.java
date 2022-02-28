@@ -12,6 +12,8 @@ import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.screens.TileManager;
 import com.mygdx.gigabiteconomy.sprites.IHealthBar;
 
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.*;
 
 /**
@@ -28,9 +30,12 @@ public abstract class Enemy extends MovingSprite {
     private HashMap<String, Queue<DIRECTION>> movementPaths = new HashMap<>(); //Allows n paths for n behaviours
     private Queue<DIRECTION> currentPath;
 
-    int[][] agroTilePos; //Fixed tile coords in following format: [ [curr-x, curr+x] , [curr+y, curr-y] ]
-    int horizAgroTiles;
-    int vertAgroTiles;
+    ArrayList<Tile> agroTiles; //Fixed tile coords in following format: [ [curr-x, curr+x] , [curr+y, curr-y] ]
+    int[] agroTilePos;
+    int horizAgroTiles = 5;
+    int vertAgroTiles = 5;
+
+    int[] agroTileVals = {5, 5, 5, 5}; // [horizAgroTiles, vertAgroTiles]
 
     boolean agro = false;
 
@@ -166,51 +171,54 @@ public abstract class Enemy extends MovingSprite {
     public boolean checkAgro() {
         if (agro) return false;
 
-        if (agroTilePos == null) {
-            System.out.println("SHould only be running once");
+        if (agroTiles == null) {
+            agroTiles = new ArrayList<>(4);
+            agroTilePos = new int[4];
+
             TileManager tm = getTileManager();
             Tile currTile = getCurrentTiles().get(0);
 
 
             System.out.println(tm + " " + currTile);
-            agroTilePos = new int[][]{
-                    {tm.getAdjacentTile(currTile, DIRECTION.EAST, 5).getPositionTile()[0], tm.getAdjacentTile(currTile, DIRECTION.WEST, 5).getPositionTile()[0]},
-                    {tm.getAdjacentTile(currTile, DIRECTION.NORTH, 5).getPositionTile()[1], tm.getAdjacentTile(currTile, DIRECTION.SOUTH, 5).getPositionTile()[1]}
-            };
+
+
+            for (int i=0; i<4; i++) {
+                //Add potential value
+                Tile toAdd;
+
+                while((toAdd = tm.getAdjacentTile(currTile, DIRECTION.values()[i], agroTileVals[i])) == null && agroTileVals[i] > 0) {
+                    agroTileVals[i]--;
+                }
+                if (agroTileVals[i] <= 0 || toAdd == null) {
+                    toAdd = currTile;
+                }
+
+                agroTiles.add(toAdd);
+                System.out.println(toAdd + " " + agroTilePos);
+
+                agroTilePos[i] = toAdd.getPositionTile()[(i+1)%2]; //Seq: 1, 0, 1, 0 == y, x, y, x == N, E, S, W
+            }
+
         }
 
-        /**
-         * If player square position is within agroDistance (see TileManager methods)
-         * -> Set agro to true
-         * -> Set targetEntity to player
-         * ::: In move method override: Agro = true => We run path finding and change pathSet to shortest path to player
-         * Else return false
-         *
-         * Check whether Player is within agro square
-         */
-        Tile currTile = getCurrentTiles().get(0);
+
         Tile currPlayerTile = targetEntity.getCurrentTiles().get(0);
 
-        /**
-         * Both blocks below check for the same condition (that player is within agro square
-         */
 
-        /** */
-        /** */
-        /** */
 
-        agro = true;
+        agro=true;
+        //agroTilePos = [ N < , E < , S > , W > ]
         for (int i=0; i<agroTilePos.length; i++) {
-            //System.out.println(String.format("Checking %d > %d and < %d", currPlayerTile.getPositionTile()[i], agroTilePos[i][0], agroTilePos[i][1]));
-            agro &= (currPlayerTile.getPositionTile()[i] < agroTilePos[i][0]) && (currPlayerTile.getPositionTile()[i] > agroTilePos[i][1]);
+            if (i<2) { //On N || E ; i==0 || i==1
+                agro &= currPlayerTile.getPositionTile()[(i + 1) % 2] < agroTilePos[i];
+                System.out.println(String.format("checking %d for %d --- pos:%d", (i+1)%2, i, agroTilePos[i]));
+            } else {// S || W ; i==2 || i==3
+                agro &= currPlayerTile.getPositionTile()[(i + 1) % 2] > agroTilePos[i];
+                System.out.println(String.format("checking %d for %d --- pos:%d", (i+1)%2, i, agroTilePos[i]));
+            }
+            System.out.println("Agro after " + i + " " + agro);
         }
 
-        /** */
-        /** */
-        /** */
-        /** */
-        /** */
-        /** */
 
         return agro;
     }
