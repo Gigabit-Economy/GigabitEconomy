@@ -100,7 +100,6 @@ public class LevelSelectScreen implements Screen {
         stage.act(delta);
         stage.draw();
         levelSelectTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        
     }
 
     @Override
