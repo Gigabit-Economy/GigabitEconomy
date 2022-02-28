@@ -15,8 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 
 public class TutorialScreen implements Screen {
+    private final static String DESCRIPTION = "You are a delivery driver aiming to do your round. Deliver to all the houses you can without falling victim to the dangers of suburbia. If worst comes to worst though you can always borrow what the content of your parcels. Just remember in the gig-economy the deliveries you make (and the ones you don't) affect the score your company gives you at the end of the day.";
 
     private GigabitEconomy director;
+
     private Stage stage;
     private Table informationScreenTable;
 
@@ -26,59 +28,17 @@ public class TutorialScreen implements Screen {
     }
 
     @Override
-    public void dispose() {
-        stage.dispose();
-        
-        
-    }
-
-    @Override
-    public void hide() {
-        Gdx.input.setInputProcessor(null);
-        
-    }
-
-    @Override
-    public void pause() {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void render(float delta) {
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act(delta);
-        stage.draw();
-        informationScreenTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        stage.getViewport().update(width, height, true);
-        
-    }
-
-    @Override
-    public void resume() {
-        // TODO Auto-generated method stub
-        
-    }
-
-    private String DESCRIPTION = "You are a delivery driver aiming to do your round. Deliver to all the houses you can without falling victim to the dangers of suburbia. If worst comes to worst though you can always borrow what the content of your parcels. Just remember in the gig-economy the deliveries you make (and the ones you don't) affect the score your company gives you at the end of the day.";
-    private String CONTROLS = "move using W/A/S/D or the arrow-keys\n attack with spacebar\n open parcels with tab\n open the pause menu with esc\n"; 
-    
-    @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-        // Skin defined in UI skin (commodore - hopefully we can use, looks really cool)
+
+        // Skin defined in UI skin (Commodore)
         Skin style = new Skin(Gdx.files.internal("uiskin.json"));
 
         informationScreenTable = new Table();
         informationScreenTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         Label headerControls = new Label("Controls", style);
-        Label ctrlMovement = new Label ("Movement: ", style);
+        Label ctrlMovement = new Label("Movement: ", style);
         TextField ctrlMovementBind = new TextField(" W/A/S/D [-or-] arrow-keys", style);
         Label ctrlAttack = new Label("Attack: ", style);
         TextField ctrlAttackBind = new TextField("space-bar", style);
@@ -91,7 +51,10 @@ public class TutorialScreen implements Screen {
 
         Label headerDescription = new Label("Description", style);
         TextArea bodyDescriptions = new TextArea(DESCRIPTION, style);
-    
+
+        String lastPlayedLevel = director.getLastPlayedLevel();
+        TextButton screenTableReturnToLevelButton = new TextButton("RETURN TO LEVEL", style);
+        screenTableReturnToLevelButton.setName(lastPlayedLevel);
         TextButton screenTableMainMenuButton = new TextButton("MAIN MENU", style);
         screenTableMainMenuButton.setName("menu");
 
@@ -123,29 +86,57 @@ public class TutorialScreen implements Screen {
         informationScreenTable.add(bodyDescriptions).width(630).height(300).colspan(2);
         informationScreenTable.row();
         informationScreenTable.row();
+        if (lastPlayedLevel != null && screenTableReturnToLevelButton != null) {
+            informationScreenTable.add(screenTableReturnToLevelButton).padTop(50).bottom().colspan(1);
+        }
         informationScreenTable.add(screenTableMainMenuButton).padTop(50).bottom().colspan(2);
-        
-    
-        
+
         // Add click listener for buttons
         ClickListener buttonsListener = new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-            String buttonName = event.getListenerActor().getName();
-            System.out.println(buttonName);
+                String buttonName = event.getListenerActor().getName();
 
-            // Switch to selected level screen via. director
-            try {
-                director.switchScreen(buttonName);
-            } catch (Exception ex) {
-                Gdx.app.error("Exception", String.format("Error switching screen to %s", buttonName), ex);
-                System.exit(-1);
-            }
+                // Switch to selected level screen via. director
+                try {
+                    director.switchScreen(buttonName);
+                } catch (Exception ex) {
+                    Gdx.app.error("Exception", String.format("Error switching screen to %s", buttonName), ex);
+                    System.exit(-1);
+                }
             }
         };
         screenTableMainMenuButton.addListener(buttonsListener);
         stage.addActor(informationScreenTable);
-        
     }
-    
+
+    @Override
+    public void render(float delta) {
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stage.act(delta);
+        stage.draw();
+        informationScreenTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        stage.getViewport().update(width, height, true);
+
+    }
+
+    @Override
+    public void hide() {
+        Gdx.input.setInputProcessor(null);
+    }
+
+    @Override
+    public void resume() {}
+
+    @Override
+    public void pause() {}
+
+    @Override
+    public void dispose() {
+        stage.dispose();
+    }
 }
