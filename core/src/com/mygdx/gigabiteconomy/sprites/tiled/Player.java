@@ -147,6 +147,7 @@ public class Player extends MovingSprite {
             TiledObject adjacentSprite = adjacentTile.getOccupiedBy();
             if (adjacentSprite instanceof ParcelVan) {
                 this.parcel = new Parcel();
+                level.getParcelVan().setInactive();
                 return;
             }
         }
@@ -295,7 +296,9 @@ public class Player extends MovingSprite {
             level.addToScore(1);
 
             house.unmarkAsDeliveryLocation();
-            level.getParcelVan().setInactive();
+            if (level.getParcels() >= 1) {
+                level.getParcelVan().setActive();
+            }
 
             if (isFinalParcel) {
                 level.complete();

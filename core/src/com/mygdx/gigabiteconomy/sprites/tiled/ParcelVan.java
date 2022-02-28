@@ -38,8 +38,6 @@ public class ParcelVan extends StaticSprite {
         } else {
             getTileManager().placeObject(this.tileIndicator, this.tileIndicator.getCurrentTiles());
         }
-
-
     }
 
     /**
