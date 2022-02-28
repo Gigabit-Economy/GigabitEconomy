@@ -52,10 +52,10 @@ public class LevelSelectScreen implements Screen {
         levelSelectTable.add(selectSecondLevelLabel).padLeft(-200);
 
         TextButton selectSecondLevelTextButton = new TextButton("Level 2", style);
-        selectSecondLevelTextButton.setName("LevelTwocreen");
-        if(score2.getHighestScore() == 0)
-        selectSecondLevelTextButton.setTouchable(Touchable.disabled);
-
+        selectSecondLevelTextButton.setName("LevelTwoScreen");
+        if (score2.getHighestScore() == 0) {
+            selectSecondLevelTextButton.setTouchable(Touchable.disabled);
+        }
         levelSelectTable.add(selectSecondLevelTextButton).padRight(-200);
         
         levelSelectTable.row();
@@ -65,8 +65,9 @@ public class LevelSelectScreen implements Screen {
 
         TextButton selectThirdLevelTextButton = new TextButton("Level 3", style);
         selectThirdLevelTextButton.setName("LevelThreeScreen");
-        if(score3.getHighestScore() == 0)
-        selectThirdLevelTextButton.setTouchable(Touchable.disabled);
+        if (score3.getHighestScore() == 0) {
+            selectThirdLevelTextButton.setTouchable(Touchable.disabled);
+        }
         levelSelectTable.add(selectThirdLevelTextButton).padRight(-200);
 
         // Add click listener for buttons
@@ -83,18 +84,14 @@ public class LevelSelectScreen implements Screen {
                 Gdx.app.error("Exception", String.format("Error switching screen to %s", buttonName), ex);
                 System.exit(-1);
             }
-
-
-
-
             }
         };
         selectFirstLevelTextButton.addListener(buttonsListener);
         selectSecondLevelTextButton.addListener(buttonsListener);
         selectThirdLevelTextButton.addListener(buttonsListener);
         selectThirdLevelLabel.addListener(buttonsListener);
+
         stage.addActor(levelSelectTable);
-        
     }
 
     @Override
