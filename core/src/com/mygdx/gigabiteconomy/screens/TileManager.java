@@ -2,10 +2,7 @@ package com.mygdx.gigabiteconomy.screens;
 
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.gigabiteconomy.exceptions.TileException;
-import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
-import com.mygdx.gigabiteconomy.sprites.tiled.Player;
-import com.mygdx.gigabiteconomy.sprites.tiled.StaticSprite;
-import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
+import com.mygdx.gigabiteconomy.sprites.tiled.*;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -215,6 +212,20 @@ public class TileManager implements Disposable {
         return adjacentTiles;
     }
 
+    public ArrayList<Tile> getAdjacentTiles(ArrayList<Tile> tiles, TiledObject to) {
+        ArrayList<Tile> ret = new ArrayList<>();
+
+        for (Tile tile : tiles) {
+            Tile[] tempTiles = getAdjacentTiles(tile);
+            for (Tile tileInTemp : tempTiles) {
+                if (!tileInTemp.isOccupiedBy(to))
+                    ret.add(tileInTemp);
+            }
+        }
+
+        return ret;
+    }
+
     /**
      * Initialise Sprites on the gameboard
      * @param objsArr ArrayLists of TiledObject to place
@@ -296,7 +307,8 @@ public class TileManager implements Disposable {
         for (Tile[] tileX : tileArray) {
             for (Tile tile : tileX) {
                 if (tile.getOccupiedBy() != null) {
-                    occupied += "[" + tile.getTileCoords()[0] + "," + tile.getTileCoords()[1] + "] ";
+                    if (tile.getOccupiedBy() instanceof Player || tile.getOccupiedBy() instanceof Enemy)
+                        occupied += "[" + tile.getTileCoords()[0] + "," + tile.getTileCoords()[1] + "] ";
                 }
             }
         }
