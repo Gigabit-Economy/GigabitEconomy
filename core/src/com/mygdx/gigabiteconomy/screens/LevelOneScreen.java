@@ -52,7 +52,7 @@ public class LevelOneScreen extends LevelScreen {
     int[][] canCoords = {
             {8, 8}, {19, 8}, {28, 8}
     };
-    
+
     private final ArrayList<StaticSprite> staticSprites = new ArrayList<StaticSprite>(Arrays.asList(houseOne, houseTwo, houseThree, houseFour, houseFive));
 
     /**
