@@ -315,11 +315,11 @@ public class Player extends MovingSprite {
             setWeapon(this.weapon);
 
             house.unmarkAsDeliveryLocation();
-            level.getParcelVan().setInactive();
+            if (level.getParcels() >= 1) {
+                level.getParcelVan().setActive();
+            }
 
             parcel = null;
         }
     }
-
-
 }
