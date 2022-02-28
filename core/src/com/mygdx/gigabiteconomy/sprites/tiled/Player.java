@@ -13,8 +13,6 @@ import com.mygdx.gigabiteconomy.exceptions.ParcelException;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
-import com.mygdx.gigabiteconomy.sprites.GameObject;
-import com.mygdx.gigabiteconomy.sprites.HealthBar;
 import com.mygdx.gigabiteconomy.sprites.IHealthBar;
 
 import java.util.ArrayList;
@@ -154,13 +152,13 @@ public class Player extends MovingSprite {
         // if Player does have a Parcel, check if next to House to be delivered to
         else {
             // if current tile or adjacent tile is owned by a House (door), deliver parcel
-            GameObject currentObject;
+            TiledObject currentObject;
             try {
                 currentObject = getCurrentTiles().get(0).getOwnedBy();
             } catch (NullPointerException ex) {
                 currentObject = null;
             }
-            GameObject adjacentObject = adjacentTile.getOwnedBy();
+            TiledObject adjacentObject = adjacentTile.getOwnedBy();
             if ((adjacentObject instanceof House) ||
                     currentObject instanceof House) {
                 parcel.deliver();
