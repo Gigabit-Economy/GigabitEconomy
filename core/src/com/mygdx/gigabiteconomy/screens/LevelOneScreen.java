@@ -15,7 +15,7 @@ import java.util.LinkedList;
  * Level 1 screen
  */
 public class LevelOneScreen extends LevelScreen {
-    // Level screen background texture
+    // Background texture
     private static final String BACKGROUND_TEXTURE_PNG = "finished_assets/levels/level1.png";
 
     // Player character
