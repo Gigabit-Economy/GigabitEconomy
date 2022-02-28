@@ -1,33 +1,72 @@
 package com.mygdx.gigabiteconomy.sprites.tiled;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.screens.TileManager;
-import com.mygdx.gigabiteconomy.sprites.GameObject;
 
-import java.lang.Exception;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
  * Abstract class which all tiled sprites/game objects derive from.
  * Implements GameObject.
  */
-public abstract class TiledObject extends GameObject {
+public abstract class TiledObject implements Disposable {
     private TileManager tileManager;
 
     private ArrayList<Tile> currentTiles;
     private int height;
     private int width;
 
-    public TiledObject(float x, float y, int height, int width) {
-        super(x, y);
+    private Vector2 pos; // Coordinates of sprite on screen
 
+    public TiledObject(float x, float y, int height, int width) {
+        this.pos = new Vector2(x, y);
         this.height = height <= 0 ? 1 : height; //Implement a max h/w?
         this.width = width <= 0 ? 1 : width;
+    }
+
+    /**
+     * Get the Vector2 position of the sprite
+     *
+     * @return the current X coordinate of the sprite
+     */
+    public float getX()
+    {
+        return pos.x;
+    }
+
+    /**
+     * Get the Vector2 position of the sprite
+     *
+     * @return the current U coordinate of the sprite
+     */
+    public float getY()
+    {
+        return pos.y;
+    }
+
+    /**
+     * Set the Vector2 position of the sprite
+     *
+     * @param x the new X coordinate
+     * @param y the new Y coordinate
+     */
+    public void setPos(float x, float y)
+    {
+        pos.x = x;
+        pos.y = y;
+    }
+
+    /**
+     * Add to the sprite's current Vector2 position.
+     *
+     * @param deltaMove the Vector 2 coordinates to move by
+     */
+    public void addToPos(Vector2 deltaMove)
+    {
+        pos.add(deltaMove);
     }
 
     /**
