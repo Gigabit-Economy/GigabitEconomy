@@ -97,7 +97,7 @@ public class GigabitEconomy extends Game {
             case "LevelOneScreen":
                 if (fromPause != null) {
                     setScreen(fromPause);
-                    fromPause = null;
+                    this.fromPause = null;
                     return;
                 } else {
                     toSwitch = new LevelOneScreen(this, "theChase");
@@ -114,6 +114,11 @@ public class GigabitEconomy extends Game {
         // if a LevelScreen, record as lastPlayedLevel
         if (toSwitch instanceof LevelScreen) {
             this.lastPlayedLevel = toSwitch.getClass().getSimpleName();
+        }
+        // if returned to menu, reset fromPause & lastPlayedLevel (prevents from being taken back to exited level)
+        else if (toSwitch instanceof MenuScreen) {
+            this.fromPause = null;
+            this.lastPlayedLevel = null;
         }
 
         setScreen(toSwitch);
