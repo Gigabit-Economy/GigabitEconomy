@@ -183,7 +183,7 @@ public class Player extends MovingSprite {
         private ShapeRenderer healthRect;
         private Texture healthBarTexture = new Texture("finished_assets/ui_elements/health bar1.png");;
         private Texture parcelIcon = new Texture("finished_assets/ui_elements/parcelicon.png");
-        private int[] dimensions;
+        private float[] dimensions;
         private Vector2 pos = new Vector2();
         private Vector3 cam;
 
@@ -193,7 +193,7 @@ public class Player extends MovingSprite {
             pos.set(cam.x-900, cam.y+370);
 
             healthRect = new ShapeRenderer();
-            dimensions = new int[]{318, 72}; // More specific values needed, size of health bar texture
+            dimensions = new float[]{318f, 72f}; // More specific values needed, size of health bar texture
         }
 
         @Override
@@ -215,7 +215,9 @@ public class Player extends MovingSprite {
 
         @Override
         public void modifyHealth(int dhealth) {
-            if ((dimensions[0] -= (dhealth*3.18)) <= 0) dimensions[0] = 0;
+            if ((dimensions[0] -= (dhealth*(318/100))) <= 0) dimensions[0] = 0;
+            System.out.println("Width now: " + dimensions[0]);
+
         }
 
         @Override

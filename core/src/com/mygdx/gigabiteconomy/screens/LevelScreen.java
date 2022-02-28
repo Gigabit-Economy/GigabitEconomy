@@ -309,7 +309,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
             pause();
         } else if (keycode == Input.Keys.SPACE) {
             // Launch attack
-            player.launchAttack();
+            player.setAttacking(true);
         }
         else if (keycode == Input.Keys.TAB) {
             // Open parcel (if any)
