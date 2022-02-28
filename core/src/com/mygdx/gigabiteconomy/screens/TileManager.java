@@ -212,8 +212,14 @@ public class TileManager implements Disposable {
         return adjacentTiles;
     }
 
-    public ArrayList<Tile> getAdjacentTiles(ArrayList<Tile> tiles, TiledObject to) {
+    /**
+     * Get adjacent tiles to a specific TiledObject
+     * @param to TiledObject - can be multi-tiled
+     * @return
+     */
+    public ArrayList<Tile> getAdjacentTiles(TiledObject to) {
         ArrayList<Tile> ret = new ArrayList<>();
+        ArrayList<Tile> tiles = to.getCurrentTiles();
 
         for (Tile tile : tiles) {
             Tile[] tempTiles = getAdjacentTiles(tile);
