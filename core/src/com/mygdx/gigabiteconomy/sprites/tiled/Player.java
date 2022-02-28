@@ -41,7 +41,7 @@ public class Player extends MovingSprite {
      * @param width of Tiles to occupy
      */
     public Player(Weapon weapon, int x, int y, int height, int width) {
-        super(weapon, x, y, height, width, 3.5f, 3f, BASE_PATH);
+        super(weapon, x, y, height, width, 3.5f, 3f, 100f, BASE_PATH);
     }
 
     /**
@@ -212,7 +212,7 @@ public class Player extends MovingSprite {
         }
 
         @Override
-        public void modifyHealth(int dhealth) {
+        public void modifyHealth(float dhealth) {
             if ((dimensions[0] -= (dhealth*(318/100))) <= 0) dimensions[0] = 0;
             System.out.println("Width now: " + dimensions[0]);
 

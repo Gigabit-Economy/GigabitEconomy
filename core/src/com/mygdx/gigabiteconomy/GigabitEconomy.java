@@ -10,6 +10,7 @@ import com.mygdx.gigabiteconomy.exceptions.ScreenException;
 import com.mygdx.gigabiteconomy.screens.*;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.Gdx;
+import jdk.vm.ci.code.RegisterAttributes;
 
 import java.lang.String;
 
@@ -112,6 +113,15 @@ public class GigabitEconomy extends Game {
                 } else {
                     toSwitch = new LevelOneScreen(this);
                     setMusic("LevelOne");
+                }
+                break;
+            case "LevelThreeScreen":
+                if (fromPause != null) {
+                    setScreen(fromPause);
+                    this.fromPause = null;
+                    return;
+                } else {
+                    toSwitch = new LevelRatKing(this, "theChase");
                 }
                 break;
 
