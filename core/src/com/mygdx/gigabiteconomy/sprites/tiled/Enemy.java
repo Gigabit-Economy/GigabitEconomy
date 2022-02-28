@@ -10,7 +10,7 @@ import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.screens.TileManager;
-import com.mygdx.gigabiteconomy.sprites.IHealthBar;
+import com.mygdx.gigabiteconomy.sprites.HealthBar;
 
 import java.util.*;
 
@@ -18,7 +18,6 @@ import java.util.*;
  * Class representing an enemy sprite (many per level)
  */
 public abstract class Enemy extends MovingSprite {
-
     private EnemyHealthBar healthBar;
 
     private Queue<DIRECTION> movePath;
@@ -29,8 +28,6 @@ public abstract class Enemy extends MovingSprite {
     private Queue<DIRECTION> currentPath;
 
     int[][] agroTilePos; //Fixed tile coords in following format: [ [curr-x, curr+x] , [curr+y, curr-y] ]
-    int horizAgroTiles;
-    int vertAgroTiles;
 
     boolean agro = false;
 
@@ -98,65 +95,51 @@ public abstract class Enemy extends MovingSprite {
     public void attack(Weapon weapon) {
         super.attack(weapon);
 
-        // deduct -10 (base health detraction) multiplied by hit multiplier of the used weapon from sprite
-        healthBar.modifyHealth(10 * weapon.getHitMultiplier());
+        // Update health bar value
+        healthBar.setHealth(getHealth());
     }
 
     /**
      * Class that manages the display of enemy health
      */
-    public class EnemyHealthBar implements IHealthBar {
-        private float INIT_WIDTH = 69;
-        private float INIT_HEIGHT = 7;
-
-
-        private ShapeRenderer healthEllipse;
-        private float[] dimensions = new float[2];
-
-        private Vector3 pos;
+    public class EnemyHealthBar extends HealthBar {
+        private static final float WIDTH = 69;
+        private static final float HEIGHT = 7;
 
         private OrthographicCamera cam;
-
-        //Custom health bar for bigger enemies
-        public EnemyHealthBar(GigabitEconomy director, int width, int height) {
-            healthBar = this;
-            cam = director.getCamera(); //Need to use .project for drawing shape
-            INIT_HEIGHT = dimensions[0] = width; INIT_WIDTH = dimensions[1] = height;
-            healthEllipse = new ShapeRenderer();
-        }
+        private Vector3 pos = new Vector3();
 
         public EnemyHealthBar(GigabitEconomy director) {
-            healthBar = this;
-            cam = director.getCamera();
-            dimensions[0] = INIT_WIDTH; dimensions[1] = INIT_HEIGHT;
-            healthEllipse = new ShapeRenderer();
+            super(WIDTH, HEIGHT);
+
+            this.cam = director.getCamera();
+
+        }
+
+        // Custom health bar for bigger enemies (overrides WIDTH/HEIGHT constants)
+        public EnemyHealthBar(GigabitEconomy director, float width, float height) {
+            super(width, height);
+
+            this.cam = director.getCamera();
         }
 
         @Override
         public void drawOn(SpriteBatch batch) {
             batch.end();
 
-            healthEllipse.begin(ShapeRenderer.ShapeType.Filled);
-            healthEllipse.setColor(Color.RED);
+            getEllipse().begin(ShapeRenderer.ShapeType.Filled);
+            getEllipse().setColor(Color.RED);
+
             //Ellipse is always centred over middle of texture
             pos = cam.project(new Vector3(
-                    /* Mess around with these to centre health bar over enemy */
-
-                    getX()+(((TextureAtlas.AtlasRegion)getTextureRegion()).offsetX-INIT_WIDTH)/2,
-
-                    getY()+(getTextureRegion().getRegionHeight())-dimensions[1],
+                    getX() + (((TextureAtlas.AtlasRegion)getTextureRegion()).offsetX-getDimensions()[0])/2,
+                    getY() + (getTextureRegion().getRegionHeight())- getDimensions()[1],
                     0
                     ));
-            healthEllipse.ellipse(pos.x, pos.y, dimensions[0], dimensions[1]);
-            healthEllipse.end();
+            getEllipse().ellipse(pos.x, pos.y, getDimensions()[0], getDimensions()[1]);
+            getEllipse().end();
 
             batch.begin();
-        }
-
-        @Override
-        public void modifyHealth(float dhealth) {
-            if ((dimensions[0] -= (dhealth*(INIT_WIDTH/100))) <= 0) dimensions[0] = 0;
-            System.out.println("Width now: " + dimensions[0]);
         }
     }
 
