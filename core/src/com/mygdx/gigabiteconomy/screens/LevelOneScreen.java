@@ -19,7 +19,7 @@ public class LevelOneScreen extends LevelScreen {
     private static final String BACKGROUND_TEXTURE_PNG = "finished_assets/levels/level1.png";
 
     // Player character
-    private final Weapon playerWeapon = Weapon.KNIFE;
+    private final Weapon playerWeapon = Weapon.KATANA;
     private final Player player = new Player(playerWeapon, 0 , 7, 1, 1);
 
     private final Enemy enemyThree = new Dog(25, 3, player);

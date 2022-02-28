@@ -96,11 +96,11 @@ public abstract class Enemy extends MovingSprite {
      */
     public class EnemyHealthBar implements IHealthBar {
 
-        private final int DEFAULT_WIDTH = 69;
-        private final int DEFAULT_HEIGHT = 7;
+        private float INIT_WIDTH = 69;
+        private float INIT_HEIGHT = 7;
 
         private ShapeRenderer healthEllipse;
-        private int[] dimensions = new int[2];
+        private float[] dimensions = new float[2];
         private Vector3 pos;
 
         private OrthographicCamera cam;
@@ -109,14 +109,14 @@ public abstract class Enemy extends MovingSprite {
         public EnemyHealthBar(GigabitEconomy director, int width, int height) {
             healthBar = this;
             cam = director.getCamera(); //Need to use .project for drawing shape
-            dimensions[0] = width; dimensions[1] = height;
+            INIT_HEIGHT = dimensions[0] = width; INIT_WIDTH = dimensions[1] = height;
             healthEllipse = new ShapeRenderer();
         }
 
         public EnemyHealthBar(GigabitEconomy director) {
             healthBar = this;
             cam = director.getCamera();
-            dimensions[0] = DEFAULT_WIDTH; dimensions[1] = DEFAULT_HEIGHT;
+            dimensions[0] = INIT_WIDTH; dimensions[1] = INIT_HEIGHT;
             healthEllipse = new ShapeRenderer();
         }
 
@@ -129,7 +129,7 @@ public abstract class Enemy extends MovingSprite {
             //Ellipse is always centred over middle of texture
             pos = cam.project(new Vector3(
                     /* Mess around with these to centre health bar over enemy */
-                    getX()+(((TextureAtlas.AtlasRegion)getTextureRegion()).offsetX-dimensions[0])/2,
+                    getX()+(((TextureAtlas.AtlasRegion)getTextureRegion()).offsetX-INIT_WIDTH)/2,
                     getY()+(getTextureRegion().getRegionHeight())-dimensions[1],
                     0
                     ));
@@ -141,7 +141,7 @@ public abstract class Enemy extends MovingSprite {
 
         @Override
         public void modifyHealth(int dhealth) {
-            if ((dimensions[0] -= (dhealth*(dimensions[1]/100))) <= 0) dimensions[0] = 0;
+            if ((dimensions[0] -= (dhealth*(INIT_WIDTH/100))) <= 0) dimensions[0] = 0;
             System.out.println("Width now: " + dimensions[0]);
         }
 
@@ -241,7 +241,8 @@ public abstract class Enemy extends MovingSprite {
                 TileManager tm = getTileManager();
                 //Check if player is on adjacent tiles
                 if (getTileManager().isGroupOccupiedBy(targetEntity, new ArrayList<>(Arrays.asList(tm.getAdjacentTiles(this.getCurrentTiles().get(0)))))) {
-                    super.launchAttack();
+                    //super.launchAttack();
+                    setAttacking(true);
                 }
 
                 //Check if player is on the row

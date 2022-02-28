@@ -108,7 +108,6 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         String movementConfig = String.format("%s/movement/%s%s.txt", this.basePath, selectedWeapon, spriteDirection);
         String attackingConfig = String.format("%s/attacks/%s%s.txt", this.basePath, selectedWeapon, spriteDirection);
 
-        System.out.println("Updating to textures for: " + directionFacing + " " + movementConfig + " " + attackingConfig);
         this.ta = new TextureAtlas(movementConfig);
         this.regions = ta.getRegions();
         this.textureRegion = regions.get(0);
@@ -234,6 +233,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
             //Checking if animation finished
             if (attackAnimation.isFinished(delta)) {
                 System.out.println("Finished attacking");
+                launchAttack();
                 setAttacking(false);
             } else {
                 return false;
