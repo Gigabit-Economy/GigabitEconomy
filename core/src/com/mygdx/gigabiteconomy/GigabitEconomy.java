@@ -110,11 +110,10 @@ public class GigabitEconomy extends Game {
                     this.fromPause = null;
                     return;
                 } else {
-                    toSwitch = new LevelOneScreen(this, "theChase");
-                    setMusic("MenuScreen");
+                    toSwitch = new LevelOneScreen(this);
+                    setMusic("LevelOneScreen");
                 }
                 break;
-
 
             default:
                 throw new ScreenException(String.format("Tried to switch to invalid screen %s", name));
@@ -169,6 +168,9 @@ public class GigabitEconomy extends Game {
                 return "LevelTwoScreen";
             case "LevelTwoScreen":
                 return "LevelThreeScreen";
+
+            default:
+                return "LevelSelectScreen";
         }
     }
 }

@@ -31,7 +31,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
     private TileManager tileManager;
 
-    private Music levelMusic;
     private String backgroundTexturePng;
     private Texture backgroundTexture;
     private Sprite backgroundSprite;
@@ -51,11 +50,12 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      * A template constructor for use by all level screen subclasses. Sets
      * properties that differ between levels such as game director & background texture.
      *
-     * @param director          the instance of the game director
-     * @param backgroundTexture the background graphic png of the level
+     * @param director              the instance of the game director
+     * @param backgroundTexturePng  the background graphic png of the level
      */
-    public LevelScreen(GigabitEconomy director, String backgroundTexturePng, String levelMusic) {
+    public LevelScreen(GigabitEconomy director, String backgroundTexturePng) {
         this.director = director;
+
         this.backgroundTexturePng = backgroundTexturePng;
         // Add background
         this.backgroundTexture = new Texture(this.backgroundTexturePng);
@@ -64,12 +64,8 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         int backgroundTextureHeight = backgroundTexture.getHeight();
         int backgroundTextureWidth = backgroundTexture.getWidth();
         int numberOfTilesHigh = 18;
-        tileManager = new TileManager(backgroundTextureHeight / numberOfTilesHigh, backgroundTextureHeight / 2,
+        this.tileManager = new TileManager(backgroundTextureHeight / numberOfTilesHigh, backgroundTextureHeight / 2,
                 backgroundTextureWidth, 0, 0);
-        //add music
-        this.levelMusic = Gdx.audio.newMusic(Gdx.files.internal("finished_assets/music/"+levelMusic+".wav"));
-        this.levelMusic.setLooping(true);
-        this.levelMusic.play();
     }
 
     /**
@@ -424,7 +420,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     @Override
     public void hide() {
        Gdx.input.setInputProcessor(null);
-        levelMusic.stop();
+
        if (!paused) {
            dispose();
        }
