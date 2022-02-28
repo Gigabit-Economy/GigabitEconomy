@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -40,17 +41,23 @@ public class TutorialScreen implements Screen {
         Label headerControls = new Label("Controls", style);
         Label ctrlMovement = new Label("Movement: ", style);
         TextField ctrlMovementBind = new TextField(" W/A/S/D [-or-] arrow-keys", style);
+        ctrlMovementBind.setDisabled(true);
         Label ctrlAttack = new Label("Attack: ", style);
         TextField ctrlAttackBind = new TextField("space-bar", style);
+        ctrlAttackBind.setDisabled(true);
         Label ctrlOpenParcel = new Label("Open Parcels: ", style);
         TextField ctrlOpenParcelBind = new TextField("tab", style);
+        ctrlOpenParcelBind.setDisabled(true);
         Label ctrlParcelDelivery = new Label("Parcel collection & delivery: ", style);
         TextField ctrlParcelDeliveryBind = new TextField("space-bar", style);
+        ctrlParcelDeliveryBind.setDisabled(true);
         Label ctrPauseGame = new Label("Pause Game: ", style);
         TextField ctrlPauseGameBind = new TextField("esc", style);
+        ctrlPauseGameBind.setDisabled(true);
 
         Label headerDescription = new Label("Description", style);
         TextArea bodyDescriptions = new TextArea(DESCRIPTION, style);
+        bodyDescriptions.setDisabled(true);
 
         String lastPlayedLevel = director.getLastPlayedLevel();
         TextButton screenTableReturnToLevelButton = new TextButton("RETURN TO LEVEL", style);
