@@ -43,7 +43,7 @@ public class LevelFailedScreen implements Screen{
         deathScreenTable.add(tryAgainButton).left().pad(20);
 
         TextButton deathScreenMainMenuButton = new TextButton("MAIN MENU", style);
-        deathScreenMainMenuButton.setName("menu");
+        deathScreenMainMenuButton.setName("MenuScreen");
         deathScreenTable.add(deathScreenMainMenuButton).right().pad(20);
         
         // Add click listener for buttons

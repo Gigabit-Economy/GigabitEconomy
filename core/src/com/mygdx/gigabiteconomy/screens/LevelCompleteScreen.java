@@ -70,11 +70,11 @@ public class LevelCompleteScreen implements Screen {
         levelCompletedTable.row();
 
         TextButton levelCompletedMainMenuButton = new TextButton("MAIN MENU", style);
-        levelCompletedMainMenuButton.setName("menu");
+        levelCompletedMainMenuButton.setName("MenuScreen");
         levelCompletedTable.add(levelCompletedMainMenuButton).bottom().padTop(50);
 
         TextButton levelCompletedNextLevelButton = new TextButton("NEXT LEVEL", style);
-        levelCompletedNextLevelButton.setName("nextlevelscreen");
+        levelCompletedNextLevelButton.setName(director.getNextLevel());
         levelCompletedTable.add(levelCompletedNextLevelButton).bottom().padTop(50);
         levelCompletedTable.row();
 
@@ -85,14 +85,11 @@ public class LevelCompleteScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 String buttonName = event.getListenerActor().getName();
 
-                // Switch to selected level screen via. director
-                if (buttonName == "menu" || buttonName == "") {
-                    try {
-                        director.switchScreen(buttonName);
-                    } catch (Exception ex) {
-                        Gdx.app.error("Exception", String.format("Error switching screen to %s", buttonName), ex);
-                        System.exit(-1);
-                    }
+                try {
+                    director.switchScreen(buttonName);
+                } catch (Exception ex) {
+                    Gdx.app.error("Exception", String.format("Error switching screen to %s", buttonName), ex);
+                    System.exit(-1);
                 }
             }
         };

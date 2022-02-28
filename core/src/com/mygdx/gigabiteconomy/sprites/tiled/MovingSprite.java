@@ -5,11 +5,16 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.badlogic.gdx.utils.Disposable;
 
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Random;
 
 /**
  * Class representing a sprite shown on screen, ready to be drawn with batch.draw(); in MainScreen class.
@@ -64,6 +69,13 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
 
         setWeapon(weapon);
     }
+
+    /**
+     * Add a health bar to the sprite
+     *
+     * @param director the level's director class
+     */
+    public abstract void addHealthBar(GigabitEconomy director);
 
     /**
      * Get the texture region of the sprite
@@ -204,8 +216,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         //updateTextureRegions();
 
         ArrayList<Tile> toSet = getTileManager().getNextTiles(this, getDirectionMoving(), 1);
-
-        if (toSet == null) {
+        if (toSet.contains(null)) {
             targetTiles = null;
             return null;
         }
@@ -312,6 +323,17 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         public DIRECTION getNext() {
             return DIRECTION.values()[(this.ordinal()+1) % DIRECTION.values().length];
         }
+
+        public static LinkedList<DIRECTION> randomPath(int length) {
+            LinkedList<DIRECTION> ret = new LinkedList<>();
+            Random rand = new Random();
+
+            for (int i=0; i<length; i++) {
+                ret.add(DIRECTION.values()[rand.nextInt(4)]);
+            }
+
+            return ret;
+        }
     }
 
 
@@ -372,10 +394,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      *
      * @param weapon the weapon the attacking sprite is currently carrying
      */
-    public void attack(Weapon weapon) {
-        // deduct -5 (base health detraction) multiplied by hit multiplier of the used weapon from sprite
-        setHealth(health - (5 * weapon.hitMultiplier));
-    }
+    public abstract void attack(Weapon weapon);
 
     /**
      * Set the health of the sprite

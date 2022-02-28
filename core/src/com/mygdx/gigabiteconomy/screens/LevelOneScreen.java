@@ -1,7 +1,6 @@
 package com.mygdx.gigabiteconomy.screens;
 
 import com.mygdx.gigabiteconomy.GigabitEconomy;
-import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.gigabiteconomy.sprites.tiled.House;
 import com.mygdx.gigabiteconomy.sprites.tiled.*;
 import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite.Weapon;
@@ -15,17 +14,27 @@ import java.util.LinkedList;
  * Level 1 screen
  */
 public class LevelOneScreen extends LevelScreen {
-    // Level screen backgro1.5und texture
+    // Background texture
     private static final String BACKGROUND_TEXTURE_PNG = "finished_assets/levels/level1.png";
 
     // Player character
-    private final Weapon playerWeapon = Weapon.KNIFE;
-    private final Player player = new Player(playerWeapon, 0 , 7, 1, 1);
+
+    private final Player player = new Player(Weapon.KNIFE, 0 , 7, 1, 1);
+
 
     /* ENEMIES */
     private final ArrayList<Enemy> enemies = new ArrayList<Enemy>(Arrays.asList(
-            new BatGuy(50, 3, player)
+            new BatGuy(50, 3, player),
             /* Example of completely custom fighter */
+            new Fighter(15, 7, player, 3.4f, 2.8f, 7, new LinkedList<>(Arrays.asList(
+                    MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
+                    MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.NORTH, MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.SOUTH,
+                    MovingSprite.DIRECTION.SOUTH, MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST
+            )),
+            new Dog(25, 2, player),
+            new BatGuy(20, 5, player),
+            new Fighter(30, 4, player)
+
     ));
 
     // Parcel van (for Player to collect parcels from)
@@ -52,8 +61,6 @@ public class LevelOneScreen extends LevelScreen {
             {8, 8}, {19, 8}, {28, 8}
     };
 
-
-
     private final ArrayList<StaticSprite> staticSprites = new ArrayList<StaticSprite>(Arrays.asList(houseOne, houseTwo, houseThree, houseFour, houseFive));
 
     /**
@@ -62,8 +69,8 @@ public class LevelOneScreen extends LevelScreen {
      *
      * @param director the instance of the game director
      */
-    public LevelOneScreen(GigabitEconomy director, String levelMusic) {
-        super(director, BACKGROUND_TEXTURE_PNG,levelMusic);
+    public LevelOneScreen(GigabitEconomy director) {
+        super(director, BACKGROUND_TEXTURE_PNG);
 
         for (int[] coords : fenceCoords) {
             fences.add(new StaticSprite("finished_assets/static_sprites/level1/fence.png", coords[0], coords[1], 1, 1));
@@ -73,12 +80,15 @@ public class LevelOneScreen extends LevelScreen {
             cans.add(new StaticSprite("finished_assets/static_sprites/level1/trashcan.png", coords[0], coords[1], 1, 1));
         }
 
+        player.addHealthBar(director);
         addPlayer(player);
-        player.new PlayerHealthBar(director);
+
+
         addEnemies(enemies);
         for (Enemy enemy : enemies) {
-            enemy.new EnemyHealthBar(director);
+            enemy.addHealthBar(director);
         }
+
         addParcelVan(parcelVan);
         addSprites(staticSprites);
         addSprites(fences);

@@ -22,14 +22,8 @@ public class BatGuy extends Enemy {
      * @param y            position of Tile (within tile grid) to place sprite
      */
     public BatGuy(int x, int y, Player targetEntity) {
+        super(BASE_PATH, MovingSprite.Weapon.BAT, x, y, 1, 1, targetEntity, 2f, 1.5f, 3, DIRECTION.randomPath(10));
 
-        super(BASE_PATH, Weapon.BAT, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, DEFAULT_DELTAHORIZ, DEFAULT_DELTAVERT, DEFAULT_HEALTH, new LinkedList<>(
-
-                Arrays.asList(MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
-                        MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
-                        MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.WEST,
-                        MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.WEST)
-        ));
     }
 
     /**
