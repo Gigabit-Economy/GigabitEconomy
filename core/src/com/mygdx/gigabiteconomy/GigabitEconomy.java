@@ -115,7 +115,8 @@ public class GigabitEconomy extends Game {
         if (toSwitch instanceof LevelScreen) {
             this.lastPlayedLevel = toSwitch.getClass().getSimpleName();
         }
-        else if (toSwitch instanceof MenuScreen || toSwitch instanceof LevelCompleteScreen || toSwitch instanceof LevelFailedScreen) {
+        // if returned to menu, reset lastPlayedLevel (prevents from being taken back to exited level)
+        else if (toSwitch instanceof MenuScreen) {
             this.lastPlayedLevel = null;
         }
 
