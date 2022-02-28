@@ -105,32 +105,19 @@ public class LevelSelectScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
-        
     }
 
     @Override
-    public void pause() {
-        // TODO Auto-generated method stub
-        
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
-        // TODO Auto-generated method stub
-        
-    }
+    public void resume() {}
 
     @Override
-    public void hide() {
-        // TODO Auto-generated method stub
-        
-    }
+    public void hide() {}
 
     @Override
     public void dispose() {
         stage.dispose();
-        
     }
-
-
 }
