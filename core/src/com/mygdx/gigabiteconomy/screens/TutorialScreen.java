@@ -94,9 +94,11 @@ public class TutorialScreen implements Screen {
         informationScreenTable.row();
         informationScreenTable.row();
         if (lastPlayedLevel != null && screenTableReturnToLevelButton != null) {
-            informationScreenTable.add(screenTableReturnToLevelButton).padTop(50).bottom().colspan(1);
+            informationScreenTable.add(screenTableReturnToLevelButton).padTop(50).bottom().colspan(2);
         }
-        informationScreenTable.add(screenTableMainMenuButton).padTop(50).bottom().colspan(2);
+        else {
+            informationScreenTable.add(screenTableMainMenuButton).padTop(50).bottom().colspan(2);
+        }
 
         // Add click listener for buttons
         ClickListener buttonsListener = new ClickListener() {
