@@ -106,7 +106,9 @@ public class TutorialScreen implements Screen {
                 }
             }
         };
+        screenTableReturnToLevelButton.addListener(buttonsListener);
         screenTableMainMenuButton.addListener(buttonsListener);
+        
         stage.addActor(informationScreenTable);
     }
 
