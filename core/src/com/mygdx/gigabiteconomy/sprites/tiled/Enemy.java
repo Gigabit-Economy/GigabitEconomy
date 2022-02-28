@@ -10,7 +10,7 @@ import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.screens.TileManager;
-import com.mygdx.gigabiteconomy.sprites.IHealthBar;
+import com.mygdx.gigabiteconomy.sprites.HealthBar;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
@@ -20,15 +20,15 @@ import java.util.*;
  * Class representing an enemy sprite (many per level)
  */
 public abstract class Enemy extends MovingSprite {
-
+    private static final int BASE_HEALTH_DETRACTION = 10;
     private EnemyHealthBar healthBar;
 
     private Queue<DIRECTION> movePath;
     private Queue<DIRECTION> agroMovePath;
-    private Tile pathBegin; //Bottom leftmost tile
 
     private HashMap<String, Queue<DIRECTION>> movementPaths = new HashMap<>(); //Allows n paths for n behaviours
     private Queue<DIRECTION> currentPath;
+
 
     ArrayList<Tile> agroTiles; //Fixed tile coords in following format: [ [curr-x, curr+x] , [curr+y, curr-y] ]
     int[] agroTilePos;
@@ -36,6 +36,7 @@ public abstract class Enemy extends MovingSprite {
     int vertAgroTiles = 5;
 
     int[] agroTileVals = {5, 5, 5, 5}; // [horizAgroTiles, vertAgroTiles]
+
 
     boolean agro = false;
 
@@ -52,35 +53,37 @@ public abstract class Enemy extends MovingSprite {
      * @param width of Tiles to occupy
      * @param deltaHoriz horizontal speed
      * @param deltaVert vertical speed
-     * @param horizAgroTiles number of horizontal tiles either side of starting position to protect
-     * @param vertAgroTiles number of vertical tiles either size of starting position to protect
      */
     public Enemy(String BASE_PATH, Weapon weapon, int x, int y, int height, int width, Player targetEntity, float deltaHoriz, float deltaVert, float health, LinkedList<DIRECTION> movePath) {
         super(weapon, x, y, height, width, deltaHoriz, deltaVert, health, BASE_PATH);
 
-
         this.movePath = movePath;
-
         agroMovePath = new LinkedList<>();
         for (int i=0; i<5; i++) agroMovePath.add(DIRECTION.NORTH);
         for (int i=0; i<5; i++) agroMovePath.add(DIRECTION.SOUTH);
-
         movementPaths.put("move", movePath);
         movementPaths.put("agro", agroMovePath);
-
         setPath("move");
-
         this.targetEntity = targetEntity;
-
         setMoving(true);
+    }
 
-
+    /**
+     * Add a health bar to be displayed above the Enemy
+     *
+     * @param director the level's director class
+     */
+    public void addHealthBar(GigabitEconomy director) {
+        this.healthBar = new EnemyHealthBar(director);
     }
 
     @Override
     public void drawOn(SpriteBatch batch, float delta) {
         super.drawOn(batch, delta);
-        healthBar.drawOn(batch);
+
+        if (this.healthBar != null) {
+            this.healthBar.drawOn(batch);
+        }
     }
 
     public void setPath(Queue<DIRECTION> pathList) {
@@ -101,65 +104,54 @@ public abstract class Enemy extends MovingSprite {
 
     @Override
     public void attack(Weapon weapon) {
-        super.attack(weapon);
-        healthBar.modifyHealth(5*weapon.getHitMultiplier());
+        // deduct -10 (base health detraction for Enemies) multiplied by hit multiplier of the used weapon from sprite
+        setHealth(getHealth() - (BASE_HEALTH_DETRACTION * weapon.getHitMultiplier()));
+
+        // update health bar value
+        healthBar.setHealth(getHealth());
     }
 
     /**
      * Class that manages the display of enemy health
      */
-    public class EnemyHealthBar implements IHealthBar {
-        private float INIT_WIDTH = 69;
-        private float INIT_HEIGHT = 7;
-
-
-        private ShapeRenderer healthEllipse;
-        private float[] dimensions = new float[2];
-
-        private Vector3 pos;
+    public class EnemyHealthBar extends HealthBar {
+        private static final float WIDTH = 69;
+        private static final float HEIGHT = 7;
 
         private OrthographicCamera cam;
-
-        //Custom health bar for bigger enemies
-        public EnemyHealthBar(GigabitEconomy director, int width, int height) {
-            healthBar = this;
-            cam = director.getCamera(); //Need to use .project for drawing shape
-            INIT_HEIGHT = dimensions[0] = width; INIT_WIDTH = dimensions[1] = height;
-            healthEllipse = new ShapeRenderer();
-        }
+        private Vector3 pos = new Vector3();
 
         public EnemyHealthBar(GigabitEconomy director) {
-            healthBar = this;
-            cam = director.getCamera();
-            dimensions[0] = INIT_WIDTH; dimensions[1] = INIT_HEIGHT;
-            healthEllipse = new ShapeRenderer();
+            super(HEIGHT, WIDTH);
+
+            this.cam = director.getCamera();
+
+        }
+
+        // Custom health bar for bigger enemies (overrides WIDTH/HEIGHT constants)
+        public EnemyHealthBar(GigabitEconomy director, float width, float height) {
+            super(width, height);
+
+            this.cam = director.getCamera();
         }
 
         @Override
         public void drawOn(SpriteBatch batch) {
             batch.end();
 
-            healthEllipse.begin(ShapeRenderer.ShapeType.Filled);
-            healthEllipse.setColor(Color.RED);
+            getEllipse().begin(ShapeRenderer.ShapeType.Filled);
+            getEllipse().setColor(Color.RED);
+
             //Ellipse is always centred over middle of texture
             pos = cam.project(new Vector3(
-                    /* Mess around with these to centre health bar over enemy */
-
-                    getX()+(((TextureAtlas.AtlasRegion)getTextureRegion()).offsetX-INIT_WIDTH)/2,
-
-                    getY()+(getTextureRegion().getRegionHeight())-dimensions[1],
+                    getX() + (((TextureAtlas.AtlasRegion)getTextureRegion()).offsetX-getDimensions()[0])/2,
+                    getY() + (getTextureRegion().getRegionHeight())- getDimensions()[1],
                     0
                     ));
-            healthEllipse.ellipse(pos.x, pos.y, dimensions[0], dimensions[1]);
-            healthEllipse.end();
+            getEllipse().ellipse(pos.x, pos.y, getDimensions()[0], getDimensions()[1]);
+            getEllipse().end();
 
             batch.begin();
-        }
-
-        @Override
-        public void modifyHealth(float dhealth) {
-            if ((dimensions[0] -= (dhealth*(INIT_WIDTH/100))) <= 0) dimensions[0] = 0;
-            System.out.println("Width now: " + dimensions[0]);
         }
     }
 
