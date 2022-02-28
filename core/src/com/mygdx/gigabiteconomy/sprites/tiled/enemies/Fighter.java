@@ -18,7 +18,7 @@ public class Fighter extends Enemy {
      * @param targetEntity
      */
     public Fighter(int x, int y, Player targetEntity) {
-        super(BASE_PATH, MovingSprite.Weapon.NONE, x, y, 1, 1, targetEntity, 2f, 1.5f, new LinkedList<>(
+        super(BASE_PATH, MovingSprite.Weapon.NONE, x, y, 1, 1, targetEntity, 2f, 1.5f, 85f, new LinkedList<>(
                 Arrays.asList(MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
                         MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
                         MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.WEST,
@@ -34,7 +34,7 @@ public class Fighter extends Enemy {
      * @param movementPath define a specific movement path
      * @param targetEntity
      */
-    public Fighter(int x, int y, Player targetEntity, float deltaHoriz, float deltaVert, LinkedList<MovingSprite.DIRECTION> movementPath) {
-        super(BASE_PATH, MovingSprite.Weapon.NONE, x, y, 1, 1, targetEntity, deltaHoriz, deltaVert, movementPath);
+    public Fighter(int x, int y, Player targetEntity, float deltaHoriz, float deltaVert, float health, LinkedList<MovingSprite.DIRECTION> movementPath) {
+        super(BASE_PATH, MovingSprite.Weapon.NONE, x, y, 1, 1, targetEntity, deltaHoriz, deltaVert, health, movementPath);
     }
 }

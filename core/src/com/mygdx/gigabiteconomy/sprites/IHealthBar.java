@@ -6,7 +6,7 @@ public interface IHealthBar {
 
     void drawOn(SpriteBatch batch);
 
-    void modifyHealth(int dhealth);
+    void modifyHealth(float dhealth);
 
     void remove(); //-> This will be covered in sprite disposal?
 
