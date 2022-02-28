@@ -18,14 +18,24 @@ public class LevelOneScreen extends LevelScreen {
     private static final String BACKGROUND_TEXTURE_PNG = "finished_assets/levels/level1.png";
 
     // Player character
+
     private final Player player = new Player(Weapon.KNIFE, 0 , 7, 1, 1);
+
 
     /* ENEMIES */
     private final ArrayList<Enemy> enemies = new ArrayList<Enemy>(Arrays.asList(
-            new BatGuy(5, 3, player),
+            new BatGuy(50, 3, player),
             /* Example of completely custom fighter */
-            new Fighter(15, 7, player, 3.4f, 2.8f, 95f, new LinkedList<MovingSprite.DIRECTION>(Arrays.asList(MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.EAST))),
-            new Dog(25, 3, player)
+
+            new Fighter(15, 7, player, 3.4f, 2.8f, 7, new LinkedList<>(Arrays.asList(
+                    MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
+                    MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.NORTH, MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.SOUTH,
+                    MovingSprite.DIRECTION.SOUTH, MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST
+            ))),
+            new Dog(25, 2, player),
+            new BatGuy(20, 5, player),
+            new Fighter(30, 4, player)
+
     ));
 
     // Parcel van (for Player to collect parcels from)

@@ -13,6 +13,8 @@ import com.badlogic.gdx.utils.Disposable;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Random;
 
 /**
  * Class representing a sprite shown on screen, ready to be drawn with batch.draw(); in MainScreen class.
@@ -320,6 +322,17 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
 
         public DIRECTION getNext() {
             return DIRECTION.values()[(this.ordinal()+1) % DIRECTION.values().length];
+        }
+
+        public static LinkedList<DIRECTION> randomPath(int length) {
+            LinkedList<DIRECTION> ret = new LinkedList<>();
+            Random rand = new Random();
+
+            for (int i=0; i<length; i++) {
+                ret.add(DIRECTION.values()[rand.nextInt(4)]);
+            }
+
+            return ret;
         }
     }
 
