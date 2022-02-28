@@ -13,8 +13,6 @@ import com.mygdx.gigabiteconomy.exceptions.ParcelException;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
-import com.mygdx.gigabiteconomy.sprites.GameObject;
-import com.mygdx.gigabiteconomy.sprites.HealthBar;
 import com.mygdx.gigabiteconomy.sprites.IHealthBar;
 
 import java.util.ArrayList;
@@ -154,13 +152,13 @@ public class Player extends MovingSprite {
         // if Player does have a Parcel, check if next to House to be delivered to
         else {
             // if current tile or adjacent tile is owned by a House (door), deliver parcel
-            GameObject currentObject;
+            TiledObject currentObject;
             try {
                 currentObject = getCurrentTiles().get(0).getOwnedBy();
             } catch (NullPointerException ex) {
                 currentObject = null;
             }
-            GameObject adjacentObject = adjacentTile.getOwnedBy();
+            TiledObject adjacentObject = adjacentTile.getOwnedBy();
             if ((adjacentObject instanceof House) ||
                     currentObject instanceof House) {
                 parcel.deliver();
@@ -179,8 +177,7 @@ public class Player extends MovingSprite {
     /**
      * Class for displaying and controlling Player health bar in top left of the screen
      */
-    public class PlayerHealthBar implements IHealthBar  {
-
+    public class PlayerHealthBar implements IHealthBar {
         private ShapeRenderer healthRect;
         private Texture healthBarTexture = new Texture("finished_assets/ui_elements/health bar1.png");;
         private Texture parcelIcon = new Texture("finished_assets/ui_elements/parcelicon.png");
@@ -220,12 +217,6 @@ public class Player extends MovingSprite {
             System.out.println("Width now: " + dimensions[0]);
 
         }
-
-        @Override
-        public void remove() {
-
-        }
-
     }
 
     /**
@@ -261,7 +252,7 @@ public class Player extends MovingSprite {
         public Parcel() {
             // pick a random Weapon from the enum values to be weapon inside parcel (if it's opened)
             //Weapon assignedWeapon = MovingSprite.Weapon.values()[RANDOM.nextInt(Weapon.values().length)];
-            Weapon randomWeapon[] = {Weapon.GOLF, Weapon.PIPE, Weapon.KNIFE, Weapon.KATANA};
+            Weapon[] randomWeapon = {Weapon.GOLF, Weapon.PIPE, Weapon.KNIFE, Weapon.KATANA};
             this.weapon = randomWeapon[RANDOM.nextInt(randomWeapon.length)];
 
             // pick a random House from the level's houses to be house to be delivered to

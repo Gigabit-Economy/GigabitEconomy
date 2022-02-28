@@ -27,7 +27,8 @@ public class LevelOneScreen extends LevelScreen {
     /* ENEMIES */
     private final ArrayList<Enemy> enemies = new ArrayList<Enemy>(Arrays.asList(
             new BatGuy(5, 3, player),
-            new Fighter(15, 7, player, 3.4f, 2.8f, 95f, new LinkedList<MovingSprite.DIRECTION>(Arrays.asList(MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.EAST))),
+            /* Example of completely custom fighter */
+            new Fighter(15, 7, player, 3.4f, 2.8f, 95f, new LinkedList<MovingSprite.DIRECTION>(Arrays.asList(MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.EAST)));
             new Dog(25, 3, player)
     ));
 
@@ -35,11 +36,11 @@ public class LevelOneScreen extends LevelScreen {
     private final ParcelVan parcelVan = new ParcelVan(0, 0);
 
     /* STATIC SPRITES (HOUSES, FENCES ETC...) */
-    private final House houseOne = new House(House.HouseType.DETACHED, 0);
-    private final House houseTwo = new House(House.HouseType.TWO_STORY, 10);
-    private final House houseThree = new House(House.HouseType.DETACHED, 20);
-    private final House houseFour = new House(House.HouseType.TWO_STORY, 31);
-    private final House houseFive = new House(House.HouseType.DETACHED, 38);
+    private final House houseOne = new House(House.HouseType.DETACHED, 0, "level1");
+    private final House houseTwo = new House(House.HouseType.TWO_STORY, 10, "level1");
+    private final House houseThree = new House(House.HouseType.DETACHED, 20, "level1");
+    private final House houseFour = new House(House.HouseType.TWO_STORY, 31, "level1");
+    private final House houseFive = new House(House.HouseType.DETACHED, 38, "level1");
 
     private final ArrayList<StaticSprite> fences = new ArrayList<>();
     private final ArrayList<StaticSprite> cans = new ArrayList<>();
@@ -69,11 +70,11 @@ public class LevelOneScreen extends LevelScreen {
         super(director, BACKGROUND_TEXTURE_PNG,levelMusic);
 
         for (int[] coords : fenceCoords) {
-            fences.add(new StaticSprite("finished_assets/static_sprites/fence.png", coords[0], coords[1], 1, 1));
+            fences.add(new StaticSprite("finished_assets/static_sprites/level1/fence.png", coords[0], coords[1], 1, 1));
         }
 
         for (int[] coords : canCoords) {
-            cans.add(new StaticSprite("finished_assets/static_sprites/trashcan.png", coords[0], coords[1], 1, 1));
+            cans.add(new StaticSprite("finished_assets/static_sprites/level1/trashcan.png", coords[0], coords[1], 1, 1));
         }
 
         addPlayer(player);

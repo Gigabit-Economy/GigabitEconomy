@@ -20,6 +20,7 @@ public class Dog extends Enemy {
      */
     public Dog(int x, int y, Player targetEntity) {
         super(BASE_PATH, Weapon.DOG, x, y, 1, 1, targetEntity, 4f, 3.25f, 50f, new LinkedList<>(
+
                 Arrays.asList(MovingSprite.DIRECTION.NORTH,MovingSprite.DIRECTION.NORTH,
                         MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
                         MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
@@ -37,9 +38,9 @@ public class Dog extends Enemy {
      * @param x            position of Tile (within tile grid) to place sprite
      * @param y            position of Tile (within tile grid) to place sprite
      * @param movementPath define a specific movement path
-     * @param targetEntity
      */
     public Dog(int x, int y, Player targetEntity, float deltaHoriz, float deltaVert, float health, LinkedList<DIRECTION> movementPath) {
         super(BASE_PATH, Weapon.DOG, x, y, 1, 1, targetEntity, deltaHoriz, deltaVert, health, movementPath);
+
     }
 }

@@ -8,40 +8,40 @@ dogLeftAttack1
   xy: 0, 0
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 73, 0
   index: -1
 dogLeftAttack2
   rotate: false
   xy: 0, 240
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 73, 0
   index: -1
 dogLeftAttack3
   rotate: false
   xy: 0, 480
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 73, 0
   index: -1
 dogLeftAttack4
   rotate: false
   xy: 0, 720
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 73, 0
   index: -1
 dogLeftAttack5
   rotate: false
   xy: 0, 960
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 73, 0
   index: -1
 dogLeftAttack6
   rotate: false
   xy: 0, 1200
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 73, 0
   index: -1

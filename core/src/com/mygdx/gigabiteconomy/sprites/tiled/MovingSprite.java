@@ -352,14 +352,17 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      */
     public void launchAttack() {
         setAttacking(true);
+        
+        for (int i=getWidth(); i>0; i--) {
+            Tile tempAdjTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), directionFacing, i);
 
-        Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), directionFacing, 1);
-        if (adjacentTile == null) return; // trying to attack invalid Tile
-
-        // if adjacent tile is occupied by sprite which can be attacked, attack
-        TiledObject adjacentSprite = adjacentTile.getOccupiedBy();
-        if (adjacentSprite instanceof MovingSprite) {
-            ((MovingSprite) adjacentSprite).attack(weapon);
+            TiledObject adjacentSprite = tempAdjTile.getOccupiedBy();
+            if (adjacentSprite instanceof MovingSprite && adjacentSprite != this) {
+                if (this instanceof Enemy) {
+                    System.out.println(String.format("Trying to attack %d %d", tempAdjTile.getPositionTile()[0], tempAdjTile.getPositionTile()[1]));
+                }
+                ((MovingSprite) adjacentSprite).attack(weapon);
+            }
         }
     }
 
@@ -381,10 +384,6 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      */
     public void setHealth(float health) {
         this.health = health;
-
-        if (this instanceof Enemy) {
-            System.out.println("Thats a lotta damage!" + this.health);
-        }
 
         if (health <= 0) {
             destroy();
