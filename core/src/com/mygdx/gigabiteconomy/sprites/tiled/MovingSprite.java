@@ -108,7 +108,6 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         String movementConfig = String.format("%s/movement/%s%s.txt", this.basePath, selectedWeapon, spriteDirection);
         String attackingConfig = String.format("%s/attacks/%s%s.txt", this.basePath, selectedWeapon, spriteDirection);
 
-        System.out.println("Updating to textures for: " + directionFacing + " " + movementConfig + " " + attackingConfig);
         this.ta = new TextureAtlas(movementConfig);
         this.regions = ta.getRegions();
         this.textureRegion = regions.get(0);
@@ -380,10 +379,6 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      */
     public void setHealth(int health) {
         this.health = health;
-
-        if (this instanceof Enemy) {
-            System.out.println("Thats a lotta damage!" + this.health);
-        }
 
         if (health <= 0) {
             destroy();
