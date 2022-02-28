@@ -376,7 +376,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     public void pause() {
         try {
             this.paused = true;
-            director.switchScreen("pausemenu");
+            director.switchScreen("PauseMenu");
         } catch (Exception ex) {
             Gdx.app.error("Exception", "Error switching screen to pause menu", ex);
             System.exit(-1);
@@ -394,7 +394,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      */
     public void end() {
         try {
-            director.switchScreen("levelfailed");
+            director.switchScreen("LevelFailed");
         } catch (ScreenException ex) {
             Gdx.app.error("Exception", "The screen could not be switched when level failed", ex);
             System.exit(-1);
@@ -408,7 +408,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         score.saveScore();
 
         try {
-            director.switchScreen("levelcomplete");
+            director.switchScreen("LevelComplete");
         } catch (ScreenException ex) {
             Gdx.app.error("Exception", "The screen could not be switched when level complete", ex);
             System.exit(-1);

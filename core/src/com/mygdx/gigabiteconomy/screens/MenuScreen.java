@@ -26,25 +26,19 @@ import com.mygdx.gigabiteconomy.GigabitEconomy;
  * The menu screen which is shown on initial game load.
  */
 public class MenuScreen implements Screen {
+    private static final Texture BACKGROUND_TEXTURE = new Texture("finished_assets/ui_elements/gigabitEconomyHomeScreen.png");
+
     private GigabitEconomy director;
     private Stage stage;
     private Table buttons;
-    private Music menuMusic;
-    private Sprite backgroundSprite;
-    private static final Texture backgroundTexture = new Texture("finished_assets/ui_elements/gigabitEconomyHomeScreen.png");
 
-    private SpriteBatch batch;
     TextureAtlas ta;
     private Array<TextureAtlas.AtlasRegion> regions;
     private TextureRegion current;
 
-
-    public MenuScreen(GigabitEconomy director, String menuMusic) {
+    public MenuScreen(GigabitEconomy director) {
         this.director = director;
         this.stage = new Stage(director.getViewport());
-        this.menuMusic = Gdx.audio.newMusic(Gdx.files.internal("finished_assets/music/adventure.wav"));
-        this.menuMusic.setLooping(true);
-        this.menuMusic.play();
     }
 
     @Override
@@ -56,11 +50,11 @@ public class MenuScreen implements Screen {
         // Buttons
         buttons = new Table();
         //add background
-        buttons.setBackground(new TextureRegionDrawable(new TextureRegion(backgroundTexture)));
+        buttons.setBackground(new TextureRegionDrawable(new TextureRegion(BACKGROUND_TEXTURE)));
         buttons.setFillParent(true);
         buttons.center();
 
-        //add button images
+        // add button images
         ta = new TextureAtlas("finished_assets/ui_elements/icons.txt");
         regions = ta.getRegions();
         current = regions.get(6);
@@ -70,7 +64,7 @@ public class MenuScreen implements Screen {
 
         //add buttons
         ImageButton level1Button = new ImageButton(drawable);
-        level1Button.setName("levelSelectScreen");
+        level1Button.setName("LevelSelectScreen");
         buttons.add(level1Button);
 
         
@@ -123,7 +117,6 @@ public class MenuScreen implements Screen {
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);
-        menuMusic.stop();
     }
 
     @Override
