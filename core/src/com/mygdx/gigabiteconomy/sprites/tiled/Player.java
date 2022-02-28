@@ -46,6 +46,15 @@ public class Player extends MovingSprite {
     }
 
     /**
+     * Add a health bar to be displayed in the top left corner of the level screen
+     *
+     * @param director the level's director class
+     */
+    public void addHealthBar(GigabitEconomy director) {
+        this.healthBar = new PlayerHealthBar(director);
+    }
+
+    /**
      * Set the level the MovingSprite is in
      *
      * @param level the level the MovingSprite is in
@@ -127,7 +136,10 @@ public class Player extends MovingSprite {
     @Override
     public void drawOn(SpriteBatch batch, float delta) {
         super.drawOn(batch, delta);
-        healthBar.drawOn(batch);
+
+        if (this.healthBar != null) {
+            this.healthBar.drawOn(batch);
+        }
     }
 
     /**

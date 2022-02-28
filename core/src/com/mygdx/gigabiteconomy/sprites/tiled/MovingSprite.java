@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.badlogic.gdx.utils.Disposable;
@@ -64,6 +65,13 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
 
         setWeapon(weapon);
     }
+
+    /**
+     * Add a health bar to the sprite
+     *
+     * @param director the level's director class
+     */
+    public abstract void addHealthBar(GigabitEconomy director);
 
     /**
      * Get the texture region of the sprite

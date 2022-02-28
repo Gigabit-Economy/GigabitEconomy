@@ -44,35 +44,37 @@ public abstract class Enemy extends MovingSprite {
      * @param width of Tiles to occupy
      * @param deltaHoriz horizontal speed
      * @param deltaVert vertical speed
-     * @param horizAgroTiles number of horizontal tiles either side of starting position to protect
-     * @param vertAgroTiles number of vertical tiles either size of starting position to protect
      */
     public Enemy(String BASE_PATH, Weapon weapon, int x, int y, int height, int width, Player targetEntity, float deltaHoriz, float deltaVert, float health, LinkedList<DIRECTION> movePath) {
         super(weapon, x, y, height, width, deltaHoriz, deltaVert, health, BASE_PATH);
 
-
         this.movePath = movePath;
-
         agroMovePath = new LinkedList<>();
         for (int i=0; i<5; i++) agroMovePath.add(DIRECTION.NORTH);
         for (int i=0; i<5; i++) agroMovePath.add(DIRECTION.SOUTH);
-
         movementPaths.put("move", movePath);
         movementPaths.put("agro", agroMovePath);
-
         setPath("move");
-
         this.targetEntity = targetEntity;
-
         setMoving(true);
+    }
 
-
+    /**
+     * Add a health bar to be displayed above the Enemy
+     *
+     * @param director the level's director class
+     */
+    public void addHealthBar(GigabitEconomy director) {
+        this.healthBar = new EnemyHealthBar(director);
     }
 
     @Override
     public void drawOn(SpriteBatch batch, float delta) {
         super.drawOn(batch, delta);
-        healthBar.drawOn(batch);
+
+        if (this.healthBar != null) {
+            this.healthBar.drawOn(batch);
+        }
     }
 
     public void setPath(Queue<DIRECTION> pathList) {
