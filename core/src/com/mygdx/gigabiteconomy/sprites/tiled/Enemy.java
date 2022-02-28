@@ -178,10 +178,6 @@ public abstract class Enemy extends MovingSprite {
             TileManager tm = getTileManager();
             Tile currTile = getCurrentTiles().get(0);
 
-
-            System.out.println(tm + " " + currTile);
-
-
             for (int i=0; i<4; i++) {
                 //Add potential value
                 Tile toAdd;
@@ -194,7 +190,6 @@ public abstract class Enemy extends MovingSprite {
                 }
 
                 agroTiles.add(toAdd);
-                System.out.println(toAdd + " " + agroTilePos);
 
                 agroTilePos[i] = toAdd.getPositionTile()[(i+1)%2]; //Seq: 1, 0, 1, 0 == y, x, y, x == N, E, S, W
             }
@@ -211,12 +206,9 @@ public abstract class Enemy extends MovingSprite {
         for (int i=0; i<agroTilePos.length; i++) {
             if (i<2) { //On N || E ; i==0 || i==1
                 agro &= currPlayerTile.getPositionTile()[(i + 1) % 2] < agroTilePos[i];
-                System.out.println(String.format("checking %d for %d --- pos:%d", (i+1)%2, i, agroTilePos[i]));
             } else {// S || W ; i==2 || i==3
                 agro &= currPlayerTile.getPositionTile()[(i + 1) % 2] > agroTilePos[i];
-                System.out.println(String.format("checking %d for %d --- pos:%d", (i+1)%2, i, agroTilePos[i]));
             }
-            System.out.println("Agro after " + i + " " + agro);
         }
 
 
