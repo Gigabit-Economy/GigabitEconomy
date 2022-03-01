@@ -14,6 +14,8 @@ public class BatGuy extends Enemy {
     private static final float DEFAULT_DELTAVERT = 1.5f;
     private static final int DEFAULT_WIDTH = 1;
     private static final int DEFAULT_HEIGHT = 1;
+    private static final int DEFAULT_VERTAGROTILES = 5;
+    private static final int DEFAULT_HORIZAGROTILES = 5;
 
     /**
      * Create a new Enemy sprite (MovingSprite)
@@ -22,7 +24,7 @@ public class BatGuy extends Enemy {
      * @param y            position of Tile (within tile grid) to place sprite
      */
     public BatGuy(int x, int y, Player targetEntity) {
-        super(BASE_PATH, MovingSprite.Weapon.BAT, x, y, 1, 1, targetEntity, 2f, 1.5f, 3, DIRECTION.randomPath(10));
+        super(BASE_PATH, MovingSprite.Weapon.BAT, x, y, 1, 1, targetEntity, 2f, 1.5f, DEFAULT_HORIZAGROTILES, DEFAULT_VERTAGROTILES, DEFAULT_HEALTH, DIRECTION.randomPath(10));
 
     }
 
@@ -34,7 +36,7 @@ public class BatGuy extends Enemy {
      * @param movementPath define a specific movement path
      */
     public BatGuy(int x, int y, Player targetEntity, float deltaHoriz, float deltaVert, float health, LinkedList<MovingSprite.DIRECTION> movementPath) {
-        super(BASE_PATH, MovingSprite.Weapon.BAT, x, y, 1, 1, targetEntity, deltaHoriz, deltaVert, health, movementPath);
+        super(BASE_PATH, MovingSprite.Weapon.BAT, x, y, 1, 1, targetEntity, deltaHoriz, deltaVert, DEFAULT_HORIZAGROTILES, DEFAULT_VERTAGROTILES, health, movementPath);
 
     }
 }

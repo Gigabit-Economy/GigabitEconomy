@@ -15,6 +15,9 @@ public class Dog extends Enemy {
     private static final float DEFAULT_DELTAVERT = 3.25f;
     private static final int DEFAULT_WIDTH = 3;
     private static final int DEFAULT_HEIGHT = 1;
+    private static final int DEFAULT_VERTAGROTILES = 5;
+    private static final int DEFAULT_HORIZAGROTILES = 5;
+
 
     /**
      * Create a new Enemy sprite (MovingSprite)
@@ -24,7 +27,7 @@ public class Dog extends Enemy {
      * @param targetEntity
      */
     public Dog(int x, int y, Player targetEntity) {
-        super(BASE_PATH, Weapon.DOG, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, DEFAULT_DELTAHORIZ, DEFAULT_DELTAVERT, DEFAULT_HEALTH, new LinkedList<>(
+        super(BASE_PATH, Weapon.DOG, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, DEFAULT_DELTAHORIZ, DEFAULT_DELTAVERT, DEFAULT_HORIZAGROTILES, DEFAULT_VERTAGROTILES, DEFAULT_HEALTH, new LinkedList<>(
 
                 Arrays.asList(MovingSprite.DIRECTION.NORTH,MovingSprite.DIRECTION.NORTH,
                         MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
@@ -45,7 +48,7 @@ public class Dog extends Enemy {
      * @param movementPath define a specific movement path
      */
     public Dog(int x, int y, Player targetEntity, float deltaHoriz, float deltaVert, float health, LinkedList<DIRECTION> movementPath) {
-        super(BASE_PATH, Weapon.DOG, x, y, 1, 1, targetEntity, deltaHoriz, deltaVert, health, movementPath);
+        super(BASE_PATH, Weapon.DOG, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, deltaHoriz, deltaVert, DEFAULT_HORIZAGROTILES, DEFAULT_VERTAGROTILES, health, movementPath);
 
     }
 }

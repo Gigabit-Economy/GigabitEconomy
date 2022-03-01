@@ -11,6 +11,7 @@ import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.screens.TileManager;
 import com.mygdx.gigabiteconomy.sprites.HealthBar;
+import com.mygdx.gigabiteconomy.sprites.tiled.enemies.RatKing;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
@@ -54,8 +55,13 @@ public abstract class Enemy extends MovingSprite {
      * @param deltaHoriz horizontal speed
      * @param deltaVert vertical speed
      */
-    public Enemy(String BASE_PATH, Weapon weapon, int x, int y, int height, int width, Player targetEntity, float deltaHoriz, float deltaVert, float health, LinkedList<DIRECTION> movePath) {
+    public Enemy(String BASE_PATH, Weapon weapon, int x, int y, int height, int width, Player targetEntity, float deltaHoriz, float deltaVert, int horizAgroTiles, int vertAgroTiles, float health, LinkedList<DIRECTION> movePath) {
         super(weapon, x, y, height, width, deltaHoriz, deltaVert, health, BASE_PATH);
+        this.horizAgroTiles = horizAgroTiles;
+        this.vertAgroTiles = vertAgroTiles;
+
+        this.agroTileVals[0] = this.agroTileVals[2] = vertAgroTiles;
+        this.agroTileVals[1] = this.agroTileVals[3] = horizAgroTiles;
 
         this.movePath = movePath;
         agroMovePath = new LinkedList<>();
@@ -207,6 +213,26 @@ public abstract class Enemy extends MovingSprite {
         return agro;
     }
 
+    public void agro_action() {
+        TileManager tm = getTileManager();
+        //Check if player is on adjacent tiles
+
+        if (getTileManager().isGroupOccupiedBy(targetEntity, new ArrayList<>(Arrays.asList(tm.getAdjacentTiles(this.getCurrentTiles().get(0)))))) {
+            setAttacking(true);
+        }
+
+        //Check if player is on the row
+        //Move in that direction
+
+        DIRECTION dirTo = tm.findDirectionFrom(getCurrentTiles().get(0), targetEntity.getCurrentTiles().get(0));
+
+        if (dirTo != null) {
+            setPath(new LinkedList<>(Arrays.asList(dirTo, dirTo)));
+        } else {
+            setPath("agro");
+        }
+    }
+
     @Override
     public boolean move(float delta) throws TileMovementException {
         boolean ret = super.move(delta); //Checks if we've arrived else moved
@@ -237,23 +263,7 @@ public abstract class Enemy extends MovingSprite {
             super.setDirectionMovement(currentPath.remove());
             currentPath.add(getDirectionMoving());
             if (agro) {
-                TileManager tm = getTileManager();
-                //Check if player is on adjacent tiles
-
-                if (getTileManager().isGroupOccupiedBy(targetEntity, new ArrayList<>(Arrays.asList(tm.getAdjacentTiles(this.getCurrentTiles().get(0)))))) {
-                    setAttacking(true);
-                }
-
-                //Check if player is on the row
-                //Move in that direction
-
-                DIRECTION dirTo = tm.findDirectionFrom(getCurrentTiles().get(0), targetEntity.getCurrentTiles().get(0));
-
-                if (dirTo != null) {
-                    setPath(new LinkedList<>(Arrays.asList(dirTo, dirTo)));
-                } else {
-                    setPath("agro");
-                }
+                agro_action();
             }
 
         }
