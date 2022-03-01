@@ -45,7 +45,7 @@ public abstract class Enemy extends MovingSprite {
     /**
      * Create a new Enemy sprite (MovingSprite)
      *
-     * @param BASE_PATH of texture
+     * @param level the level of sprite (dictates the path of the texture)
      * @param weapon the weapon the Enemy is carrying
      * @param x position of Tile (within tile grid) to place sprite
      * @param y position of Tile (within tile grid) to place sprite
