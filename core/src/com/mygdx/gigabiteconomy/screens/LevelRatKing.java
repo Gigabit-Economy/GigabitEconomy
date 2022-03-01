@@ -1,7 +1,6 @@
 package com.mygdx.gigabiteconomy.screens;
 
 import com.mygdx.gigabiteconomy.GigabitEconomy;
-import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.sprites.tiled.*;
 import com.mygdx.gigabiteconomy.sprites.tiled.enemies.*;
 
@@ -22,15 +21,15 @@ public class LevelRatKing extends LevelScreen {
     private final ArrayList<Enemy> boxes = new ArrayList<Enemy>(Arrays.asList(
             ratKing,
             /* THE MINIONS */
-            new RatKingBoxes(25, 0, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>())
-            /*new RatKingBoxes(25, 1, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
-            new RatKingBoxes(25, 2, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
-            new RatKingBoxes(25, 3, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
-            new RatKingBoxes(25, 4, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
-            new RatKingBoxes(25, 5, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
-            new RatKingBoxes(25, 6, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
-            new RatKingBoxes(25, 7, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
-            new RatKingBoxes(25, 8, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>())*/
+            new RatKingFort(25, 0, player, ratKing)
+            /*new RatKingFort(25, 1, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
+            new RatKingFort(25, 2, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
+            new RatKingFort(25, 3, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
+            new RatKingFort(25, 4, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
+            new RatKingFort(25, 5, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
+            new RatKingFort(25, 6, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
+            new RatKingFort(25, 7, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
+            new RatKingFort(25, 8, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>())*/
     ));
 
     // Parcel van (for Player to collect parcels from)

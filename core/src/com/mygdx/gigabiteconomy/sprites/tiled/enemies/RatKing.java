@@ -9,6 +9,7 @@ import com.mygdx.gigabiteconomy.sprites.tiled.Player;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.Random;
 
 public class RatKing extends Enemy {
     private static final String BASE_PATH = "finished_assets/enemies/level1";
@@ -21,6 +22,7 @@ public class RatKing extends Enemy {
     private static final int DEFAULT_HORIZAGROTILES = 5;
 
     private LevelScreen level;
+    private RatKingFort fort;
 
 
     /**
@@ -48,6 +50,11 @@ public class RatKing extends Enemy {
         this.level = level;
     }
 
+    public void setParcelFort(RatKingFort fort) {
+        this.fort = fort;
+
+    }
+
     /**
      * Defines what the Rat King does when Player agros
      * -> If box fort not destroyed:
@@ -60,13 +67,14 @@ public class RatKing extends Enemy {
          * Call level to spawn an enemy at random y
          */
 
+
     }
 
     public void underAttack(int y) {
         //Spawn a minion in level
         System.out.println("Under attack at " + y);
         level.addEnemies(new ArrayList<Enemy>(Arrays.asList(
-                new BatGuy(34, y, this.getTargetEntity(), 6f, 1.5f, 65f, new LinkedList<>(Arrays.asList(DIRECTION.WEST, DIRECTION.WEST)))
+                new BatGuy(24, (new Random()).nextInt(8), this.getTargetEntity(), 6f, 1.5f, 65f, new LinkedList<>(Arrays.asList(DIRECTION.WEST, DIRECTION.WEST)))
         )));
     }
 }
