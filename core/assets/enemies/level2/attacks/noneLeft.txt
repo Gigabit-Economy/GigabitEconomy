@@ -1,53 +1,39 @@
-unarmedRatRight.png
-size: 368, 1680
+noneLeft.png
+size: 1840, 240
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-unarmedRatRightWalk1
+unarmedRatLeftAttack1
   rotate: false
   xy: 0, 0
   size: 368, 240
   orig: 368, 240
   offset: 126, 0
   index: -1
-unarmedRatRightWalk2
+unarmedRatLeftAttack2
   rotate: false
-  xy: 0, 240
+  xy: 368, 0
   size: 368, 240
   orig: 368, 240
   offset: 126, 0
   index: -1
-unarmedRatRightWalk3
+unarmedRatLeftAttack3
   rotate: false
-  xy: 0, 480
+  xy: 736, 0
   size: 368, 240
   orig: 368, 240
   offset: 126, 0
   index: -1
-unarmedRatRightWalk4
+unarmedRatLeftAttack4
   rotate: false
-  xy: 0, 720
+  xy: 1104, 0
   size: 368, 240
   orig: 368, 240
   offset: 126, 0
   index: -1
-unarmedRatRightWalk5
+unarmedRatLeftAttack5
   rotate: false
-  xy: 0, 960
-  size: 368, 240
-  orig: 368, 240
-  offset: 126, 0
-  index: -1
-unarmedRatRightWalk6
-  rotate: false
-  xy: 0, 1200
-  size: 368, 240
-  orig: 368, 240
-  offset: 126, 0
-  index: -1
-unarmedRatRightWalk7
-  rotate: false
-  xy: 0, 1440
+  xy: 1472, 0
   size: 368, 240
   orig: 368, 240
   offset: 126, 0

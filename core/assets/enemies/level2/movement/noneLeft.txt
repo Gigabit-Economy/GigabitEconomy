@@ -1,51 +1,51 @@
-ratRight.png
+noneLeft.png
 size: 368, 1680
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-ratRightwalk1
+unarmedRatLeftWalk1
   rotate: false
   xy: 0, 0
   size: 368, 240
   orig: 368, 240
   offset: 126, 0
   index: -1
-ratRightwalk2
+unarmedRatLeftWalk2
   rotate: false
   xy: 0, 240
   size: 368, 240
   orig: 368, 240
   offset: 126, 0
   index: -1
-ratRightwalk3
+unarmedRatLeftWalk3
   rotate: false
   xy: 0, 480
   size: 368, 240
   orig: 368, 240
   offset: 126, 0
   index: -1
-ratRightwalk4
+unarmedRatLeftWalk4
   rotate: false
   xy: 0, 720
   size: 368, 240
   orig: 368, 240
   offset: 126, 0
   index: -1
-ratRightwalk5
+unarmedRatLeftWalk5
   rotate: false
   xy: 0, 960
   size: 368, 240
   orig: 368, 240
   offset: 126, 0
   index: -1
-ratRightwalk6
+unarmedRatLeftWalk6
   rotate: false
   xy: 0, 1200
   size: 368, 240
   orig: 368, 240
   offset: 126, 0
   index: -1
-ratRightwalk7
+unarmedRatLeftWalk7
   rotate: false
   xy: 0, 1440
   size: 368, 240
