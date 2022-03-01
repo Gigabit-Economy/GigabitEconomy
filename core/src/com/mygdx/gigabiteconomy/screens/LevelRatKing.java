@@ -30,7 +30,7 @@ public class LevelRatKing extends LevelScreen {
             new RatKingBoxes(25, 5, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
             new RatKingBoxes(25, 6, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
             new RatKingBoxes(25, 7, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
-            new RatKingBoxes(25, 8, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
+            new RatKingBoxes(25, 8, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>())
     ));
 
     // Parcel van (for Player to collect parcels from)
