@@ -19,7 +19,7 @@ public class RatKing extends Enemy {
     private static final float DEFAULT_DELTAHORIZ = 5f;
     private static final float DEFAULT_DELTAVERT = 4f;
     private static final int DEFAULT_WIDTH = 8;
-    private static final int DEFAULT_HEIGHT = 5;
+    private static final int DEFAULT_HEIGHT = 3;
     private static final int DEFAULT_VERTAGROTILES = 5;
     private static final int DEFAULT_HORIZAGROTILES = 5;
 
@@ -38,7 +38,7 @@ public class RatKing extends Enemy {
      */
     public RatKing(int x, int y, Player targetEntity) {
 
-        super(BASE_PATH, Weapon.BAT, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, DEFAULT_DELTAHORIZ, DEFAULT_DELTAVERT, DEFAULT_HORIZAGROTILES, DEFAULT_VERTAGROTILES, DEFAULT_HEALTH, new LinkedList<DIRECTION>(
+        super(BASE_PATH, Weapon.RATKING, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, DEFAULT_DELTAHORIZ, DEFAULT_DELTAVERT, DEFAULT_HORIZAGROTILES, DEFAULT_VERTAGROTILES, DEFAULT_HEALTH, new LinkedList<DIRECTION>(
                 Arrays.asList(
                         DIRECTION.WEST
                 )
