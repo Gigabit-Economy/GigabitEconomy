@@ -376,15 +376,18 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         setAttacking(true);
         
         for (int i=getWidth(); i>0; i--) {
-            Tile tempAdjTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), directionFacing, i);
+            ArrayList<Tile> tempAdjTiles = getTileManager().getAdjacentTiles(this);
 
-            TiledObject adjacentSprite = tempAdjTile.getOccupiedBy();
-            if (adjacentSprite instanceof MovingSprite && adjacentSprite != this) {
-                if (this instanceof Enemy) {
-                    System.out.println(String.format("Trying to attack %d %d", tempAdjTile.getPositionTile()[0], tempAdjTile.getPositionTile()[1]));
+            for (Tile t : tempAdjTiles) {
+                TiledObject adjacentSprite = t.getOccupiedBy();
+                if (adjacentSprite instanceof MovingSprite && adjacentSprite != this) {
+                    if (this instanceof Enemy) {
+                        System.out.println(String.format("Trying to attack %d %d", t.getPositionTile()[0], t.getPositionTile()[1]));
+                    }
+                    ((MovingSprite) adjacentSprite).attack(weapon);
                 }
-                ((MovingSprite) adjacentSprite).attack(weapon);
             }
+
         }
     }
 
