@@ -13,7 +13,7 @@ public class LevelRatKing extends LevelScreen {
     private static final String BACKGROUND_TEXTURE_PNG = "finished_assets/levels/level2.png";
 
     // Player character
-    private final MovingSprite.Weapon playerWeapon = MovingSprite.Weapon.KNIFE;
+    private final MovingSprite.Weapon playerWeapon = MovingSprite.Weapon.KATANA;
     private final Player player = new Player(playerWeapon, 0 , 7, 1, 1);
     private final RatKing ratKing = new RatKing(26, 3, player);
 

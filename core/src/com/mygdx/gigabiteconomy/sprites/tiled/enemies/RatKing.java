@@ -16,10 +16,10 @@ import java.util.Random;
 public class RatKing extends Enemy {
     private static final String BASE_PATH = "finished_assets/enemies/ratking";
     private static final float DEFAULT_HEALTH = 200f;
-    private static final float DEFAULT_DELTAHORIZ = 5f;
+    private static final float DEFAULT_DELTAHORIZ = 15f;
     private static final float DEFAULT_DELTAVERT = 4f;
-    private static final int DEFAULT_WIDTH = 8;
-    private static final int DEFAULT_HEIGHT = 3;
+    private static final int DEFAULT_WIDTH = 1;
+    private static final int DEFAULT_HEIGHT = 1;
     private static final int DEFAULT_VERTAGROTILES = 5;
     private static final int DEFAULT_HORIZAGROTILES = 5;
 
@@ -75,14 +75,20 @@ public class RatKing extends Enemy {
      */
     @Override
     public void agro_action() {
-        if (fort != null) return;
+        if (stunned != null) return;
+
         TileManager tm = getTileManager();
 
-        if ((getPath() != getPaths().get("charge") && getPath().peek() != DIRECTION.EAST)  && !(getCurrentTiles().get(0).getPositionTile()[0] < initX)) {
-            System.out.println("CHANRNFAGINGANG");
-            setPath("charge");
-            setDeltaX(-10);
+        if (fort != null)  {
+            if ((getPath() != getPaths().get("charge") && getPath().peek() != DIRECTION.EAST)  && !(getCurrentTiles().get(0).getPositionTile()[0] < initX)) {
+                System.out.println("CHANRNFAGINGANG");
+                setPath("charge");
+            }
+        } else {
+            //Throw box
+            level.addSprite(new FallingParcel(10, 5, 1, 1));
         }
+
 
 
 //        if ((new Random()).nextInt(10)%2 == 0) {

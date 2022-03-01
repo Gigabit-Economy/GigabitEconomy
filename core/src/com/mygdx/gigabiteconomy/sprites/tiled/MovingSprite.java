@@ -167,11 +167,11 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     }
 
     public void setDeltaX(float dx) {
-        deltaMove.x = dx;
+        deltaMove.x = dx * getDirectionFacing().dxMult;
     }
 
     public void setDeltaY(float dy) {
-        deltaMove.x = dy;
+        deltaMove.x = dy * getDirectionFacing().dyMult;
     }
 
     /**

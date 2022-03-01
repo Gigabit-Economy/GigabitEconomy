@@ -21,7 +21,6 @@ public class LevelOneScreen extends LevelScreen {
 
     private final Player player = new Player(Weapon.KATANA, 0 , 7, 1, 1);
 
-
     /* ENEMIES */
     private final ArrayList<Enemy> enemies = new ArrayList<Enemy>(Arrays.asList(
         new BatGuy(50, 3, player),

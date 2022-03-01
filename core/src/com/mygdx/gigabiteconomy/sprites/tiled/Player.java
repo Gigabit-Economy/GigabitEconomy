@@ -42,7 +42,7 @@ public class Player extends MovingSprite {
      * @param width of Tiles to occupy
      */
     public Player(Weapon weapon, int x, int y, int height, int width) {
-        super(weapon, x, y, height, width, 3.5f, 3f, 100f, BASE_PATH);
+        super(weapon, x, y, height, width, 5f, 3f, 100f, BASE_PATH);
     }
 
     /**
