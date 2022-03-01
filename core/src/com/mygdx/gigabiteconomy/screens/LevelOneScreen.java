@@ -80,7 +80,6 @@ public class LevelOneScreen extends LevelScreen {
             cans.add(new StaticSprite("finished_assets/static_sprites/level1/trashcan.png", coords[0], coords[1], 1, 1));
         }
 
-        player.addHealthBar(director);
         addPlayer(player);
 
 
