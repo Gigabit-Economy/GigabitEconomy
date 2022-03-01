@@ -22,7 +22,6 @@ public class RatKing extends Enemy {
 
     private LevelScreen level;
 
-    private Enemy spawnedEnemy;
 
     /**
      * Create a new Enemy sprite (MovingSprite)
@@ -61,5 +60,13 @@ public class RatKing extends Enemy {
          * Call level to spawn an enemy at random y
          */
 
+    }
+
+    public void underAttack(int y) {
+        //Spawn a minion in level
+        System.out.println("Under attack at " + y);
+        level.addEnemies(new ArrayList<Enemy>(Arrays.asList(
+                new BatGuy(34, y, this.getTargetEntity(), 6f, 1.5f, 65f, new LinkedList<>(Arrays.asList(DIRECTION.WEST, DIRECTION.WEST)))
+        )));
     }
 }

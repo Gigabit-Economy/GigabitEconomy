@@ -3,10 +3,7 @@ package com.mygdx.gigabiteconomy.screens;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.sprites.tiled.*;
-import com.mygdx.gigabiteconomy.sprites.tiled.enemies.BatGuy;
-import com.mygdx.gigabiteconomy.sprites.tiled.enemies.Dog;
-import com.mygdx.gigabiteconomy.sprites.tiled.enemies.Fighter;
-import com.mygdx.gigabiteconomy.sprites.tiled.enemies.RatKing;
+import com.mygdx.gigabiteconomy.sprites.tiled.enemies.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,23 +16,21 @@ public class LevelRatKing extends LevelScreen {
     // Player character
     private final MovingSprite.Weapon playerWeapon = MovingSprite.Weapon.KNIFE;
     private final Player player = new Player(playerWeapon, 0 , 7, 1, 1);
-
+    private final RatKing ratKing = new RatKing(26, 3, player);
 
     /* ENEMIES */
-    private final ArrayList<Enemy> enemies = new ArrayList<Enemy>(Arrays.asList(
-            new RatKing(26, 3, player),
+    private final ArrayList<Enemy> boxes = new ArrayList<Enemy>(Arrays.asList(
+            ratKing,
             /* THE MINIONS */
-            new BatGuy(34, 0, player, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
-            new BatGuy(34, 1, player, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
-            new BatGuy(34, 2, player, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
-            new BatGuy(34, 3, player, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
-            new BatGuy(34, 4, player, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
-            new BatGuy(34, 5, player, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
-            new BatGuy(34, 6, player, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
-            new BatGuy(34, 7, player, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
-            new BatGuy(34, 8, player, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>())
-
-
+            new RatKingBoxes(25, 0, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
+            new RatKingBoxes(25, 1, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
+            new RatKingBoxes(25, 2, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
+            new RatKingBoxes(25, 3, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
+            new RatKingBoxes(25, 4, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
+            new RatKingBoxes(25, 5, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
+            new RatKingBoxes(25, 6, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
+            new RatKingBoxes(25, 7, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
+            new RatKingBoxes(25, 8, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
     ));
 
     // Parcel van (for Player to collect parcels from)
@@ -49,7 +44,6 @@ public class LevelRatKing extends LevelScreen {
     int[][] fenceCoords = {
 
             /* Stops the map a bit short - it's huge */
-            {25,8}, {25,7}, {25,6}, {25,5}, {25,4}, {25,2}, {25,1}, {25,0},
             {35,8}, {35,7}, {35,6}, {35,5}, {35,4}, {35,3}, {35,2}, {35,1}, {35,0}
     };
 
@@ -75,8 +69,8 @@ public class LevelRatKing extends LevelScreen {
 
         addPlayer(player);
         player.new PlayerHealthBar(director);
-        addEnemies(enemies);
-        for (Enemy enemy : enemies) {
+        addEnemies(boxes);
+        for (Enemy enemy : boxes) {
             enemy.new EnemyHealthBar(director);
         }
         addParcelVan(parcelVan);

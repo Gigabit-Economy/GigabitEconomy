@@ -41,7 +41,7 @@ public abstract class Enemy extends MovingSprite {
 
     boolean agro = false;
 
-    private TiledObject targetEntity;
+    private Player targetEntity;
 
     /**
      * Create a new Enemy sprite (MovingSprite)
@@ -159,6 +159,10 @@ public abstract class Enemy extends MovingSprite {
 
             batch.begin();
         }
+    }
+
+    public Player getTargetEntity() {
+        return targetEntity;
     }
 
     /**
