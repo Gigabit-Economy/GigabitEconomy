@@ -241,9 +241,7 @@ public abstract class Enemy extends MovingSprite {
                 //Check if player is on adjacent tiles
 
                 if (getTileManager().isGroupOccupiedBy(targetEntity, new ArrayList<>(Arrays.asList(tm.getAdjacentTiles(this.getCurrentTiles().get(0)))))) {
-                    //super.launchAttack();
                     setAttacking(true);
-
                 }
 
                 //Check if player is on the row
