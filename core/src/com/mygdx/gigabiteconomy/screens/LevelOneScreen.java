@@ -33,7 +33,6 @@ public class LevelOneScreen extends LevelScreen {
         new Dog(25, 2, LEVEL, player),
         new BatGuy(20, 5, LEVEL, player),
         new Fighter(30, 4, LEVEL, player)
-
     ));
 
     // Parcel van (for Player to collect parcels from)
