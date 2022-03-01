@@ -23,7 +23,7 @@ public class Dog extends Enemy {
      * @param targetEntity
      */
     public Dog(int x, int y, String level, Player targetEntity) {
-        super(String.format("enemies/%s", level), Weapon.DOG, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, DEFAULT_DELTAHORIZ, DEFAULT_DELTAVERT, DEFAULT_HEALTH, new LinkedList<>(
+        super(level, Weapon.DOG, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, DEFAULT_DELTAHORIZ, DEFAULT_DELTAVERT, DEFAULT_HEALTH, new LinkedList<>(
             Arrays.asList(MovingSprite.DIRECTION.NORTH,MovingSprite.DIRECTION.NORTH,
                     MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
                     MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
@@ -44,6 +44,6 @@ public class Dog extends Enemy {
      * @param movementPath define a specific movement path
      */
     public Dog(int x, int y, String level, Player targetEntity, float deltaHoriz, float deltaVert, float health, LinkedList<DIRECTION> movementPath) {
-        super(String.format("enemies/%s", level), Weapon.DOG, x, y, 1, 1, targetEntity, deltaHoriz, deltaVert, health, movementPath);
+        super(level, Weapon.DOG, x, y, 1, 1, targetEntity, deltaHoriz, deltaVert, health, movementPath);
     }
 }
