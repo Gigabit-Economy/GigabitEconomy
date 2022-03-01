@@ -97,6 +97,9 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      */
     public void addEnemies(ArrayList<Enemy> enemies) {
         this.enemies.addAll(enemies);
+        for (Enemy enemy : enemies) {
+            enemy.addHealthBar(director);
+        }
         addSprites(enemies);
     }
 
