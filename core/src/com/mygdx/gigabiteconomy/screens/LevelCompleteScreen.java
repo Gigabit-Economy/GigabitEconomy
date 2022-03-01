@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.ScoreSystem;
 
+import java.util.Arrays;
+
 public class LevelCompleteScreen implements Screen {
     private GigabitEconomy director;
 
@@ -61,8 +63,8 @@ public class LevelCompleteScreen implements Screen {
         
         String[] prevScores = levelScores.getAllScores();
         String[] lastFewScores = new String[5];
-        for (int i = 0; i < 5; i++) {
-            lastFewScores[i] = prevScores [i];
+        for (int i = prevScores.length - 1; i > prevScores.length - 6; i--) { // iterate through last 5 scores for level
+            lastFewScores[i] = prevScores[i];
         }
         List<String> levelCompletedScoreList = new List<String>(style);
         levelCompletedScoreList.setItems(lastFewScores);
