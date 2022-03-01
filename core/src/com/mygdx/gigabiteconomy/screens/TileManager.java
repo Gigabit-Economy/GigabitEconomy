@@ -3,6 +3,7 @@ package com.mygdx.gigabiteconomy.screens;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.gigabiteconomy.exceptions.TileException;
 import com.mygdx.gigabiteconomy.sprites.tiled.*;
+import com.mygdx.gigabiteconomy.sprites.tiled.enemies.Dog;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;

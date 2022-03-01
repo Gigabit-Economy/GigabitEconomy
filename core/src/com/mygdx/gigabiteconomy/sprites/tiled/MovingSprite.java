@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Disposable;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -42,7 +43,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     private MovingAnimation<TextureRegion> movementAnimation;
     private MovingAnimation<TextureRegion> attackAnimation;
 
-    private float health = 100;
+    private float health;
     private boolean attacking = false;
     private Weapon weapon;
 
@@ -165,9 +166,12 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         this.moving = moving;
     }
 
-    public void setDeltaMove(float x, float y) {
-        deltaMove.x = x;
-        deltaMove.y = y;
+    public void setDeltaX(float dx) {
+        deltaMove.x = dx;
+    }
+
+    public void setDeltaY(float dy) {
+        deltaMove.x = dy;
     }
 
     /**
@@ -439,7 +443,9 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         //Enemies
         NONE (0.5f),
         DOG (1.25f),
-        BAT (1.5f);
+        BAT (1.5f),
+        RATKING(8f);
+
 
         private float hitMultiplier;
 

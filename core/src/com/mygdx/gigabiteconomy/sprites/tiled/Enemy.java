@@ -102,6 +102,13 @@ public abstract class Enemy extends MovingSprite {
         setDirectionMovement(currentPath.peek());
     }
 
+    public void addPath(String name, Queue<DIRECTION>pathList) {
+        if (movementPaths.containsKey(name)) {
+            System.out.println("Already contains this path");
+        }
+        movementPaths.put(name, pathList);
+    }
+
     /**
      * Method to set path of enemy from hashmap of defined paths
      * @param pathID Hashmap ID of path
@@ -112,6 +119,15 @@ public abstract class Enemy extends MovingSprite {
         }
         setDirectionMovement(currentPath.peek());
     }
+
+    public Queue<DIRECTION> getPath() {
+        return currentPath;
+    }
+
+    public HashMap<String, Queue<DIRECTION>> getPaths() {
+        return movementPaths;
+    }
+
 
     @Override
     public void attack(Weapon weapon) {
@@ -249,8 +265,8 @@ public abstract class Enemy extends MovingSprite {
     @Override
     public boolean move(float delta) throws TileMovementException {
         boolean ret = super.move(delta); //Checks if we've arrived else moved
+        if (!ret) return false;
 
-        if (ret) setMoving(false);
 
         /**
          * >>> ATTACKING LOGIC <<<
@@ -268,20 +284,15 @@ public abstract class Enemy extends MovingSprite {
          */
 
         //Only run following code if we are still
-        if (ret) {
-            if (checkAgro()) {
-                System.out.println("Agro set to true");
-                setPath("agro");
-            }
-            super.setDirectionMovement(currentPath.remove());
-            currentPath.add(getDirectionMoving());
-            if (agro) {
-                agro_action();
-            }
-
+        if (checkAgro()) {
+            System.out.println("Agro set to true");
+            setPath("agro");
         }
-
-
+        super.setDirectionMovement(currentPath.remove());
+        currentPath.add(getDirectionMoving());
+        if (agro) {
+            agro_action();
+        }
 
         /**
          * If above is implemented right, enemy should be able to move in 'direction' towards 'targetTile'
@@ -289,7 +300,7 @@ public abstract class Enemy extends MovingSprite {
          */
 
 
-        return ret;
+        return true;
     }
 
     /**

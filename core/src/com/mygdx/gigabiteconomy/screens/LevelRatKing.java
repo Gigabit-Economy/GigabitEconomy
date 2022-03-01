@@ -10,7 +10,7 @@ import java.util.LinkedList;
 
 public class LevelRatKing extends LevelScreen {
     // Level screen backgro1.5und texture
-    private static final String BACKGROUND_TEXTURE_PNG = "finished_assets/levels/level1.png";
+    private static final String BACKGROUND_TEXTURE_PNG = "finished_assets/levels/level2.png";
 
     // Player character
     private final MovingSprite.Weapon playerWeapon = MovingSprite.Weapon.KNIFE;
@@ -33,7 +33,6 @@ public class LevelRatKing extends LevelScreen {
     ));
 
     // Parcel van (for Player to collect parcels from)
-    private final ParcelVan parcelVan = new ParcelVan(0, 0);
 
     /* STATIC SPRITES (HOUSES, FENCES ETC...) */
 
@@ -72,9 +71,6 @@ public class LevelRatKing extends LevelScreen {
         for (Enemy enemy : boxes) {
             enemy.new EnemyHealthBar(director);
         }
-        addParcelVan(parcelVan);
-        parcelVan.setToEmpty();
-        parcelVan.setInactive();
         addSprites(fences);
         addSprites(cans);
     }

@@ -55,4 +55,10 @@ public class RatKingFort extends Enemy {
 
         super.setHealth(health);
     }
+
+    @Override
+    public void destroy() {
+        overlord.setParcelFort(null);
+        super.destroy();
+    }
 }

@@ -19,7 +19,7 @@ public class LevelOneScreen extends LevelScreen {
 
     // Player character
 
-    private final Player player = new Player(Weapon.KNIFE, 0 , 7, 1, 1);
+    private final Player player = new Player(Weapon.KATANA, 0 , 7, 1, 1);
 
 
     /* ENEMIES */

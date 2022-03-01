@@ -2,7 +2,9 @@ package com.mygdx.gigabiteconomy.sprites.tiled.enemies;
 
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.LevelScreen;
+import com.mygdx.gigabiteconomy.screens.TileManager;
 import com.mygdx.gigabiteconomy.sprites.tiled.Enemy;
+import com.mygdx.gigabiteconomy.sprites.tiled.MovingAnimation;
 import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
 import com.mygdx.gigabiteconomy.sprites.tiled.Player;
 
@@ -12,8 +14,8 @@ import java.util.LinkedList;
 import java.util.Random;
 
 public class RatKing extends Enemy {
-    private static final String BASE_PATH = "finished_assets/enemies/level1";
-    private static final float DEFAULT_HEALTH = 65f;
+    private static final String BASE_PATH = "finished_assets/enemies/ratking";
+    private static final float DEFAULT_HEALTH = 200f;
     private static final float DEFAULT_DELTAHORIZ = 5f;
     private static final float DEFAULT_DELTAVERT = 4f;
     private static final int DEFAULT_WIDTH = 8;
@@ -23,6 +25,9 @@ public class RatKing extends Enemy {
 
     private LevelScreen level;
     private RatKingFort fort;
+    private int initX;
+
+    private MovingAnimation stunned;
 
 
     /**
@@ -35,11 +40,18 @@ public class RatKing extends Enemy {
 
         super(BASE_PATH, Weapon.BAT, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, DEFAULT_DELTAHORIZ, DEFAULT_DELTAVERT, DEFAULT_HORIZAGROTILES, DEFAULT_VERTAGROTILES, DEFAULT_HEALTH, new LinkedList<DIRECTION>(
                 Arrays.asList(
-                        DIRECTION.WEST, DIRECTION.WEST,
-                        DIRECTION.EAST, DIRECTION.EAST
+                        DIRECTION.WEST
                 )
 
         ));
+        initX = x;
+        addPath("charge", new LinkedList<DIRECTION>(
+                Arrays.asList(
+                        DIRECTION.WEST, DIRECTION.WEST,
+                        DIRECTION.WEST, DIRECTION.WEST
+                )
+        ));
+
     }
 
     /**
@@ -52,29 +64,89 @@ public class RatKing extends Enemy {
 
     public void setParcelFort(RatKingFort fort) {
         this.fort = fort;
-
     }
 
     /**
+     * Only runs when enemy reaches target tile, slow enemy down to slow attacks down
+     *
      * Defines what the Rat King does when Player agros
      * -> If box fort not destroyed:
      *      -> Spawn enemy (parcel) with direction
      */
     @Override
     public void agro_action() {
+        if (fort != null) return;
+        TileManager tm = getTileManager();
+
+        if ((getPath() != getPaths().get("charge") && getPath().peek() != DIRECTION.EAST)  && !(getCurrentTiles().get(0).getPositionTile()[0] < initX)) {
+            System.out.println("CHANRNFAGINGANG");
+            setPath("charge");
+            setDeltaX(-10);
+        }
+
+
+//        if ((new Random()).nextInt(10)%2 == 0) {
+//            //Charge
+//            /**
+//             * Set agro path to WEST WEST & deltaHoriz fucken high
+//             */
+//
+//        } else {
+//            //Throw
+//        }
 
         /**
-         * Call level to spawn an enemy at random y
+         * If rat fort remains throw parcel
+         *
+         * Otherwise either:
+         *      -> Charge at the player, set agro path to WEST WEST & deltaHoriz fucken high
+         *      --> If reached player:
+         *              damage targetEntity
+         *      --> return back to fort (initX)
          */
 
 
     }
 
+    @Override
+    public boolean move(float delta) throws TileMovementException {
+        if (stunned != null) {
+            if (stunned.isFinished(delta)) {
+                stunned = null;
+                //updateTextureRegions(getDirectionFacing());
+            } else {
+                stunned.runAnimation(delta);
+            }
+            return true;
+        }
+
+        boolean ret = super.move(delta);
+
+        if (!ret) return false;
+
+
+
+
+        if (getCurrentTiles().get(0).getPositionTile()[0] == 0) {
+            setPath(new LinkedList<>(
+                    Arrays.asList(
+                            DIRECTION.EAST, DIRECTION.EAST, DIRECTION.EAST, DIRECTION.EAST
+                    )));
+        } else if ((getCurrentTiles().get(0).getPositionTile()[0] > initX) && getPath().peek() == DIRECTION.EAST) {
+            setPath("agro");
+            System.out.println(initX);
+            //stunned = new MovingAnimation("finished_assets/enemies/rat_king/stunned.txt");
+        }
+
+
+        return true;
+    }
+
     public void underAttack(int y) {
         //Spawn a minion in level
         System.out.println("Under attack at " + y);
-        level.addEnemies(new ArrayList<Enemy>(Arrays.asList(
-                new BatGuy(24, (new Random()).nextInt(8), this.getTargetEntity(), 6f, 1.5f, 65f, new LinkedList<>(Arrays.asList(DIRECTION.WEST, DIRECTION.WEST)))
-        )));
+//        level.addEnemies(new ArrayList<Enemy>(Arrays.asList(
+//                new BatGuy(24, (new Random()).nextInt(8), this.getTargetEntity(), 6f, 1.5f, 65f, new LinkedList<>(Arrays.asList(DIRECTION.WEST, DIRECTION.WEST)))
+//        )));
     }
 }
