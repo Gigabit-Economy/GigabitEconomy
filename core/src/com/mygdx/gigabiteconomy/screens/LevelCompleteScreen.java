@@ -64,7 +64,12 @@ public class LevelCompleteScreen implements Screen {
 
         String[] prevScores = levelScores.getAllScores();
         String[] lastFewScores = new String[5];
-        for (int x = 0, i = prevScores.length - 1; i > 0 && i > prevScores.length - 5; i--) { // iterate through last 5 scores for level
+        for (int x = 0, i = prevScores.length - 1; i > prevScores.length - 5; i--) { // iterate through last 5 scores for level
+            if (i <= 0) {
+                lastFewScores[x] = "---";
+                continue;
+            }
+
             lastFewScores[x] = prevScores[i];
         }
         List<String> levelCompletedScoreList = new List<String>(style);
