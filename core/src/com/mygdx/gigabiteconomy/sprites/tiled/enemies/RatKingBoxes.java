@@ -6,6 +6,7 @@ import com.mygdx.gigabiteconomy.sprites.tiled.Player;
 
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.Queue;
 
 public class RatKingBoxes extends Enemy {
     private static final String BASE_PATH = "finished_assets/enemies/level1";
@@ -13,9 +14,9 @@ public class RatKingBoxes extends Enemy {
     private static final float DEFAULT_DELTAHORIZ = 2f;
     private static final float DEFAULT_DELTAVERT = 1.5f;
     private static final int DEFAULT_WIDTH = 1;
-    private static final int DEFAULT_HEIGHT = 1;
+    private static final int DEFAULT_HEIGHT = 8;
     private static final int DEFAULT_VERTAGROTILES = 5;
-    private static final int DEFAULT_HORIZAGROTILES = 5;
+    private static final int DEFAULT_HORIZAGROTILES = 10;
 
     private RatKing overlord;
 
@@ -26,7 +27,7 @@ public class RatKingBoxes extends Enemy {
      * @param y            position of Tile (within tile grid) to place sprite
      */
     public RatKingBoxes(int x, int y, Player targetEntity, RatKing overlord) {
-        super(BASE_PATH, MovingSprite.Weapon.BAT, x, y, 1, 1, targetEntity, 2f, 1.5f, DEFAULT_HORIZAGROTILES, DEFAULT_VERTAGROTILES, DEFAULT_HEALTH, DIRECTION.randomPath(10));
+        super(BASE_PATH, MovingSprite.Weapon.BAT, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, 2f, 1.5f, DEFAULT_HORIZAGROTILES, DEFAULT_VERTAGROTILES, DEFAULT_HEALTH, DIRECTION.randomPath(10));
         this.overlord = overlord;
     }
 
@@ -38,7 +39,7 @@ public class RatKingBoxes extends Enemy {
      * @param movementPath define a specific movement path
      */
     public RatKingBoxes(int x, int y, Player targetEntity, RatKing overlord, float deltaHoriz, float deltaVert, float health, LinkedList<MovingSprite.DIRECTION> movementPath) {
-        super(BASE_PATH, MovingSprite.Weapon.BAT, x, y, 1, 1, targetEntity, deltaHoriz, deltaVert, DEFAULT_HORIZAGROTILES, DEFAULT_VERTAGROTILES, health, movementPath);
+        super(BASE_PATH, MovingSprite.Weapon.BAT, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, deltaHoriz, deltaVert, DEFAULT_HORIZAGROTILES, DEFAULT_VERTAGROTILES, health, movementPath);
         this.overlord = overlord;
     }
 

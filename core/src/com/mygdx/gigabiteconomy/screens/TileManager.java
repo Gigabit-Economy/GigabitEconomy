@@ -228,6 +228,7 @@ public class TileManager implements Disposable {
         for (Tile tile : tiles) {
             Tile[] tempTiles = getAdjacentTiles(tile);
             for (Tile tileInTemp : tempTiles) {
+                if (tileInTemp == null) continue;
                 if (!tileInTemp.isOccupiedBy(to))
                     ret.add(tileInTemp);
             }

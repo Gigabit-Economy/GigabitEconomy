@@ -64,14 +64,19 @@ public abstract class Enemy extends MovingSprite {
         this.agroTileVals[1] = this.agroTileVals[3] = horizAgroTiles;
 
         this.movePath = movePath;
-        agroMovePath = new LinkedList<>();
-        for (int i=0; i<5; i++) agroMovePath.add(DIRECTION.NORTH);
-        for (int i=0; i<5; i++) agroMovePath.add(DIRECTION.SOUTH);
+        agroMovePath = setAgroPath();
         movementPaths.put("move", movePath);
         movementPaths.put("agro", agroMovePath);
         setPath("move");
         this.targetEntity = targetEntity;
         setMoving(true);
+    }
+
+    public Queue<DIRECTION> setAgroPath() {
+        LinkedList<DIRECTION> ret = new LinkedList<>();
+        for (int i=0; i<5; i++) ret.add(DIRECTION.NORTH);
+        for (int i=0; i<5; i++) ret.add(DIRECTION.SOUTH);
+        return ret;
     }
 
     /**
@@ -205,6 +210,10 @@ public abstract class Enemy extends MovingSprite {
 
         agro=true;
         //agroTilePos = [ N < , E < , S > , W > ]
+
+        if (getTileManager().isGroupOccupiedBy(targetEntity, getTileManager().getAdjacentTiles(this))) {
+            return true; //If we're next to player - agro
+        }
         for (int i=0; i<agroTilePos.length; i++) {
             if (i<2) { //On N || E ; i==0 || i==1
                 agro &= currPlayerTile.getPositionTile()[(i + 1) % 2] < agroTilePos[i];
