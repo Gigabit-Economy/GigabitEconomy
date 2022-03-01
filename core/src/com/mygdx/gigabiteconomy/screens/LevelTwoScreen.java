@@ -14,6 +14,8 @@ import java.util.LinkedList;
  * Level 2 screen
  */
 public class LevelTwoScreen extends LevelScreen {
+    // Level string
+    private static final String LEVEL = "level2";
     // Background texture
     private static final String BACKGROUND_TEXTURE_PNG = "levels/level2.png";
 
@@ -37,14 +39,11 @@ public class LevelTwoScreen extends LevelScreen {
     private final ParcelVan parcelVan = new ParcelVan(0, 0);
 
     /* STATIC SPRITES (HOUSES, FENCES ETC...) */
-    private final House houseOne = new House(House.HouseType.DETACHED, 0, "level1");
-    private final House houseTwo = new House(House.HouseType.TWO_STORY, 10, "level1");
-    private final House houseThree = new House(House.HouseType.DETACHED, 20, "level1");
-    private final House houseFour = new House(House.HouseType.TWO_STORY, 31, "level1");
-    private final House houseFive = new House(House.HouseType.DETACHED, 38, "level1");
-
-    private final ArrayList<StaticSprite> fences = new ArrayList<>();
-    private final ArrayList<StaticSprite> cans = new ArrayList<>();
+    private final House houseOne = new House(House.HouseType.FLATS1, 0);
+    private final House houseTwo = new House(House.HouseType.FLATS2, 10);
+    private final House houseThree = new House(House.HouseType.OFFICES, 20);
+    private final House houseFour = new House(House.HouseType.FLATS2, 31);
+    private final House houseFive = new House(House.HouseType.FLATS2, 38);
 
     int[][] fenceCoords = {
             {7,8}, {9,8}, {10,8}, {17,8}, {18,8}, {20,8}, {27,8}, {29,8}, {30,8}, {31,8}, {38,8},
@@ -69,16 +68,15 @@ public class LevelTwoScreen extends LevelScreen {
         super(director, BACKGROUND_TEXTURE_PNG);
 
         for (int[] coords : fenceCoords) {
-            fences.add(new StaticSprite("static_sprites/level1/fence.png", coords[0], coords[1], 1, 1));
+            staticSprites.add(new StaticSprite(String.format("static_sprites/%s/fence.png", LEVEL), coords[0], coords[1], 1, 1));
         }
 
         for (int[] coords : canCoords) {
-            cans.add(new StaticSprite("static_sprites/level1/trashcan.png", coords[0], coords[1], 1, 1));
+            staticSprites.add(new StaticSprite(String.format("static_sprites/%s/trashcan.png", LEVEL), coords[0], coords[1], 1, 1));
         }
 
         player.addHealthBar(director);
         addPlayer(player);
-
 
         addEnemies(enemies);
         for (Enemy enemy : enemies) {
@@ -87,7 +85,5 @@ public class LevelTwoScreen extends LevelScreen {
 
         addParcelVan(parcelVan);
         addSprites(staticSprites);
-        addSprites(fences);
-        addSprites(cans);
     }
 }

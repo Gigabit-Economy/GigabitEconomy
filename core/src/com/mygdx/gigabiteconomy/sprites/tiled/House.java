@@ -21,8 +21,8 @@ public class House extends StaticSprite {
      * @param type the type of house (HouseType enum)
      * @param x position of Tile (within tile grid) to place sprite
      */
-    public House(HouseType type, int x, String level) {
-        super(String.format("houses/"+level+"/%s.png", type.name().toLowerCase()), x, Y, 1, 6);
+    public House(HouseType type, int x) {
+        super(String.format("houses/%s.png", type.name().toLowerCase()), x, Y, 1, 6);
     }
 
     /**
@@ -48,8 +48,6 @@ public class House extends StaticSprite {
         // get delivery tile to be owned by House (so it's deliverable to)
         this.deliveryTile.setOccupied(null);
         this.deliveryTile.setOwned(this);
-
-
     }
 
     /**
@@ -68,6 +66,9 @@ public class House extends StaticSprite {
 
     public enum HouseType {
         DETACHED,
-        TWO_STORY
+        TWO_STORY,
+        FLATS1,
+        FLATS2,
+        OFFICES
     }
 }
