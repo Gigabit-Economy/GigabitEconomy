@@ -13,7 +13,7 @@ import java.util.LinkedList;
 
 public class LevelRatKing extends LevelScreen {
     // Level screen backgro1.5und texture
-    private static final String BACKGROUND_TEXTURE_PNG = "finished_assets/levels/level1.png";
+    private static final String BACKGROUND_TEXTURE_PNG = "levels/level1.png";
 
     // Player character
     private final MovingSprite.Weapon playerWeapon = MovingSprite.Weapon.KNIFE;
@@ -53,11 +53,11 @@ public class LevelRatKing extends LevelScreen {
         super(director, BACKGROUND_TEXTURE_PNG);
 
         for (int[] coords : fenceCoords) {
-            fences.add(new StaticSprite("finished_assets/static_sprites/level1/fence.png", coords[0], coords[1], 1, 1));
+            fences.add(new StaticSprite("static_sprites/level1/fence.png", coords[0], coords[1], 1, 1));
         }
 
         for (int[] coords : canCoords) {
-            cans.add(new StaticSprite("finished_assets/static_sprites/level1/trashcan.png", coords[0], coords[1], 1, 1));
+            cans.add(new StaticSprite("static_sprites/level1/trashcan.png", coords[0], coords[1], 1, 1));
         }
 
         addPlayer(player);

@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 public class RatKing extends Enemy {
-    private static final String BASE_PATH = "finished_assets/enemies/level1";
+    private static final String BASE_PATH = "enemies/level1";
     private static final float DEFAULT_HEALTH = 65f;
     private static final float DEFAULT_DELTAHORIZ = 5f;
     private static final float DEFAULT_DELTAVERT = 4f;

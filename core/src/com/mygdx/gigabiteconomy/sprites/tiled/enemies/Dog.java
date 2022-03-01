@@ -9,7 +9,7 @@ import java.util.LinkedList;
 
 public class Dog extends Enemy {
 
-    private static final String BASE_PATH = "finished_assets/enemies/level1";
+    private static final String BASE_PATH = "enemies/level1";
     private static final float DEFAULT_HEALTH = 50f;
     private static final float DEFAULT_DELTAHORIZ = 4f;
     private static final float DEFAULT_DELTAVERT = 3.25f;

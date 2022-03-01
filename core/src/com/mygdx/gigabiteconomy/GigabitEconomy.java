@@ -21,7 +21,7 @@ public class GigabitEconomy extends Game {
 
     private Screen fromPause;
 
-    private static final String MUSIC_BASE_PATH = "finished_assets/music/";
+    private static final String MUSIC_BASE_PATH = "music/";
     private Music backgroundMusic;
 
     @Override

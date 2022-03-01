@@ -1,6 +1,5 @@
 package com.mygdx.gigabiteconomy.sprites.tiled;
 
-import com.mygdx.gigabiteconomy.screens.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
 
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ public class House extends StaticSprite {
      * @param x position of Tile (within tile grid) to place sprite
      */
     public House(HouseType type, int x, String level) {
-        super(String.format("finished_assets/houses/"+level+"/%s.png", type.name().toLowerCase()), x, Y, 1, 6);
+        super(String.format("houses/"+level+"/%s.png", type.name().toLowerCase()), x, Y, 1, 6);
     }
 
     /**
