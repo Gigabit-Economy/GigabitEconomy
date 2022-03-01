@@ -1,9 +1,12 @@
 package com.mygdx.gigabiteconomy.sprites.tiled.enemies;
 
+import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
+import com.mygdx.gigabiteconomy.screens.LevelScreen;
 import com.mygdx.gigabiteconomy.sprites.tiled.Enemy;
 import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
 import com.mygdx.gigabiteconomy.sprites.tiled.Player;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -14,6 +17,12 @@ public class RatKing extends Enemy {
     private static final float DEFAULT_DELTAVERT = 4f;
     private static final int DEFAULT_WIDTH = 8;
     private static final int DEFAULT_HEIGHT = 5;
+    private static final int DEFAULT_VERTAGROTILES = 5;
+    private static final int DEFAULT_HORIZAGROTILES = 5;
+
+    private LevelScreen level;
+
+    private Enemy spawnedEnemy;
 
     /**
      * Create a new Enemy sprite (MovingSprite)
@@ -23,17 +32,34 @@ public class RatKing extends Enemy {
      */
     public RatKing(int x, int y, Player targetEntity) {
 
-        super(BASE_PATH, Weapon.BAT, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, DEFAULT_DELTAHORIZ, DEFAULT_DELTAVERT, DEFAULT_HEALTH, new LinkedList<>(
+        super(BASE_PATH, Weapon.BAT, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, DEFAULT_DELTAHORIZ, DEFAULT_DELTAVERT, DEFAULT_HORIZAGROTILES, DEFAULT_VERTAGROTILES, DEFAULT_HEALTH, new LinkedList<DIRECTION>(
                 Arrays.asList(
-                        MovingSprite.DIRECTION.NORTH, MovingSprite.DIRECTION.NORTH,
-                        MovingSprite.DIRECTION.NORTH, MovingSprite.DIRECTION.NORTH,
-                        MovingSprite.DIRECTION.NORTH, MovingSprite.DIRECTION.NORTH,
-                        MovingSprite.DIRECTION.NORTH, MovingSprite.DIRECTION.NORTH,
-                        MovingSprite.DIRECTION.SOUTH, MovingSprite.DIRECTION.SOUTH,
-                        MovingSprite.DIRECTION.SOUTH, MovingSprite.DIRECTION.SOUTH,
-                        MovingSprite.DIRECTION.SOUTH, MovingSprite.DIRECTION.SOUTH,
-                        MovingSprite.DIRECTION.SOUTH, MovingSprite.DIRECTION.SOUTH
+                        DIRECTION.WEST, DIRECTION.WEST,
+                        DIRECTION.EAST, DIRECTION.EAST
                 )
+
         ));
+    }
+
+    /**
+     * Rat king needs power to spawn in enemies
+     * @param level
+     */
+    public void setLevel(LevelScreen level) {
+        this.level = level;
+    }
+
+    /**
+     * Defines what the Rat King does when Player agros
+     * -> If box fort not destroyed:
+     *      -> Spawn enemy (parcel) with direction
+     */
+    @Override
+    public void agro_action() {
+
+        /**
+         * Call level to spawn an enemy at random y
+         */
+
     }
 }
