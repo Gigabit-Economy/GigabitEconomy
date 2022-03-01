@@ -153,7 +153,6 @@ public class PauseMenu implements Screen, InputProcessor {
             ClickListener audioButtonListener = new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                String buttonName = event.getListenerActor().getName();
 
                     try {
                         if (director.isMusicPlaying() == true) {
@@ -163,7 +162,7 @@ public class PauseMenu implements Screen, InputProcessor {
                             director.enableMusic(true);
                         }
                     } catch (Exception ex) {
-                        Gdx.app.error("Exception", String.format("Error changing audio via %s", buttonName), ex);
+                        Gdx.app.error("Exception", String.format("Error changing audio"), ex);
                     }
 
                     stage.draw();

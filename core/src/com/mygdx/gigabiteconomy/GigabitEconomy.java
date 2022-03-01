@@ -155,18 +155,17 @@ public class GigabitEconomy extends Game {
         this.backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal(String.format("%s/%s.wav", MUSIC_BASE_PATH, name)));
 
         this.backgroundMusic.setLooping(true);
-        this.backgroundMusic.play();
+        enableMusic(true);
     }
 
     public void enableMusic(boolean enable) {
         if (enable == true) {
-            System.out.println("music enabled");
+
             System.out.println(isMusicPlaying());
             this.backgroundMusic.play();
 
         }
         if (enable == false) {
-            System.out.println("music disabled");
             System.out.println(isMusicPlaying());
             this.backgroundMusic.stop();
 
