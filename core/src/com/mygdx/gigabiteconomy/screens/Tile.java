@@ -48,10 +48,7 @@ public class Tile {
      * @return float[2] of form [screen coord x, screen coord y]
      */
     public float[] getTileCoords() {
-        int[] pos = this.getPositionTile().clone();
-        float[] coords = new float[2];
-        coords[0] = pos[0]*sideLength; coords[1] = pos[1]*sideLength;
-        return coords;
+        return position;
     }
 
     /**

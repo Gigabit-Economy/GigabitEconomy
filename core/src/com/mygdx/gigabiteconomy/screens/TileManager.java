@@ -264,6 +264,7 @@ public class TileManager implements Disposable {
      */
     public boolean isGroupOccupiedBy(TiledObject to, ArrayList<Tile> tiles) {
         for (Tile t : tiles) {
+            if (t == null) continue;
             if (t.isOccupiedBy(to)) return true;
         }
         return false;
@@ -298,11 +299,8 @@ public class TileManager implements Disposable {
      */
     public boolean withinTileBounds(MovingSprite mo, ArrayList<Tile> toCheck) {
         if (toCheck.contains(null)) return false;
-        boolean ret = false;
-        for (Tile t : toCheck) {
-            ret |= t.withinTile(mo);
-        }
-        return ret;
+        //Only check for one tile
+        return toCheck.get(0).withinTile(mo);
     }
 
     public int getWidth() { return gridWidth; }
