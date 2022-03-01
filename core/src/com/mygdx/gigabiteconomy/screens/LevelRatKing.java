@@ -12,6 +12,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 public class LevelRatKing extends LevelScreen {
+    // Level string
+    private static final String LEVEL = "level3";
     // Level screen backgro1.5und texture
     private static final String BACKGROUND_TEXTURE_PNG = "levels/level1.png";
 
@@ -22,7 +24,7 @@ public class LevelRatKing extends LevelScreen {
 
     /* ENEMIES */
     private final ArrayList<Enemy> enemies = new ArrayList<Enemy>(Arrays.asList(
-            new RatKing(26, 0, player)
+            new RatKing(26, 0, LEVEL, player)
     ));
 
     // Parcel van (for Player to collect parcels from)

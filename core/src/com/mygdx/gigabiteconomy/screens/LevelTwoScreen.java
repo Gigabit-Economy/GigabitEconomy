@@ -17,22 +17,22 @@ public class LevelTwoScreen extends LevelScreen {
     // Level string
     private static final String LEVEL = "level2";
     // Background texture
-    private static final String BACKGROUND_TEXTURE_PNG = "levels/level2.png";
+    private static final String BACKGROUND_TEXTURE_PNG = String.format("levels/%s.png", LEVEL);
 
     // Player character
     private final Player player = new Player(Weapon.KNIFE, 0 , 7, 1, 1);
 
     /* ENEMIES */
     private final ArrayList<Enemy> enemies = new ArrayList<Enemy>(Arrays.asList(
-        new BatGuy(50, 3, player),
-        new Fighter(15, 7, player, 3.4f, 2.8f, 7, new LinkedList<>(Arrays.asList(
+        new BatGuy(50, 3, LEVEL, player),
+        new Fighter(15, 7, LEVEL, player, 3.4f, 2.8f, 7, new LinkedList<>(Arrays.asList(
                 MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
                 MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.NORTH, MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.SOUTH,
                 MovingSprite.DIRECTION.SOUTH, MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST
         ))),
-        new Dog(25, 2, player),
-        new BatGuy(20, 5, player),
-        new Fighter(30, 4, player)
+        new Dog(25, 2, LEVEL, player),
+        new BatGuy(20, 5, LEVEL, player),
+        new Fighter(30, 4, LEVEL, player)
     ));
 
     // Parcel van (for Player to collect parcels from)

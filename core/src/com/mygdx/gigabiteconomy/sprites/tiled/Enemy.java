@@ -54,8 +54,8 @@ public abstract class Enemy extends MovingSprite {
      * @param deltaHoriz horizontal speed
      * @param deltaVert vertical speed
      */
-    public Enemy(String BASE_PATH, Weapon weapon, int x, int y, int height, int width, Player targetEntity, float deltaHoriz, float deltaVert, float health, LinkedList<DIRECTION> movePath) {
-        super(weapon, x, y, height, width, deltaHoriz, deltaVert, health, BASE_PATH);
+    public Enemy(String level, Weapon weapon, int x, int y, int height, int width, Player targetEntity, float deltaHoriz, float deltaVert, float health, LinkedList<DIRECTION> movePath) {
+        super(weapon, x, y, height, width, deltaHoriz, deltaVert, health, String.format("enemies/%s", level));
 
         this.movePath = movePath;
         agroMovePath = new LinkedList<>();
