@@ -108,12 +108,18 @@ public class PlotScreen implements Screen{
 
         TextArea body = new TextArea(bodyText, style);
         body.setDisabled(true);
-        storyTable.add(body).width(630).height(500);
+        storyTable.add(body).width(Gdx.graphics.getWidth()-500).height(Gdx.graphics.getHeight()-500);
         storyTable.row();
 
         TextButton toLevelButton = new TextButton("Continue", style);
         toLevelButton.setName(levelName);
         storyTable.add(toLevelButton).bottom().padTop(50);
+        storyTable.row();
+
+        TextButton tutorialButton = new TextButton("Controls", style);
+        tutorialButton.setName("TutorialScreen");
+        storyTable.add(tutorialButton).bottom().padTop(20);
+        tutorialButton.row();
 
         ClickListener buttonsListener = new ClickListener() {
             @Override
@@ -130,6 +136,7 @@ public class PlotScreen implements Screen{
             }
         };
         toLevelButton.addListener(buttonsListener);
+        tutorialButton.addListener(buttonsListener);
 
         stage.addActor(storyTable);
 
