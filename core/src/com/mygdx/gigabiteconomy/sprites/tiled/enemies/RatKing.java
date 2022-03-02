@@ -83,14 +83,19 @@ public class RatKing extends Enemy {
 
         TileManager tm = getTileManager();
 
-        if (fort != null && !isAttacking())  {
+        if (fort != null && !isAttacking()) {
             //Throw box
-            if (parcelFalling == null || parcelFalling.getOwnedTile().getOwnedBy() == null) {
-                parcelFalling = new FallingParcel(rand.nextInt(20)+5, rand.nextInt(6)+2); //Spawn relative to player location
-                level.addSprite(parcelFalling);
-                setAttacking(true);
-            }
+            int randy = rand.nextInt(100);
+            if (randy < 10) {
+                if (parcelFalling == null || parcelFalling.getOwnedTile().getOwnedBy() == null) {
+//                    parcelFalling = new FallingParcel(rand.nextInt(20) + 5, rand.nextInt(6) + 2); //Spawn relative to player location
+//                    level.addSprite(parcelFalling);
 
+                }
+            } else if (randy > 50) {
+                level.addSprite(new ThrowingParcel(24, getTargetEntity().getCurrentTiles().get(0).getPositionTile()[1], getTargetEntity()));
+            }
+            setAttacking(true);
         } else {
             if ((getPath() != getPaths().get("charge") && getPath().peek() != DIRECTION.EAST)  && !(getCurrentTiles().get(0).getPositionTile()[0] < initX)) {
                 System.out.println("CHANRNFAGINGANG");
@@ -149,7 +154,7 @@ public class RatKing extends Enemy {
         } else if ((getCurrentTiles().get(0).getPositionTile()[0] > initX) && getPath().peek() == DIRECTION.EAST) {
             setPath("agro");
             System.out.println(initX);
-            //stunned = new MovingAnimation("finished_assets/enemies/rat_king/stunned.txt");
+            //stunned = new MovingAnimation<TextureRegion>("finished_assets/enemies/rat_king/stunned.txt");
         }
 
 

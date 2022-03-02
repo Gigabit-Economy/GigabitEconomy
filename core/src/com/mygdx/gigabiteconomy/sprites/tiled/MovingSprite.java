@@ -131,6 +131,31 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     }
 
     /**
+     * Sets a custom movement animation
+     * @param basePath
+     */
+    public void setMovementAnimation(String basePath) {
+
+        this.ta = new TextureAtlas(basePath);
+        this.regions = ta.getRegions();
+        this.textureRegion = regions.get(0);
+        this.movementAnimation = new MovingAnimation<TextureRegion>(1/14f, regions, true);
+    }
+
+    /**
+     * Sets a custom attack animation
+     * @param basePath
+     */
+    public void setAttackAnimation(String basePath) {
+
+        this.ta = new TextureAtlas(basePath);
+        this.regions = ta.getRegions();
+        this.textureRegion = regions.get(0);
+        this.attackAnimation = new MovingAnimation<TextureRegion>(1/14f, regions, true);
+    }
+
+
+    /**
      * Set the direction the sprite is facing (and therefore moves in).
      *
      * @param dir the direction enum to move in
@@ -217,7 +242,6 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      */
     public ArrayList<Tile> setNextTiles() {
         //Setting next direction
-        //updateTextureRegions();
 
         ArrayList<Tile> toSet = getTileManager().getNextTiles(this, getDirectionMoving(), 1);
         if (toSet.contains(null)) {

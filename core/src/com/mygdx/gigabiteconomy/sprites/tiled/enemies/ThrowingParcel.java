@@ -1,39 +1,37 @@
 package com.mygdx.gigabiteconomy.sprites.tiled.enemies;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
+import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.sprites.tiled.Enemy;
+import com.mygdx.gigabiteconomy.sprites.tiled.MovingAnimation;
 import com.mygdx.gigabiteconomy.sprites.tiled.Player;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class ThrowingParcel extends Enemy {
-    private static final String BASE_PATH = "finished_assets/enemies/level1";
+    private static final String BASE_PATH = "finished_assets/enemies/ratking";
     private static final float DEFAULT_HEALTH = 1f;
-    private static final float DEFAULT_DELTAHORIZ = 2f;
+    private static final float DEFAULT_DELTAHORIZ = 13f;
     private static final float DEFAULT_DELTAVERT = 1.5f;
     private static final int DEFAULT_WIDTH = 1;
     private static final int DEFAULT_HEIGHT = 1;
     private static final int DEFAULT_VERTAGROTILES = 5;
     private static final int DEFAULT_HORIZAGROTILES = 5;
 
+    private MovingAnimation<TextureRegion> customMove;
+
     /**
-     * Create a new Enemy sprite (MovingSprite)
-     *
-     * @param BASE_PATH      of texture
-     * @param weapon         the weapon the Enemy is carrying
-     * @param x              position of Tile (within tile grid) to place sprite
-     * @param y              position of Tile (within tile grid) to place sprite
-     * @param height         of Tiles to occupy
-     * @param width          of Tiles to occupy
-     * @param targetEntity
-     * @param deltaHoriz     horizontal speed
-     * @param deltaVert      vertical speed
-     * @param horizAgroTiles
-     * @param vertAgroTiles
-     * @param health
-     * @param movePath
+     * Creates a new parcel for RatKing to throw
      */
-    public ThrowingParcel(int x, int y, Player targetEntity, int height, int width) {
-        super(BASE_PATH, Weapon.KATANA, x, y, height, width, targetEntity, deltaHoriz, deltaVert, horizAgroTiles, vertAgroTiles, health, movePath);
+    public ThrowingParcel(int x, int y, Player targetEntity) {
+        super(BASE_PATH, Weapon.KATANA, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, DEFAULT_DELTAHORIZ, DEFAULT_DELTAVERT, DEFAULT_HORIZAGROTILES, DEFAULT_VERTAGROTILES, DEFAULT_HEALTH, new LinkedList<>(
+                Arrays.asList(
+                        DIRECTION.WEST, DIRECTION.WEST
+                )
+        ));
     }
 
     @Override
@@ -41,7 +39,25 @@ public class ThrowingParcel extends Enemy {
         /**
          * Always facing WEST
          * Once comes in contact with anything it'll inflict damage
+         * Only needs to run once
          */
 
+
+        setMovementAnimation("finished_assets/enemies/ratking/fallingBox.txt");
+        setAttackAnimation("finished_assets/enemies/ratking/fallingBox.txt");
+    }
+
+    @Override
+    public boolean move(float delta) throws TileMovementException {
+        boolean ret = super.move(delta);
+        if (!ret) return false;
+
+        if (isAttacking() || getTileManager().isGroupOccupiedBy(getTargetEntity(), new ArrayList<>(Arrays.asList(getTileManager().getAdjacentTiles(getCurrentTiles().get(0)))))) {
+            launchAttack();
+            destroy();
+        }
+
+
+        return true;
     }
 }

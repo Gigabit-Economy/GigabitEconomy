@@ -6,10 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.screens.TileManager;
-import com.mygdx.gigabiteconomy.sprites.tiled.Enemy;
-import com.mygdx.gigabiteconomy.sprites.tiled.MovingAnimation;
-import com.mygdx.gigabiteconomy.sprites.tiled.Player;
-import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
+import com.mygdx.gigabiteconomy.sprites.tiled.*;
 
 import java.util.LinkedList;
 
@@ -55,6 +52,10 @@ public class FallingParcel extends TiledObject {
 
     @Override
     public void dispose() {
+        TiledObject occupiedBy = tileOn.getOccupiedBy();
+        if (occupiedBy instanceof MovingSprite) {
+            ((MovingSprite) occupiedBy).attack(MovingSprite.Weapon.GOLF);
+        }
         tileOn.setOwned(null);
         getTileManager().removeFromRows(this);
 
