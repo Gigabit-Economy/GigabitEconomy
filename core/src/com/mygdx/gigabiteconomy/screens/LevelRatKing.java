@@ -2,10 +2,7 @@ package com.mygdx.gigabiteconomy.screens;
 
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.sprites.tiled.*;
-import com.mygdx.gigabiteconomy.sprites.tiled.enemies.BatGuy;
-import com.mygdx.gigabiteconomy.sprites.tiled.enemies.Dog;
-import com.mygdx.gigabiteconomy.sprites.tiled.enemies.Fighter;
-import com.mygdx.gigabiteconomy.sprites.tiled.enemies.RatKing;
+import com.mygdx.gigabiteconomy.sprites.tiled.enemies.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,32 +10,41 @@ import java.util.LinkedList;
 
 public class LevelRatKing extends LevelScreen {
     // Level string
-    private static final String LEVEL = "level3";
+    private static final String LEVEL = "ratking";
     // Level screen backgro1.5und texture
-    private static final String BACKGROUND_TEXTURE_PNG = "levels/level1.png";
+    private static final String BACKGROUND_TEXTURE_PNG = "levels/level2.png";
 
     // Player character
-    private final MovingSprite.Weapon playerWeapon = MovingSprite.Weapon.KNIFE;
-    private final Player player = new Player(playerWeapon, 0 , 7, 1, 1);
-
+    private final MovingSprite.Weapon playerWeapon = MovingSprite.Weapon.KATANA;
+    private final Player player = new Player(playerWeapon, 0 , 4, 1, 1);
+    private final RatKing ratKing = new RatKing(26, 3, LEVEL, player);
 
     /* ENEMIES */
+    private final ArrayList<Enemy> boxes = new ArrayList<Enemy>(Arrays.asList(
+            ratKing,
+            /* THE MINIONS */
+            new RatKingFort(25, 0, player, ratKing)
+            /*new RatKingFort(25, 1, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
+            new RatKingFort(25, 2, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
+            new RatKingFort(25, 3, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
+            new RatKingFort(25, 4, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
+            new RatKingFort(25, 5, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
+            new RatKingFort(25, 6, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
+            new RatKingFort(25, 7, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
+            new RatKingFort(25, 8, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>())*/
+    ));
     private final ArrayList<Enemy> enemies = new ArrayList<Enemy>(Arrays.asList(
             new RatKing(26, 0, LEVEL, player)
     ));
 
     // Parcel van (for Player to collect parcels from)
-    private final ParcelVan parcelVan = new ParcelVan(0, 0);
 
     /* STATIC SPRITES (HOUSES, FENCES ETC...) */
-
-    private final ArrayList<StaticSprite> fences = new ArrayList<>();
-    private final ArrayList<StaticSprite> cans = new ArrayList<>();
+    private final ArrayList<StaticSprite> staticSprites = new ArrayList<>();
 
     int[][] fenceCoords = {
 
             /* Stops the map a bit short - it's huge */
-            {25,8}, {25,7}, {25,6}, {25,5}, {25,4}, {25,3}, {25,2}, {25,1}, {25,0},
             {35,8}, {35,7}, {35,6}, {35,5}, {35,4}, {35,3}, {35,2}, {35,1}, {35,0}
     };
 
@@ -55,23 +61,20 @@ public class LevelRatKing extends LevelScreen {
         super(director, BACKGROUND_TEXTURE_PNG);
 
         for (int[] coords : fenceCoords) {
-            fences.add(new StaticSprite("static_sprites/level1/fence.png", coords[0], coords[1], 1, 1));
+            staticSprites.add(new StaticSprite("static_sprites/level1/fence.png", coords[0], coords[1], 1, 1));
         }
 
         for (int[] coords : canCoords) {
-            cans.add(new StaticSprite("static_sprites/level1/trashcan.png", coords[0], coords[1], 1, 1));
+            staticSprites.add(new StaticSprite("static_sprites/level1/trashcan.png", coords[0], coords[1], 1, 1));
         }
 
         addPlayer(player);
         player.new PlayerHealthBar(director);
-        addEnemies(enemies);
-        for (Enemy enemy : enemies) {
+        player.hideParcels();
+        addEnemies(boxes);
+        for (Enemy enemy : boxes) {
             enemy.new EnemyHealthBar(director);
         }
-        addParcelVan(parcelVan);
-        parcelVan.setToEmpty();
-        parcelVan.setInactive();
-        addSprites(fences);
-        addSprites(cans);
+        addSprites(staticSprites);
     }
 }

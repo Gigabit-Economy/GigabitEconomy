@@ -1,0 +1,222 @@
+dazed.png
+size: 3840, 1600
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ratkingDazed1
+  rotate: false
+  xy: 0, 0
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed2
+  rotate: false
+  xy: 480, 0
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed3
+  rotate: false
+  xy: 960, 0
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed4
+  rotate: false
+  xy: 1440, 0
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed5
+  rotate: false
+  xy: 1920, 0
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed6
+  rotate: false
+  xy: 2400, 0
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed7
+  rotate: false
+  xy: 2880, 0
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed8
+  rotate: false
+  xy: 3360, 0
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed9
+  rotate: false
+  xy: 0, 400
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed10
+  rotate: false
+  xy: 480, 400
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed11
+  rotate: false
+  xy: 960, 400
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed12
+  rotate: false
+  xy: 1440, 400
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed13
+  rotate: false
+  xy: 1920, 400
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed14
+  rotate: false
+  xy: 2400, 400
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed15
+  rotate: false
+  xy: 2880, 400
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed16
+  rotate: false
+  xy: 3360, 400
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed17
+  rotate: false
+  xy: 0, 800
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed18
+  rotate: false
+  xy: 480, 800
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed19
+  rotate: false
+  xy: 960, 800
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed20
+  rotate: false
+  xy: 1440, 800
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed21
+  rotate: false
+  xy: 1920, 800
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed22
+  rotate: false
+  xy: 2400, 800
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed23
+  rotate: false
+  xy: 2880, 800
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed24
+  rotate: false
+  xy: 3360, 800
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed25
+  rotate: false
+  xy: 0, 1200
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed26
+  rotate: false
+  xy: 480, 1200
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed27
+  rotate: false
+  xy: 960, 1200
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed28
+  rotate: false
+  xy: 1440, 1200
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed29
+  rotate: false
+  xy: 1920, 1200
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed30
+  rotate: false
+  xy: 2400, 1200
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1
+ratkingDazed31
+  rotate: false
+  xy: 2880, 1200
+  size: 480, 400
+  orig: 480, 400
+  offset: 0, 0
+  index: -1

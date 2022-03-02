@@ -3,6 +3,7 @@ package com.mygdx.gigabiteconomy.screens;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.gigabiteconomy.exceptions.TileException;
 import com.mygdx.gigabiteconomy.sprites.tiled.*;
+import com.mygdx.gigabiteconomy.sprites.tiled.enemies.Dog;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -59,7 +60,7 @@ public class TileManager implements Disposable {
         }
     }
 
-    private Tile getTile(int x, int y) {
+    public Tile getTile(int x, int y) {
         try {
             return tileArray[x][y]; //This will need to TileMovementException
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -228,6 +229,7 @@ public class TileManager implements Disposable {
         for (Tile tile : tiles) {
             Tile[] tempTiles = getAdjacentTiles(tile);
             for (Tile tileInTemp : tempTiles) {
+                if (tileInTemp == null) continue;
                 if (!tileInTemp.isOccupiedBy(to))
                     ret.add(tileInTemp);
             }

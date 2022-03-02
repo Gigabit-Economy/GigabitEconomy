@@ -14,6 +14,7 @@ import com.mygdx.gigabiteconomy.ScoreSystem;
 import com.mygdx.gigabiteconomy.exceptions.ParcelException;
 import com.mygdx.gigabiteconomy.exceptions.ScreenException;
 import com.mygdx.gigabiteconomy.sprites.tiled.*;
+import com.mygdx.gigabiteconomy.sprites.tiled.enemies.RatKing;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -84,6 +85,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      */
     public void addPlayer(Player player) {
         this.player = player;
+        player.addHealthBar(director);
         this.player.setLevel(this);
 
         addSprite(player);
@@ -97,6 +99,12 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      */
     public void addEnemies(ArrayList<Enemy> enemies) {
         this.enemies.addAll(enemies);
+        for (Enemy enemy : enemies) {
+            enemy.addHealthBar(director);
+            if (enemy instanceof RatKing) {
+                ((RatKing) enemy).setLevel(this);
+            }
+        }
         addSprites(enemies);
     }
 

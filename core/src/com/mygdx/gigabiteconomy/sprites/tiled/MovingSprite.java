@@ -1,5 +1,6 @@
 package com.mygdx.gigabiteconomy.sprites.tiled;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,10 +10,12 @@ import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.badlogic.gdx.utils.Disposable;
+import com.mygdx.gigabiteconomy.sprites.tiled.enemies.RatKing;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -42,7 +45,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
     private MovingAnimation<TextureRegion> movementAnimation;
     private MovingAnimation<TextureRegion> attackAnimation;
 
-    private float health = 100;
+    private float health;
     private boolean attacking = false;
     private Weapon weapon;
 
@@ -84,6 +87,12 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      */
     public TextureRegion getTextureRegion() {
         return textureRegion;
+    }
+
+    public void setTextureRegion(TextureRegion textureRegion) {
+        if (this instanceof RatKing) {
+            this.textureRegion = textureRegion;
+        }
     }
 
     @Override
@@ -129,6 +138,40 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         this.attackAnimation = new MovingAnimation<TextureRegion>(1/14f, new TextureAtlas(attackingConfig).getRegions(), false);
     }
 
+    public MovingAnimation<TextureRegion> getMovementAnimation() {
+        return this.movementAnimation;
+    }
+
+    public MovingAnimation<TextureRegion> getAttackAnimation() {
+        return this.attackAnimation;
+    }
+
+
+    /**
+     * Sets a custom movement animation
+     * @param basePath
+     */
+    public void setMovementAnimation(float duration, String basePath) {
+
+        this.ta = new TextureAtlas(basePath);
+        this.regions = ta.getRegions();
+        this.textureRegion = regions.get(0);
+        this.movementAnimation = new MovingAnimation<TextureRegion>(duration, regions, true);
+    }
+
+    /**
+     * Sets a custom attack animation
+     * @param basePath
+     */
+    public void setAttackAnimation(float duration, String basePath) {
+
+        this.ta = new TextureAtlas(basePath);
+        this.regions = ta.getRegions();
+        this.textureRegion = regions.get(0);
+        this.attackAnimation = new MovingAnimation<TextureRegion>(duration, regions, true);
+    }
+
+
     /**
      * Set the direction the sprite is facing (and therefore moves in).
      *
@@ -165,9 +208,12 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         this.moving = moving;
     }
 
-    public void setDeltaMove(float x, float y) {
-        deltaMove.x = x;
-        deltaMove.y = y;
+    public void setDeltaX(float dx) {
+        deltaMove.x = dx * getDirectionFacing().dxMult;
+    }
+
+    public void setDeltaY(float dy) {
+        deltaMove.x = dy * getDirectionFacing().dyMult;
     }
 
     /**
@@ -213,7 +259,6 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      */
     public ArrayList<Tile> setNextTiles() {
         //Setting next direction
-        //updateTextureRegions();
 
         ArrayList<Tile> toSet = getTileManager().getNextTiles(this, getDirectionMoving(), 1);
         if (toSet.contains(null)) {
@@ -244,7 +289,10 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
             textureRegion = (TextureRegion) attackAnimation.runAnimation(delta);
             //Checking if animation finished
             if (attackAnimation.isFinished(delta)) {
-                System.out.println("Finished attacking");
+                //System.out.println("Finished attacking");
+                if (this instanceof RatKing) {
+                    System.out.println("Launching attack for rat king");
+                }
                 launchAttack();
                 setAttacking(false);
             } else {
@@ -376,15 +424,22 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         setAttacking(true);
         
         for (int i=getWidth(); i>0; i--) {
-            Tile tempAdjTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), directionFacing, i);
+            ArrayList<Tile> tempAdjTiles = getTileManager().getAdjacentTiles(this);
 
-            TiledObject adjacentSprite = tempAdjTile.getOccupiedBy();
-            if (adjacentSprite instanceof MovingSprite && adjacentSprite != this) {
-                if (this instanceof Enemy) {
-                    System.out.println(String.format("Trying to attack %d %d", tempAdjTile.getPositionTile()[0], tempAdjTile.getPositionTile()[1]));
+            for (Tile t : tempAdjTiles) {
+                TiledObject adjacentSprite = t.getOccupiedBy();
+                if (adjacentSprite instanceof MovingSprite && adjacentSprite != this) {
+                    if (this instanceof Enemy && adjacentSprite instanceof Enemy) {
+                        System.out.println("Not attacking enemy");
+                        continue;
+                    }
+                    if (this instanceof RatKing) {
+                        System.out.println("Laucnhing attack on " + adjacentSprite.getClass().getName());
+                    }
+                    ((MovingSprite) adjacentSprite).attack(weapon);
                 }
-                ((MovingSprite) adjacentSprite).attack(weapon);
             }
+
         }
     }
 
@@ -425,7 +480,6 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      */
     public void setAttacking(boolean attacking) {
         this.attacking = attacking;
-        System.out.println(String.format("Attacking: %s", attacking));
     }
 
     public enum Weapon {
@@ -436,7 +490,9 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         //Enemies
         NONE (0.5f),
         DOG (1.25f),
-        BAT (1.5f);
+        BAT (1.5f),
+        RATKING(8f);
+
 
         private float hitMultiplier;
 
@@ -447,6 +503,10 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         public float getHitMultiplier() {
             return hitMultiplier;
         }
+    }
+
+    public Vector2 getDeltaMove() {
+        return deltaMove;
     }
 
     /**

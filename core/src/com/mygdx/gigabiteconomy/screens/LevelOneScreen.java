@@ -75,13 +75,9 @@ public class LevelOneScreen extends LevelScreen {
             staticSprites.add(new StaticSprite(String.format("static_sprites/%s/trashcan.png", LEVEL), coords[0], coords[1], 1, 1));
         }
 
-        player.addHealthBar(director);
         addPlayer(player);
 
         addEnemies(enemies);
-        for (Enemy enemy : enemies) {
-            enemy.addHealthBar(director);
-        }
 
         addParcelVan(parcelVan);
         addSprites(staticSprites);

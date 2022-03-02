@@ -124,7 +124,7 @@ public class GigabitEconomy extends Game {
                     setMusic("LevelTwo");
                 }
                 break;
-            case "LevelThreeScreen":
+            case "LevelRatKing":
                 if (fromPause != null) {
                     setScreen(fromPause);
                     this.fromPause = null;
