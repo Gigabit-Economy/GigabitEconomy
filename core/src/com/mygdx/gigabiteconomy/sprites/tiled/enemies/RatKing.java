@@ -85,8 +85,8 @@ public class RatKing extends Enemy {
             int randy = rand.nextInt(100);
             if (randy < 10) {
                 if (parcelFalling == null || parcelFalling.getOwnedTile().getOwnedBy() == null) {
-//                    parcelFalling = new FallingParcel(rand.nextInt(20) + 5, rand.nextInt(6) + 2); //Spawn relative to player location
-//                    level.addSprite(parcelFalling);
+                    parcelFalling = new FallingParcel(rand.nextInt(20) + 5, rand.nextInt(6) + 2); //Spawn relative to player location
+                    level.addSprite(parcelFalling);
 
                 }
             } else if (randy > 50) {

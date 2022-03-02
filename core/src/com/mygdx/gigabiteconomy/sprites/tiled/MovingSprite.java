@@ -481,6 +481,10 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         }
     }
 
+    public Vector2 getDeltaMove() {
+        return deltaMove;
+    }
+
     /**
      * Get the sprite's health
      *
