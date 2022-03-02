@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.ScoreSystem;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class LevelCompleteScreen implements Screen {
@@ -63,17 +62,8 @@ public class LevelCompleteScreen implements Screen {
         levelCompletedTable.row();
 
         String[] prevScores = levelScores.getAllScores();
-        String[] lastFewScores = new String[Math.min(prevScores.length, 5)];
-        for (int x = 0, i = prevScores.length - 1; i > prevScores.length - 5; x++, i--) { // iterate through last 5 scores for level
-            if (i <= 0) {
-                lastFewScores[x] = "---";
-                continue;
-            }
-
-            lastFewScores[x] = prevScores[i];
-        }
-        List<String> levelCompletedScoreList = new List<String>(style);
-        levelCompletedScoreList.setItems(lastFewScores);
+        List<String> levelCompletedScoreList = new List(style);
+        levelCompletedScoreList.setItems(prevScores);
         levelCompletedTable.add(levelCompletedScoreList).colspan(2);
         levelCompletedTable.row();
 
