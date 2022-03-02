@@ -14,7 +14,7 @@ public class LevelTwoPlotScreen extends PlotScreen {
                         +" but think of all the experience you'll gain.\n\n"
                         +"Now you may have heard in the news about people downtown having slight abnormalites. Here at 'Dangerous Packaging Company'"
                         +" we don't discriminate and believe that everyone should have the joy and convenience of having dangerous objects delivered"
-                        +" directly to your door";
+                        +" directly to your door. So go out there and deliver!";
 
         String nextLevelName = "LevelTwoScreen";
 
