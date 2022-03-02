@@ -1,7 +1,10 @@
 package com.mygdx.gigabiteconomy.sprites.tiled.enemies;
 
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.LevelScreen;
+import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.screens.TileManager;
 import com.mygdx.gigabiteconomy.sprites.tiled.Enemy;
 import com.mygdx.gigabiteconomy.sprites.tiled.MovingAnimation;
@@ -12,11 +15,11 @@ import java.util.*;
 
 public class RatKing extends Enemy {
     private static final String BASE_PATH = "finished_assets/enemies/ratking";
-    private static final float DEFAULT_HEALTH = 200f;
+    private static final float DEFAULT_HEALTH = 350f;
     private static final float DEFAULT_DELTAHORIZ = 15f;
     private static final float DEFAULT_DELTAVERT = 4f;
-    private static final int DEFAULT_WIDTH = 1;
-    private static final int DEFAULT_HEIGHT = 1;
+    private static final int DEFAULT_WIDTH = 8;
+    private static final int DEFAULT_HEIGHT = 3;
     private static final int DEFAULT_VERTAGROTILES = 5;
     private static final int DEFAULT_HORIZAGROTILES = 20;
 
@@ -46,7 +49,7 @@ public class RatKing extends Enemy {
 
         ));
         initX = x;
-        addPath("charge", new LinkedList<DIRECTION>(
+        addPath("charge", new LinkedList<>(
                 Arrays.asList(
                         DIRECTION.WEST, DIRECTION.WEST,
                         DIRECTION.WEST, DIRECTION.WEST
@@ -83,10 +86,13 @@ public class RatKing extends Enemy {
         if (fort != null && !isAttacking()) {
             //Throw box
             int randy = rand.nextInt(100);
-            if (randy < 10) {
+            if (randy < 15) {
                 if (parcelFalling == null || parcelFalling.getOwnedTile().getOwnedBy() == null) {
-                    parcelFalling = new FallingParcel(rand.nextInt(20) + 5, rand.nextInt(6) + 2); //Spawn relative to player location
-                    level.addSprite(parcelFalling);
+                    for (int i=0; i<6; i++) {
+                        parcelFalling = new FallingParcel(rand.nextInt(20) + 5, rand.nextInt(6) + 2); //Spawn relative to player location
+                        level.addSprite(parcelFalling);
+                    }
+
 
                 }
             } else if (randy > 85) {
@@ -103,6 +109,7 @@ public class RatKing extends Enemy {
             if ((getPath() != getPaths().get("charge") && getPath().peek() != DIRECTION.EAST)  && !(getCurrentTiles().get(0).getPositionTile()[0] < initX)) {
                 setPath("charge");
             }
+
         }
 
 
@@ -136,7 +143,7 @@ public class RatKing extends Enemy {
                 stunned = null;
                 //updateTextureRegions(getDirectionFacing());
             } else {
-                stunned.runAnimation(delta);
+                setTextureRegion((TextureRegion) stunned.runAnimation(delta));
             }
             return true;
         }
@@ -144,7 +151,6 @@ public class RatKing extends Enemy {
         boolean ret = super.move(delta);
 
         if (!ret) return false;
-
 
 
 
@@ -156,7 +162,8 @@ public class RatKing extends Enemy {
         } else if ((getCurrentTiles().get(0).getPositionTile()[0] > initX) && getPath().peek() == DIRECTION.EAST) {
             setPath("agro");
             System.out.println(initX);
-            //stunned = new MovingAnimation<TextureRegion>("finished_assets/enemies/rat_king/stunned.txt");
+            setMovementAnimation(1/8f, "finished_assets/enemies/ratking/dazed.txt");
+            stunned = getMovementAnimation();
         }
 
 
@@ -166,8 +173,8 @@ public class RatKing extends Enemy {
     public void underAttack(int y) {
         //Spawn a minion in level
         System.out.println("Under attack at " + y);
-//        level.addEnemies(new ArrayList<Enemy>(Arrays.asList(
-//                new BatGuy(24, (new Random()).nextInt(8), this.getTargetEntity(), 6f, 1.5f, 65f, new LinkedList<>(Arrays.asList(DIRECTION.WEST, DIRECTION.WEST)))
-//        )));
+        level.addEnemies(new ArrayList<Enemy>(Arrays.asList(
+                new BatGuy(24, (new Random()).nextInt(8), this.getTargetEntity(), 6f, 1.5f, 65f, new LinkedList<>(Arrays.asList(DIRECTION.WEST, DIRECTION.WEST)))
+        )));
     }
 }
