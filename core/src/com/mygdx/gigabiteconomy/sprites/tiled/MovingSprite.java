@@ -491,6 +491,8 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         NONE (0.5f),
         DOG (1.25f),
         BAT (1.5f),
+        BOXFORT(0f),
+        THROWBOX(6f),
         RATKING(8f);
 
 

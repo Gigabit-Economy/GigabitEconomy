@@ -1,4 +1,4 @@
-throwBox.png
+throwbox.png
 size: 100, 1600
 format: RGBA8888
 filter: Linear,Linear
