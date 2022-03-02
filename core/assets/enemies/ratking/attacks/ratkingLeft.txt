@@ -1,54 +1,96 @@
 ratkingLeft.png
-size: 3360, 500
+size: 970, 3500
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-ratKingThrow1
+ratkingLeftAttack1
   rotate: false
   xy: 0, 0
-  size: 480, 500
-  orig: 480, 500
+  size: 485, 500
+  orig: 485, 500
   offset: 0, 0
   index: -1
-ratKingThrow2
+ratkingLeftAttack2
   rotate: false
-  xy: 480, 0
-  size: 480, 500
-  orig: 480, 500
+  xy: 485, 0
+  size: 485, 500
+  orig: 485, 500
   offset: 0, 0
   index: -1
-ratKingThrow3
+ratkingLeftAttack3
   rotate: false
-  xy: 960, 0
-  size: 480, 500
-  orig: 480, 500
+  xy: 0, 500
+  size: 485, 500
+  orig: 485, 500
   offset: 0, 0
   index: -1
-ratKingThrow4
+ratkingLeftAttack4
   rotate: false
-  xy: 1440, 0
-  size: 480, 500
-  orig: 480, 500
+  xy: 485, 500
+  size: 485, 500
+  orig: 485, 500
   offset: 0, 0
   index: -1
-ratKingThrow5
+ratkingLeftAttack5
   rotate: false
-  xy: 1920, 0
-  size: 480, 500
-  orig: 480, 500
+  xy: 0, 1000
+  size: 485, 500
+  orig: 485, 500
   offset: 0, 0
   index: -1
-ratKingThrow6
+ratkingLeftAttack6
   rotate: false
-  xy: 2400, 0
-  size: 480, 500
-  orig: 480, 500
+  xy: 485, 1000
+  size: 485, 500
+  orig: 485, 500
   offset: 0, 0
   index: -1
-ratKingThrow7
+ratkingLeftAttack7
   rotate: false
-  xy: 2880, 0
-  size: 480, 500
-  orig: 480, 500
+  xy: 0, 1500
+  size: 485, 500
+  orig: 485, 500
+  offset: 0, 0
+  index: -1
+ratkingLeftAttack8
+  rotate: false
+  xy: 485, 1500
+  size: 485, 500
+  orig: 485, 500
+  offset: 0, 0
+  index: -1
+ratkingLeftAttack9
+  rotate: false
+  xy: 0, 2000
+  size: 485, 500
+  orig: 485, 500
+  offset: 0, 0
+  index: -1
+ratkingLeftAttack10
+  rotate: false
+  xy: 485, 2000
+  size: 485, 500
+  orig: 485, 500
+  offset: 0, 0
+  index: -1
+ratkingLeftAttack11
+  rotate: false
+  xy: 0, 2500
+  size: 485, 500
+  orig: 485, 500
+  offset: 0, 0
+  index: -1
+ratkingLeftAttack12
+  rotate: false
+  xy: 485, 2500
+  size: 485, 500
+  orig: 485, 500
+  offset: 0, 0
+  index: -1
+ratkingLeftAttack13
+  rotate: false
+  xy: 0, 3000
+  size: 485, 500
+  orig: 485, 500
   offset: 0, 0
   index: -1
