@@ -65,7 +65,6 @@ public class ThrowingParcel extends Enemy {
             destroy();
             return false;
         } else if (nextTile.getOccupiedBy() == getTargetEntity()) {
-            System.out.println(String.format("Launching attack on %f %f", getX(), getY()));
             launchAttack();
             destroy();
             return false;
