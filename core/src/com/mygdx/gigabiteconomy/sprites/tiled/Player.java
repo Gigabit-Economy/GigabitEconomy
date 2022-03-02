@@ -190,6 +190,10 @@ public class Player extends MovingSprite {
         healthBar.setHealth(getHealth());
     }
 
+    public void hideParcels() {
+        healthBar.showParcels = false;
+    }
+
     /**
      * Class for displaying and controlling Player health bar in top left of the screen
      */
@@ -199,6 +203,7 @@ public class Player extends MovingSprite {
 
         private static final float WIDTH = 318f;
         private static final float HEIGHT = 72f;
+        private boolean showParcels = false;
 
         private Vector3 cam;
         private Vector2 pos = new Vector2();
@@ -222,9 +227,12 @@ public class Player extends MovingSprite {
             batch.begin();
             batch.draw(HEALTH_BAR_TEXTURE, cam.x-900, cam.y+370);
 
-            for (int i=0; i<level.getParcels(); i++) {
-                batch.draw(PARCEL_ICON, cam.x-900+100+(1.15f*i*(PARCEL_ICON.getWidth())), cam.y+370);
+            if (showParcels) {
+                for (int i=0; i<level.getParcels(); i++) {
+                    batch.draw(PARCEL_ICON, cam.x-900+100+(1.15f*i*(PARCEL_ICON.getWidth())), cam.y+370);
+                }
             }
+
         }
     }
 
