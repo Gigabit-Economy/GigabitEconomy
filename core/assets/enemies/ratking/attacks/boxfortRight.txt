@@ -1,4 +1,4 @@
-boxFort.png
+boxfortRight.png
 size: 80, 600
 format: RGBA8888
 filter: Linear,Linear
