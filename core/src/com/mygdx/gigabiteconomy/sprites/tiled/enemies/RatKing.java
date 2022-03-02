@@ -96,9 +96,7 @@ public class RatKing extends Enemy {
                     ThrowingParcel throwingParcel = new ThrowingParcel(24, getCurrentTiles().get(0).getPositionTile()[1], getTargetEntity());
                     level.addEnemies(new ArrayList<Enemy>(Collections.singletonList(throwingParcel)));
                     throwingParcel.hideHealthBar();
-                } else {
-                    System.out.println("THIS Y IS OCCUPIED!");
-                }
+                } 
             }
             setAttacking(true);
         } else if (!isAttacking()) {
@@ -162,7 +160,6 @@ public class RatKing extends Enemy {
                     )));
         } else if ((getCurrentTiles().get(0).getPositionTile()[0] > initX) && getPath().peek() == DIRECTION.EAST) {
             setPath("agro");
-            System.out.println(initX);
             setMovementAnimation(1/8f, "enemies/ratking/dazed.txt");
             stunned = getMovementAnimation();
         }
@@ -172,8 +169,7 @@ public class RatKing extends Enemy {
 
     public void underAttack(int y) {
         //Spawn a minion in level
-        System.out.println("Under attack at " + y);
-        level.addEnemies(new ArrayList<Enemy>(Arrays.asList(
+            level.addEnemies(new ArrayList<Enemy>(Arrays.asList(
             new BatGuy(24, (new Random()).nextInt(8), "level2", this.getTargetEntity(), 6f, 1.5f, 65f, new LinkedList<>(Arrays.asList(DIRECTION.WEST, DIRECTION.WEST)))
         )));
     }

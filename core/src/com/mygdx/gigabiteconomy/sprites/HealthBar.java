@@ -26,7 +26,6 @@ public abstract class HealthBar {
      * @param health the new health value
      */
     public void setHealth(float health) {
-        System.out.println(health);
         float newHealth = (health * (INIT_WIDTH/100));
 
         if (newHealth <= 0) {

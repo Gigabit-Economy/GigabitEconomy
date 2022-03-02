@@ -24,7 +24,6 @@ public class FallingParcel extends TiledObject implements Disposable {
 
     public FallingParcel(int x, int y) {
         super(40, y, 1, 1); //Setting occupied tile beyond RK
-        System.out.println("Creating new parcel");
 
         this.x = x; this.y = y;
 

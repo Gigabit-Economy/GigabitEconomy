@@ -63,9 +63,6 @@ public class Tile {
      * @param occupying GameObject to occupy current Tile
      */
     public void setOccupied(TiledObject occupying) {
-        if (occupying instanceof Player) {
-            System.out.println(String.format("Player occupying %d %d", positionTile[0], positionTile[1]));
-        }
         this.occupiedBy = occupying;
     }
 
