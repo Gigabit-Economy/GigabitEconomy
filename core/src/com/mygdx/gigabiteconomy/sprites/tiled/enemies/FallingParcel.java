@@ -28,7 +28,7 @@ public class FallingParcel extends TiledObject implements Disposable {
 
         this.x = x; this.y = y;
 
-        ta = new TextureAtlas("finished_assets/enemies/ratking/fallingBox.txt");
+        ta = new TextureAtlas("enemies/ratking/fallingBox.txt");
         regions = ta.getRegions();
 
         falling = new MovingAnimation<TextureRegion>(1/14f, regions, false);
