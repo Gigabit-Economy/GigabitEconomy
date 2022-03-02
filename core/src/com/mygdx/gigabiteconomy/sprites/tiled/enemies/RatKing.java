@@ -149,8 +149,6 @@ public class RatKing extends Enemy {
 
         if (!ret) return false;
 
-
-
         if (getCurrentTiles().get(0).getPositionTile()[0] == 0) {
             setPath(new LinkedList<>(
                     Arrays.asList(
