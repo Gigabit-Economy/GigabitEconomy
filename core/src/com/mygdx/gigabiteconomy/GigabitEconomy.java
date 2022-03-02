@@ -82,7 +82,8 @@ public class GigabitEconomy extends Game {
         Screen toSwitch;
         switch (name) {
             case "MenuScreen":
-                toSwitch = new MenuScreen(this);
+                toSwitch = new PlotScreen(this);
+                // toSwitch = new MenuScreen(this);
                 setMusic("Menu");
                 break;
             case "LevelSelectScreen":
