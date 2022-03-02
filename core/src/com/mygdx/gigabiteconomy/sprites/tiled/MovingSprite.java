@@ -111,7 +111,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * Called when directionFacing or weapon is changed.
      */
     public void updateTextureRegions(DIRECTION directionFacing) {
-        if (directionFacing == DIRECTION.NORTH || directionMoving == DIRECTION.SOUTH) {
+        if (directionFacing == DIRECTION.NORTH || directionFacing == DIRECTION.SOUTH) {
             directionFacing = this.latitude;
         }
 
