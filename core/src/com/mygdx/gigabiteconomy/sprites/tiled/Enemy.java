@@ -148,6 +148,8 @@ public abstract class Enemy extends MovingSprite {
         private OrthographicCamera cam;
         private Vector3 pos = new Vector3();
 
+        private boolean show = true;
+
         public EnemyHealthBar(GigabitEconomy director) {
             super(HEIGHT, WIDTH);
 
@@ -156,14 +158,24 @@ public abstract class Enemy extends MovingSprite {
         }
 
         // Custom health bar for bigger enemies (overrides WIDTH/HEIGHT constants)
-        public EnemyHealthBar(GigabitEconomy director, float width, float height) {
-            super(width, height);
+        public EnemyHealthBar(GigabitEconomy director, float height, float width) {
+            super(height, width);
 
             this.cam = director.getCamera();
         }
 
+        /**
+         * Set whether health bar is shown or not
+         * @param show
+         */
+        public void setShow(boolean show) {
+            this.show = show;
+        }
+
         @Override
         public void drawOn(SpriteBatch batch) {
+            if (!show) return;
+
             batch.end();
 
             getEllipse().begin(ShapeRenderer.ShapeType.Filled);
