@@ -17,7 +17,7 @@ public class LevelRatKing extends LevelScreen {
     // Player character
     private final MovingSprite.Weapon playerWeapon = MovingSprite.Weapon.KATANA;
     private final Player player = new Player(playerWeapon, 0 , 4, 1, 1);
-    private final RatKing ratKing = new RatKing(26, 3, player);
+    private final RatKing ratKing = new RatKing(26, 3, LEVEL, player);
 
     /* ENEMIES */
     private final ArrayList<Enemy> boxes = new ArrayList<Enemy>(Arrays.asList(
@@ -32,6 +32,7 @@ public class LevelRatKing extends LevelScreen {
             new RatKingFort(25, 6, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
             new RatKingFort(25, 7, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
             new RatKingFort(25, 8, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>())*/
+    ));
     private final ArrayList<Enemy> enemies = new ArrayList<Enemy>(Arrays.asList(
             new RatKing(26, 0, LEVEL, player)
     ));
@@ -60,11 +61,11 @@ public class LevelRatKing extends LevelScreen {
         super(director, BACKGROUND_TEXTURE_PNG);
 
         for (int[] coords : fenceCoords) {
-            fences.add(new StaticSprite("static_sprites/level1/fence.png", coords[0], coords[1], 1, 1));
+            staticSprites.add(new StaticSprite("static_sprites/level1/fence.png", coords[0], coords[1], 1, 1));
         }
 
         for (int[] coords : canCoords) {
-            cans.add(new StaticSprite("static_sprites/level1/trashcan.png", coords[0], coords[1], 1, 1));
+            staticSprites.add(new StaticSprite("static_sprites/level1/trashcan.png", coords[0], coords[1], 1, 1));
         }
 
         addPlayer(player);

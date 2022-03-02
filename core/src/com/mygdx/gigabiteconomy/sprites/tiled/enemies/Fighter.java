@@ -8,11 +8,11 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 public class Fighter extends Enemy {
+    private static final int DEFAULT_WIDTH = 1;
+    private static final int DEFAULT_HEIGHT = 1;
     private static final float DEFAULT_HEALTH = 85f;
     private static final float DEFAULT_DELTAHORIZ = 2f;
     private static final float DEFAULT_DELTAVERT = 1.5f;
-    private static final int DEFAULT_WIDTH = 1;
-    private static final int DEFAULT_HEIGHT = 1;
     private static final int DEFAULT_VERTAGROTILES = 5;
     private static final int DEFAULT_HORIZAGROTILES = 5;
 

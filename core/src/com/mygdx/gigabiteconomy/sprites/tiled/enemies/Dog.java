@@ -24,8 +24,8 @@ public class Dog extends Enemy {
      * @param level        the level of the Dog
      * @param targetEntity
      */
-    public Dog(int x, int y, Player targetEntity) {
-        super(BASE_PATH, Weapon.DOG, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, DEFAULT_DELTAHORIZ, DEFAULT_DELTAVERT, DEFAULT_HORIZAGROTILES, DEFAULT_HORIZAGROTILES, DEFAULT_HEALTH, new LinkedList<>(
+    public Dog(int x, int y, String level, Player targetEntity) {
+        super(level, Weapon.DOG, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, DEFAULT_DELTAHORIZ, DEFAULT_DELTAVERT, DEFAULT_HORIZAGROTILES, DEFAULT_HORIZAGROTILES, DEFAULT_HEALTH, new LinkedList<>(
 
                 Arrays.asList(MovingSprite.DIRECTION.NORTH,MovingSprite.DIRECTION.NORTH,
                         MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,

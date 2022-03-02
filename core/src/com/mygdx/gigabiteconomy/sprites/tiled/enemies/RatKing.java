@@ -171,7 +171,7 @@ public class RatKing extends Enemy {
         //Spawn a minion in level
         System.out.println("Under attack at " + y);
         level.addEnemies(new ArrayList<Enemy>(Arrays.asList(
-                new BatGuy(24, (new Random()).nextInt(8), this.getTargetEntity(), 6f, 1.5f, 65f, new LinkedList<>(Arrays.asList(DIRECTION.WEST, DIRECTION.WEST)))
+            new BatGuy(24, (new Random()).nextInt(8), "level3", this.getTargetEntity(), 6f, 1.5f, 65f, new LinkedList<>(Arrays.asList(DIRECTION.WEST, DIRECTION.WEST)))
         )));
     }
 }
