@@ -12,7 +12,7 @@ public class RatKingFort extends Enemy {
     private static final float DEFAULT_DELTAHORIZ = 2f;
     private static final float DEFAULT_DELTAVERT = 1.5f;
     private static final int DEFAULT_WIDTH = 1;
-    private static final int DEFAULT_HEIGHT = 8;
+    private static final int DEFAULT_HEIGHT = 9;
     private static final int DEFAULT_VERTAGROTILES = 5;
     private static final int DEFAULT_HORIZAGROTILES = 10;
 

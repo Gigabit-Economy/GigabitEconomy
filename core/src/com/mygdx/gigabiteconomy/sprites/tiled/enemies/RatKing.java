@@ -89,7 +89,7 @@ public class RatKing extends Enemy {
                     level.addSprite(parcelFalling);
 
                 }
-            } else if (randy > 50) {
+            } else if (randy > 85) {
                 if (tm.getTile(24, getCurrentTiles().get(0).getPositionTile()[1]).getOwnedBy() == null) {
                     ThrowingParcel throwingParcel = new ThrowingParcel(24, getCurrentTiles().get(0).getPositionTile()[1], getTargetEntity());
                     level.addEnemies(new ArrayList<Enemy>(Collections.singletonList(throwingParcel)));

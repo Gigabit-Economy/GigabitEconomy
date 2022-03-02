@@ -14,7 +14,7 @@ public class LevelRatKing extends LevelScreen {
 
     // Player character
     private final MovingSprite.Weapon playerWeapon = MovingSprite.Weapon.KATANA;
-    private final Player player = new Player(playerWeapon, 0 , 7, 1, 1);
+    private final Player player = new Player(playerWeapon, 0 , 4, 1, 1);
     private final RatKing ratKing = new RatKing(26, 3, player);
 
     /* ENEMIES */
@@ -58,7 +58,7 @@ public class LevelRatKing extends LevelScreen {
         super(director, BACKGROUND_TEXTURE_PNG);
 
         for (int[] coords : fenceCoords) {
-            fences.add(new StaticSprite("finished_assets/static_sprites/level1/fence.png", coords[0], coords[1], 1, 1));
+            fences.add(new StaticSprite("finished_assets/static_sprites/level2/fence.png", coords[0], coords[1], 1, 1));
         }
 
         for (int[] coords : canCoords) {
