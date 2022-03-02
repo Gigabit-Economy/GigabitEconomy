@@ -1,39 +1,53 @@
-unarmedRatLeft.png
-size: 1840, 240
+batRight.png
+size: 368, 1680
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-unarmedRatLeftAttack1
+baseballratRightAttack1
   rotate: false
   xy: 0, 0
   size: 368, 240
   orig: 368, 240
   offset: 126, 0
   index: -1
-unarmedRatLeftAttack2
+baseballratRightAttack2
   rotate: false
-  xy: 368, 0
+  xy: 0, 240
   size: 368, 240
   orig: 368, 240
   offset: 126, 0
   index: -1
-unarmedRatLeftAttack3
+baseballratRightAttack3
   rotate: false
-  xy: 736, 0
+  xy: 0, 480
   size: 368, 240
   orig: 368, 240
   offset: 126, 0
   index: -1
-unarmedRatLeftAttack4
+baseballratRightAttack4
   rotate: false
-  xy: 1104, 0
+  xy: 0, 720
   size: 368, 240
   orig: 368, 240
   offset: 126, 0
   index: -1
-unarmedRatLeftAttack5
+baseballratRightAttack5
   rotate: false
-  xy: 1472, 0
+  xy: 0, 960
+  size: 368, 240
+  orig: 368, 240
+  offset: 126, 0
+  index: -1
+baseballratRightAttack6
+  rotate: false
+  xy: 0, 1200
+  size: 368, 240
+  orig: 368, 240
+  offset: 126, 0
+  index: -1
+baseballratRightAttack7
+  rotate: false
+  xy: 0, 1440
   size: 368, 240
   orig: 368, 240
   offset: 126, 0

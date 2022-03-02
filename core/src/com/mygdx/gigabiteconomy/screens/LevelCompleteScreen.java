@@ -33,7 +33,7 @@ public class LevelCompleteScreen implements Screen {
 
         Gdx.input.setInputProcessor(stage);
         // Skin defined in UI skin (commodore - hopefully we can use, looks really cool)
-        Skin style = new Skin(Gdx.files.internal("uiskin.json"));
+        Skin style = new Skin(Gdx.files.internal("ui_elements/ui_skin/uiskin.json"));
 
         levelCompletedTable = new Table();
         levelCompletedTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

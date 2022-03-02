@@ -34,7 +34,7 @@ public class LevelSelectScreen implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(stage);
         // Skin defined in UI skin (commodore - hopefully we can use, looks really cool)
-        Skin style = new Skin(Gdx.files.internal("uiskin.json"));
+        Skin style = new Skin(Gdx.files.internal("ui_elements/ui_skin/uiskin.json"));
 
         levelSelectTable = new Table();
         levelSelectTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -53,7 +53,7 @@ public class LevelSelectScreen implements Screen {
 
         TextButton selectSecondLevelTextButton = new TextButton("Level 2", style);
         selectSecondLevelTextButton.setName("LevelTwoScreen");
-        if (score2.getHighestScore() == 0) {
+        if (score1.getHighestScore() == 0) {
             selectSecondLevelTextButton.setTouchable(Touchable.disabled);
         }
         levelSelectTable.add(selectSecondLevelTextButton).padRight(-200);
@@ -65,7 +65,7 @@ public class LevelSelectScreen implements Screen {
 
         TextButton selectThirdLevelTextButton = new TextButton("Level 3", style);
         selectThirdLevelTextButton.setName("LevelThreeScreen");
-        if (score3.getHighestScore() == 0) {
+        if (score2.getHighestScore() == 0) {
             selectThirdLevelTextButton.setTouchable(Touchable.disabled);
         }
         levelSelectTable.add(selectThirdLevelTextButton).padRight(-200);

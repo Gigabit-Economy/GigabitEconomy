@@ -1,53 +1,39 @@
-baseballRatLeft.png
-size: 368, 1680
+noneRight.png
+size: 1840, 240
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-baseballRatLeftWalk1
+unarmedRatRightAttack1
   rotate: false
   xy: 0, 0
   size: 368, 240
   orig: 368, 240
   offset: 126, 0
   index: -1
-baseballRatLeftWalk2
+unarmedRatRightAttack2
   rotate: false
-  xy: 0, 240
+  xy: 368, 0
   size: 368, 240
   orig: 368, 240
   offset: 126, 0
   index: -1
-baseballRatLeftWalk3
+unarmedRatRightAttack3
   rotate: false
-  xy: 0, 480
+  xy: 736, 0
   size: 368, 240
   orig: 368, 240
   offset: 126, 0
   index: -1
-baseballRatLeftWalk4
+unarmedRatRightAttack4
   rotate: false
-  xy: 0, 720
+  xy: 1104, 0
   size: 368, 240
   orig: 368, 240
   offset: 126, 0
   index: -1
-baseballRatLeftWalk5
+unarmedRatRightAttack5
   rotate: false
-  xy: 0, 960
-  size: 368, 240
-  orig: 368, 240
-  offset: 126, 0
-  index: -1
-baseballRatLeftWalk6
-  rotate: false
-  xy: 0, 1200
-  size: 368, 240
-  orig: 368, 240
-  offset: 126, 0
-  index: -1
-baseballRatLeftWalk7
-  rotate: false
-  xy: 0, 1440
+  xy: 1472, 0
   size: 368, 240
   orig: 368, 240
   offset: 126, 0

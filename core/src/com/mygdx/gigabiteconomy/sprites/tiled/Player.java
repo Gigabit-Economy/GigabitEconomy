@@ -27,7 +27,7 @@ public class Player extends MovingSprite {
     private LevelScreen level;
     private Parcel parcel;
 
-    private static final String BASE_PATH = "finished_assets/player";
+    private static final String BASE_PATH = "player";
 
     private static final int BASE_HEALTH_DETRACTION = 5;
     private PlayerHealthBar healthBar;
@@ -194,8 +194,8 @@ public class Player extends MovingSprite {
      * Class for displaying and controlling Player health bar in top left of the screen
      */
     public class PlayerHealthBar extends HealthBar {
-        private final Texture HEALTH_BAR_TEXTURE = new Texture("finished_assets/ui_elements/health bar1.png");
-        private final Texture PARCEL_ICON = new Texture("finished_assets/ui_elements/parcelicon.png");
+        private final Texture HEALTH_BAR_TEXTURE = new Texture("ui_elements/healthbar.png");
+        private final Texture PARCEL_ICON = new Texture("ui_elements/parcelicon.png");
 
         private static final float WIDTH = 318f;
         private static final float HEIGHT = 72f;

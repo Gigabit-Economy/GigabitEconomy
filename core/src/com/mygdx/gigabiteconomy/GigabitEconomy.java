@@ -21,7 +21,7 @@ public class GigabitEconomy extends Game {
 
     private Screen fromPause;
 
-    private static final String MUSIC_BASE_PATH = "finished_assets/music/";
+    private static final String MUSIC_BASE_PATH = "music/";
     private Music backgroundMusic;
 
     @Override
@@ -112,6 +112,16 @@ public class GigabitEconomy extends Game {
                 } else {
                     toSwitch = new LevelOneScreen(this);
                     setMusic("LevelOne");
+                }
+                break;
+            case "LevelTwoScreen":
+                if (fromPause != null) {
+                    setScreen(fromPause);
+                    this.fromPause = null;
+                    return;
+                } else {
+                    toSwitch = new LevelTwoScreen(this);
+                    setMusic("LevelTwo");
                 }
                 break;
             case "LevelThreeScreen":

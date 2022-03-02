@@ -8,8 +8,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 public class Dog extends Enemy {
-
-    private static final String BASE_PATH = "finished_assets/enemies/level1";
     private static final float DEFAULT_HEALTH = 50f;
     private static final float DEFAULT_DELTAHORIZ = 4f;
     private static final float DEFAULT_DELTAVERT = 3.25f;
@@ -21,19 +19,19 @@ public class Dog extends Enemy {
      *
      * @param x            position of Tile (within tile grid) to place sprite
      * @param y            position of Tile (within tile grid) to place sprite
+     * @param level        the level of the Dog
      * @param targetEntity
      */
-    public Dog(int x, int y, Player targetEntity) {
-        super(BASE_PATH, Weapon.DOG, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, DEFAULT_DELTAHORIZ, DEFAULT_DELTAVERT, DEFAULT_HEALTH, new LinkedList<>(
-
-                Arrays.asList(MovingSprite.DIRECTION.NORTH,MovingSprite.DIRECTION.NORTH,
-                        MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
-                        MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
-                        MovingSprite.DIRECTION.SOUTH,MovingSprite.DIRECTION.SOUTH,
-                        MovingSprite.DIRECTION.SOUTH,MovingSprite.DIRECTION.SOUTH,
-                        MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.WEST,
-                        MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.WEST,
-                        MovingSprite.DIRECTION.NORTH,MovingSprite.DIRECTION.NORTH)
+    public Dog(int x, int y, String level, Player targetEntity) {
+        super(level, Weapon.DOG, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, DEFAULT_DELTAHORIZ, DEFAULT_DELTAVERT, DEFAULT_HEALTH, new LinkedList<>(
+            Arrays.asList(MovingSprite.DIRECTION.NORTH,MovingSprite.DIRECTION.NORTH,
+                    MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
+                    MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
+                    MovingSprite.DIRECTION.SOUTH,MovingSprite.DIRECTION.SOUTH,
+                    MovingSprite.DIRECTION.SOUTH,MovingSprite.DIRECTION.SOUTH,
+                    MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.WEST,
+                    MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.WEST,
+                    MovingSprite.DIRECTION.NORTH,MovingSprite.DIRECTION.NORTH)
         ));
     }
 
@@ -42,10 +40,10 @@ public class Dog extends Enemy {
      *
      * @param x            position of Tile (within tile grid) to place sprite
      * @param y            position of Tile (within tile grid) to place sprite
+     * @param level        the level of the Dog
      * @param movementPath define a specific movement path
      */
-    public Dog(int x, int y, Player targetEntity, float deltaHoriz, float deltaVert, float health, LinkedList<DIRECTION> movementPath) {
-        super(BASE_PATH, Weapon.DOG, x, y, 1, 1, targetEntity, deltaHoriz, deltaVert, health, movementPath);
-
+    public Dog(int x, int y, String level, Player targetEntity, float deltaHoriz, float deltaVert, float health, LinkedList<DIRECTION> movementPath) {
+        super(level, Weapon.DOG, x, y, 1, 1, targetEntity, deltaHoriz, deltaVert, health, movementPath);
     }
 }
