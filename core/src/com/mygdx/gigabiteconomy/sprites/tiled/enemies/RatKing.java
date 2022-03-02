@@ -161,7 +161,6 @@ public class RatKing extends Enemy {
             stunned = getMovementAnimation();
         }
 
-
         return true;
     }
 
