@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 public class ThrowingParcel extends Enemy {
-    private static final String BASE_PATH = "finished_assets/player";
+    private static final String BASE_PATH = "player";
     private static final float DEFAULT_HEALTH = 1f;
     private static final float DEFAULT_DELTAHORIZ = 9f;
     private static final float DEFAULT_DELTAVERT = 1.5f;
@@ -51,8 +51,8 @@ public class ThrowingParcel extends Enemy {
          */
 
 
-        setMovementAnimation(1/14f, "finished_assets/player/movement/katanaLeft.txt");
-        setAttackAnimation(1/14f, "finished_assets/player/attacks/katanaLeft.txt");
+        setMovementAnimation(1/14f, "player/movement/katanaLeft.txt");
+        setAttackAnimation(1/14f, "player/attacks/katanaLeft.txt");
     }
 
     @Override

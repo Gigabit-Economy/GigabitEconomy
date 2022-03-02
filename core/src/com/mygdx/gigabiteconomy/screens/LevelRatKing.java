@@ -10,9 +10,9 @@ import java.util.LinkedList;
 
 public class LevelRatKing extends LevelScreen {
     // Level string
-    private static final String LEVEL = "level3";
+    private static final String LEVEL = "ratking";
     // Level screen backgro1.5und texture
-    private static final String BACKGROUND_TEXTURE_PNG = "finished_assets/levels/level2.png";
+    private static final String BACKGROUND_TEXTURE_PNG = "levels/level2.png";
 
     // Player character
     private final MovingSprite.Weapon playerWeapon = MovingSprite.Weapon.KATANA;

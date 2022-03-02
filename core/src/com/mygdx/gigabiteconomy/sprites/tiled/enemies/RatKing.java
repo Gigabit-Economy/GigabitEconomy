@@ -14,7 +14,6 @@ import com.mygdx.gigabiteconomy.sprites.tiled.Player;
 import java.util.*;
 
 public class RatKing extends Enemy {
-    private static final String BASE_PATH = "finished_assets/enemies/ratking";
     private static final float DEFAULT_HEALTH = 350f;
     private static final float DEFAULT_DELTAHORIZ = 15f;
     private static final float DEFAULT_DELTAVERT = 4f;
@@ -102,9 +101,16 @@ public class RatKing extends Enemy {
                 }
             }
             setAttacking(true);
-        } else {
+        } else if (!isAttacking()) {
             if ((getPath() != getPaths().get("charge") && getPath().peek() != DIRECTION.EAST)  && !(getCurrentTiles().get(0).getPositionTile()[0] < initX)) {
                 setPath("charge");
+            }
+
+            for (Tile t : tm.getNextTiles(this, getDirectionMoving(), 1)) {
+                if (t == null) continue;
+                if (t.isOccupiedBy(getTargetEntity())) {
+                    launchAttack();
+                }
             }
 
         }
@@ -157,7 +163,7 @@ public class RatKing extends Enemy {
         } else if ((getCurrentTiles().get(0).getPositionTile()[0] > initX) && getPath().peek() == DIRECTION.EAST) {
             setPath("agro");
             System.out.println(initX);
-            setMovementAnimation(1/8f, "finished_assets/enemies/ratking/dazed.txt");
+            setMovementAnimation(1/8f, "enemies/ratking/dazed.txt");
             stunned = getMovementAnimation();
         }
 
@@ -168,7 +174,7 @@ public class RatKing extends Enemy {
         //Spawn a minion in level
         System.out.println("Under attack at " + y);
         level.addEnemies(new ArrayList<Enemy>(Arrays.asList(
-            new BatGuy(24, (new Random()).nextInt(8), "level3", this.getTargetEntity(), 6f, 1.5f, 65f, new LinkedList<>(Arrays.asList(DIRECTION.WEST, DIRECTION.WEST)))
+            new BatGuy(24, (new Random()).nextInt(8), "level2", this.getTargetEntity(), 6f, 1.5f, 65f, new LinkedList<>(Arrays.asList(DIRECTION.WEST, DIRECTION.WEST)))
         )));
     }
 }
