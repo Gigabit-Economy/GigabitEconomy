@@ -1,0 +1,40 @@
+noneLeft.png
+size: 1840, 240
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+unarmedRatLeftAttack1
+  rotate: false
+  xy: 0, 0
+  size: 368, 240
+  orig: 368, 240
+  offset: 126, 0
+  index: -1
+unarmedRatLeftAttack2
+  rotate: false
+  xy: 368, 0
+  size: 368, 240
+  orig: 368, 240
+  offset: 126, 0
+  index: -1
+unarmedRatLeftAttack3
+  rotate: false
+  xy: 736, 0
+  size: 368, 240
+  orig: 368, 240
+  offset: 126, 0
+  index: -1
+unarmedRatLeftAttack4
+  rotate: false
+  xy: 1104, 0
+  size: 368, 240
+  orig: 368, 240
+  offset: 126, 0
+  index: -1
+unarmedRatLeftAttack5
+  rotate: false
+  xy: 1472, 0
+  size: 368, 240
+  orig: 368, 240
+  offset: 126, 0
+  index: -1

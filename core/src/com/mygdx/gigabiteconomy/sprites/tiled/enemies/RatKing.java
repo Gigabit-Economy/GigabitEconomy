@@ -33,20 +33,17 @@ public class RatKing extends Enemy {
 
     private Random rand = new Random();
 
-
     /**
      * Create a new Enemy sprite (MovingSprite)
      *
      * @param x            position of Tile (within tile grid) to place sprite
      * @param y            position of Tile (within tile grid) to place sprite
      */
-    public RatKing(int x, int y, Player targetEntity) {
-
-        super(BASE_PATH, Weapon.RATKING, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, DEFAULT_DELTAHORIZ, DEFAULT_DELTAVERT, DEFAULT_HORIZAGROTILES, DEFAULT_VERTAGROTILES, DEFAULT_HEALTH, new LinkedList<DIRECTION>(
-                Arrays.asList(
-                        DIRECTION.WEST
-                )
-
+    public RatKing(int x, int y, String level, Player targetEntity) {
+        super(level, Weapon.RATKING, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, DEFAULT_DELTAHORIZ, DEFAULT_DELTAVERT, DEFAULT_HORIZAGROTILES, DEFAULT_VERTAGROTILES, DEFAULT_HEALTH, new LinkedList<DIRECTION>(
+            Arrays.asList(
+                DIRECTION.WEST
+            )
         ));
         initX = x;
         addPath("charge", new LinkedList<>(

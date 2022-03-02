@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 public class LevelRatKing extends LevelScreen {
+    // Level string
+    private static final String LEVEL = "level3";
     // Level screen backgro1.5und texture
     private static final String BACKGROUND_TEXTURE_PNG = "finished_assets/levels/level2.png";
 
@@ -30,14 +32,14 @@ public class LevelRatKing extends LevelScreen {
             new RatKingFort(25, 6, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
             new RatKingFort(25, 7, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
             new RatKingFort(25, 8, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>())*/
+    private final ArrayList<Enemy> enemies = new ArrayList<Enemy>(Arrays.asList(
+            new RatKing(26, 0, LEVEL, player)
     ));
 
     // Parcel van (for Player to collect parcels from)
 
     /* STATIC SPRITES (HOUSES, FENCES ETC...) */
-
-    private final ArrayList<StaticSprite> fences = new ArrayList<>();
-    private final ArrayList<StaticSprite> cans = new ArrayList<>();
+    private final ArrayList<StaticSprite> staticSprites = new ArrayList<>();
 
     int[][] fenceCoords = {
 
@@ -58,11 +60,11 @@ public class LevelRatKing extends LevelScreen {
         super(director, BACKGROUND_TEXTURE_PNG);
 
         for (int[] coords : fenceCoords) {
-            fences.add(new StaticSprite("finished_assets/static_sprites/level2/fence.png", coords[0], coords[1], 1, 1));
+            fences.add(new StaticSprite("static_sprites/level1/fence.png", coords[0], coords[1], 1, 1));
         }
 
         for (int[] coords : canCoords) {
-            cans.add(new StaticSprite("finished_assets/static_sprites/level1/trashcan.png", coords[0], coords[1], 1, 1));
+            cans.add(new StaticSprite("static_sprites/level1/trashcan.png", coords[0], coords[1], 1, 1));
         }
 
         addPlayer(player);
@@ -72,7 +74,6 @@ public class LevelRatKing extends LevelScreen {
         for (Enemy enemy : boxes) {
             enemy.new EnemyHealthBar(director);
         }
-        addSprites(fences);
-        addSprites(cans);
+        addSprites(staticSprites);
     }
 }

@@ -49,7 +49,7 @@ public class PauseMenu implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(inputMulti);
         
         // Skin defined in UI skin (commodore - hopefully we can use, looks really cool)
-        Skin style = new Skin(Gdx.files.internal("uiskin.json"));
+        Skin style = new Skin(Gdx.files.internal("ui_elements/ui_skin/uiskin.json"));
 
         if (pauseCount == 0) {
             pauseMenuTable = new Table();
@@ -66,10 +66,14 @@ public class PauseMenu implements Screen, InputProcessor {
             volumeControlLabel.setSize(10, 50);
             pauseMenuTable.add(volumeControlLabel);
 
-            Slider volumeControlSlider = new Slider(-40, 6, 2, false, style);
-            volumeControlSlider.setName("volumeSlider");
-            volumeControlSlider.setOriginX(volumeControlLabel.getX());
-            pauseMenuTable.add(volumeControlSlider);
+            TextButton audioButton = new TextButton("CAT", style);
+            if (director.isMusicPlaying() == true) {
+                audioButton.setText("ON");
+            }
+            if (director.isMusicPlaying() == false) {
+                audioButton.setText("OFF");
+            }
+            pauseMenuTable.add(audioButton);
 
             pauseMenuTable.row();
 
@@ -98,6 +102,12 @@ public class PauseMenu implements Screen, InputProcessor {
             TextButton res1280Button = new TextButton("1280 x 720", style);
             res1280Button.setName("res1280");
             pauseMenuTable.add(res1280Button);
+
+            pauseMenuTable.row();
+
+            TextButton levelResetButton = new TextButton("RESET LEVEL", style);
+            levelResetButton.setName("resetthelevel");
+            pauseMenuTable.add(levelResetButton);
 
             // Add click listeners for buttons
             ClickListener screenButtonsListener = new ClickListener() {
@@ -139,11 +149,47 @@ public class PauseMenu implements Screen, InputProcessor {
                     Gdx.app.error("Exception", String.format("Error changing resolution to %s", buttonName), ex);
                     System.exit(-1);
                 }
+
+                if(buttonName == "resetthelevel")
+                {
+                    try {
+                        String tempLastPlayedLevel = director.getLastPlayedLevel();
+                        director.switchScreen("MenuScreen");
+                        director.switchScreen(tempLastPlayedLevel);
+
+                    } catch (Exception ex) {
+                        Gdx.app.error("Exception", String.format("Error switching screen to" + director.getLastPlayedLevel()), ex);
+                    }        
+                }
                 }
             };
+
             res1280Button.addListener(resButtonsListener);
             res1366Button.addListener(resButtonsListener);
             res1920Button.addListener(resButtonsListener);
+            levelResetButton.addListener(resButtonsListener);
+
+            ClickListener audioButtonListener = new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+
+                    try {
+                        if (director.isMusicPlaying() == true) {
+                            director.enableMusic(false);
+                        }
+                        else if (director.isMusicPlaying() == false) {
+                            director.enableMusic(true);
+                        }
+                    } catch (Exception ex) {
+                        Gdx.app.error("Exception", String.format("Error changing audio"), ex);
+                    }
+
+                    stage.draw();
+                }
+
+            };
+
+            audioButton.addListener(audioButtonListener);
 
             stage.addActor(pauseMenuTable);
         }
@@ -180,9 +226,9 @@ public class PauseMenu implements Screen, InputProcessor {
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.P || keycode == Input.Keys.ESCAPE) {
             try {
-                director.switchScreen("LevelOneScreen");
+                director.switchScreen(director.getLastPlayedLevel());
             } catch (Exception ex) {
-                Gdx.app.error("Exception", String.format("Error switching screen to LevelOneScreen"), ex);
+                Gdx.app.error("Exception", String.format("Error switching screen back"), ex);
                 System.exit(-1);
             }
         }

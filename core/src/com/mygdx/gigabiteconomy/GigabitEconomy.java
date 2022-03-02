@@ -10,7 +10,6 @@ import com.mygdx.gigabiteconomy.exceptions.ScreenException;
 import com.mygdx.gigabiteconomy.screens.*;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.Gdx;
-import jdk.vm.ci.code.RegisterAttributes;
 
 import java.lang.String;
 
@@ -22,7 +21,7 @@ public class GigabitEconomy extends Game {
 
     private Screen fromPause;
 
-    private static final String MUSIC_BASE_PATH = "finished_assets/music/";
+    private static final String MUSIC_BASE_PATH = "music/";
     private Music backgroundMusic;
 
     @Override
@@ -115,6 +114,16 @@ public class GigabitEconomy extends Game {
                     setMusic("LevelOne");
                 }
                 break;
+            case "LevelTwoScreen":
+                if (fromPause != null) {
+                    setScreen(fromPause);
+                    this.fromPause = null;
+                    return;
+                } else {
+                    toSwitch = new LevelTwoScreen(this);
+                    setMusic("LevelTwo");
+                }
+                break;
             case "LevelRatKing":
                 if (fromPause != null) {
                     setScreen(fromPause);
@@ -148,6 +157,7 @@ public class GigabitEconomy extends Game {
      * @param name the music file name in "[MUSIC_BASE_PATH]/[...].wav"
      */
     public void setMusic(String name) {
+
         if (this.backgroundMusic != null) {
             this.backgroundMusic.stop();
         }
@@ -155,7 +165,31 @@ public class GigabitEconomy extends Game {
         this.backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal(String.format("%s/%s.wav", MUSIC_BASE_PATH, name)));
 
         this.backgroundMusic.setLooping(true);
-        this.backgroundMusic.play();
+        enableMusic(true);
+    }
+
+    public void enableMusic(boolean enable) {
+        if (enable == true) {
+
+            System.out.println(isMusicPlaying());
+            this.backgroundMusic.play();
+
+        }
+        if (enable == false) {
+            System.out.println(isMusicPlaying());
+            this.backgroundMusic.stop();
+
+        }
+    }
+
+    public boolean isMusicPlaying() {
+        try {
+            return this.backgroundMusic.isPlaying();
+        } catch (Exception ex) {
+                Gdx.app.error("Exception", String.format("Audio could not be found playing"), ex);
+        }
+        return false;
+        
     }
 
     public ScreenViewport getViewport() {
