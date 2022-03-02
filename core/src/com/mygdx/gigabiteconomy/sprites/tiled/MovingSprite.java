@@ -11,6 +11,7 @@ import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.gigabiteconomy.sprites.tiled.enemies.RatKing;
+import com.mygdx.gigabiteconomy.sprites.tiled.enemies.RatKingFort;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
@@ -414,7 +415,6 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * Will call attack() and detract from health of any surrounding sprite.
      */
     public void launchAttack() {
-        setAttacking(true);
         
         for (int i=getWidth(); i>0; i--) {
             ArrayList<Tile> tempAdjTiles = getTileManager().getAdjacentTiles(this);
@@ -422,9 +422,15 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
             for (Tile t : tempAdjTiles) {
                 TiledObject adjacentSprite = t.getOccupiedBy();
                 if (adjacentSprite instanceof MovingSprite && adjacentSprite != this) {
-                    if (this instanceof Enemy && adjacentSprite instanceof Enemy) {
+
+                    if (this instanceof RatKing && adjacentSprite instanceof RatKingFort) {
+                        System.out.println("Not attacking fort");
                         continue;
                     }
+                    if (this instanceof RatKing) {
+                        System.out.println("Attacking " + adjacentSprite.getClass().getName());
+                    }
+
                     ((MovingSprite) adjacentSprite).attack(weapon);
                 }
             }
@@ -480,6 +486,8 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         NONE (0.5f),
         DOG (1.25f),
         BAT (1.5f),
+        BOXFORT(0f),
+        THROWBOX(6f),
         RATKING(8f);
 
 

@@ -1,54 +1,96 @@
 ratkingRight.png
-size: 1920, 800
+size: 970, 3500
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-ratkingRight1
+ratKingRightAttack1
   rotate: false
   xy: 0, 0
-  size: 480, 400
-  orig: 480, 400
+  size: 485, 500
+  orig: 485, 500
   offset: 0, 0
   index: -1
-ratkingRight2
+ratKingRightAttack2
   rotate: false
-  xy: 480, 0
-  size: 480, 400
-  orig: 480, 400
+  xy: 485, 0
+  size: 485, 500
+  orig: 485, 500
   offset: 0, 0
   index: -1
-ratkingRight3
+ratKingRightAttack3
   rotate: false
-  xy: 960, 0
-  size: 480, 400
-  orig: 480, 400
+  xy: 0, 500
+  size: 485, 500
+  orig: 485, 500
   offset: 0, 0
   index: -1
-ratkingRight4
+ratKingRightAttack4
   rotate: false
-  xy: 1440, 0
-  size: 480, 400
-  orig: 480, 400
+  xy: 485, 500
+  size: 485, 500
+  orig: 485, 500
   offset: 0, 0
   index: -1
-ratkingRight5
+ratKingRightAttack5
   rotate: false
-  xy: 0, 400
-  size: 480, 400
-  orig: 480, 400
+  xy: 0, 1000
+  size: 485, 500
+  orig: 485, 500
   offset: 0, 0
   index: -1
-ratkingRight6
+ratKingRightAttack6
   rotate: false
-  xy: 480, 400
-  size: 480, 400
-  orig: 480, 400
+  xy: 485, 1000
+  size: 485, 500
+  orig: 485, 500
   offset: 0, 0
   index: -1
-ratkingRight7
+ratKingRightAttack7
   rotate: false
-  xy: 960, 400
-  size: 480, 400
-  orig: 480, 400
+  xy: 0, 1500
+  size: 485, 500
+  orig: 485, 500
+  offset: 0, 0
+  index: -1
+ratKingRightAttack8
+  rotate: false
+  xy: 485, 1500
+  size: 485, 500
+  orig: 485, 500
+  offset: 0, 0
+  index: -1
+ratKingRightAttack9
+  rotate: false
+  xy: 0, 2000
+  size: 485, 500
+  orig: 485, 500
+  offset: 0, 0
+  index: -1
+ratKingRightAttack10
+  rotate: false
+  xy: 485, 2000
+  size: 485, 500
+  orig: 485, 500
+  offset: 0, 0
+  index: -1
+ratKingRightAttack11
+  rotate: false
+  xy: 0, 2500
+  size: 485, 500
+  orig: 485, 500
+  offset: 0, 0
+  index: -1
+ratKingRightAttack12
+  rotate: false
+  xy: 485, 2500
+  size: 485, 500
+  orig: 485, 500
+  offset: 0, 0
+  index: -1
+ratKingRightAttack13
+  rotate: false
+  xy: 0, 3000
+  size: 485, 500
+  orig: 485, 500
   offset: 0, 0
   index: -1

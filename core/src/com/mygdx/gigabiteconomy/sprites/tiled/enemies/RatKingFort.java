@@ -7,7 +7,7 @@ import com.mygdx.gigabiteconomy.sprites.tiled.Player;
 import java.util.LinkedList;
 
 public class RatKingFort extends Enemy {
-    private static final String BASE_PATH = "level1";
+    private static final String BASE_PATH = "ratking";
     private static final float DEFAULT_HEALTH = 200f;
     private static final float DEFAULT_DELTAHORIZ = 2f;
     private static final float DEFAULT_DELTAVERT = 1.5f;
@@ -25,7 +25,7 @@ public class RatKingFort extends Enemy {
      * @param y            position of Tile (within tile grid) to place sprite
      */
     public RatKingFort(int x, int y, Player targetEntity, RatKing overlord) {
-        super(BASE_PATH, MovingSprite.Weapon.BAT, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, 2f, 1.5f, DEFAULT_HORIZAGROTILES, DEFAULT_VERTAGROTILES, DEFAULT_HEALTH, new LinkedList<MovingSprite.DIRECTION>());
+        super(BASE_PATH, Weapon.BOXFORT, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, 2f, 1.5f, DEFAULT_HORIZAGROTILES, DEFAULT_VERTAGROTILES, DEFAULT_HEALTH, new LinkedList<MovingSprite.DIRECTION>());
         this.overlord = overlord;
         overlord.setParcelFort(this);
     }
