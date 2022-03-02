@@ -18,7 +18,7 @@ public class RatKing extends Enemy {
     private static final int DEFAULT_WIDTH = 1;
     private static final int DEFAULT_HEIGHT = 1;
     private static final int DEFAULT_VERTAGROTILES = 5;
-    private static final int DEFAULT_HORIZAGROTILES = 5;
+    private static final int DEFAULT_HORIZAGROTILES = 20;
 
     private LevelScreen level;
     private RatKingFort fort;

@@ -39,6 +39,9 @@ public class ThrowingParcel extends Enemy {
         ));
     }
 
+    @Override
+    public void agro_action() {};
+
 //    @Override
 //    public void updateTextureRegions(DIRECTION directionFacing) {
 //        /**
@@ -54,17 +57,22 @@ public class ThrowingParcel extends Enemy {
 
     @Override
     public boolean move(float delta) throws TileMovementException {
-        boolean ret = super.move(delta);
-        if (!ret) return false;
+
         System.out.println(String.format("Currently on: %d %d", getCurrentTiles().get(0).getPositionTile()[0], getCurrentTiles().get(0).getPositionTile()[1]));
 
-        if (getTileManager().isGroupOccupiedBy(getTargetEntity(), new ArrayList<>(Arrays.asList(getTileManager().getAdjacentTiles(getCurrentTiles().get(0)))))) {
+        Tile nextTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), DIRECTION.WEST, 1);
+
+        if (nextTile == null) {
+            destroy();
+            return false;
+        } else if (nextTile.getOccupiedBy() == getTargetEntity()) {
             System.out.println(String.format("Launching attack on %f %f", getX(), getY()));
             launchAttack();
             destroy();
+            return false;
         }
+        setAttacking(false);
 
-
-        return true;
+        return super.move(delta);
     }
 }

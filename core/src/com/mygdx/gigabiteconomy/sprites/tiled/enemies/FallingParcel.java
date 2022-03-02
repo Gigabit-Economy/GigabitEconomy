@@ -4,16 +4,19 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.screens.TileManager;
 import com.mygdx.gigabiteconomy.sprites.tiled.*;
 
 import java.util.LinkedList;
 
-public class FallingParcel extends TiledObject {
+public class FallingParcel extends TiledObject implements Disposable {
 
     private MovingAnimation falling;
     private TextureRegion currentRegion;
+    private TextureAtlas ta;
+    private Array<TextureAtlas.AtlasRegion> regions;
     private float[] tilePosition;
 
     private Tile tileOn;
@@ -25,8 +28,10 @@ public class FallingParcel extends TiledObject {
 
         this.x = x; this.y = y;
 
-        Array<TextureAtlas.AtlasRegion> regions = new TextureAtlas("finished_assets/enemies/ratking/fallingBox.txt").getRegions();
-        falling = new MovingAnimation(1/14f, regions, false);
+        ta = new TextureAtlas("finished_assets/enemies/ratking/fallingBox.txt");
+        regions = ta.getRegions();
+
+        falling = new MovingAnimation<TextureRegion>(1/14f, regions, false);
         currentRegion = regions.get(0);
 
 
@@ -39,7 +44,7 @@ public class FallingParcel extends TiledObject {
             tileOn.setOwned(this);
             tilePosition = tileOn.getTileCoords();
         }
-        if (falling.isFinished(delta)) dispose();
+        if (falling.isFinished(delta)) destroy();
 
         currentRegion = (TextureRegion) falling.runAnimation(delta);
 
@@ -50,8 +55,7 @@ public class FallingParcel extends TiledObject {
         return tileOn;
     }
 
-    @Override
-    public void dispose() {
+    public void destroy() {
         TiledObject occupiedBy = tileOn.getOccupiedBy();
         if (occupiedBy instanceof MovingSprite) {
             ((MovingSprite) occupiedBy).attack(MovingSprite.Weapon.GOLF);
@@ -59,5 +63,14 @@ public class FallingParcel extends TiledObject {
         tileOn.setOwned(null);
         getTileManager().removeFromRows(this);
 
+        dispose();
+
+
+    }
+
+
+    @Override
+    public void dispose() {
+        ta.dispose();
     }
 }

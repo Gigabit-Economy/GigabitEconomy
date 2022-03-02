@@ -64,6 +64,7 @@ public abstract class Enemy extends MovingSprite {
         this.agroTileVals[1] = this.agroTileVals[3] = horizAgroTiles;
 
         this.movePath = movePath;
+        this.movePath = movePath;
         agroMovePath = setAgroPath();
         movementPaths.put("move", movePath);
         movementPaths.put("agro", agroMovePath);
