@@ -15,7 +15,7 @@ import java.util.*;
 
 public class RatKing extends Enemy {
     private static final float DEFAULT_HEALTH = 350f;
-    private static final float DEFAULT_DELTAHORIZ = 15f;
+    private static final float DEFAULT_DELTAHORIZ = 20f;
     private static final float DEFAULT_DELTAVERT = 4f;
     private static final int DEFAULT_WIDTH = 8;
     private static final int DEFAULT_HEIGHT = 3;
