@@ -60,7 +60,7 @@ public class TileManager implements Disposable {
         }
     }
 
-    private Tile getTile(int x, int y) {
+    public Tile getTile(int x, int y) {
         try {
             return tileArray[x][y]; //This will need to TileMovementException
         } catch (ArrayIndexOutOfBoundsException e) {

@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.gigabiteconomy.screens.Tile;
+import com.mygdx.gigabiteconomy.screens.TileManager;
 import com.mygdx.gigabiteconomy.sprites.tiled.Enemy;
 import com.mygdx.gigabiteconomy.sprites.tiled.MovingAnimation;
 import com.mygdx.gigabiteconomy.sprites.tiled.Player;
@@ -17,18 +19,29 @@ public class FallingParcel extends TiledObject {
     private TextureRegion currentRegion;
     private float[] tilePosition;
 
-    public FallingParcel(float x, float y, int height, int width) {
-        super(x, y, height, width);
+    private Tile tileOn;
+    private int x; private int y;
+
+    public FallingParcel(int x, int y) {
+        super(40, 8, 1, 1); //Setting occupied tile beyond RK
+        System.out.println("Creating new parcel");
+
+        this.x = x; this.y = y;
 
         Array<TextureAtlas.AtlasRegion> regions = new TextureAtlas("finished_assets/enemies/ratking/fallingBox.txt").getRegions();
         falling = new MovingAnimation(1/14f, regions, false);
         currentRegion = regions.get(0);
 
-        tilePosition = getCurrentTiles().get(0).getTileCoords();
+
     }
 
     @Override
     public void drawOn(SpriteBatch batch, float delta) {
+        if (tileOn == null) {
+            tileOn = getTileManager().getTile(x, y);
+            tileOn.setOwned(this);
+            tilePosition = tileOn.getTileCoords();
+        }
         if (falling.isFinished(delta)) dispose();
 
         currentRegion = (TextureRegion) falling.runAnimation(delta);
@@ -36,9 +49,14 @@ public class FallingParcel extends TiledObject {
         batch.draw(currentRegion, tilePosition[0], tilePosition[1]);
     }
 
+    public Tile getOwnedTile() {
+        return tileOn;
+    }
+
     @Override
     public void dispose() {
-        getCurrentTiles();
+        tileOn.setOwned(null);
+        getTileManager().removeFromRows(this);
 
     }
 }

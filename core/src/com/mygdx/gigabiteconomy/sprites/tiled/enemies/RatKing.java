@@ -29,6 +29,10 @@ public class RatKing extends Enemy {
 
     private MovingAnimation stunned;
 
+    private FallingParcel parcelFalling;
+
+    private Random rand = new Random();
+
 
     /**
      * Create a new Enemy sprite (MovingSprite)
@@ -80,13 +84,17 @@ public class RatKing extends Enemy {
         TileManager tm = getTileManager();
 
         if (fort != null)  {
+            //Throw box
+            if (parcelFalling == null || parcelFalling.getOwnedTile().getOwnedBy() == null) {
+                parcelFalling = new FallingParcel(rand.nextInt(10)+10, rand.nextInt(6)+2);
+                level.addSprite(parcelFalling);
+            }
+
+        } else {
             if ((getPath() != getPaths().get("charge") && getPath().peek() != DIRECTION.EAST)  && !(getCurrentTiles().get(0).getPositionTile()[0] < initX)) {
                 System.out.println("CHANRNFAGINGANG");
                 setPath("charge");
             }
-        } else {
-            //Throw box
-            level.addSprite(new FallingParcel(10, 5, 1, 1));
         }
 
 
