@@ -8,10 +8,7 @@ import com.mygdx.gigabiteconomy.sprites.tiled.MovingAnimation;
 import com.mygdx.gigabiteconomy.sprites.tiled.MovingSprite;
 import com.mygdx.gigabiteconomy.sprites.tiled.Player;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Random;
+import java.util.*;
 
 public class RatKing extends Enemy {
     private static final String BASE_PATH = "finished_assets/enemies/ratking";
@@ -93,12 +90,17 @@ public class RatKing extends Enemy {
 
                 }
             } else if (randy > 50) {
-                level.addSprite(new ThrowingParcel(24, getTargetEntity().getCurrentTiles().get(0).getPositionTile()[1], getTargetEntity()));
+                if (tm.getTile(24, getCurrentTiles().get(0).getPositionTile()[1]).getOwnedBy() == null) {
+                    ThrowingParcel throwingParcel = new ThrowingParcel(24, getCurrentTiles().get(0).getPositionTile()[1], getTargetEntity());
+                    level.addEnemies(new ArrayList<Enemy>(Collections.singletonList(throwingParcel)));
+                    throwingParcel.hideHealthBar();
+                } else {
+                    System.out.println("THIS Y IS OCCUPIED!");
+                }
             }
             setAttacking(true);
         } else {
             if ((getPath() != getPaths().get("charge") && getPath().peek() != DIRECTION.EAST)  && !(getCurrentTiles().get(0).getPositionTile()[0] < initX)) {
-                System.out.println("CHANRNFAGINGANG");
                 setPath("charge");
             }
         }

@@ -272,7 +272,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
             textureRegion = (TextureRegion) attackAnimation.runAnimation(delta);
             //Checking if animation finished
             if (attackAnimation.isFinished(delta)) {
-                System.out.println("Finished attacking");
+                //System.out.println("Finished attacking");
                 launchAttack();
                 setAttacking(false);
             } else {
@@ -410,7 +410,6 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
                 TiledObject adjacentSprite = t.getOccupiedBy();
                 if (adjacentSprite instanceof MovingSprite && adjacentSprite != this) {
                     if (this instanceof Enemy && adjacentSprite instanceof Enemy) {
-                        System.out.println(String.format("Trying to attack %d %d", t.getPositionTile()[0], t.getPositionTile()[1]));
                         continue;
                     }
                     ((MovingSprite) adjacentSprite).attack(weapon);
@@ -457,7 +456,6 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      */
     public void setAttacking(boolean attacking) {
         this.attacking = attacking;
-        System.out.println(String.format("Attacking: %s", attacking));
     }
 
     public enum Weapon {

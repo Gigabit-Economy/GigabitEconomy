@@ -79,6 +79,10 @@ public abstract class Enemy extends MovingSprite {
         return ret;
     }
 
+    public void setAgroPath(LinkedList<DIRECTION> path) {
+        movementPaths.put("agro", path);
+    }
+
     /**
      * Add a health bar to be displayed above the Enemy
      *
@@ -126,6 +130,10 @@ public abstract class Enemy extends MovingSprite {
 
     public HashMap<String, Queue<DIRECTION>> getPaths() {
         return movementPaths;
+    }
+
+    public void hideHealthBar() {
+        healthBar.setShow(false);
     }
 
 

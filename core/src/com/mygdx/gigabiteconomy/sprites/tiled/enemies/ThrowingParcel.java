@@ -12,9 +12,9 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 public class ThrowingParcel extends Enemy {
-    private static final String BASE_PATH = "finished_assets/enemies/ratking";
+    private static final String BASE_PATH = "finished_assets/player";
     private static final float DEFAULT_HEALTH = 1f;
-    private static final float DEFAULT_DELTAHORIZ = 13f;
+    private static final float DEFAULT_DELTAHORIZ = 9f;
     private static final float DEFAULT_DELTAVERT = 1.5f;
     private static final int DEFAULT_WIDTH = 1;
     private static final int DEFAULT_HEIGHT = 1;
@@ -32,27 +32,34 @@ public class ThrowingParcel extends Enemy {
                         DIRECTION.WEST, DIRECTION.WEST
                 )
         ));
+        setAgroPath(new LinkedList<>(
+                Arrays.asList(
+                        DIRECTION.WEST, DIRECTION.WEST
+                )
+        ));
     }
 
-    @Override
-    public void updateTextureRegions(DIRECTION directionFacing) {
-        /**
-         * Always facing WEST
-         * Once comes in contact with anything it'll inflict damage
-         * Only needs to run once
-         */
-
-
-        setMovementAnimation("finished_assets/enemies/ratking/fallingBox.txt");
-        setAttackAnimation("finished_assets/enemies/ratking/fallingBox.txt");
-    }
+//    @Override
+//    public void updateTextureRegions(DIRECTION directionFacing) {
+//        /**
+//         * Always facing WEST
+//         * Once comes in contact with anything it'll inflict damage
+//         * Only needs to run once
+//         */
+//
+//
+//        setMovementAnimation("finished_assets/enemies/ratking/fallingBox.txt");
+//        setAttackAnimation("finished_assets/enemies/ratking/fallingBox.txt");
+//    }
 
     @Override
     public boolean move(float delta) throws TileMovementException {
         boolean ret = super.move(delta);
         if (!ret) return false;
+        System.out.println(String.format("Currently on: %d %d", getCurrentTiles().get(0).getPositionTile()[0], getCurrentTiles().get(0).getPositionTile()[1]));
 
-        if (isAttacking() || getTileManager().isGroupOccupiedBy(getTargetEntity(), new ArrayList<>(Arrays.asList(getTileManager().getAdjacentTiles(getCurrentTiles().get(0)))))) {
+        if (getTileManager().isGroupOccupiedBy(getTargetEntity(), new ArrayList<>(Arrays.asList(getTileManager().getAdjacentTiles(getCurrentTiles().get(0)))))) {
+            System.out.println(String.format("Launching attack on %f %f", getX(), getY()));
             launchAttack();
             destroy();
         }
