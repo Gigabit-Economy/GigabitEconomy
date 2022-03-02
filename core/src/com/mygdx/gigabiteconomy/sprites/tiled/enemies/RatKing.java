@@ -79,15 +79,16 @@ public class RatKing extends Enemy {
      */
     @Override
     public void agro_action() {
-        if (stunned != null || isAttacking()) return;
+        if (stunned != null) return;
 
         TileManager tm = getTileManager();
 
-        if (fort != null)  {
+        if (fort != null && !isAttacking())  {
             //Throw box
             if (parcelFalling == null || parcelFalling.getOwnedTile().getOwnedBy() == null) {
                 parcelFalling = new FallingParcel(rand.nextInt(20)+5, rand.nextInt(6)+2); //Spawn relative to player location
                 level.addSprite(parcelFalling);
+                setAttacking(true);
             }
 
         } else {
@@ -96,8 +97,6 @@ public class RatKing extends Enemy {
                 setPath("charge");
             }
         }
-
-        setAttacking(true);
 
 
 //        if ((new Random()).nextInt(10)%2 == 0) {
