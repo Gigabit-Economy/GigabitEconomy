@@ -33,6 +33,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
 
     private DIRECTION directionMoving = null;
     private DIRECTION directionFacing = DIRECTION.EAST;
+    private DIRECTION latitude = DIRECTION.EAST;
 
     private boolean moving;
     // Velocity for this moving object
@@ -110,11 +111,12 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      * Called when directionFacing or weapon is changed.
      */
     public void updateTextureRegions(DIRECTION directionFacing) {
+        if (directionFacing == DIRECTION.NORTH || directionMoving == DIRECTION.SOUTH) {
+            directionFacing = this.latitude;
+        }
+
         String spriteDirection;
         switch (directionFacing) {
-            case NORTH: //direction at start should always be east
-            case SOUTH:
-                return;
             case WEST:
                 spriteDirection = "Left";
                 break;
@@ -168,7 +170,6 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         this.attackAnimation = new MovingAnimation<TextureRegion>(duration, regions, true);
     }
 
-
     /**
      * Set the direction the sprite is facing (and therefore moves in).
      *
@@ -176,6 +177,11 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
      */
     public void setDirectionMovement(MovingSprite.DIRECTION dir) {
         directionMoving = dir;
+
+        if (directionMoving == DIRECTION.WEST || directionMoving == DIRECTION.EAST) {
+            this.latitude = directionMoving;
+        }
+
         if (directionMoving == null) {
             deltaMove.x = 0;
             deltaMove.y = 0;

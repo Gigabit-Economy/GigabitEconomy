@@ -76,7 +76,6 @@ public class LevelCompleteScreen implements Screen {
         levelCompletedTable.add(levelCompletedNextLevelButton).bottom().padTop(50);
         levelCompletedTable.row();
 
-
         // Add click listener for buttons
         ClickListener buttonsListener = new ClickListener() {
             @Override
