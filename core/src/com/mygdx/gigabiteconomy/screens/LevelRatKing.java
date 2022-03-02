@@ -67,6 +67,7 @@ public class LevelRatKing extends LevelScreen {
 
         addPlayer(player);
         player.new PlayerHealthBar(director);
+        player.hideParcels();
         addEnemies(boxes);
         for (Enemy enemy : boxes) {
             enemy.new EnemyHealthBar(director);

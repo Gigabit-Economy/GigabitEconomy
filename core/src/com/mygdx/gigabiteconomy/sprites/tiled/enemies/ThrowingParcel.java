@@ -14,7 +14,7 @@ import java.util.LinkedList;
 public class ThrowingParcel extends Enemy {
     private static final String BASE_PATH = "finished_assets/player";
     private static final float DEFAULT_HEALTH = 1f;
-    private static final float DEFAULT_DELTAHORIZ = 10f;
+    private static final float DEFAULT_DELTAHORIZ = 9f;
     private static final float DEFAULT_DELTAVERT = 1.5f;
     private static final int DEFAULT_WIDTH = 1;
     private static final int DEFAULT_HEIGHT = 1;
@@ -51,14 +51,12 @@ public class ThrowingParcel extends Enemy {
          */
 
 
-        setMovementAnimation("finished_assets/player/movement/katanaLeft.txt");
-        setAttackAnimation("finished_assets/player/attacks/katanaLeft.txt");
+        setMovementAnimation(1/14f, "finished_assets/player/movement/katanaLeft.txt");
+        setAttackAnimation(1/14f, "finished_assets/player/attacks/katanaLeft.txt");
     }
 
     @Override
     public boolean move(float delta) throws TileMovementException {
-
-        System.out.println(String.format("Currently on: %d %d", getCurrentTiles().get(0).getPositionTile()[0], getCurrentTiles().get(0).getPositionTile()[1]));
 
         Tile nextTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), DIRECTION.WEST, 1);
 

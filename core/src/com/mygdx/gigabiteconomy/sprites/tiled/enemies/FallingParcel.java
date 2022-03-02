@@ -31,7 +31,7 @@ public class FallingParcel extends TiledObject implements Disposable {
         ta = new TextureAtlas("finished_assets/enemies/ratking/fallingBox.txt");
         regions = ta.getRegions();
 
-        falling = new MovingAnimation<TextureRegion>(1/24f, regions, true);
+        falling = new MovingAnimation<TextureRegion>(1/14f, regions, false);
         currentRegion = regions.get(0);
 
 
@@ -39,12 +39,13 @@ public class FallingParcel extends TiledObject implements Disposable {
 
     @Override
     public void drawOn(SpriteBatch batch, float delta) {
+        if (falling.isFinished(delta)) destroy();
         if (tileOn == null) {
             tileOn = getTileManager().getTile(x, y);
             tileOn.setOwned(this);
             tilePosition = tileOn.getTileCoords();
         }
-        if (falling.isFinished(delta)) destroy();
+
 
         currentRegion = (TextureRegion) falling.runAnimation(delta);
 
@@ -64,13 +65,11 @@ public class FallingParcel extends TiledObject implements Disposable {
         getTileManager().removeFromRows(this);
 
         dispose();
-
-
     }
 
 
     @Override
     public void dispose() {
-        ta.dispose();
+        //ta.dispose();
     }
 }

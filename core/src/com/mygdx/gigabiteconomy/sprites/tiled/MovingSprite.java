@@ -1,5 +1,6 @@
 package com.mygdx.gigabiteconomy.sprites.tiled;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,6 +10,7 @@ import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.badlogic.gdx.utils.Disposable;
+import com.mygdx.gigabiteconomy.sprites.tiled.enemies.RatKing;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
@@ -87,6 +89,12 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         return textureRegion;
     }
 
+    public void setTextureRegion(TextureRegion textureRegion) {
+        if (this instanceof RatKing) {
+            this.textureRegion = textureRegion;
+        }
+    }
+
     @Override
     public void drawOn(SpriteBatch batch, float delta) {
         try {
@@ -130,28 +138,37 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         this.attackAnimation = new MovingAnimation<TextureRegion>(1/14f, new TextureAtlas(attackingConfig).getRegions(), false);
     }
 
+    public MovingAnimation<TextureRegion> getMovementAnimation() {
+        return this.movementAnimation;
+    }
+
+    public MovingAnimation<TextureRegion> getAttackAnimation() {
+        return this.attackAnimation;
+    }
+
+
     /**
      * Sets a custom movement animation
      * @param basePath
      */
-    public void setMovementAnimation(String basePath) {
+    public void setMovementAnimation(float duration, String basePath) {
 
         this.ta = new TextureAtlas(basePath);
         this.regions = ta.getRegions();
         this.textureRegion = regions.get(0);
-        this.movementAnimation = new MovingAnimation<TextureRegion>(1/14f, regions, true);
+        this.movementAnimation = new MovingAnimation<TextureRegion>(duration, regions, true);
     }
 
     /**
      * Sets a custom attack animation
      * @param basePath
      */
-    public void setAttackAnimation(String basePath) {
+    public void setAttackAnimation(float duration, String basePath) {
 
         this.ta = new TextureAtlas(basePath);
         this.regions = ta.getRegions();
         this.textureRegion = regions.get(0);
-        this.attackAnimation = new MovingAnimation<TextureRegion>(1/14f, regions, true);
+        this.attackAnimation = new MovingAnimation<TextureRegion>(duration, regions, true);
     }
 
 
@@ -273,6 +290,9 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
             //Checking if animation finished
             if (attackAnimation.isFinished(delta)) {
                 //System.out.println("Finished attacking");
+                if (this instanceof RatKing) {
+                    System.out.println("Launching attack for rat king");
+                }
                 launchAttack();
                 setAttacking(false);
             } else {
@@ -410,7 +430,11 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
                 TiledObject adjacentSprite = t.getOccupiedBy();
                 if (adjacentSprite instanceof MovingSprite && adjacentSprite != this) {
                     if (this instanceof Enemy && adjacentSprite instanceof Enemy) {
+                        System.out.println("Not attacking enemy");
                         continue;
+                    }
+                    if (this instanceof RatKing) {
+                        System.out.println("Laucnhing attack on " + adjacentSprite.getClass().getName());
                     }
                     ((MovingSprite) adjacentSprite).attack(weapon);
                 }
