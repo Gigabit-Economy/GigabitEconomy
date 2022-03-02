@@ -448,7 +448,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         if (paused) {
             return;
         }
-
+//
 //        // dispose of Tile Manager & its sprites (to dispose their texture/texture atlas)
 //        tileManager.dispose();
 //
