@@ -60,7 +60,8 @@ public class LevelCompleteScreen implements Screen {
         levelCompletedTable.row();
         
         String[] prevScores = levelScores.getAllScores();
-        String[] lastFewScores = new String[5];
+        String[] lastFewScores = {"0", "0", "0", "0", "0"};
+
         for (int i = 0; i < 5; i++) {
             lastFewScores[i] = prevScores [i];
         }

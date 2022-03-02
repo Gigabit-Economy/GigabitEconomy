@@ -3,6 +3,7 @@ package com.mygdx.gigabiteconomy;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.Gdx;
 import java.lang.String;
 
 public class GigabitEconomy extends Game {
+
     private OrthographicCamera camera;
     private ScreenViewport viewport;
 
@@ -23,6 +25,7 @@ public class GigabitEconomy extends Game {
 
     private static final String MUSIC_BASE_PATH = "finished_assets/music/";
     private Music backgroundMusic;
+
 
     @Override
     public void create() {
@@ -131,6 +134,7 @@ public class GigabitEconomy extends Game {
         // if a LevelScreen, record as lastPlayedLevel
         if (toSwitch instanceof LevelScreen) {
             this.lastPlayedLevel = toSwitch.getClass().getSimpleName();
+            System.out.println("Last plaeyd level: "+lastPlayedLevel);
         }
         // if returned to menu, reset fromPause & lastPlayedLevel (prevents from being taken back to exited level)
         else if (toSwitch instanceof MenuScreen) {

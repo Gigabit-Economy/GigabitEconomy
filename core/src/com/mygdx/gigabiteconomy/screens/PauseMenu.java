@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 
+
 /**
  * The pause menu screen
  */
@@ -138,11 +139,14 @@ public class PauseMenu implements Screen, InputProcessor {
                         pauseMenuTable.setBounds(0, 0, 1920, 1080);
                     }
                     else if (buttonName == "res1366") {
-                        Gdx.graphics.setWindowedMode(1366, 768);
+                        resize(1366,720);
+                     
+                        
+                        //LwjglApplicationConfiguration.lw = 1080;
                         pauseMenuTable.setBounds(0, 0, 1366, 768);
                     }
                     else if (buttonName == "res1280") {
-                        Gdx.graphics.setWindowedMode(1280, 720);
+                        
                         pauseMenuTable.setBounds(0, 0, 1280, 720);
                     }
                 } catch (Exception ex) {
