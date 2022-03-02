@@ -24,12 +24,7 @@ public class PlotScreen implements Screen{
 
     /**
      * A constructor for adding the details into a plotscreen.
-     *
      * @param director  the instance of the game director
-     * @param header    the title to be put at the top of the page
-     * @param body      the body of text explaining the level ahead
-     * @param levelName the String name formated for the screen changing
-     * 
      */
     
     public PlotScreen(GigabitEconomy director) {
@@ -41,15 +36,24 @@ public class PlotScreen implements Screen{
         bodyText = "[ Body ]";
 
     }
-
+    /**
+     * Add the title/header for the plot screen.
+     * @param title  text that makes up the title for a level
+     */
     public void addTitle(String title) {
         titleText = title;
     }
-
+    /**
+     * Add the title/header for the plot screen.
+     * @param body  text that makes up the body for a level
+     */
     public void addBody(String body) {
         bodyText = body;
     }
-
+    /**
+     * Button should be used to transition from the plotscreen to the actual leve
+     * @param body  String name, used in directory, to transition to level screen
+     */
     public void addButton(String nextLevelName) {
         levelName = nextLevelName;
     }
