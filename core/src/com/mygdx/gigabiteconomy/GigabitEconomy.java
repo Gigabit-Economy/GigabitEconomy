@@ -171,12 +171,10 @@ public class GigabitEconomy extends Game {
     public void enableMusic(boolean enable) {
         if (enable == true) {
 
-            System.out.println(isMusicPlaying());
             this.backgroundMusic.play();
 
         }
         if (enable == false) {
-            System.out.println(isMusicPlaying());
             this.backgroundMusic.stop();
 
         }

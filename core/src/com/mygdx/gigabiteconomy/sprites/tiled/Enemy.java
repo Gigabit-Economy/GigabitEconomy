@@ -109,7 +109,6 @@ public abstract class Enemy extends MovingSprite {
 
     public void addPath(String name, Queue<DIRECTION>pathList) {
         if (movementPaths.containsKey(name)) {
-            System.out.println("Already contains this path");
         }
         movementPaths.put(name, pathList);
     }
@@ -306,7 +305,6 @@ public abstract class Enemy extends MovingSprite {
 
         //Only run following code if we are still
         if (checkAgro()) {
-            System.out.println("Agro set to true");
             setPath("agro");
         }
         super.setDirectionMovement(currentPath.remove());

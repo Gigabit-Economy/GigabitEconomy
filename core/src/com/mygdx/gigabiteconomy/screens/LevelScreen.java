@@ -161,9 +161,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
         this.backgroundSprite = new Sprite(backgroundTexture);
 
-        System.out.println(
-                "Texture dimensions: h:" + backgroundTexture.getHeight() + " w:" + backgroundTexture.getWidth());
-
         this.batch = new SpriteBatch();
         this.font = new BitmapFont();
     }
@@ -298,7 +295,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      */
     @Override
     public boolean keyDown(int keycode) {
-        System.out.println("key pressed: " + keycode);
 
         /**
          * Movement calculated by:
@@ -310,7 +306,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
                 keycode == Input.Keys.RIGHT || keycode == Input.Keys.W ||
                 keycode == Input.Keys.UP || keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
             // Move player
-            System.out.println("Moving");
             player.handleMovement(keycode);
         } else if (keycode == Input.Keys.P || keycode == Input.Keys.ESCAPE) {
             // Pause play

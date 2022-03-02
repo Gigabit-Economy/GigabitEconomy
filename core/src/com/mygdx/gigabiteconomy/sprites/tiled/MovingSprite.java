@@ -68,8 +68,6 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         velocity.x = deltaHoriz;
         velocity.y = deltaVert;
 
-        System.out.println(String.format("Setting velocity to %f %f", deltaHoriz, deltaVert));
-
         setWeapon(weapon);
     }
 
@@ -100,7 +98,6 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         try {
             move(delta);
         } catch (TileMovementException ex) {
-            System.out.println("Sprite was blocked");
         }
 
         float offsetX = ((TextureAtlas.AtlasRegion)textureRegion).offsetX;
@@ -289,10 +286,6 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
             textureRegion = (TextureRegion) attackAnimation.runAnimation(delta);
             //Checking if animation finished
             if (attackAnimation.isFinished(delta)) {
-                //System.out.println("Finished attacking");
-                if (this instanceof RatKing) {
-                    System.out.println("Launching attack for rat king");
-                }
                 launchAttack();
                 setAttacking(false);
             } else {
@@ -430,11 +423,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
                 TiledObject adjacentSprite = t.getOccupiedBy();
                 if (adjacentSprite instanceof MovingSprite && adjacentSprite != this) {
                     if (this instanceof Enemy && adjacentSprite instanceof Enemy) {
-                        System.out.println("Not attacking enemy");
                         continue;
-                    }
-                    if (this instanceof RatKing) {
-                        System.out.println("Laucnhing attack on " + adjacentSprite.getClass().getName());
                     }
                     ((MovingSprite) adjacentSprite).attack(weapon);
                 }

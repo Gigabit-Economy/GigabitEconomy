@@ -36,13 +36,6 @@ public class TileManager implements Disposable {
         initialX=x; initialY=y;
 
         this.sideLength = sideLength;
-        System.out.println("Side length: " + sideLength);
-        //Basic checking
-        if (!(maxHeight%sideLength!=0 || maxWidth%sideLength!=0)) {
-            System.out.println(">>> WARNING: maxHeight/maxWidth must be divisible by sideLength <<<"); //Throw exception here
-            System.out.println(">>>        : Whole number of tiles needed within given bounds!  <<<");
-            System.out.println(">>>        : Change sideLength?                                 <<<");
-        }
         gridHeight = maxHeight/sideLength;
         gridWidth = maxWidth/sideLength;
         tileArray = new Tile[gridWidth][gridHeight];
@@ -50,7 +43,6 @@ public class TileManager implements Disposable {
         for (int i=0; i<gridWidth; i++) {
             for (int ii=0; ii<gridHeight; ii++) {
                 tileArray[i][ii] = new Tile((x+(sideLength*i)), (y+(sideLength*ii)), sideLength, i, ii);
-                //System.out.println("Tile created at " + (i) + " " + (ii));
             }
         }
         //Creating array to store objects in order
@@ -168,7 +160,6 @@ public class TileManager implements Disposable {
                 if (toAdd.getOccupiedBy() instanceof StaticSprite) {
                     return ret;
                 }
-                //System.out.println(String.format("%d %d", x, y));
                 if (direction.dyMult == 0) x = (direction.dxMult < 0) ? x-1 : x+1;
                 if (direction.dxMult == 0) y = (direction.dyMult < 0) ? y-1 : y+1;
             }
@@ -186,14 +177,9 @@ public class TileManager implements Disposable {
      */
     public MovingSprite.DIRECTION findDirectionFrom(Tile curr, Tile next) {
         // For each direction, we need to find corresponding row or col, then see if that's contained
-
-        //System.out.println(String.format("Initiating search from [%d, %d] to [%d, %d]", curr.getPositionTile()[0], curr.getPositionTile()[1], next.getPositionTile()[0], next.getPositionTile()[1]));
-
         for (MovingSprite.DIRECTION direction : MovingSprite.DIRECTION.values()) {
-            //System.out.println("ON DIRECTION" + direction);
             ArrayList<Tile> toSearch = getSelectiveDir(curr.getPositionTile()[0], curr.getPositionTile()[1], direction);
             if (toSearch.contains(next)) {
-                //System.out.println("In direction: " + direction);
                 return direction;
             }
         }
@@ -322,7 +308,6 @@ public class TileManager implements Disposable {
                 }
             }
         }
-        System.out.println(occupied);
     }
 
     /**
