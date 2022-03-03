@@ -11,7 +11,7 @@ public class LevelThreeScreen extends LevelScreen {
     // Level string
     private static final String LEVEL = "ratking";
     // Level screen backgro1.5und texture
-    private static final String BACKGROUND_TEXTURE_PNG = "levels/level2.png";
+    private static final String BACKGROUND_TEXTURE_PNG = "levels/level3.png";
 
     // Player character
     private final MovingSprite.Weapon playerWeapon = MovingSprite.Weapon.KATANA;
@@ -60,7 +60,7 @@ public class LevelThreeScreen extends LevelScreen {
         super(director, BACKGROUND_TEXTURE_PNG);
 
         for (int[] coords : fenceCoords) {
-            staticSprites.add(new StaticSprite("static_sprites/level1/fence.png", coords[0], coords[1], 1, 1));
+            staticSprites.add(new StaticSprite("static_sprites/level2/fence.png", coords[0], coords[1], 1, 1));
         }
 
         for (int[] coords : canCoords) {

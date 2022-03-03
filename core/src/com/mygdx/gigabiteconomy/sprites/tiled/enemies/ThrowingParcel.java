@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 public class ThrowingParcel extends Enemy {
-    private static final String BASE_PATH = "player";
+    private static final String BASE_PATH = "ratking";
     private static final float DEFAULT_HEALTH = 1f;
     private static final float DEFAULT_DELTAHORIZ = 9f;
     private static final float DEFAULT_DELTAVERT = 1.5f;
@@ -27,7 +27,7 @@ public class ThrowingParcel extends Enemy {
      * Creates a new parcel for RatKing to throw
      */
     public ThrowingParcel(int x, int y, Player targetEntity) {
-        super(BASE_PATH, Weapon.KATANA, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, DEFAULT_DELTAHORIZ, DEFAULT_DELTAVERT, DEFAULT_HORIZAGROTILES, DEFAULT_VERTAGROTILES, DEFAULT_HEALTH, new LinkedList<>(
+        super(BASE_PATH, Weapon.THROWBOX, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, DEFAULT_DELTAHORIZ, DEFAULT_DELTAVERT, DEFAULT_HORIZAGROTILES, DEFAULT_VERTAGROTILES, DEFAULT_HEALTH, new LinkedList<>(
                 Arrays.asList(
                         DIRECTION.WEST, DIRECTION.WEST
                 )
@@ -51,8 +51,8 @@ public class ThrowingParcel extends Enemy {
          */
 
 
-        setMovementAnimation(1/14f, "player/movement/katanaLeft.txt");
-        setAttackAnimation(1/14f, "player/attacks/katanaLeft.txt");
+        setMovementAnimation(1/14f, "enemies/ratking/throwbox.txt");
+        setAttackAnimation(1/14f, "enemies/ratking/throwbox.txt");
     }
 
     @Override

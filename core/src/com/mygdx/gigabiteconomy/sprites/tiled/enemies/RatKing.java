@@ -15,7 +15,7 @@ import java.util.*;
 
 public class RatKing extends Enemy {
     private static final float DEFAULT_HEALTH = 350f;
-    private static final float DEFAULT_DELTAHORIZ = 15f;
+    private static final float DEFAULT_DELTAHORIZ = 20f;
     private static final float DEFAULT_DELTAVERT = 4f;
     private static final int DEFAULT_WIDTH = 8;
     private static final int DEFAULT_HEIGHT = 3;
@@ -76,9 +76,11 @@ public class RatKing extends Enemy {
     @Override
     public void agro_action() {
         if (stunned != null) return;
-
         TileManager tm = getTileManager();
 
+        /**
+         * If the fort is still there, and RK is not already attacking, pick from attacks
+         */
         if (fort != null && !isAttacking()) {
             //Throw box
             int randy = rand.nextInt(100);
@@ -88,29 +90,28 @@ public class RatKing extends Enemy {
                         parcelFalling = new FallingParcel(rand.nextInt(20) + 5, rand.nextInt(6) + 2); //Spawn relative to player location
                         level.addSprite(parcelFalling);
                     }
-
-
                 }
+                setAttacking(true);
             } else if (randy > 85) {
                 if (tm.getTile(24, getCurrentTiles().get(0).getPositionTile()[1]).getOwnedBy() == null) {
                     ThrowingParcel throwingParcel = new ThrowingParcel(24, getCurrentTiles().get(0).getPositionTile()[1], getTargetEntity());
                     level.addEnemies(new ArrayList<Enemy>(Collections.singletonList(throwingParcel)));
                     throwingParcel.hideHealthBar();
-                } 
+
+                } else {
+                    System.out.println("THIS Y IS OCCUPIED!");
+                }
+                setAttacking(true);
             }
-            setAttacking(true);
-        } else if (!isAttacking()) {
+
+        /**
+         * If fort has been destroyed, charge
+         */
+        } else {
+            System.out.println("Box fort destroyed, setting to charging");
             if ((getPath() != getPaths().get("charge") && getPath().peek() != DIRECTION.EAST)  && !(getCurrentTiles().get(0).getPositionTile()[0] < initX)) {
                 setPath("charge");
             }
-
-            for (Tile t : tm.getNextTiles(this, getDirectionMoving(), 1)) {
-                if (t == null) continue;
-                if (t.isOccupiedBy(getTargetEntity())) {
-                    launchAttack();
-                }
-            }
-
         }
 
 
@@ -150,14 +151,38 @@ public class RatKing extends Enemy {
         }
 
         boolean ret = super.move(delta);
+        if(isAttacking()) return false;
 
+        /**
+         * Make sure we've arrived at the tile and we're not blocked
+         */
         if (!ret) return false;
 
+
+        /**
+         * Check if next tile is occupied by target entity
+         */
+        for (Tile t : getTileManager().getNextTiles(this, getDirectionMoving(), 1)) {
+            if (t == null) continue;
+            /**
+             * Attack any MovingSprite in front
+             */
+            if (t.getOccupiedBy() instanceof MovingSprite && !(t.getOccupiedBy() instanceof RatKing)) {
+                setAttacking(true);
+            }
+        }
+
+        /**
+         * If we're at end of map, turn around
+         */
         if (getCurrentTiles().get(0).getPositionTile()[0] == 0) {
             setPath(new LinkedList<>(
                     Arrays.asList(
                             DIRECTION.EAST, DIRECTION.EAST, DIRECTION.EAST, DIRECTION.EAST
                     )));
+        /**
+         * If we're back at fort run stun
+         */
         } else if ((getCurrentTiles().get(0).getPositionTile()[0] > initX) && getPath().peek() == DIRECTION.EAST) {
             setPath("agro");
             setMovementAnimation(1/8f, "enemies/ratking/dazed.txt");
