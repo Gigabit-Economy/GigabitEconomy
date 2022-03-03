@@ -1,5 +1,5 @@
 batRight.png
-size: 368, 1680
+size: 736, 1680
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -8,47 +8,96 @@ baseballRightAttack1
   xy: 0, 0
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 0, 0
   index: -1
 baseballRightAttack2
+  rotate: false
+  xy: 368, 0
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+baseballRightAttack3
   rotate: false
   xy: 0, 240
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 0, 0
   index: -1
-baseballRightAttack3
+baseballRightAttack4
+  rotate: false
+  xy: 368, 240
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+baseballRightAttack5
   rotate: false
   xy: 0, 480
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 0, 0
   index: -1
-baseballRightAttack4
+baseballRightAttack6
+  rotate: false
+  xy: 368, 480
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+baseballRightAttack7
   rotate: false
   xy: 0, 720
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 0, 0
   index: -1
-baseballRightAttack5
+baseballRightAttack8
+  rotate: false
+  xy: 368, 720
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+baseballRightAttack9
   rotate: false
   xy: 0, 960
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 0, 0
   index: -1
-baseballRightAttack6
+baseballRightAttack10
+  rotate: false
+  xy: 368, 960
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+baseballRightAttack11
   rotate: false
   xy: 0, 1200
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 0, 0
   index: -1
-baseballRightAttack7
+baseballRightAttack12
+  rotate: false
+  xy: 368, 1200
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+baseballRightAttack13
   rotate: false
   xy: 0, 1440
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 0, 0
+  index: -1
+baseballRightAttack14
+  rotate: false
+  xy: 368, 1440
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
   index: -1
