@@ -1,0 +1,54 @@
+batLeft.png
+size: 368, 1680
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+baseballRatLeftWalk1
+  rotate: false
+  xy: 0, 0
+  size: 368, 240
+  orig: 368, 240
+  offset: 126, 0
+  index: -1
+baseballRatLeftWalk2
+  rotate: false
+  xy: 0, 240
+  size: 368, 240
+  orig: 368, 240
+  offset: 126, 0
+  index: -1
+baseballRatLeftWalk3
+  rotate: false
+  xy: 0, 480
+  size: 368, 240
+  orig: 368, 240
+  offset: 126, 0
+  index: -1
+baseballRatLeftWalk4
+  rotate: false
+  xy: 0, 720
+  size: 368, 240
+  orig: 368, 240
+  offset: 126, 0
+  index: -1
+baseballRatLeftWalk5
+  rotate: false
+  xy: 0, 960
+  size: 368, 240
+  orig: 368, 240
+  offset: 126, 0
+  index: -1
+baseballRatLeftWalk6
+  rotate: false
+  xy: 0, 1200
+  size: 368, 240
+  orig: 368, 240
+  offset: 126, 0
+  index: -1
+baseballRatLeftWalk7
+  rotate: false
+  xy: 0, 1440
+  size: 368, 240
+  orig: 368, 240
+  offset: 126, 0
+  index: -1

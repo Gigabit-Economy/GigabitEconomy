@@ -21,7 +21,7 @@ public class GigabitEconomy extends Game {
 
     private Screen fromPause;
 
-    private static final String MUSIC_BASE_PATH = "finished_assets/music/";
+    private static final String MUSIC_BASE_PATH = "music/";
     private Music backgroundMusic;
 
     @Override
@@ -103,9 +103,9 @@ public class GigabitEconomy extends Game {
                 toSwitch = new LevelFailedScreen(this);
                 setMusic("Menu");
                 break;
+
             case "LevelOnePlotScreen":
                 toSwitch = new LevelOnePlotScreen(this);
-                setMusic("LevelOne");
                 break;
             case "LevelOneScreen":
                 if (fromPause != null) {
@@ -119,18 +119,27 @@ public class GigabitEconomy extends Game {
                 break;
             case "LeveTwoPlotScreen":
                 toSwitch = new LevelOnePlotScreen(this);
-                setMusic("LevelTwo");
                 break;
-
+            case "LevelTwoScreen":
+                if (fromPause != null) {
+                    setScreen(fromPause);
+                    this.fromPause = null;
+                    return;
+                } else {
+                    toSwitch = new LevelTwoScreen(this);
+                    setMusic("LevelTwo");
+                }
+                break;
             case "LevelThreePlotScreen":
                 toSwitch = new LevelRatKingPlotScreen(this);
+                break;
             case "LevelThreeScreen":
                 if (fromPause != null) {
                     setScreen(fromPause);
                     this.fromPause = null;
                     return;
                 } else {
-                    toSwitch = new LevelRatKing(this);
+                    toSwitch = new LevelThreeScreen(this);
                 }
                 break;
 
@@ -171,12 +180,10 @@ public class GigabitEconomy extends Game {
     public void enableMusic(boolean enable) {
         if (enable == true) {
 
-            System.out.println(isMusicPlaying());
             this.backgroundMusic.play();
 
         }
         if (enable == false) {
-            System.out.println(isMusicPlaying());
             this.backgroundMusic.stop();
 
         }

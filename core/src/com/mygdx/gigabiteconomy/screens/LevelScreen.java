@@ -14,6 +14,7 @@ import com.mygdx.gigabiteconomy.ScoreSystem;
 import com.mygdx.gigabiteconomy.exceptions.ParcelException;
 import com.mygdx.gigabiteconomy.exceptions.ScreenException;
 import com.mygdx.gigabiteconomy.sprites.tiled.*;
+import com.mygdx.gigabiteconomy.sprites.tiled.enemies.RatKing;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -84,6 +85,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      */
     public void addPlayer(Player player) {
         this.player = player;
+        player.addHealthBar(director);
         this.player.setLevel(this);
 
         addSprite(player);
@@ -97,6 +99,12 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      */
     public void addEnemies(ArrayList<Enemy> enemies) {
         this.enemies.addAll(enemies);
+        for (Enemy enemy : enemies) {
+            enemy.addHealthBar(director);
+            if (enemy instanceof RatKing) {
+                ((RatKing) enemy).setLevel(this);
+            }
+        }
         addSprites(enemies);
     }
 
@@ -152,9 +160,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
 
         this.backgroundSprite = new Sprite(backgroundTexture);
-
-        System.out.println(
-                "Texture dimensions: h:" + backgroundTexture.getHeight() + " w:" + backgroundTexture.getWidth());
 
         this.batch = new SpriteBatch();
         this.font = new BitmapFont();
@@ -290,7 +295,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      */
     @Override
     public boolean keyDown(int keycode) {
-        System.out.println("key pressed: " + keycode);
 
         /**
          * Movement calculated by:
@@ -302,7 +306,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
                 keycode == Input.Keys.RIGHT || keycode == Input.Keys.W ||
                 keycode == Input.Keys.UP || keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
             // Move player
-            System.out.println("Moving");
             player.handleMovement(keycode);
         } else if (keycode == Input.Keys.P || keycode == Input.Keys.ESCAPE) {
             // Pause play
@@ -440,12 +443,12 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         if (paused) {
             return;
         }
-
-        // dispose of Tile Manager & its sprites (to dispose their texture/texture atlas)
-        tileManager.dispose();
-
-        backgroundTexture.dispose();
-        batch.dispose();
-        font.dispose();
+//
+//        // dispose of Tile Manager & its sprites (to dispose their texture/texture atlas)
+//        tileManager.dispose();
+//
+//        backgroundTexture.dispose();
+//        batch.dispose();
+//        font.dispose();
     }
 }

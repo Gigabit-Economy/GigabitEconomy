@@ -1,0 +1,96 @@
+ratkingLeft.png
+size: 970, 3500
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ratkingLeftAttack1
+  rotate: false
+  xy: 0, 0
+  size: 485, 500
+  orig: 485, 500
+  offset: 0, 0
+  index: -1
+ratkingLeftAttack2
+  rotate: false
+  xy: 485, 0
+  size: 485, 500
+  orig: 485, 500
+  offset: 0, 0
+  index: -1
+ratkingLeftAttack3
+  rotate: false
+  xy: 0, 500
+  size: 485, 500
+  orig: 485, 500
+  offset: 0, 0
+  index: -1
+ratkingLeftAttack4
+  rotate: false
+  xy: 485, 500
+  size: 485, 500
+  orig: 485, 500
+  offset: 0, 0
+  index: -1
+ratkingLeftAttack5
+  rotate: false
+  xy: 0, 1000
+  size: 485, 500
+  orig: 485, 500
+  offset: 0, 0
+  index: -1
+ratkingLeftAttack6
+  rotate: false
+  xy: 485, 1000
+  size: 485, 500
+  orig: 485, 500
+  offset: 0, 0
+  index: -1
+ratkingLeftAttack7
+  rotate: false
+  xy: 0, 1500
+  size: 485, 500
+  orig: 485, 500
+  offset: 0, 0
+  index: -1
+ratkingLeftAttack8
+  rotate: false
+  xy: 485, 1500
+  size: 485, 500
+  orig: 485, 500
+  offset: 0, 0
+  index: -1
+ratkingLeftAttack9
+  rotate: false
+  xy: 0, 2000
+  size: 485, 500
+  orig: 485, 500
+  offset: 0, 0
+  index: -1
+ratkingLeftAttack10
+  rotate: false
+  xy: 485, 2000
+  size: 485, 500
+  orig: 485, 500
+  offset: 0, 0
+  index: -1
+ratkingLeftAttack11
+  rotate: false
+  xy: 0, 2500
+  size: 485, 500
+  orig: 485, 500
+  offset: 0, 0
+  index: -1
+ratkingLeftAttack12
+  rotate: false
+  xy: 485, 2500
+  size: 485, 500
+  orig: 485, 500
+  offset: 0, 0
+  index: -1
+ratkingLeftAttack13
+  rotate: false
+  xy: 0, 3000
+  size: 485, 500
+  orig: 485, 500
+  offset: 0, 0
+  index: -1

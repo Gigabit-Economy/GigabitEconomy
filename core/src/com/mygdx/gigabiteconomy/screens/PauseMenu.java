@@ -49,7 +49,7 @@ public class PauseMenu implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(inputMulti);
         
         // Skin defined in UI skin (commodore - hopefully we can use, looks really cool)
-        Skin style = new Skin(Gdx.files.internal("uiskin.json"));
+        Skin style = new Skin(Gdx.files.internal("ui_elements/ui_skin/uiskin.json"));
 
         if (pauseCount == 0) {
             pauseMenuTable = new Table();
@@ -103,6 +103,12 @@ public class PauseMenu implements Screen, InputProcessor {
             res1280Button.setName("res1280");
             pauseMenuTable.add(res1280Button);
 
+            pauseMenuTable.row();
+
+            TextButton levelResetButton = new TextButton("RESET LEVEL", style);
+            levelResetButton.setName("resetthelevel");
+            pauseMenuTable.add(levelResetButton);
+
             // Add click listeners for buttons
             ClickListener screenButtonsListener = new ClickListener() {
                 @Override
@@ -143,12 +149,25 @@ public class PauseMenu implements Screen, InputProcessor {
                     Gdx.app.error("Exception", String.format("Error changing resolution to %s", buttonName), ex);
                     System.exit(-1);
                 }
+
+                if(buttonName == "resetthelevel")
+                {
+                    try {
+                        String tempLastPlayedLevel = director.getLastPlayedLevel();
+                        director.switchScreen("MenuScreen");
+                        director.switchScreen(tempLastPlayedLevel);
+
+                    } catch (Exception ex) {
+                        Gdx.app.error("Exception", String.format("Error switching screen to" + director.getLastPlayedLevel()), ex);
+                    }        
+                }
                 }
             };
 
             res1280Button.addListener(resButtonsListener);
             res1366Button.addListener(resButtonsListener);
             res1920Button.addListener(resButtonsListener);
+            levelResetButton.addListener(resButtonsListener);
 
             ClickListener audioButtonListener = new ClickListener() {
                 @Override
@@ -207,9 +226,9 @@ public class PauseMenu implements Screen, InputProcessor {
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.P || keycode == Input.Keys.ESCAPE) {
             try {
-                director.switchScreen("LevelOneScreen");
+                director.switchScreen(director.getLastPlayedLevel());
             } catch (Exception ex) {
-                Gdx.app.error("Exception", String.format("Error switching screen to LevelOneScreen"), ex);
+                Gdx.app.error("Exception", String.format("Error switching screen back"), ex);
                 System.exit(-1);
             }
         }

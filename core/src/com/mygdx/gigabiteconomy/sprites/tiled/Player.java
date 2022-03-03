@@ -27,7 +27,7 @@ public class Player extends MovingSprite {
     private LevelScreen level;
     private Parcel parcel;
 
-    private static final String BASE_PATH = "finished_assets/player";
+    private static final String BASE_PATH = "player";
 
     private static final int BASE_HEALTH_DETRACTION = 5;
     private PlayerHealthBar healthBar;
@@ -42,7 +42,7 @@ public class Player extends MovingSprite {
      * @param width of Tiles to occupy
      */
     public Player(Weapon weapon, int x, int y, int height, int width) {
-        super(weapon, x, y, height, width, 3.5f, 3f, 100f, BASE_PATH);
+        super(weapon, x, y, height, width, 5f, 3f, 100f, BASE_PATH);
     }
 
     /**
@@ -70,7 +70,6 @@ public class Player extends MovingSprite {
      */
     public void handleMovement(int keycode) {
         if (getTargetTiles() != null) {
-            System.out.println("Not finished with previous movement");
             return; // Not finished with previous movement
         }
 
@@ -94,7 +93,6 @@ public class Player extends MovingSprite {
             // Move down
             super.setDirectionMovement(DIRECTION.SOUTH);
         } else {
-            System.out.println(keycode + " not accounted for in movement logic");
             return;
         }
         setMoving(true);
@@ -148,7 +146,6 @@ public class Player extends MovingSprite {
     @Override
     public void launchAttack() {
         // get Tile adjacent to Player
-        System.out.println(getDirectionFacing());
         Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), getDirectionFacing(), 1);
         if (adjacentTile == null) return; // trying to attack invalid Tile
 
@@ -190,15 +187,20 @@ public class Player extends MovingSprite {
         healthBar.setHealth(getHealth());
     }
 
+    public void hideParcels() {
+        healthBar.showParcels = false;
+    }
+
     /**
      * Class for displaying and controlling Player health bar in top left of the screen
      */
     public class PlayerHealthBar extends HealthBar {
-        private final Texture HEALTH_BAR_TEXTURE = new Texture("finished_assets/ui_elements/health bar1.png");
-        private final Texture PARCEL_ICON = new Texture("finished_assets/ui_elements/parcelicon.png");
+        private final Texture HEALTH_BAR_TEXTURE = new Texture("ui_elements/healthbar.png");
+        private final Texture PARCEL_ICON = new Texture("ui_elements/parcelicon.png");
 
         private static final float WIDTH = 318f;
         private static final float HEIGHT = 72f;
+        private boolean showParcels = true;
 
         private Vector3 cam;
         private Vector2 pos = new Vector2();
@@ -222,9 +224,12 @@ public class Player extends MovingSprite {
             batch.begin();
             batch.draw(HEALTH_BAR_TEXTURE, cam.x-900, cam.y+370);
 
-            for (int i=0; i<level.getParcels(); i++) {
-                batch.draw(PARCEL_ICON, cam.x-900+100+(1.15f*i*(PARCEL_ICON.getWidth())), cam.y+370);
+            if (showParcels) {
+                for (int i=0; i<level.getParcels(); i++) {
+                    batch.draw(PARCEL_ICON, cam.x-900+100+(1.15f*i*(PARCEL_ICON.getWidth())), cam.y+370);
+                }
             }
+
         }
     }
 
