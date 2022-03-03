@@ -200,7 +200,7 @@ public class Player extends MovingSprite {
 
         private static final float WIDTH = 318f;
         private static final float HEIGHT = 72f;
-        private boolean showParcels = false;
+        private boolean showParcels = true;
 
         private Vector3 cam;
         private Vector2 pos = new Vector2();
