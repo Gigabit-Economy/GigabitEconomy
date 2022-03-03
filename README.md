@@ -1,21 +1,25 @@
 # GigabitEconomy
 
 
-## GamePlay Instruction
+## Gameplay Info
 
 ### Description
-You are a delivery driver aiming to do your round. Deliver to all the houses you can without falling victim to the dangers of suburbia. If worst comes to worst though you can always _borrow_ what the content of your parcels. Just remember in the gig-economy the deliveries you make (and the ones you don't) affect the score your company gives you at the end of the day. 
+You are a delivery driver aiming to do your round. Deliver to all the houses you can without falling victim to the dangers of suburbia. 
+
+If worst comes to worst, you can always _borrow_ whatever happens to lie inside your parcels for a helping hand. 
+
+Just remember in the Gigabit Economy the deliveries you make (and the ones you don't) affect the score your company gives you at the end of the day. 
 
 ### Controls
 - move using `W/A/S/D` or the `arrow-keys`
-- attack with `spacebar`
+- attack enemies/collect parcels with `spacebar`
 - open parcels with `tab`
 - open the pause menu with `esc`
 
 ## Dev Info
 
 ### Branch policy
-**No commits should be made directly to main branch.**
+**Avoid making commits directly to main branch.**
 
 - Commit to a feature branch *(feature/[name])* and then open a pull request once functionality is complete
 - Remember to make clear commit messages and add comments and updated to the GitHub issues when appropriate
