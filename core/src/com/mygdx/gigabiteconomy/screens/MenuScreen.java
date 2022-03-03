@@ -23,10 +23,10 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 
 /**
- * The menu screen which is shown on initial game load.
+ * Class that represents the menu screen which is shown on initial game load.
  */
 public class MenuScreen implements Screen {
-    private static final Texture BACKGROUND_TEXTURE = new Texture("finished_assets/ui_elements/gigabitEconomyHomeScreen.png");
+    private static final Texture BACKGROUND_TEXTURE = new Texture("ui_elements/homescreen.png");
 
     private GigabitEconomy director;
     private Stage stage;
@@ -45,7 +45,7 @@ public class MenuScreen implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(stage);
         // Skin defined in UI skin (commodore - hopefully we can use, looks really cool)
-        Skin style = new Skin(Gdx.files.internal("uiskin.json"));
+        Skin style = new Skin(Gdx.files.internal("ui_elements/ui_skin/uiskin.json"));
 
         // Buttons
         buttons = new Table();
@@ -55,7 +55,7 @@ public class MenuScreen implements Screen {
         buttons.center();
 
         // add button images
-        ta = new TextureAtlas("finished_assets/ui_elements/icons.txt");
+        ta = new TextureAtlas("ui_elements/icons.txt");
         regions = ta.getRegions();
         current = regions.get(6);
         Drawable drawable = new TextureRegionDrawable(current);
@@ -78,7 +78,6 @@ public class MenuScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
             String buttonName = event.getListenerActor().getName();
-            System.out.println(buttonName);
 
             // Switch to selected level screen via. director
             try {

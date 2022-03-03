@@ -11,6 +11,7 @@ import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.screens.TileManager;
 import com.mygdx.gigabiteconomy.sprites.HealthBar;
+import com.mygdx.gigabiteconomy.sprites.tiled.enemies.RatKing;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
@@ -40,12 +41,12 @@ public abstract class Enemy extends MovingSprite {
 
     boolean agro = false;
 
-    private TiledObject targetEntity;
+    private Player targetEntity;
 
     /**
      * Create a new Enemy sprite (MovingSprite)
      *
-     * @param BASE_PATH of texture
+     * @param level the level of sprite (dictates the path of the texture)
      * @param weapon the weapon the Enemy is carrying
      * @param x position of Tile (within tile grid) to place sprite
      * @param y position of Tile (within tile grid) to place sprite
@@ -54,18 +55,33 @@ public abstract class Enemy extends MovingSprite {
      * @param deltaHoriz horizontal speed
      * @param deltaVert vertical speed
      */
-    public Enemy(String BASE_PATH, Weapon weapon, int x, int y, int height, int width, Player targetEntity, float deltaHoriz, float deltaVert, float health, LinkedList<DIRECTION> movePath) {
-        super(weapon, x, y, height, width, deltaHoriz, deltaVert, health, BASE_PATH);
+    public Enemy(String level, Weapon weapon, int x, int y, int height, int width, Player targetEntity, float deltaHoriz, float deltaVert, int horizAgroTiles, int vertAgroTiles, float health, LinkedList<DIRECTION> movePath) {
+        super(weapon, x, y, height, width, deltaHoriz, deltaVert, health, String.format("enemies/%s", level));
+        this.horizAgroTiles = horizAgroTiles;
+        this.vertAgroTiles = vertAgroTiles;
+
+        this.agroTileVals[0] = this.agroTileVals[2] = vertAgroTiles;
+        this.agroTileVals[1] = this.agroTileVals[3] = horizAgroTiles;
 
         this.movePath = movePath;
-        agroMovePath = new LinkedList<>();
-        for (int i=0; i<5; i++) agroMovePath.add(DIRECTION.NORTH);
-        for (int i=0; i<5; i++) agroMovePath.add(DIRECTION.SOUTH);
+        this.movePath = movePath;
+        agroMovePath = setAgroPath();
         movementPaths.put("move", movePath);
         movementPaths.put("agro", agroMovePath);
         setPath("move");
         this.targetEntity = targetEntity;
         setMoving(true);
+    }
+
+    public Queue<DIRECTION> setAgroPath() {
+        LinkedList<DIRECTION> ret = new LinkedList<>();
+        for (int i=0; i<5; i++) ret.add(DIRECTION.NORTH);
+        for (int i=0; i<5; i++) ret.add(DIRECTION.SOUTH);
+        return ret;
+    }
+
+    public void setAgroPath(LinkedList<DIRECTION> path) {
+        movementPaths.put("agro", path);
     }
 
     /**
@@ -91,6 +107,12 @@ public abstract class Enemy extends MovingSprite {
         setDirectionMovement(currentPath.peek());
     }
 
+    public void addPath(String name, Queue<DIRECTION>pathList) {
+        if (movementPaths.containsKey(name)) {
+        }
+        movementPaths.put(name, pathList);
+    }
+
     /**
      * Method to set path of enemy from hashmap of defined paths
      * @param pathID Hashmap ID of path
@@ -101,6 +123,19 @@ public abstract class Enemy extends MovingSprite {
         }
         setDirectionMovement(currentPath.peek());
     }
+
+    public Queue<DIRECTION> getPath() {
+        return currentPath;
+    }
+
+    public HashMap<String, Queue<DIRECTION>> getPaths() {
+        return movementPaths;
+    }
+
+    public void hideHealthBar() {
+        healthBar.setShow(false);
+    }
+
 
     @Override
     public void attack(Weapon weapon) {
@@ -121,6 +156,8 @@ public abstract class Enemy extends MovingSprite {
         private OrthographicCamera cam;
         private Vector3 pos = new Vector3();
 
+        private boolean show = true;
+
         public EnemyHealthBar(GigabitEconomy director) {
             super(HEIGHT, WIDTH);
 
@@ -129,14 +166,24 @@ public abstract class Enemy extends MovingSprite {
         }
 
         // Custom health bar for bigger enemies (overrides WIDTH/HEIGHT constants)
-        public EnemyHealthBar(GigabitEconomy director, float width, float height) {
-            super(width, height);
+        public EnemyHealthBar(GigabitEconomy director, float height, float width) {
+            super(height, width);
 
             this.cam = director.getCamera();
         }
 
+        /**
+         * Set whether health bar is shown or not
+         * @param show
+         */
+        public void setShow(boolean show) {
+            this.show = show;
+        }
+
         @Override
         public void drawOn(SpriteBatch batch) {
+            if (!show) return;
+
             batch.end();
 
             getEllipse().begin(ShapeRenderer.ShapeType.Filled);
@@ -153,6 +200,10 @@ public abstract class Enemy extends MovingSprite {
 
             batch.begin();
         }
+    }
+
+    public Player getTargetEntity() {
+        return targetEntity;
     }
 
     /**
@@ -195,6 +246,10 @@ public abstract class Enemy extends MovingSprite {
 
         agro=true;
         //agroTilePos = [ N < , E < , S > , W > ]
+
+        if (getTileManager().isGroupOccupiedBy(targetEntity, getTileManager().getAdjacentTiles(this))) {
+            return true; //If we're next to player - agro
+        }
         for (int i=0; i<agroTilePos.length; i++) {
             if (i<2) { //On N || E ; i==0 || i==1
                 agro &= currPlayerTile.getPositionTile()[(i + 1) % 2] < agroTilePos[i];
@@ -207,11 +262,31 @@ public abstract class Enemy extends MovingSprite {
         return agro;
     }
 
+    public void agro_action() {
+        TileManager tm = getTileManager();
+        //Check if player is on adjacent tiles
+
+        if (getTileManager().isGroupOccupiedBy(targetEntity, new ArrayList<>(Arrays.asList(tm.getAdjacentTiles(this.getCurrentTiles().get(0)))))) {
+            setAttacking(true);
+        }
+
+        //Check if player is on the row
+        //Move in that direction
+
+        DIRECTION dirTo = tm.findDirectionFrom(getCurrentTiles().get(0), targetEntity.getCurrentTiles().get(0));
+
+        if (dirTo != null) {
+            setPath(new LinkedList<>(Arrays.asList(dirTo, dirTo)));
+        } else {
+            setPath("agro");
+        }
+    }
+
     @Override
     public boolean move(float delta) throws TileMovementException {
         boolean ret = super.move(delta); //Checks if we've arrived else moved
+        if (!ret) return false;
 
-        if (ret) setMoving(false);
 
         /**
          * >>> ATTACKING LOGIC <<<
@@ -229,36 +304,14 @@ public abstract class Enemy extends MovingSprite {
          */
 
         //Only run following code if we are still
-        if (ret) {
-            if (checkAgro()) {
-                System.out.println("Agro set to true");
-                setPath("agro");
-            }
-            super.setDirectionMovement(currentPath.remove());
-            currentPath.add(getDirectionMoving());
-            if (agro) {
-                TileManager tm = getTileManager();
-                //Check if player is on adjacent tiles
-
-                if (getTileManager().isGroupOccupiedBy(targetEntity, new ArrayList<>(Arrays.asList(tm.getAdjacentTiles(this.getCurrentTiles().get(0)))))) {
-                    setAttacking(true);
-                }
-
-                //Check if player is on the row
-                //Move in that direction
-
-                DIRECTION dirTo = tm.findDirectionFrom(getCurrentTiles().get(0), targetEntity.getCurrentTiles().get(0));
-
-                if (dirTo != null) {
-                    setPath(new LinkedList<>(Arrays.asList(dirTo, dirTo)));
-                } else {
-                    setPath("agro");
-                }
-            }
-
+        if (checkAgro()) {
+            setPath("agro");
         }
-
-
+        super.setDirectionMovement(currentPath.remove());
+        currentPath.add(getDirectionMoving());
+        if (agro) {
+            agro_action();
+        }
 
         /**
          * If above is implemented right, enemy should be able to move in 'direction' towards 'targetTile'
@@ -266,7 +319,7 @@ public abstract class Enemy extends MovingSprite {
          */
 
 
-        return ret;
+        return true;
     }
 
     /**

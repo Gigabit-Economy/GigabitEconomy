@@ -3,7 +3,7 @@ package com.mygdx.gigabiteconomy;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -23,7 +23,7 @@ public class GigabitEconomy extends Game {
 
     private Screen fromPause;
 
-    private static final String MUSIC_BASE_PATH = "finished_assets/music/";
+    private static final String MUSIC_BASE_PATH = "music/";
     private Music backgroundMusic;
 
 
@@ -117,7 +117,17 @@ public class GigabitEconomy extends Game {
                     setMusic("LevelOne");
                 }
                 break;
-            case "LevelThreeScreen":
+            case "LevelTwoScreen":
+                if (fromPause != null) {
+                    setScreen(fromPause);
+                    this.fromPause = null;
+                    return;
+                } else {
+                    toSwitch = new LevelTwoScreen(this);
+                    setMusic("LevelTwo");
+                }
+                break;
+            case "LevelRatKing":
                 if (fromPause != null) {
                     setScreen(fromPause);
                     this.fromPause = null;
@@ -134,7 +144,6 @@ public class GigabitEconomy extends Game {
         // if a LevelScreen, record as lastPlayedLevel
         if (toSwitch instanceof LevelScreen) {
             this.lastPlayedLevel = toSwitch.getClass().getSimpleName();
-            System.out.println("Last plaeyd level: "+lastPlayedLevel);
         }
         // if returned to menu, reset fromPause & lastPlayedLevel (prevents from being taken back to exited level)
         else if (toSwitch instanceof MenuScreen) {
@@ -165,12 +174,10 @@ public class GigabitEconomy extends Game {
     public void enableMusic(boolean enable) {
         if (enable == true) {
 
-            System.out.println(isMusicPlaying());
             this.backgroundMusic.play();
 
         }
         if (enable == false) {
-            System.out.println(isMusicPlaying());
             this.backgroundMusic.stop();
 
         }

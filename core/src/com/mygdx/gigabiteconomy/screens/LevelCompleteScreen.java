@@ -1,5 +1,4 @@
 package com.mygdx.gigabiteconomy.screens;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -13,7 +12,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.ScoreSystem;
+import java.util.Arrays;
 
+/**
+ * Class that represents the LevelCompleteScreen which is shown right after successfully completing a level.
+ * @param levelCompletedTable a table where all visual elements of the screen are stored
+ * @param levelScores object used to access scores of last played level
+ */
 public class LevelCompleteScreen implements Screen {
     private GigabitEconomy director;
 
@@ -27,13 +32,23 @@ public class LevelCompleteScreen implements Screen {
         this.stage = new Stage(director.getViewport());
     }
 
+    /**
+     * @param congratulationsLabel a label which congratulates user on completing the level (1/2)
+     * @param passedThisLevelLabel a label which congratulates user on completing the level (2/2)
+     * @param yourScoreWasLabel a label which shows last score
+     * @param highestScoreText a label which shows record score
+     * @param lastFewScores an array where values of past scores are stored
+     * @param levelCompletedScoreList list which shows past scores
+     * @param levelCompletedMainMenuButton a button which allows user to go back to MenuScreen
+     * @param levelCompletedNextLevelButton a button which allows user to proceed to the next level
+     */
     @Override
     public void show() {
         this.levelScores = new ScoreSystem(director.getLastPlayedLevel());
 
         Gdx.input.setInputProcessor(stage);
         // Skin defined in UI skin (commodore - hopefully we can use, looks really cool)
-        Skin style = new Skin(Gdx.files.internal("uiskin.json"));
+        Skin style = new Skin(Gdx.files.internal("ui_elements/ui_skin/uiskin.json"));
 
         levelCompletedTable = new Table();
         levelCompletedTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -58,7 +73,7 @@ public class LevelCompleteScreen implements Screen {
         Label yourPastScoresLabel = new Label("PREVIOUS SCORES:", style);
         levelCompletedTable.add(yourPastScoresLabel).colspan(2);
         levelCompletedTable.row();
-        
+
         String[] prevScores = levelScores.getAllScores();
         String[] lastFewScores = {"0", "0", "0", "0", "0"};
 
@@ -78,7 +93,6 @@ public class LevelCompleteScreen implements Screen {
         levelCompletedNextLevelButton.setName(director.getNextLevel());
         levelCompletedTable.add(levelCompletedNextLevelButton).bottom().padTop(50);
         levelCompletedTable.row();
-
 
         // Add click listener for buttons
         ClickListener buttonsListener = new ClickListener() {

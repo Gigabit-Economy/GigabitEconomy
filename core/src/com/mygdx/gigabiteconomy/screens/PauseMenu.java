@@ -24,9 +24,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 
-
 /**
- * The pause menu screen
+ * Class representing the pause menu
+ * @param pauseMenuTable a table where all visual elements of the screen are stored
  */
 public class PauseMenu implements Screen, InputProcessor {
     private GigabitEconomy director;
@@ -35,85 +35,93 @@ public class PauseMenu implements Screen, InputProcessor {
     private Table pauseMenuTable;
 
     private InputMultiplexer inputMulti;
-    private int pauseCount = 0;
 
     public PauseMenu(GigabitEconomy director) {
         this.director = director;
         this.stage = new Stage(director.getViewport());
         this.inputMulti = new InputMultiplexer();
         inputMulti.addProcessor(stage);
-		inputMulti.addProcessor(this);
+        inputMulti.addProcessor(this);
     }
 
+    /**
+     * @param closePauseMenuButton a button which closes pause screen
+     * @param audioButton a button which closes pause screen
+     * @param backToMainMenuButton a button which opens MenuScreen
+     * @param tutorialButton a button which opens TutorialScreen
+     * @param res1920Button a button which changes resolution to 1920x1080
+     * @param res1366Button a button which changes resolution to 1366x728
+     * @param res1280Button a button which changes resolution to 1280x720
+     * @param levelResetButton a button which resets the current level
+     */
     @Override
     public void show() {
         Gdx.input.setInputProcessor(inputMulti);
-        
+
         // Skin defined in UI skin (commodore - hopefully we can use, looks really cool)
-        Skin style = new Skin(Gdx.files.internal("uiskin.json"));
+        Skin style = new Skin(Gdx.files.internal("ui_elements/ui_skin/uiskin.json"));
 
-        if (pauseCount == 0) {
-            pauseMenuTable = new Table();
-            pauseMenuTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        pauseMenuTable = new Table();
+        pauseMenuTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-            TextButton closePauseMenuButton = new TextButton("CLOSE", style);
-            closePauseMenuButton.align(Align.topRight);
-            closePauseMenuButton.setName(director.getLastPlayedLevel());
-            pauseMenuTable.add(closePauseMenuButton);
+        TextButton closePauseMenuButton = new TextButton("CLOSE", style);
+        closePauseMenuButton.align(Align.topRight);
+        closePauseMenuButton.setName(director.getLastPlayedLevel());
+        pauseMenuTable.add(closePauseMenuButton);
 
-            pauseMenuTable.row();
+        pauseMenuTable.row();
 
-            Label volumeControlLabel = new Label("AUDIO", style);
-            volumeControlLabel.setSize(10, 50);
-            pauseMenuTable.add(volumeControlLabel);
+        Label volumeControlLabel = new Label("AUDIO", style);
+        volumeControlLabel.setSize(10, 50);
+        pauseMenuTable.add(volumeControlLabel);
 
-            TextButton audioButton = new TextButton("CAT", style);
-            if (director.isMusicPlaying() == true) {
-                audioButton.setText("ON");
-            }
-            if (director.isMusicPlaying() == false) {
-                audioButton.setText("OFF");
-            }
-            pauseMenuTable.add(audioButton);
+        TextButton audioButton = new TextButton("CAT", style);
+        if (director.isMusicPlaying() == true) {
+            audioButton.setText("ON");
+        }
+        if (director.isMusicPlaying() == false) {
+            audioButton.setText("OFF");
+        }
+        pauseMenuTable.add(audioButton);
 
-            pauseMenuTable.row();
+        pauseMenuTable.row();
 
-            TextButton backToMainMenuButton = new TextButton("BACK TO MAIN MENU", style);
-            backToMainMenuButton.setName("MenuScreen");
-            pauseMenuTable.add(backToMainMenuButton);
+        TextButton backToMainMenuButton = new TextButton("BACK TO MAIN MENU", style);
+        backToMainMenuButton.setName("MenuScreen");
+        pauseMenuTable.add(backToMainMenuButton);
 
-            TextButton tutorialButton = new TextButton("HELP", style);
-            tutorialButton.setName("TutorialScreen");
-            pauseMenuTable.add(tutorialButton);
+        TextButton tutorialButton = new TextButton("HELP", style);
+        tutorialButton.setName("TutorialScreen");
+        pauseMenuTable.add(tutorialButton);
 
-            pauseMenuTable.row();
+        pauseMenuTable.row();
 
-            TextButton res1920Button = new TextButton("1920 x 1080", style);
-            res1920Button.setName("res1920");
-            pauseMenuTable.add(res1920Button);
-            
-            pauseMenuTable.row();
+        TextButton res1920Button = new TextButton("1920 x 1080", style);
+        res1920Button.setName("res1920");
+        pauseMenuTable.add(res1920Button);
 
-            TextButton res1366Button = new TextButton("1366 x 768", style);
-            res1366Button.setName("res1366");
-            pauseMenuTable.add(res1366Button);
+        pauseMenuTable.row();
 
-            pauseMenuTable.row();
+        TextButton res1366Button = new TextButton("1366 x 768", style);
+        res1366Button.setName("res1366");
+        pauseMenuTable.add(res1366Button);
 
-            TextButton res1280Button = new TextButton("1280 x 720", style);
-            res1280Button.setName("res1280");
-            pauseMenuTable.add(res1280Button);
+        pauseMenuTable.row();
 
-            pauseMenuTable.row();
+        TextButton res1280Button = new TextButton("1280 x 720", style);
+        res1280Button.setName("res1280");
+        pauseMenuTable.add(res1280Button);
 
-            TextButton levelResetButton = new TextButton("RESET LEVEL", style);
-            levelResetButton.setName("resetthelevel");
-            pauseMenuTable.add(levelResetButton);
+        pauseMenuTable.row();
 
-            // Add click listeners for buttons
-            ClickListener screenButtonsListener = new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
+        TextButton levelResetButton = new TextButton("RESET LEVEL", style);
+        levelResetButton.setName("resetthelevel");
+        pauseMenuTable.add(levelResetButton);
+
+        // Add click listeners for buttons
+        ClickListener screenButtonsListener = new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
                 String buttonName = event.getListenerActor().getName();
 
                 try {
@@ -122,31 +130,29 @@ public class PauseMenu implements Screen, InputProcessor {
                     Gdx.app.error("Exception", String.format("Error switching screen to %s", buttonName), ex);
                     System.exit(-1);
                 }
-                }
-            };
-            backToMainMenuButton.addListener(screenButtonsListener);
-            tutorialButton.addListener(screenButtonsListener);
-            closePauseMenuButton.addListener(screenButtonsListener);
+            }
+        };
+        backToMainMenuButton.addListener(screenButtonsListener);
+        tutorialButton.addListener(screenButtonsListener);
+        closePauseMenuButton.addListener(screenButtonsListener);
 
-            ClickListener resButtonsListener = new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
+        ClickListener resButtonsListener = new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
                 String buttonName = event.getListenerActor().getName();
 
                 try {
                     if (buttonName == "res1920") {
-                        Gdx.graphics.setWindowedMode(1920, 1080);
+                        resize(1920, 1080);
+                        // Gdx.graphics.setWindowedMode(1920, 1080);
                         pauseMenuTable.setBounds(0, 0, 1920, 1080);
-                    }
-                    else if (buttonName == "res1366") {
-                        resize(1366,720);
-                     
-                        
-                        //LwjglApplicationConfiguration.lw = 1080;
+                    } else if (buttonName == "res1366") {
+                        resize(1366, 768);
+
+                        // LwjglApplicationConfiguration.lw = 1080;
                         pauseMenuTable.setBounds(0, 0, 1366, 768);
-                    }
-                    else if (buttonName == "res1280") {
-                        
+                    } else if (buttonName == "res1280") {
+                        resize(1280, 720);
                         pauseMenuTable.setBounds(0, 0, 1280, 720);
                     }
                 } catch (Exception ex) {
@@ -154,51 +160,48 @@ public class PauseMenu implements Screen, InputProcessor {
                     System.exit(-1);
                 }
 
-                if(buttonName == "resetthelevel")
-                {
+                if (buttonName == "resetthelevel") {
                     try {
                         String tempLastPlayedLevel = director.getLastPlayedLevel();
                         director.switchScreen("MenuScreen");
                         director.switchScreen(tempLastPlayedLevel);
 
                     } catch (Exception ex) {
-                        Gdx.app.error("Exception", String.format("Error switching screen to" + director.getLastPlayedLevel()), ex);
-                    }        
-                }
-                }
-            };
-
-            res1280Button.addListener(resButtonsListener);
-            res1366Button.addListener(resButtonsListener);
-            res1920Button.addListener(resButtonsListener);
-            levelResetButton.addListener(resButtonsListener);
-
-            ClickListener audioButtonListener = new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-
-                    try {
-                        if (director.isMusicPlaying() == true) {
-                            director.enableMusic(false);
-                        }
-                        else if (director.isMusicPlaying() == false) {
-                            director.enableMusic(true);
-                        }
-                    } catch (Exception ex) {
-                        Gdx.app.error("Exception", String.format("Error changing audio"), ex);
+                        Gdx.app.error("Exception",
+                                String.format("Error switching screen to" + director.getLastPlayedLevel()), ex);
                     }
+                }
+            }
+        };
 
-                    stage.draw();
+        res1280Button.addListener(resButtonsListener);
+        res1366Button.addListener(resButtonsListener);
+        res1920Button.addListener(resButtonsListener);
+        levelResetButton.addListener(resButtonsListener);
+
+        ClickListener audioButtonListener = new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                try {
+                    if (director.isMusicPlaying() == true) {
+                        director.enableMusic(false);
+                    } else if (director.isMusicPlaying() == false) {
+                        director.enableMusic(true);
+                    }
+                } catch (Exception ex) {
+                    Gdx.app.error("Exception", String.format("Error changing audio"), ex);
                 }
 
-            };
+                stage.draw();
+            }
 
-            audioButton.addListener(audioButtonListener);
+        };
 
-            stage.addActor(pauseMenuTable);
-        }
+        audioButton.addListener(audioButtonListener);
 
-        pauseCount++;
+        stage.addActor(pauseMenuTable);
+
     }
 
     @Override
@@ -235,8 +238,7 @@ public class PauseMenu implements Screen, InputProcessor {
                 Gdx.app.error("Exception", String.format("Error switching screen back"), ex);
                 System.exit(-1);
             }
-        }
-        else {
+        } else {
             return false;
         }
 
@@ -244,10 +246,12 @@ public class PauseMenu implements Screen, InputProcessor {
     }
 
     @Override
-    public void pause() {}
+    public void pause() {
+    }
 
     @Override
-    public void resume() {}
+    public void resume() {
+    }
 
     @Override
     public boolean keyUp(int keycode) {

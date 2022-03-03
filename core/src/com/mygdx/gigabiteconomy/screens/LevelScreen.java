@@ -8,12 +8,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.ScoreSystem;
 import com.mygdx.gigabiteconomy.exceptions.ParcelException;
 import com.mygdx.gigabiteconomy.exceptions.ScreenException;
 import com.mygdx.gigabiteconomy.sprites.tiled.*;
+import com.mygdx.gigabiteconomy.sprites.tiled.enemies.RatKing;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,6 +48,8 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     private BitmapFont font;
     private String errorText;
     private float errorCountdown;
+
+
 
     /**
      * A template constructor for use by all level screen subclasses. Sets
@@ -84,6 +90,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      */
     public void addPlayer(Player player) {
         this.player = player;
+        player.addHealthBar(director);
         this.player.setLevel(this);
 
         addSprite(player);
@@ -97,6 +104,12 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      */
     public void addEnemies(ArrayList<Enemy> enemies) {
         this.enemies.addAll(enemies);
+        for (Enemy enemy : enemies) {
+            enemy.addHealthBar(director);
+            if (enemy instanceof RatKing) {
+                ((RatKing) enemy).setLevel(this);
+            }
+        }
         addSprites(enemies);
     }
 
@@ -153,11 +166,9 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
         this.backgroundSprite = new Sprite(backgroundTexture);
 
-        System.out.println(
-                "Texture dimensions: h:" + backgroundTexture.getHeight() + " w:" + backgroundTexture.getWidth());
-
         this.batch = new SpriteBatch();
         this.font = new BitmapFont();
+        
     }
 
     /**
@@ -184,6 +195,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         // Draw the background
         batch.draw(backgroundSprite.getTexture(), 0, 0);
 
+
         // For each TiledObject initialised in Tile Manager, call its drawOn to draw it with sprite batch
         for (ArrayList<TiledObject> toArray : tileManager.getRowArray()) {
             for (TiledObject to : toArray) {
@@ -191,14 +203,18 @@ public abstract class LevelScreen implements Screen, InputProcessor {
             }
         }
 
-        String scoreText = String.format("score: %d", score.getScore());
-
+        String scoreText = "Score: "+ score.getScore();
+        
+        font.getData().setScale(3, 2);
         font.setColor(Color.CORAL);
-        font.draw(batch, scoreText, (cam.x - 900), 1040);
+        String DavidGogginsQuote1 = "I don't stop when I'm tired. I stop when I'm done";
+        font.draw(batch, DavidGogginsQuote1, 2900,  750);
+        font.draw(batch, scoreText, cam.x+(director.getViewport().getScreenWidth()/100*38),  cam.y+(director.getViewport().getScreenHeight()/100*47));
 
         // if one is set, display error message
         if (this.errorCountdown > 0 && this.errorText != null && this.errorText.length() != 0) {
-            font.draw(batch, this.errorText, 25, 980);
+           
+            font.draw(batch, this.errorText, cam.x-200, cam.y);
 
             errorCountdown -= 1 * delta; // decrement error countdown by seconds passed in prev render
         }
@@ -290,7 +306,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      */
     @Override
     public boolean keyDown(int keycode) {
-        System.out.println("key pressed: " + keycode);
 
         /**
          * Movement calculated by:
@@ -302,7 +317,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
                 keycode == Input.Keys.RIGHT || keycode == Input.Keys.W ||
                 keycode == Input.Keys.UP || keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
             // Move player
-            System.out.println("Moving");
             player.handleMovement(keycode);
         } else if (keycode == Input.Keys.P || keycode == Input.Keys.ESCAPE) {
             // Pause play
@@ -440,12 +454,12 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         if (paused) {
             return;
         }
-
-        // dispose of Tile Manager & its sprites (to dispose their texture/texture atlas)
-        tileManager.dispose();
-
-        backgroundTexture.dispose();
-        batch.dispose();
-        font.dispose();
+//
+//        // dispose of Tile Manager & its sprites (to dispose their texture/texture atlas)
+//        tileManager.dispose();
+//
+//        backgroundTexture.dispose();
+//        batch.dispose();
+//        font.dispose();
     }
 }

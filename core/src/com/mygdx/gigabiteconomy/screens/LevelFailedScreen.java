@@ -12,8 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 
+/**
+ * Class that represents the LevelFailedScreen which is shown right after death.
+ * @param deathScreenTable a table where all visual elements of the screen are stored
+ */
 public class LevelFailedScreen implements Screen{
-
     private GigabitEconomy director;
 
     private Stage stage;
@@ -24,11 +27,16 @@ public class LevelFailedScreen implements Screen{
         this.stage = new Stage(director.getViewport());
     }
 
+    /**
+     * @param diedLabel a label which states what happened to the character
+     * @param tryAgainButton a button which allows to try again the current level
+     * @param deathScreenMainMenuButton a button which allows user to go to MenuScreen
+     */
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
         // Skin defined in UI skin (commodore - hopefully we can use, looks really cool)
-        Skin style = new Skin(Gdx.files.internal("uiskin.json"));
+        Skin style = new Skin(Gdx.files.internal("ui_elements/ui_skin/uiskin.json"));
 
         deathScreenTable = new Table();
         deathScreenTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -51,7 +59,7 @@ public class LevelFailedScreen implements Screen{
             @Override
             public void clicked(InputEvent event, float x, float y) {
             String buttonName = event.getListenerActor().getName();
-            System.out.println(buttonName);
+
 
             // Switch to selected level screen via. director
             try {

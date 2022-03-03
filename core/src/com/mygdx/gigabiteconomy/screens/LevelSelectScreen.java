@@ -14,6 +14,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.ScoreSystem;
 
+ /**
+ * Class that represents the LevelSelectScreen which is shown right after MenuScreen.
+ * @param levelSelectTable a table where all visual elements of the screen are stored
+ * @param score1 a String that stores score of the first level
+ * @param score2 a String that stores score of the second level
+ * @param score3 a String that stores score of the third level
+*/
 public class LevelSelectScreen implements Screen {
     private GigabitEconomy director;
 
@@ -23,18 +30,22 @@ public class LevelSelectScreen implements Screen {
     private ScoreSystem score1 = new ScoreSystem("LevelOneScreen");
     private ScoreSystem score2 = new ScoreSystem("LevelTwoScreen");
     private ScoreSystem score3 = new ScoreSystem("LevelThreeScreen");
-    private int pauseCount = 0;
 
     public LevelSelectScreen(GigabitEconomy director) {
         this.director = director;
         this.stage = new Stage(director.getViewport());
     }
 
+     /**
+     * @param selectFirstLevelTextButton a button which switches the screen to first level
+     * @param selectSecondLevelLabel a button which switches the screen to second level
+     * @param selectThirdLevelLabel a button which switches the screen to third level
+     */
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
         // Skin defined in UI skin (commodore - hopefully we can use, looks really cool)
-        Skin style = new Skin(Gdx.files.internal("uiskin.json"));
+        Skin style = new Skin(Gdx.files.internal("ui_elements/ui_skin/uiskin.json"));
 
         levelSelectTable = new Table();
         levelSelectTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -53,7 +64,7 @@ public class LevelSelectScreen implements Screen {
 
         TextButton selectSecondLevelTextButton = new TextButton("Level 2", style);
         selectSecondLevelTextButton.setName("LevelTwoScreen");
-        if (score2.getHighestScore() == 0) {
+        if (score1.getHighestScore() == 0) {
             selectSecondLevelTextButton.setTouchable(Touchable.disabled);
         }
         levelSelectTable.add(selectSecondLevelTextButton).padRight(-200);
@@ -64,10 +75,10 @@ public class LevelSelectScreen implements Screen {
         levelSelectTable.add(selectThirdLevelLabel).padLeft(-200);
 
         TextButton selectThirdLevelTextButton = new TextButton("Level 3", style);
-        selectThirdLevelTextButton.setName("LevelThreeScreen");
-        if (score3.getHighestScore() == 0) {
-            selectThirdLevelTextButton.setTouchable(Touchable.disabled);
-        }
+        selectThirdLevelTextButton.setName("LevelRatKing");
+//        if (score2.getHighestScore() == 0) {
+//            selectThirdLevelTextButton.setTouchable(Touchable.disabled);
+//        }
         levelSelectTable.add(selectThirdLevelTextButton).padRight(-200);
 
         // Add click listener for buttons
@@ -75,7 +86,6 @@ public class LevelSelectScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
             String buttonName = event.getListenerActor().getName();
-            System.out.println(buttonName);
 
             // Switch to selected level screen via. director
             try {
