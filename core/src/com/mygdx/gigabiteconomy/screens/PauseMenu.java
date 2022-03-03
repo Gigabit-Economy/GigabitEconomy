@@ -66,7 +66,7 @@ public class PauseMenu implements Screen, InputProcessor {
             volumeControlLabel.setSize(10, 50);
             pauseMenuTable.add(volumeControlLabel);
 
-            TextButton audioButton = new TextButton("CAT", style);
+            final TextButton audioButton = new TextButton("CAT", style); // final so it can be called from within click listener
             if (director.isMusicPlaying() == true) {
                 audioButton.setText("ON");
             }
@@ -106,7 +106,6 @@ public class PauseMenu implements Screen, InputProcessor {
             pauseMenuTable.row();
 
             TextButton levelResetButton = new TextButton("RESET LEVEL", style);
-            levelResetButton.setName("resetthelevel");
             pauseMenuTable.add(levelResetButton);
 
             // Add click listeners for buttons
@@ -149,52 +148,72 @@ public class PauseMenu implements Screen, InputProcessor {
                     Gdx.app.error("Exception", String.format("Error changing resolution to %s", buttonName), ex);
                     System.exit(-1);
                 }
-
-                if(buttonName == "resetthelevel")
-                {
-                    try {
-                        String tempLastPlayedLevel = director.getLastPlayedLevel();
-                        director.switchScreen("MenuScreen");
-                        director.switchScreen(tempLastPlayedLevel);
-
-                    } catch (Exception ex) {
-                        Gdx.app.error("Exception", String.format("Error switching screen to" + director.getLastPlayedLevel()), ex);
-                    }        
-                }
                 }
             };
-
             res1280Button.addListener(resButtonsListener);
             res1366Button.addListener(resButtonsListener);
             res1920Button.addListener(resButtonsListener);
-            levelResetButton.addListener(resButtonsListener);
+
+            ClickListener resetButtonListener = new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                try {
+                    String tempLastPlayedLevel = director.getLastPlayedLevel();
+                    director.resetPausedLevel(); // resets the LevelScreen instance currently paused
+                    director.switchScreen(tempLastPlayedLevel);
+                } catch (Exception ex) {
+                    Gdx.app.error("Exception", String.format("Error resetting level"), ex);
+                }
+
+                stage.draw();
+                }
+
+            };
+            levelResetButton.addListener(resetButtonListener);
 
             ClickListener audioButtonListener = new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-
-                    try {
-                        if (director.isMusicPlaying() == true) {
-                            director.enableMusic(false);
-                        }
-                        else if (director.isMusicPlaying() == false) {
-                            director.enableMusic(true);
-                        }
-                    } catch (Exception ex) {
-                        Gdx.app.error("Exception", String.format("Error changing audio"), ex);
+                try {
+                    if (director.isMusicPlaying() == true) {
+                        director.enableMusic(false);
+                        audioButton.setText("OFF");
                     }
+                    else if (director.isMusicPlaying() == false) {
+                        director.enableMusic(true);
+                        audioButton.setText("ON");
+                    }
+                } catch (Exception ex) {
+                    Gdx.app.error("Exception", String.format("Error changing audio"), ex);
+                }
 
-                    stage.draw();
+                stage.draw();
                 }
 
             };
-
             audioButton.addListener(audioButtonListener);
 
             stage.addActor(pauseMenuTable);
         }
 
         pauseCount++;
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        if (keycode == Input.Keys.P || keycode == Input.Keys.ESCAPE) {
+            try {
+                director.switchScreen(director.getLastPlayedLevel());
+            } catch (Exception ex) {
+                Gdx.app.error("Exception", String.format("Error switching screen back to level from pause"), ex);
+                System.exit(-1);
+            }
+        }
+        else {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
@@ -209,7 +228,6 @@ public class PauseMenu implements Screen, InputProcessor {
     public void resize(int width, int height) {
         // True since camera position with UI is rarely changed
         stage.getViewport().update(width, height, true);
-
     }
 
     @Override
@@ -220,23 +238,6 @@ public class PauseMenu implements Screen, InputProcessor {
     @Override
     public void dispose() {
         stage.dispose();
-    }
-
-    @Override
-    public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.P || keycode == Input.Keys.ESCAPE) {
-            try {
-                director.switchScreen(director.getLastPlayedLevel());
-            } catch (Exception ex) {
-                Gdx.app.error("Exception", String.format("Error switching screen back"), ex);
-                System.exit(-1);
-            }
-        }
-        else {
-            return false;
-        }
-
-        return true;
     }
 
     @Override
