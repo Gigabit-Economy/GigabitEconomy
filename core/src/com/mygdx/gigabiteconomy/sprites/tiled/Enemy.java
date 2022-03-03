@@ -330,6 +330,7 @@ public abstract class Enemy extends MovingSprite {
     public void destroy() {
         // remove the sprite from the level and clear its tile
         getTileManager().placeObject(null, getCurrentTiles());
+        if (getTargetTiles() != null) getTileManager().placeObject(null, getTargetTiles());
         getTileManager().removeFromRows(this);
 
     }

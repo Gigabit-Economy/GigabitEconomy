@@ -46,14 +46,14 @@ public class Dog extends Enemy {
      * @param level        the level of the Dog
      * @param movementPath define a specific movement path
      */
-    public Dog(int x, int y, String level, Player targetEntity, float deltaHoriz, float deltaVert, float health, LinkedList<DIRECTION> movementPath) {
-        super(level, Weapon.DOG, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, deltaHoriz, deltaVert, DEFAULT_HORIZAGROTILES, DEFAULT_VERTAGROTILES, health, movementPath);
+    public Dog(int x, int y, String level, Player targetEntity, float deltaHoriz, float deltaVert, int horizAgroTiles, int vertAgroTiles, float health, LinkedList<DIRECTION> movementPath) {
+        super(level, Weapon.DOG, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, deltaHoriz, deltaVert, horizAgroTiles, vertAgroTiles, health, movementPath);
     }
 
-    @Override
-    public void destroy() {
-        if (getCurrentTiles() != null) getTileManager().purge(getCurrentTiles().get(0).getPositionTile()[1], this);
-        if (getTargetTiles() != null) getTileManager().purge(getTargetTiles().get(0).getPositionTile()[1], this);
-        super.destroy();
-    }
+//    @Override
+//    public void destroy() {
+//        if (getCurrentTiles() != null) getTileManager().purge(getCurrentTiles().get(0).getPositionTile()[1], this);
+//        if (getTargetTiles() != null) getTileManager().purge(getTargetTiles().get(0).getPositionTile()[1], this);
+//        super.destroy();
+//    }
 }
