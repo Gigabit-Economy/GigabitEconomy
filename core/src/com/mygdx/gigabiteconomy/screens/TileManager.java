@@ -298,7 +298,7 @@ public class TileManager implements Disposable {
     /**
      * Debugging func
      */
-    public void printOccupiedTiles() {
+    public String printOccupiedTiles() {
         String occupied = " ";
         for (Tile[] tileX : tileArray) {
             for (Tile tile : tileX) {
@@ -308,6 +308,7 @@ public class TileManager implements Disposable {
                 }
             }
         }
+        return occupied;
     }
 
     /**
@@ -327,9 +328,8 @@ public class TileManager implements Disposable {
      */
     public boolean removeFromRows(TiledObject to) {
         boolean ret = false;
-        for (int i=0; i<rowArray.length; i++) {
-            ret |= rowArray[i].remove(to);
-//            purge(i, to);
+        for (ArrayList<TiledObject> tiledObjects : rowArray) {
+            ret |= tiledObjects.remove(to);
         }
 
         return ret;
