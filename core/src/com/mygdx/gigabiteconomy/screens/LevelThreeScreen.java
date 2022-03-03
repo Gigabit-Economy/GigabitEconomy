@@ -6,9 +6,8 @@ import com.mygdx.gigabiteconomy.sprites.tiled.enemies.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 
-public class LevelRatKing extends LevelScreen {
+public class LevelThreeScreen extends LevelScreen {
     // Level string
     private static final String LEVEL = "ratking";
     // Level screen backgro1.5und texture
@@ -57,7 +56,7 @@ public class LevelRatKing extends LevelScreen {
      *
      * @param director the instance of the game director
      */
-    public LevelRatKing(GigabitEconomy director) {
+    public LevelThreeScreen(GigabitEconomy director) {
         super(director, BACKGROUND_TEXTURE_PNG);
 
         for (int[] coords : fenceCoords) {
