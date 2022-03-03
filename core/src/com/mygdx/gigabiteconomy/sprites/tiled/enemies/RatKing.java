@@ -108,7 +108,6 @@ public class RatKing extends Enemy {
          * If fort has been destroyed, charge
          */
         } else {
-            System.out.println("Box fort destroyed, setting to charging");
             if ((getPath() != getPaths().get("charge") && getPath().peek() != DIRECTION.EAST)  && !(getCurrentTiles().get(0).getPositionTile()[0] < initX)) {
                 setPath("charge");
             }
@@ -158,6 +157,8 @@ public class RatKing extends Enemy {
          */
         if (!ret) return false;
 
+        getTileManager().printOccupiedTiles();
+
 
         /**
          * Check if next tile is occupied by target entity
@@ -195,7 +196,7 @@ public class RatKing extends Enemy {
     public void underAttack(int y) {
         //Spawn a minion in level
             level.addEnemies(new ArrayList<Enemy>(Arrays.asList(
-            new BatGuy(24, (new Random()).nextInt(8), "level2", this.getTargetEntity(), 6f, 1.5f, 65f, new LinkedList<>(Arrays.asList(DIRECTION.WEST, DIRECTION.WEST)))
+            new Dog(22, (new Random()).nextInt(8), "level2", this.getTargetEntity(), 8f, 6.5f, 80f, DIRECTION.randomPath(7))
         )));
     }
 }

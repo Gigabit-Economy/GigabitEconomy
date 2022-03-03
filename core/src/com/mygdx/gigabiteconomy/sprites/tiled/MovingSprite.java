@@ -430,11 +430,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
                 if (adjacentSprite instanceof MovingSprite && adjacentSprite != this) {
 
                     if (this instanceof RatKing && adjacentSprite instanceof RatKingFort) {
-                        System.out.println("Not attacking fort");
                         continue;
-                    }
-                    if (this instanceof RatKing) {
-                        System.out.println("Attacking " + adjacentSprite.getClass().getName());
                     }
 
                     ((MovingSprite) adjacentSprite).attack(weapon);

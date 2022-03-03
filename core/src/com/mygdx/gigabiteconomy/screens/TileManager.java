@@ -303,10 +303,21 @@ public class TileManager implements Disposable {
         for (Tile[] tileX : tileArray) {
             for (Tile tile : tileX) {
                 if (tile.getOccupiedBy() != null) {
-                    if (tile.getOccupiedBy() instanceof Player || tile.getOccupiedBy() instanceof Enemy)
+                    if (tile.getOccupiedBy() instanceof Dog)
                         occupied += "[" + tile.getTileCoords()[0] + "," + tile.getTileCoords()[1] + "] ";
                 }
             }
+        }
+    }
+
+    /**
+     * Method to purge all instances of to from row
+     */
+    public void purge(int row, TiledObject to) {
+        for (int i=0; i<gridWidth-1; i++) {
+            Tile currTile = tileArray[i][row];
+            if (currTile.isOccupiedBy(to))
+                currTile.setOccupied(null);
         }
     }
 
@@ -316,8 +327,11 @@ public class TileManager implements Disposable {
      */
     public boolean removeFromRows(TiledObject to) {
         boolean ret = false;
-        for (ArrayList<TiledObject> row : rowArray)
-            ret |= row.remove(to);
+        for (int i=0; i<rowArray.length; i++) {
+            ret |= rowArray[i].remove(to);
+//            purge(i, to);
+        }
+
         return ret;
     }
 

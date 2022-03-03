@@ -65,9 +65,9 @@ public class LevelSelectScreen implements Screen {
 
         TextButton selectThirdLevelTextButton = new TextButton("Level 3", style);
         selectThirdLevelTextButton.setName("LevelThreeScreen");
-        if (score2.getHighestScore() == 0) {
-            selectThirdLevelTextButton.setTouchable(Touchable.disabled);
-        }
+//        if (score2.getHighestScore() == 0) {
+//            selectThirdLevelTextButton.setTouchable(Touchable.disabled);
+//        }
         levelSelectTable.add(selectThirdLevelTextButton).padRight(-200);
 
         // Add click listener for buttons
