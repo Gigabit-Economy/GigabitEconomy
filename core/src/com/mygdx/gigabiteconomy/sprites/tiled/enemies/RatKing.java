@@ -86,7 +86,7 @@ public class RatKing extends Enemy {
             int randy = rand.nextInt(100);
             if (randy < 15) {
                 if (parcelFalling == null || parcelFalling.getOwnedTile().getOwnedBy() == null) {
-                    for (int i=0; i<6; i++) {
+                    for (int i=0; i<((new Random()).nextInt(6)+3); i++) {
                         parcelFalling = new FallingParcel(rand.nextInt(20) + 5, rand.nextInt(6) + 2); //Spawn relative to player location
                         level.addSprite(parcelFalling);
                     }
@@ -112,28 +112,6 @@ public class RatKing extends Enemy {
                 setPath("charge");
             }
         }
-
-
-//        if ((new Random()).nextInt(10)%2 == 0) {
-//            //Charge
-//            /**
-//             * Set agro path to WEST WEST & deltaHoriz fucken high
-//             */
-//
-//        } else {
-//            //Throw
-//        }
-
-        /**
-         * If rat fort remains throw parcel
-         *
-         * Otherwise either:
-         *      -> Charge at the player, set agro path to WEST WEST & deltaHoriz fucken high
-         *      --> If reached player:
-         *              damage targetEntity
-         *      --> return back to fort (initX)
-         */
-
 
     }
 
@@ -193,10 +171,10 @@ public class RatKing extends Enemy {
         return true;
     }
 
-    public void underAttack(int y) {
+    public void underAttack() {
         //Spawn a minion in level
-            level.addEnemies(new ArrayList<Enemy>(Arrays.asList(
-            new Dog(22, (new Random()).nextInt(8), "level2", this.getTargetEntity(), 10f, 4.5f, 60f, DIRECTION.randomPath(20))
-        )));
+            level.addEnemies(new ArrayList<Enemy>(Collections.singletonList(
+                    new Dog(22, (new Random()).nextInt(8), "level2", this.getTargetEntity(), 8f, 3.5f, 60f, DIRECTION.randomPath(20))
+            )));
     }
 }
