@@ -1,5 +1,5 @@
 batLeft.png
-size: 368, 1680
+size: 736, 1680
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -8,47 +8,96 @@ baseballratLeftAttack1
   xy: 0, 0
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 0, 0
   index: -1
 baseballratLeftAttack2
+  rotate: false
+  xy: 368, 0
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+baseballratLeftAttack3
   rotate: false
   xy: 0, 240
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 0, 0
   index: -1
-baseballratLeftAttack3
+baseballratLeftAttack4
+  rotate: false
+  xy: 368, 240
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+baseballratLeftAttack5
   rotate: false
   xy: 0, 480
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 0, 0
   index: -1
-baseballratLeftAttack4
+baseballratLeftAttack6
+  rotate: false
+  xy: 368, 480
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+baseballratLeftAttack7
   rotate: false
   xy: 0, 720
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 0, 0
   index: -1
-baseballratLeftAttack5
+baseballratLeftAttack8
+  rotate: false
+  xy: 368, 720
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+baseballratLeftAttack9
   rotate: false
   xy: 0, 960
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 0, 0
   index: -1
-baseballratLeftAttack6
+baseballratLeftAttack10
+  rotate: false
+  xy: 368, 960
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+baseballratLeftAttack11
   rotate: false
   xy: 0, 1200
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 0, 0
   index: -1
-baseballratLeftAttack7
+baseballratLeftAttack12
+  rotate: false
+  xy: 368, 1200
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+baseballratLeftAttack13
   rotate: false
   xy: 0, 1440
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 0, 0
+  index: -1
+baseballratLeftAttack14
+  rotate: false
+  xy: 368, 1440
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
   index: -1
