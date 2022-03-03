@@ -43,7 +43,7 @@ public class LevelSelectScreen implements Screen {
         levelSelectTable.add(selectFirstLevelLabel).padLeft(-200);
 
         TextButton selectFirstLevelTextButton = new TextButton("Level 1", style);
-        selectFirstLevelTextButton.setName("LevelOneScreen");
+        selectFirstLevelTextButton.setName("LevelOnePlotScreen");
         levelSelectTable.add(selectFirstLevelTextButton).padRight(-200);
 
         levelSelectTable.row();
