@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 public class Dog extends Enemy {
-    private static final float DEFAULT_HEALTH = 50f;
+    private static final float DEFAULT_HEALTH = 40f;
     private static final float DEFAULT_DELTAHORIZ = 4f;
     private static final float DEFAULT_DELTAVERT = 3.25f;
     private static final int DEFAULT_WIDTH = 3;

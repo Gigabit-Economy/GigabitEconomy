@@ -131,6 +131,7 @@ public class GigabitEconomy extends Game {
                     return;
                 } else {
                     toSwitch = new LevelThreeScreen(this);
+                    setMusic("LevelThree");
                 }
                 break;
 
