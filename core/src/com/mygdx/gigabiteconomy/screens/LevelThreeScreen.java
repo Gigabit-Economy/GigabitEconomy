@@ -19,21 +19,10 @@ public class LevelThreeScreen extends LevelScreen {
     private final RatKing ratKing = new RatKing(26, 3, LEVEL, player);
 
     /* ENEMIES */
-    private final ArrayList<Enemy> boxes = new ArrayList<Enemy>(Arrays.asList(
+    private final ArrayList<Enemy> enemies = new ArrayList<Enemy>(Arrays.asList(
             ratKing,
             /* THE MINIONS */
             new RatKingFort(25, 0, player, ratKing)
-            /*new RatKingFort(25, 1, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
-            new RatKingFort(25, 2, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
-            new RatKingFort(25, 3, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
-            new RatKingFort(25, 4, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
-            new RatKingFort(25, 5, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
-            new RatKingFort(25, 6, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
-            new RatKingFort(25, 7, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>()),
-            new RatKingFort(25, 8, player, ratKing, 2f, 1.5f, 65f, new LinkedList<MovingSprite.DIRECTION>())*/
-    ));
-    private final ArrayList<Enemy> enemies = new ArrayList<Enemy>(Arrays.asList(
-            new RatKing(26, 0, LEVEL, player)
     ));
 
     // Parcel van (for Player to collect parcels from)
@@ -70,10 +59,14 @@ public class LevelThreeScreen extends LevelScreen {
         addPlayer(player);
         player.new PlayerHealthBar(director);
         player.hideParcels();
-        addEnemies(boxes);
-        for (Enemy enemy : boxes) {
+        addEnemies(enemies);
+        for (Enemy enemy : enemies) {
             enemy.new EnemyHealthBar(director);
         }
+
+        enemies.get(1).hideHealthBar();
+        enemies.get(0).attack(MovingSprite.Weapon.BOXFORT);
+
         addSprites(staticSprites);
     }
 }

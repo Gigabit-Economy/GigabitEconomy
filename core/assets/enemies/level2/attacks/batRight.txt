@@ -1,5 +1,5 @@
 batRight.png
-size: 368, 1680
+size: 736, 1680
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -8,47 +8,96 @@ baseballratRightAttack1
   xy: 0, 0
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 0, 0
   index: -1
 baseballratRightAttack2
+  rotate: false
+  xy: 368, 0
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+baseballratRightAttack3
   rotate: false
   xy: 0, 240
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 0, 0
   index: -1
-baseballratRightAttack3
+baseballratRightAttack4
+  rotate: false
+  xy: 368, 240
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+baseballratRightAttack5
   rotate: false
   xy: 0, 480
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 0, 0
   index: -1
-baseballratRightAttack4
+baseballratRightAttack6
+  rotate: false
+  xy: 368, 480
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+baseballratRightAttack7
   rotate: false
   xy: 0, 720
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 0, 0
   index: -1
-baseballratRightAttack5
+baseballratRightAttack8
+  rotate: false
+  xy: 368, 720
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+baseballratRightAttack9
   rotate: false
   xy: 0, 960
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 0, 0
   index: -1
-baseballratRightAttack6
+baseballratRightAttack10
+  rotate: false
+  xy: 368, 960
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+baseballratRightAttack11
   rotate: false
   xy: 0, 1200
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 0, 0
   index: -1
-baseballratRightAttack7
+baseballratRightAttack12
+  rotate: false
+  xy: 368, 1200
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
+  index: -1
+baseballratRightAttack13
   rotate: false
   xy: 0, 1440
   size: 368, 240
   orig: 368, 240
-  offset: 126, 0
+  offset: 0, 0
+  index: -1
+baseballratRightAttack14
+  rotate: false
+  xy: 368, 1440
+  size: 368, 240
+  orig: 368, 240
+  offset: 0, 0
   index: -1

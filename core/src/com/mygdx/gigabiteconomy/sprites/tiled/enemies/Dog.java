@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 public class Dog extends Enemy {
-    private static final float DEFAULT_HEALTH = 50f;
+    private static final float DEFAULT_HEALTH = 40f;
     private static final float DEFAULT_DELTAHORIZ = 4f;
     private static final float DEFAULT_DELTAVERT = 3.25f;
     private static final int DEFAULT_WIDTH = 3;
@@ -48,5 +48,12 @@ public class Dog extends Enemy {
      */
     public Dog(int x, int y, String level, Player targetEntity, float deltaHoriz, float deltaVert, float health, LinkedList<DIRECTION> movementPath) {
         super(level, Weapon.DOG, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, deltaHoriz, deltaVert, DEFAULT_HORIZAGROTILES, DEFAULT_VERTAGROTILES, health, movementPath);
+    }
+
+    @Override
+    public void destroy() {
+        if (getCurrentTiles() != null) getTileManager().purge(getCurrentTiles().get(0).getPositionTile()[1], this);
+        if (getTargetTiles() != null) getTileManager().purge(getTargetTiles().get(0).getPositionTile()[1], this);
+        super.destroy();
     }
 }
