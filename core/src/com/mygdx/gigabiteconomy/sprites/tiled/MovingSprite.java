@@ -405,6 +405,10 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         return directionFacing;
     }
 
+    public DIRECTION getDirectionLat() {
+        return latitude;
+    }
+
     /**
      * Set the sprite's current weapon
      *

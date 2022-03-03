@@ -145,35 +145,21 @@ public class Player extends MovingSprite {
      */
     @Override
     public void launchAttack() {
-        // get Tile adjacent to Player
-        Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), getDirectionFacing(), 1);
-        if (adjacentTile == null) return; // trying to attack invalid Tile
-
-        // if Player doesn't yet have a Parcel, check if next to a parcel van to collect one
-        if (this.parcel == null) {
-            // if adjacent tile is occupied by a parcel van, collect parcel
-            TiledObject adjacentSprite = adjacentTile.getOccupiedBy();
-            if (adjacentSprite instanceof ParcelVan) {
+        for (Tile t : getTileManager().getAdjacentTiles(this)) {
+            // if Player doesn't yet have a Parcel, check if next to a parcel van to collect one
+            if (t.getOccupiedBy() instanceof ParcelVan && this.parcel == null) {
                 level.getParcelVan().setInactive();
                 this.parcel = new Parcel();
                 return;
-            }
-        }
-        // if Player does have a Parcel, check if next to House to be delivered to
-        else {
-            // if current tile or adjacent tile is owned by a House (door), deliver parcel
-            TiledObject currentObject;
-            try {
-                currentObject = getCurrentTiles().get(0).getOwnedBy();
-            } catch (NullPointerException ex) {
-                currentObject = null;
-            }
-            TiledObject adjacentObject = adjacentTile.getOwnedBy();
-            if ((adjacentObject instanceof House) ||
-                    currentObject instanceof House) {
+            } else if (t.getOccupiedBy() instanceof House && getCurrentTiles().get(0).getOwnedBy() instanceof House) {
+                // if current tile or adjacent tile is owned by a House (door), deliver parcel
                 parcel.deliver();
+                System.out.println("Delivering!");
+                break;
             }
+            System.out.println(t);
         }
+
 
         super.launchAttack();
     }
