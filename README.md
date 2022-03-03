@@ -6,7 +6,7 @@
 ### Description
 You are a delivery driver aiming to do your round. Deliver to all the houses you can without falling victim to the dangers of suburbia. 
 
-If worst comes to worst, you can always _borrow_ whatever happens to lie inside your parcels for a helping hand. 
+If worse comes to worst, you can always _borrow_ whatever happens to lie inside your parcels for a helping hand. 
 
 Just remember in the Gigabit Economy the deliveries you make (and the ones you don't) affect the score your company gives you at the end of the day. 
 
