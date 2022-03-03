@@ -196,7 +196,7 @@ public class RatKing extends Enemy {
     public void underAttack(int y) {
         //Spawn a minion in level
             level.addEnemies(new ArrayList<Enemy>(Arrays.asList(
-            new Dog(22, (new Random()).nextInt(8), "level2", this.getTargetEntity(), 20f, 6.5f, 80f, DIRECTION.randomPath(7))
+            new Dog(22, (new Random()).nextInt(8), "level2", this.getTargetEntity(), 10f, 4.5f, 60f, DIRECTION.randomPath(20))
         )));
     }
 }

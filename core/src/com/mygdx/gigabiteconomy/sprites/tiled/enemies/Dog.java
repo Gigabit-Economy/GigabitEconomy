@@ -50,14 +50,10 @@ public class Dog extends Enemy {
         super(level, Weapon.DOG, x, y, DEFAULT_HEIGHT, DEFAULT_WIDTH, targetEntity, deltaHoriz, deltaVert, DEFAULT_HORIZAGROTILES, DEFAULT_VERTAGROTILES, health, movementPath);
     }
 
-//    @Override
-//    public void destroy() {
-//
-//        // remove the sprite from the level and clear its tile
-//        getTileManager().placeObject(null, getCurrentTiles());
-//        getTileManager().removeFromRows(this);
-//
-//        // dispose of the sprite from memory
-//        dispose();
-//    }
+    @Override
+    public void destroy() {
+        if (getCurrentTiles() != null) getTileManager().purge(getCurrentTiles().get(0).getPositionTile()[1], this);
+        if (getTargetTiles() != null) getTileManager().purge(getTargetTiles().get(0).getPositionTile()[1], this);
+        super.destroy();
+    }
 }
