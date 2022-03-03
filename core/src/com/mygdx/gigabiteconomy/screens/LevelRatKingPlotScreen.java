@@ -15,7 +15,7 @@ public class LevelRatKingPlotScreen extends PlotScreen {
                         +"to do with people looking like rats or have no prior knowledge to rats taking our"
                         +"parcels - if that even is happening.";
         
-        String nextLevelName = "LevelRatKing";
+        String nextLevelName = "LevelThreeScreen";
 
         addTitle(title);
         addBody(body);
