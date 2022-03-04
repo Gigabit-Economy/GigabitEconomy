@@ -46,8 +46,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     private int parcels = 5;
 
     private BitmapFont font;
-    private String errorText;
-    private float errorCountdown;
 
     /**
      * A template constructor for use by all level screen subclasses. Sets
@@ -213,25 +211,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         font.setColor(Color.CORAL);
         font.draw(batch, scoreText, cam.x+(director.getViewport().getScreenWidth()/100*38), cam.y+(director.getViewport().getScreenHeight()/100*47));
 
-        // if one is set, display error message
-        if (this.errorCountdown > 0 && this.errorText != null && this.errorText.length() != 0) {
-            font.draw(batch, this.errorText, cam.x+(director.getViewport().getScreenWidth()/100*38), cam.y+(director.getViewport().getScreenHeight()/100*47));
-
-            errorCountdown -= 1 * delta; // decrement error countdown by seconds passed in prev render
-        }
-
         batch.end();
-    }
-
-    /**
-     * Show an error message to the user
-     *
-     * @param error the error message
-     */
-    public void showErrorText(String error) {
-        this.errorText = error;
-        // set for error to display for 5 seconds
-        this.errorCountdown = 5;
     }
 
     /**
@@ -337,11 +317,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         }
         else if (keycode == Input.Keys.TAB) {
             // Open parcel (if any)
-            try {
-                player.openParcel();
-            } catch (ParcelException ex) {
-                showErrorText(ex.getMessage());
-            }
+            player.openParcel();
         } else {
             return false;
         }
