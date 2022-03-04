@@ -10,7 +10,7 @@ public class LevelThreePlotScreen extends PlotScreen {
         super(director);
         
         String title = "DON'T RAT-US OUT";
-        String body =   "So we've recently been losing lots of parcels. IWORKSS has been putting it down to"
+        String body =   "So we've recently been losing a lot more parcels. IWORKSS has been putting it down to"
                         +" delivery drivers, but it seems like it's been caused by some extra-freakish rat. A big old rat."
                         +" As our star driver, management think its only right we give you the opportunity to"
                         +" get this issue resolved for us... if you catch my drift. I must stress that 'Dangerous Packaging Company'"
