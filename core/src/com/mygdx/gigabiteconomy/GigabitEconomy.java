@@ -258,7 +258,7 @@ public class GigabitEconomy extends Game {
      */
     public String getNextLevel() {
         switch (this.lastPlayedLevel) {
-            case "LevelOnePlotScreen":
+            case "LevelOneScreen":
                 return "LevelTwoPlotScreen";
             case "LevelTwoScreen":
                 return "LevelThreePlotScreen";
