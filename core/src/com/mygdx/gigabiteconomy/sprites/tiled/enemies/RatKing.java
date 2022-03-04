@@ -1,9 +1,8 @@
 package com.mygdx.gigabiteconomy.sprites.tiled.enemies;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
-import com.mygdx.gigabiteconomy.screens.LevelScreen;
+import com.mygdx.gigabiteconomy.screens.levels.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.screens.TileManager;
 import com.mygdx.gigabiteconomy.sprites.tiled.Enemy;
@@ -86,7 +85,7 @@ public class RatKing extends Enemy {
             int randy = rand.nextInt(100);
             if (randy < 15) {
                 if (parcelFalling == null || parcelFalling.getOwnedTile().getOwnedBy() == null) {
-                    for (int i=0; i<((new Random()).nextInt(6)+3); i++) {
+                    for (int i=0; i<((new Random()).nextInt(15)+3); i++) {
                         parcelFalling = new FallingParcel(rand.nextInt(20) + 5, rand.nextInt(6) + 2); //Spawn relative to player location
                         level.addSprite(parcelFalling);
                     }
@@ -170,6 +169,16 @@ public class RatKing extends Enemy {
 
         return true;
     }
+
+    @Override
+    public void attack(MovingSprite.Weapon weapon) {
+        super.attack(weapon);
+
+        if (this.getHealth() <= 0) {
+            level.complete();
+        }
+    }
+
 
     public void underAttack() {
         //Spawn a minion in level

@@ -52,7 +52,7 @@ public class LevelSelectScreen implements Screen {
         levelSelectTable.add(selectSecondLevelLabel).padLeft(-200);
 
         TextButton selectSecondLevelTextButton = new TextButton("Level 2", style);
-        selectSecondLevelTextButton.setName("LevelTwoScreen");
+        selectSecondLevelTextButton.setName("LevelTwoPlotScreen");
         if (score1.getHighestScore() == 0) {
             selectSecondLevelTextButton.setTouchable(Touchable.disabled);
         }
@@ -64,10 +64,10 @@ public class LevelSelectScreen implements Screen {
         levelSelectTable.add(selectThirdLevelLabel).padLeft(-200);
 
         TextButton selectThirdLevelTextButton = new TextButton("Level 3", style);
-        selectThirdLevelTextButton.setName("LevelThreeScreen");
-//        if (score2.getHighestScore() == 0) {
-//            selectThirdLevelTextButton.setTouchable(Touchable.disabled);
-//        }
+        selectThirdLevelTextButton.setName("LevelThreePlotScreen");
+        if (score2.getHighestScore() == 0) {
+            selectThirdLevelTextButton.setTouchable(Touchable.disabled);
+        }
         levelSelectTable.add(selectThirdLevelTextButton).padRight(-200);
 
         // Add click listener for buttons

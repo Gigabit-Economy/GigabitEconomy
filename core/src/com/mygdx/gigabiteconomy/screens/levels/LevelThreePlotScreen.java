@@ -1,10 +1,11 @@
-package com.mygdx.gigabiteconomy.screens;
+package com.mygdx.gigabiteconomy.screens.levels;
 
 import com.mygdx.gigabiteconomy.GigabitEconomy;
+import com.mygdx.gigabiteconomy.screens.PlotScreen;
 
-public class LevelRatKingPlotScreen extends PlotScreen {
+public class LevelThreePlotScreen extends PlotScreen {
 
-    public LevelRatKingPlotScreen(GigabitEconomy director) {
+    public LevelThreePlotScreen(GigabitEconomy director) {
         super(director);
         
         String title = "DON'T RATUS RATUS OUT";

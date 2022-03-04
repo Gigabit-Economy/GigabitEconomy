@@ -2,7 +2,6 @@ package com.mygdx.gigabiteconomy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.mygdx.gigabiteconomy.screens.LevelScreen;
 
 import java.util.Arrays;
 
@@ -28,6 +27,15 @@ public class ScoreSystem {
      */
     public int getScore() {
         return score;
+    }
+
+    /**
+     * Set the current level's score
+     *
+     * @param points the amount to set the score to
+     */
+    public void setScore(int points) {
+        score = points;
     }
 
     /**

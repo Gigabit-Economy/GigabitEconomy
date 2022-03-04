@@ -1,4 +1,4 @@
-package com.mygdx.gigabiteconomy.screens;
+package com.mygdx.gigabiteconomy.screens.levels;
 
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.sprites.tiled.House;
@@ -8,7 +8,6 @@ import com.mygdx.gigabiteconomy.sprites.tiled.enemies.*;
 
 import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 /**
  * Level 1 screen
@@ -31,11 +30,6 @@ public class LevelOneScreen extends LevelScreen {
         new Fighter(30, 4, LEVEL, player)
     ));
 
-//    , 3.4f, 2.8f, 60, new LinkedList<>(Arrays.asList(
-//    MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
-//    MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.NORTH, MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.SOUTH,
-//    MovingSprite.DIRECTION.SOUTH, MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST
-//        ))
 
     // Parcel van (for Player to collect parcels from)
     private final ParcelVan parcelVan = new ParcelVan(0, 0);

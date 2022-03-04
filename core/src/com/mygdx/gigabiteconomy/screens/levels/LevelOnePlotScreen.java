@@ -1,6 +1,7 @@
-package com.mygdx.gigabiteconomy.screens;
+package com.mygdx.gigabiteconomy.screens.levels;
 
 import com.mygdx.gigabiteconomy.GigabitEconomy;
+import com.mygdx.gigabiteconomy.screens.PlotScreen;
 
 public class LevelOnePlotScreen extends PlotScreen {
 
@@ -23,7 +24,9 @@ public class LevelOnePlotScreen extends PlotScreen {
 
         addTitle(title);
         addBody(body);
+        addControls(true);
         addButton(nextLevelName);
     }
     
 }
+

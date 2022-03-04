@@ -1,4 +1,4 @@
-package com.mygdx.gigabiteconomy.screens;
+package com.mygdx.gigabiteconomy.screens.levels;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.audio.Music;
@@ -13,6 +13,7 @@ import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.ScoreSystem;
 import com.mygdx.gigabiteconomy.exceptions.ParcelException;
 import com.mygdx.gigabiteconomy.exceptions.ScreenException;
+import com.mygdx.gigabiteconomy.screens.TileManager;
 import com.mygdx.gigabiteconomy.sprites.tiled.*;
 import com.mygdx.gigabiteconomy.sprites.tiled.enemies.RatKing;
 
@@ -75,6 +76,15 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      */
     public GigabitEconomy getDirector() {
         return this.director;
+    }
+
+    /**
+     * Get the level's score system instance
+     *
+     * @return the level's score system instance
+     */
+    public ScoreSystem getScore() {
+        return score;
     }
 
     /**
@@ -277,6 +287,15 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     }
 
     /**
+     * Set the score points count
+     *
+     * @param points the number of points to set the score to
+     */
+    public void setScore(int points) {
+        score.setScore(points);
+    }
+
+    /**
      * Add to the score points count
      *
      * @param points the number of points to add
@@ -408,8 +427,12 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      * Complete the level (called when the level is complete i.e. the final parcel is delivered)
      */
     public void complete() {
+        // multiply points by health (out of 100); max score is 500
+        setScore(Math.round(player.getHealth()) * score.getScore());
+        // save score
         score.saveScore();
 
+        // switch to LevelComplete screen
         try {
             director.switchScreen("LevelComplete");
         } catch (ScreenException ex) {
@@ -443,12 +466,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         if (paused) {
             return;
         }
-//
-//        // dispose of Tile Manager & its sprites (to dispose their texture/texture atlas)
-//        tileManager.dispose();
-//
-//        backgroundTexture.dispose();
-//        batch.dispose();
-//        font.dispose();
+
     }
 }

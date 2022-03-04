@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.exceptions.ParcelException;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
-import com.mygdx.gigabiteconomy.screens.LevelScreen;
+import com.mygdx.gigabiteconomy.screens.levels.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.sprites.HealthBar;
 

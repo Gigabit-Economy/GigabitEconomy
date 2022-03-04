@@ -10,6 +10,7 @@ import com.mygdx.gigabiteconomy.exceptions.ScreenException;
 import com.mygdx.gigabiteconomy.screens.*;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.Gdx;
+import com.mygdx.gigabiteconomy.screens.levels.*;
 
 import java.lang.String;
 
@@ -128,6 +129,10 @@ public class GigabitEconomy extends Game {
                 toSwitch = new LevelFailedScreen(this);
                 setMusic("Menu");
                 break;
+            case "GameComplete":
+                toSwitch = new GameCompleteScreen(this);
+                setMusic("Menu");
+                break;
 
             case "LevelOnePlotScreen":
                 toSwitch = new LevelOnePlotScreen(this);
@@ -142,7 +147,7 @@ public class GigabitEconomy extends Game {
                     setMusic("LevelOne");
                 }
                 break;
-            case "LeveTwoPlotScreen":
+            case "LevelTwoPlotScreen":
                 toSwitch = new LevelTwoPlotScreen(this);
                 break;
             case "LevelTwoScreen":
@@ -156,7 +161,7 @@ public class GigabitEconomy extends Game {
                 }
                 break;
             case "LevelThreePlotScreen":
-                toSwitch = new LevelRatKingPlotScreen(this);
+                toSwitch = new LevelThreePlotScreen(this);
                 break;
             case "LevelThreeScreen":
                 if (fromPause != null) {
@@ -255,9 +260,9 @@ public class GigabitEconomy extends Game {
     public String getNextLevel() {
         switch (this.lastPlayedLevel) {
             case "LevelOneScreen":
-                return "LevelTwoScreen";
+                return "LevelTwoPlotScreen";
             case "LevelTwoScreen":
-                return "LevelThreeScreen";
+                return "LevelThreePlotScreen";
 
             default:
                 return "LevelSelectScreen";
