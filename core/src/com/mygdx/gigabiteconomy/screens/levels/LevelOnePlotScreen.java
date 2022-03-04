@@ -4,28 +4,27 @@ import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.screens.PlotScreen;
 
 public class LevelOnePlotScreen extends PlotScreen {
+    private static final String LEVEL_NAME = "LevelOneScreen";
 
     public LevelOnePlotScreen(GigabitEconomy director) {
         super(director);
 
-        String title = "WELCOME TO THE GIG ECONOMY";
-        String body =   "Hey there welcome to your first day as a delivery driver with 'Dangerous Packaging Company'. A delivery company that exclusively delivers" 
-                        +" dangerous good.\n\n"
-                        +"As an independent driver you will have the freedom to deliver parcels however you like... except we do keep track of you through our state"
-                        +" of the art 'indepent worker organised rating knowledgable score system' or IWORKSS for short. It's pretty simple really deliver parcels and"
-                        +" you get a point.\n\n"
-                        +"For your first shift we thought we'd start you off in the lovely suburbs. Little picket fences, nice white brick houses, refreshing" 
-                        +" semi-rural air. I can already imagine how much you'll love delivering round here... just a word of warning thoug... theres been a few reports"
-                        +" through IWORKSS of a few... hostile residents... Still I'm sure you'll manage after all you have your trusty box cutter if anything gets out" 
+        String title = "WELCOME TO THE GIGABIT ECONOMY";
+        String body =   "Hi! Welcome to your first day as a delivery driver with 'Dangerous Packaging Company' - your experts in delivering"
+                        +" dangerous goods.\n\n"
+                        +"As an independent driver you have the freedom to deliver parcels however you like... however, we do keep track of you through our state"
+                        +" of the art 'independent worker organised rating knowledgeable score system' (or IWORKSS for short). It's pretty simple: deliver parcels and"
+                        +" you get a point. Look after yourself and you'll get even more points.\n\n"
+                        +"For your first shift we thought we'd start you off in the lovely suburbs. Little picket fences, nice white brick houses, refreshing"
+                        +" semi-rural air. I can already imagine how much you'll love delivering round here. Just a word of warning though... there have been a few reports"
+                        +" coming through on IWORKSS of a few... erm... \"hostile\" residents. I'm sure you'll manage though, and you have your trusty box cutter if anything gets out"
                         +" of hand.\n\n"
-                        +"P.S You didn't hear it from me but some of the stuff we deliver might be worth opening with [tab]";
-        
-        String nextLevelName = "LevelOneScreen";
+                        +"P.S. You didn't hear this from me but some of the stuff we deliver might be worth opening with [tab]";
 
         addTitle(title);
         addBody(body);
         addControls(true);
-        addButton(nextLevelName);
+        addButton(LEVEL_NAME);
     }
     
 }
