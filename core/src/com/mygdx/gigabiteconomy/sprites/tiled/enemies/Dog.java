@@ -7,6 +7,9 @@ import com.mygdx.gigabiteconomy.sprites.tiled.Player;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+/**
+ * Dog enemy sprite
+ */
 public class Dog extends Enemy {
     private static final float DEFAULT_HEALTH = 40f;
     private static final float DEFAULT_DELTAHORIZ = 4f;

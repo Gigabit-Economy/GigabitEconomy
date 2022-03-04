@@ -15,6 +15,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 
+/**
+ * Screen shown when user accesses "help" via. menu screen or pause menu
+ */
 public class TutorialScreen implements Screen {
     private final static String DESCRIPTION = "You are a delivery driver aiming to do your round. Deliver to all the houses you can without falling victim to the dangers of suburbia. If worst comes to worst though you can always borrow what the content of your parcels. Just remember in the gig-economy the deliveries you make (and the ones you don't) affect the score your company gives you at the end of the day.";
 
@@ -23,11 +26,20 @@ public class TutorialScreen implements Screen {
     private Stage stage;
     private Table informationScreenTable;
 
+    /**
+     * Create a new tutorial screen
+     *
+     * @param director the game's director class instance
+     */
     public TutorialScreen(GigabitEconomy director) {
         this.director = director;
         this.stage = new Stage(director.getViewport());
     }
 
+    /**
+     * Show the game complete screen.
+     * Called by LibGDX when setScreen() is called to this screen.
+     */
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
@@ -121,6 +133,11 @@ public class TutorialScreen implements Screen {
         stage.addActor(informationScreenTable);
     }
 
+    /**
+     * Render the game complete screen
+     *
+     * @param delta the time elapsed since the previous render (in seconds)
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -129,12 +146,21 @@ public class TutorialScreen implements Screen {
         informationScreenTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
+    /**
+     * Resize the window
+     *
+     * @param width the new screen width
+     * @param height the new screen height
+     */
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
-
     }
 
+    /**
+     * Hide the screen.
+     * Called by LibGDX when setScreen()'ed away from the screen.
+     */
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);

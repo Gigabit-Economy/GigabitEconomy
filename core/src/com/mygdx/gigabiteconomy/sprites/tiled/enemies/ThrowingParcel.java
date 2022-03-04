@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+/**
+ * Throwing parcel (thrown by Rat King) enemy sprite (in level 3)
+ */
 public class ThrowingParcel extends Enemy {
     private static final String BASE_PATH = "ratking";
     private static final float DEFAULT_HEALTH = 1f;

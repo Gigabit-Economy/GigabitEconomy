@@ -10,6 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.ScoreSystem;
 
+/**
+ * Screen shown once the game is complete (after level 3 has been completed)
+ */
 public class GameCompleteScreen implements Screen {
     private GigabitEconomy director;
 
@@ -18,11 +21,20 @@ public class GameCompleteScreen implements Screen {
 
     private ScoreSystem levelScores;
 
+    /**
+     * Create a new game complete screen
+     *
+     * @param director the game's director class instance
+     */
     public GameCompleteScreen(GigabitEconomy director) {
         this.director = director;
         this.stage = new Stage(director.getViewport());
     }
 
+    /**
+     * Show the game complete screen.
+     * Called by LibGDX when setScreen() is called to this screen.
+     */
     @Override
     public void show() {
         this.levelScores = new ScoreSystem(director.getLastPlayedLevel());
@@ -89,6 +101,11 @@ public class GameCompleteScreen implements Screen {
         stage.addActor(levelCompletedTable);
     }
 
+    /**
+     * Render the game complete screen
+     *
+     * @param delta the time elapsed since the previous render (in seconds)
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -99,6 +116,12 @@ public class GameCompleteScreen implements Screen {
         levelCompletedTable.setBounds(0, 0, Gdx.graphics.getWidth() + 180, Gdx.graphics.getHeight());
     }
 
+    /**
+     * Resize the window
+     *
+     * @param width the new screen width
+     * @param height the new screen height
+     */
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
@@ -110,6 +133,10 @@ public class GameCompleteScreen implements Screen {
     @Override
     public void resume() {}
 
+    /**
+     * Hide the screen.
+     * Called by LibGDX when setScreen()'ed away from the screen.
+     */
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);

@@ -16,6 +16,9 @@ import com.mygdx.gigabiteconomy.ScoreSystem;
 
 import java.util.Arrays;
 
+/**
+ * Screen shown once a level is complete (level 1/2)
+ */
 public class LevelCompleteScreen implements Screen {
     private GigabitEconomy director;
 
@@ -24,11 +27,20 @@ public class LevelCompleteScreen implements Screen {
 
     private ScoreSystem levelScores;
 
+    /**
+     * Create a new level complete screen
+     *
+     * @param director the game's director class instance
+     */
     public LevelCompleteScreen(GigabitEconomy director) {
         this.director = director;
         this.stage = new Stage(director.getViewport());
     }
 
+    /**
+     * Show the game complete screen.
+     * Called by LibGDX when setScreen() is called to this screen.
+     */
     @Override
     public void show() {
         this.levelScores = new ScoreSystem(director.getLastPlayedLevel());
@@ -95,6 +107,11 @@ public class LevelCompleteScreen implements Screen {
         stage.addActor(levelCompletedTable);
     }
 
+    /**
+     * Render the game complete screen
+     *
+     * @param delta the time elapsed since the previous render (in seconds)
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -116,6 +133,10 @@ public class LevelCompleteScreen implements Screen {
     @Override
     public void resume() {}
 
+    /**
+     * Hide the screen.
+     * Called by LibGDX when setScreen()'ed away from the screen.
+     */
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);

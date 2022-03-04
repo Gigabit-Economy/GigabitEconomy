@@ -25,7 +25,7 @@ import com.badlogic.gdx.utils.Align;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 
 /**
- * The pause menu screen
+ * The pause menu screen (shown when accessed via. settings button on menu screen or pausing level screen)
  */
 public class PauseMenu implements Screen, InputProcessor {
     private GigabitEconomy director;
@@ -36,6 +36,11 @@ public class PauseMenu implements Screen, InputProcessor {
     private InputMultiplexer inputMulti;
     private int pauseCount = 0;
 
+    /**
+     * Create a new pause menu screen
+     *
+     * @param director the game's director class instance
+     */
     public PauseMenu(GigabitEconomy director) {
         this.director = director;
         this.stage = new Stage(director.getViewport());
@@ -44,6 +49,10 @@ public class PauseMenu implements Screen, InputProcessor {
 		inputMulti.addProcessor(this);
     }
 
+    /**
+     * Show the game complete screen.
+     * Called by LibGDX when setScreen() is called to this screen.
+     */
     @Override
     public void show() {
         Gdx.input.setInputProcessor(inputMulti);
@@ -207,6 +216,12 @@ public class PauseMenu implements Screen, InputProcessor {
         pauseCount++;
     }
 
+    /**
+     * Register a key press input
+     *
+     * @param keycode the key pressed
+     * @return true if key press processed, false if not
+     */
     @Override
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.P || keycode == Input.Keys.ESCAPE) {
@@ -224,6 +239,11 @@ public class PauseMenu implements Screen, InputProcessor {
         return true;
     }
 
+    /**
+     * Render the game complete screen
+     *
+     * @param delta the time elapsed since the previous render (in seconds)
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -232,20 +252,25 @@ public class PauseMenu implements Screen, InputProcessor {
         pauseMenuTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
+    /**
+     * Resize the window
+     *
+     * @param width the new screen width
+     * @param height the new screen height
+     */
     @Override
     public void resize(int width, int height) {
         // True since camera position with UI is rarely changed
         stage.getViewport().update(width, height, true);
     }
 
+    /**
+     * Hide the screen.
+     * Called by LibGDX when setScreen()'ed away from the screen.
+     */
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);
-    }
-
-    @Override
-    public void dispose() {
-        stage.dispose();
     }
 
     @Override
@@ -287,5 +312,10 @@ public class PauseMenu implements Screen, InputProcessor {
     @Override
     public boolean scrolled(float amountX, float amountY) {
         return false;
+    }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
     }
 }

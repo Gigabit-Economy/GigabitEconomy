@@ -23,7 +23,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 
 /**
- * The menu screen which is shown on initial game load.
+ * The screen shown on initial game load
  */
 public class MenuScreen implements Screen {
     private static final Texture BACKGROUND_TEXTURE = new Texture("ui_elements/homescreen.png");
@@ -36,11 +36,20 @@ public class MenuScreen implements Screen {
     private Array<TextureAtlas.AtlasRegion> regions;
     private TextureRegion current;
 
+    /**
+     * Create a new menu screen
+     *
+     * @param director the game's director class instance
+     */
     public MenuScreen(GigabitEconomy director) {
         this.director = director;
         this.stage = new Stage(director.getViewport());
     }
 
+    /**
+     * Show the game complete screen.
+     * Called by LibGDX when setScreen() is called to this screen.
+     */
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
@@ -103,6 +112,11 @@ public class MenuScreen implements Screen {
         stage.addActor(buttons);
     }
 
+    /**
+     * Render the game complete screen
+     *
+     * @param delta the time elapsed since the previous render (in seconds)
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -110,6 +124,12 @@ public class MenuScreen implements Screen {
         stage.draw();
     }
 
+    /**
+     * Resize the window
+     *
+     * @param width the new screen width
+     * @param height the new screen height
+     */
     @Override
     public void resize(int width, int height) {
         // True since camera position with UI is rarely changed
@@ -122,6 +142,10 @@ public class MenuScreen implements Screen {
     @Override
     public void resume() {}
 
+    /**
+     * Hide the screen.
+     * Called by LibGDX when setScreen()'ed away from the screen.
+     */
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);

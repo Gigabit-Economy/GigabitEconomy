@@ -11,8 +11,10 @@ import com.mygdx.gigabiteconomy.sprites.tiled.*;
 
 import java.util.LinkedList;
 
+/**
+ * Falling parcel enemy sprite (in level 3)
+ */
 public class FallingParcel extends TiledObject implements Disposable {
-
     private MovingAnimation falling;
     private TextureRegion currentRegion;
     private TextureAtlas ta;

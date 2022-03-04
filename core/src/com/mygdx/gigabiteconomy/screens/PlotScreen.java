@@ -14,8 +14,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 
-public class PlotScreen implements Screen{
-
+/**
+ * Abstract class which all level plot screens inherit from
+ */
+public class PlotScreen implements Screen {
     private GigabitEconomy director;
     private Stage stage;
     private Table storyTable;
@@ -25,18 +27,17 @@ public class PlotScreen implements Screen{
     private boolean enableControl = false;
 
     /**
-     * A constructor for adding the details into a plotscreen.
+     * Create a new plot screen
+     *
      * @param director  the instance of the game director
      */
-    
     public PlotScreen(GigabitEconomy director) {
         this.director = director;
         this.stage = new Stage(director.getViewport());
         
-        //default header
+        // default header & body
         titleText = "[ Header ]";
         bodyText = "[ Body ]";
-
     }
     /**
      * Add the title/header for the plot screen.
@@ -45,6 +46,7 @@ public class PlotScreen implements Screen{
     public void addTitle(String title) {
         titleText = title;
     }
+
     /**
      * Add the title/header for the plot screen.
      * @param body  text that makes up the body for a level
@@ -52,6 +54,7 @@ public class PlotScreen implements Screen{
     public void addBody(String body) {
         bodyText = body;
     }
+
     /**
      * Button should be used to transition from the plotscreen to the actual leve
      * @param body  String name, used in directory, to transition to level screen
@@ -60,55 +63,61 @@ public class PlotScreen implements Screen{
         levelName = nextLevelName;
     }
 
-
-    @Override
-    public void dispose() {
-        stage.dispose();
-    }
-
+    /**
+     * Hide the screen.
+     * Called by LibGDX when setScreen()'ed away from the screen.
+     */
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);
     }
 
     @Override
-    public void pause() {
-        // TODO Auto-generated method stub
-        
-    }
+    public void pause() {}
 
+    /**
+     * Render the game complete screen
+     *
+     * @param delta the time elapsed since the previous render (in seconds)
+     */
     @Override
     public void render(float delta) {
-        
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
         stage.draw();
         storyTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        stage.getViewport().update(width, height, true);
-
-    }
-
-    @Override
-    public void resume() {
-        // TODO Auto-generated method stub
-        
     }
 
     /**
-     * Method to enable the controls to be loaded into the table
+     * Resize the window
+     *
+     * @param width the new screen width
+     * @param height the new screen height
+     */
+    @Override
+    public void resize(int width, int height) {
+        stage.getViewport().update(width, height, true);
+    }
+
+    @Override
+    public void resume() {}
+
+    /**
+     * Enable the controls to be loaded into the table
+     *
      * @param enable boolean for choosing to enable or disable controls being displayed on a plotscreen
      */
     public void addControls(boolean enable) {
         enableControl = enable;
     }
-    
+
+    /**
+     * Add controls to the page
+     *
+     * @param table the scene2d table
+     * @param style the UI skin style
+     */
     private void insertControls(Table table, Skin style) {
-        
         Label headerControls = new Label("Controls", style);
         Label ctrlMovement = new Label("Movement: ", style);
         TextField ctrlMovementBind = new TextField(" W/A/S/D [-or-] arrow-keys", style);
@@ -143,7 +152,6 @@ public class PlotScreen implements Screen{
         table.add(ctrPauseGame).left();
         table.add(ctrlPauseGameBind);
         table.row();
-
     }
 
     @Override
@@ -163,7 +171,7 @@ public class PlotScreen implements Screen{
         storyTable.add(body).width(Gdx.graphics.getWidth()-500).height(Gdx.graphics.getHeight()-700);
         storyTable.row();
 
-        if(enableControl == true) {
+        if (enableControl == true) {
             insertControls(storyTable, style);
         }
 
@@ -189,8 +197,10 @@ public class PlotScreen implements Screen{
         toLevelButton.addListener(buttonsListener);
 
         stage.addActor(storyTable);
-
-
     }
-    
+
+    @Override
+    public void dispose() {
+        stage.dispose();
+    }
 }

@@ -12,8 +12,6 @@ import com.mygdx.gigabiteconomy.sprites.tiled.TiledObject;
  * --> Associated methods to provide encapsulation
  */
 public class Tile {
-
-    //Might help with collisons later on if things with Tile is harder than expected... only issue is x/y is float
     private float[] position = new float[2]; //x,y coords of tile on screen
     private int[] positionTile = new int[2]; //Holds relative position on screen
     private int sideLength;

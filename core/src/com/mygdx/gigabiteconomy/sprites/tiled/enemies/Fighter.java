@@ -7,6 +7,9 @@ import com.mygdx.gigabiteconomy.sprites.tiled.Player;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+/**
+ * Fighter enemy sprite
+ */
 public class Fighter extends Enemy {
     private static final int DEFAULT_WIDTH = 1;
     private static final int DEFAULT_HEIGHT = 1;

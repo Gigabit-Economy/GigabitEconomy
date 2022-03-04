@@ -30,7 +30,6 @@ public class LevelOneScreen extends LevelScreen {
         new Fighter(30, 4, LEVEL, player)
     ));
 
-
     // Parcel van (for Player to collect parcels from)
     private final ParcelVan parcelVan = new ParcelVan(0, 0);
 
@@ -56,7 +55,6 @@ public class LevelOneScreen extends LevelScreen {
     int[][] lampCoords = {
             {28, 8}
     };
-
 
     private final ArrayList<StaticSprite> staticSprites = new ArrayList<StaticSprite>(Arrays.asList(houseOne, houseTwo, houseThree, houseFour, houseFive));
 

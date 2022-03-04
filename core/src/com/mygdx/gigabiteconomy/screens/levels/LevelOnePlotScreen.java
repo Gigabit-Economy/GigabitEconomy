@@ -3,9 +3,17 @@ package com.mygdx.gigabiteconomy.screens.levels;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.screens.PlotScreen;
 
+/**
+ * Screen which shows before starting level 1
+ */
 public class LevelOnePlotScreen extends PlotScreen {
     private static final String LEVEL_NAME = "LevelOneScreen";
 
+    /**
+     * Create a new plot screen for level 2
+     *
+     * @param director the game's director class instance
+     */
     public LevelOnePlotScreen(GigabitEconomy director) {
         super(director);
 

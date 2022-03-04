@@ -14,6 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.ScoreSystem;
 
+/**
+ * Screen shown when selecting a level
+ */
 public class LevelSelectScreen implements Screen {
     private GigabitEconomy director;
 
@@ -25,11 +28,20 @@ public class LevelSelectScreen implements Screen {
     private ScoreSystem score3 = new ScoreSystem("LevelThreeScreen");
     private int pauseCount = 0;
 
+    /**
+     * Create a new level failed screen
+     *
+     * @param director the game's director class instance
+     */
     public LevelSelectScreen(GigabitEconomy director) {
         this.director = director;
         this.stage = new Stage(director.getViewport());
     }
 
+    /**
+     * Show the game complete screen.
+     * Called by LibGDX when setScreen() is called to this screen.
+     */
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
@@ -93,6 +105,11 @@ public class LevelSelectScreen implements Screen {
         stage.addActor(levelSelectTable);
     }
 
+    /**
+     * Render the game complete screen
+     *
+     * @param delta the time elapsed since the previous render (in seconds)
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -101,6 +118,12 @@ public class LevelSelectScreen implements Screen {
         levelSelectTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
+    /**
+     * Resize the window
+     *
+     * @param width the new screen width
+     * @param height the new screen height
+     */
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);

@@ -6,6 +6,9 @@ import com.mygdx.gigabiteconomy.sprites.tiled.Player;
 
 import java.util.LinkedList;
 
+/**
+ * Rat King Fort enemy sprite (in level 3)
+ */
 public class RatKingFort extends Enemy {
     private static final String BASE_PATH = "ratking";
     private static final float DEFAULT_HEALTH = 200f;

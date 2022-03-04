@@ -11,12 +11,12 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 /**
- * Class used to hold and manage all Tiles.
- * - Each MySprite instance is passed the TileManager it belongs to and sets a Tile to occupy
+ * Class used to hold and manage all Tiles
+ *
+ * - Each TiledObject instance is passed the TileManager it belongs to and sets a Tile to occupy
  * - Then Player position can be retrieved from the Tile it's on (or the bottom leftmost if multiple -- Rat King)
  */
 public class TileManager implements Disposable {
-
     private Tile[][] tileArray;
     private int sideLength;
     int initialX, initialY; //Where the Tiles begin (bottom left) - don't really need to worry about this since all ours start at 0,0 for the time being

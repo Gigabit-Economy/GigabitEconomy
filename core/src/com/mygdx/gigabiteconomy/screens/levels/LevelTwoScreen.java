@@ -40,7 +40,6 @@ public class LevelTwoScreen extends LevelScreen {
         new Fighter(25, 6, LEVEL, player),
         new Fighter(16, 3, LEVEL, player),
         new Fighter(22, 4, LEVEL, player)
-
     ));
 
     // Parcel van (for Player to collect parcels from)
@@ -52,8 +51,6 @@ public class LevelTwoScreen extends LevelScreen {
     private final House houseFour = new House(House.HouseType.OFFICES, 42);
     private final House houseFive = new House(House.HouseType.OFFICES, 36);
     private final House houseThree = new House(House.HouseType.OFFICES, 30);
-
-    //level ends at tile 54,8
 
     int[][] fenceCoords = {
             {0,8},

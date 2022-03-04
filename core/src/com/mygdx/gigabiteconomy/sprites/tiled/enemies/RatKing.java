@@ -12,6 +12,9 @@ import com.mygdx.gigabiteconomy.sprites.tiled.Player;
 
 import java.util.*;
 
+/**
+ * Rat King enemy sprite (in level 3)
+ */
 public class RatKing extends Enemy {
     private static final float DEFAULT_HEALTH = 350f;
     private static final float DEFAULT_DELTAHORIZ = 20f;

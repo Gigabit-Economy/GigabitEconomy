@@ -12,18 +12,29 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 
+/**
+ * Screen shown when a level is failed (player health reaches 0)
+ */
 public class LevelFailedScreen implements Screen{
-
     private GigabitEconomy director;
 
     private Stage stage;
     private Table deathScreenTable;
 
+    /**
+     * Create a new level failed screen
+     *
+     * @param director the game's director class instance
+     */
     public LevelFailedScreen(GigabitEconomy director) {
         this.director = director;
         this.stage = new Stage(director.getViewport());
     }
 
+    /**
+     * Show the game complete screen.
+     * Called by LibGDX when setScreen() is called to this screen.
+     */
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
@@ -68,6 +79,11 @@ public class LevelFailedScreen implements Screen{
         stage.addActor(deathScreenTable);
     }
 
+    /**
+     * Render the game complete screen
+     *
+     * @param delta the time elapsed since the previous render (in seconds)
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -77,35 +93,34 @@ public class LevelFailedScreen implements Screen{
         
     }
 
+    /**
+     * Resize the window
+     *
+     * @param width the new screen width
+     * @param height the new screen height
+     */
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
-        
     }
 
     @Override
-    public void pause() {
-        // TODO Auto-generated method stub
-        
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
-        // TODO Auto-generated method stub
-        
-    }
+    public void resume() {}
 
+    /**
+     * Hide the screen.
+     * Called by LibGDX when setScreen()'ed away from the screen.
+     */
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);
-        
     }
 
     @Override
     public void dispose() {
         stage.dispose();
-        
     }
-
-    
 }

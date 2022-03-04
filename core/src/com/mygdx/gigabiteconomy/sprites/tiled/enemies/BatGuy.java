@@ -7,6 +7,9 @@ import com.mygdx.gigabiteconomy.sprites.tiled.Player;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+/**
+ * Enemy sprite with bat
+ */
 public class BatGuy extends Enemy {
     private static final float DEFAULT_HEALTH = 80f;
     private static final float DEFAULT_DELTAHORIZ = 2f;
