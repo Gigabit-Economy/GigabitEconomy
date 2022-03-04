@@ -31,6 +31,15 @@ public class ScoreSystem {
     }
 
     /**
+     * Set the current level's score
+     *
+     * @param points the amount to set the score to
+     */
+    public void setScore(int points) {
+        score = points;
+    }
+
+    /**
      * Add to the current level's score
      *
      * @param amount the amount to add to the score
