@@ -215,7 +215,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
         // if one is set, display error message
         if (this.errorCountdown > 0 && this.errorText != null && this.errorText.length() != 0) {
-            font.draw(batch, this.errorText, 25, 980);
+            font.draw(batch, this.errorText, cam.x+(director.getViewport().getScreenWidth()/100*38), cam.y+(director.getViewport().getScreenHeight()/100*47));
 
             errorCountdown -= 1 * delta; // decrement error countdown by seconds passed in prev render
         }

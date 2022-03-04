@@ -74,7 +74,12 @@ public class ScoreSystem {
         Object[] scores = levelScores.get().values().toArray();
 
         String scoresString = Arrays.toString(scores);
-        return scoresString.substring(1, scoresString.length() - 1).split(", "); // remove last string in array as will be high score
+
+        if (scoresString.length() >= 2) {
+            return scoresString.substring(1, scoresString.length() - 1).split(", "); // remove last string in array as will be high score
+        }
+
+        return "".split(", "); // remove last string in array as will be high score
     }
 
     /**
