@@ -45,7 +45,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     private ScoreSystem score = new ScoreSystem(this.getClass().getSimpleName());
     private int parcels = 5;
 
-    private Stage stage;
     private BitmapFont font;
     private String errorText;
     private float errorCountdown;
@@ -59,8 +58,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      */
     public LevelScreen(GigabitEconomy director, String backgroundTexturePng) {
         this.director = director;
-
-        this.stage = new Stage(director.getViewport());
 
         this.backgroundTexturePng = backgroundTexturePng;
         // Add background
@@ -175,9 +172,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
 
         this.backgroundSprite = new Sprite(backgroundTexture);
 
-        // Import UI skin (commodore)
-        Skin style = new Skin(Gdx.files.internal("ui_elements/ui_skin/uiskin.json"));
-
         this.batch = new SpriteBatch();
         this.font = new BitmapFont();
     }
@@ -213,9 +207,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
             }
         }
 
-        // Add/draw score text in top-right corner
-        
-
+        // Add & draw score text in top-right corner
         String scoreText = String.format("Score: %d", score.getScore());
         font.getData().setScale(3, 2);
         font.setColor(Color.CORAL);
