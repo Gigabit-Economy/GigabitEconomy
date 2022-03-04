@@ -57,7 +57,7 @@ public class PauseMenu implements Screen, InputProcessor {
 
             TextButton closePauseMenuButton = new TextButton("CLOSE", style);
             closePauseMenuButton.align(Align.topRight);
-            closePauseMenuButton.setName(director.getLastPlayedLevel());
+            closePauseMenuButton.setName(director.getLastPlayedLevel() != null ? director.getLastPlayedLevel() : "MenuScreen");
             pauseMenuTable.add(closePauseMenuButton);
 
             pauseMenuTable.row();
@@ -77,9 +77,12 @@ public class PauseMenu implements Screen, InputProcessor {
 
             pauseMenuTable.row();
 
-            TextButton backToMainMenuButton = new TextButton("BACK TO MAIN MENU", style);
-            backToMainMenuButton.setName("MenuScreen");
-            pauseMenuTable.add(backToMainMenuButton);
+            TextButton backToMainMenuButton = null;
+            if (director.getLastPlayedLevel() != null) {
+                backToMainMenuButton = new TextButton("BACK TO MAIN MENU", style);
+                backToMainMenuButton.setName("MenuScreen");
+                pauseMenuTable.add(backToMainMenuButton);
+            }
 
             TextButton tutorialButton = new TextButton("HELP", style);
             tutorialButton.setName("TutorialScreen");
@@ -122,7 +125,7 @@ public class PauseMenu implements Screen, InputProcessor {
                 }
                 }
             };
-            backToMainMenuButton.addListener(screenButtonsListener);
+            if (backToMainMenuButton != null) backToMainMenuButton.addListener(screenButtonsListener);
             tutorialButton.addListener(screenButtonsListener);
             closePauseMenuButton.addListener(screenButtonsListener);
 
