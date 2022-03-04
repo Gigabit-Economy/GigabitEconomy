@@ -99,24 +99,6 @@ public class PauseMenu implements Screen, InputProcessor {
 
             pauseMenuTable.row();
 
-            TextButton res1920Button = new TextButton("1920 x 1080", style);
-            res1920Button.setName("res1920");
-            pauseMenuTable.add(res1920Button);
-            
-            pauseMenuTable.row();
-
-            TextButton res1366Button = new TextButton("1366 x 768", style);
-            res1366Button.setName("res1366");
-            pauseMenuTable.add(res1366Button);
-
-            pauseMenuTable.row();
-
-            TextButton res1280Button = new TextButton("1280 x 720", style);
-            res1280Button.setName("res1280");
-            pauseMenuTable.add(res1280Button);
-
-            pauseMenuTable.row();
-
             TextButton levelResetButton = null;
             if (director.getLastPlayedLevel() != null) {
                 levelResetButton = new TextButton("RESET LEVEL", style);
@@ -140,34 +122,6 @@ public class PauseMenu implements Screen, InputProcessor {
             if (backToMainMenuButton != null) backToMainMenuButton.addListener(screenButtonsListener);
             tutorialButton.addListener(screenButtonsListener);
             closePauseMenuButton.addListener(screenButtonsListener);
-
-            ClickListener resButtonsListener = new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                String buttonName = event.getListenerActor().getName();
-
-                try {
-                    if (buttonName == "res1920") {
-                        Gdx.graphics.setWindowedMode(1920, 1080);
-                        pauseMenuTable.setBounds(0, 0, 1920, 1080);
-                    }
-                    else if (buttonName == "res1366") {
-                        Gdx.graphics.setWindowedMode(1366, 768);
-                        pauseMenuTable.setBounds(0, 0, 1366, 768);
-                    }
-                    else if (buttonName == "res1280") {
-                        Gdx.graphics.setWindowedMode(1280, 720);
-                        pauseMenuTable.setBounds(0, 0, 1280, 720);
-                    }
-                } catch (Exception ex) {
-                    Gdx.app.error("Exception", String.format("Error changing resolution to %s", buttonName), ex);
-                    System.exit(-1);
-                }
-                }
-            };
-            res1280Button.addListener(resButtonsListener);
-            res1366Button.addListener(resButtonsListener);
-            res1920Button.addListener(resButtonsListener);
 
             if (levelResetButton != null) {
                 ClickListener resetButtonListener = new ClickListener() {
