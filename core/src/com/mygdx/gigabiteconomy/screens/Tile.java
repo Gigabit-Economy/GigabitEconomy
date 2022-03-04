@@ -84,6 +84,9 @@ public class Tile {
         this.ownedBy = owner;
     }
 
+    /**
+     * @return True if tile occupied by TiledObject ; False otherwise
+     */
     public boolean isOccupiedBy(TiledObject to) {
         return getOccupiedBy() == to;
     }
