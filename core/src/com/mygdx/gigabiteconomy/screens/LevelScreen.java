@@ -78,6 +78,15 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     }
 
     /**
+     * Get the level's score system instance
+     *
+     * @return the level's score system instance
+     */
+    public ScoreSystem getScore() {
+        return score;
+    }
+
+    /**
      * Add a Player to the level.
      * If level already has a Player, as a level can only have one, it'll be overridden.
      *

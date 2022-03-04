@@ -1,6 +1,8 @@
 package com.mygdx.gigabiteconomy.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
+import com.mygdx.gigabiteconomy.exceptions.ScreenException;
 import com.mygdx.gigabiteconomy.sprites.tiled.*;
 import com.mygdx.gigabiteconomy.sprites.tiled.enemies.*;
 
@@ -68,5 +70,23 @@ public class LevelThreeScreen extends LevelScreen {
         enemies.get(0).attack(MovingSprite.Weapon.BOXFORT);
 
         addSprites(staticSprites);
+    }
+
+    /**
+     * Complete the level (called when the level is complete i.e. the final parcel is delivered)
+     */
+    @Override
+    public void complete() {
+        // add proportion of health (multiplied by 5) as score
+        addToScore(Math.round(player.getHealth()) * 5);
+        // save score
+        getScore().saveScore();
+
+        try {
+            getDirector().switchScreen("GameComplete");
+        } catch (ScreenException ex) {
+            Gdx.app.error("Exception", "The screen could not be switched when game (level 3) complete", ex);
+            System.exit(-1);
+        }
     }
 }
