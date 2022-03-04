@@ -146,8 +146,8 @@ public class GigabitEconomy extends Game {
                     setMusic("LevelOne");
                 }
                 break;
-            case "LeveTwoPlotScreen":
-                toSwitch = new LevelOnePlotScreen(this);
+            case "LevelTwoPlotScreen":
+                toSwitch = new LevelTwoPlotScreen(this);
                 break;
             case "LevelTwoScreen":
                 if (fromPause != null) {
@@ -258,10 +258,10 @@ public class GigabitEconomy extends Game {
      */
     public String getNextLevel() {
         switch (this.lastPlayedLevel) {
-            case "LevelOneScreen":
-                return "LevelTwoScreen";
+            case "LevelOnePlotScreen":
+                return "LevelTwoPlotScreen";
             case "LevelTwoScreen":
-                return "LevelThreeScreen";
+                return "LevelThreePlotScreen";
 
             default:
                 return "LevelSelectScreen";
