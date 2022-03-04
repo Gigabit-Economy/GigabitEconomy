@@ -286,6 +286,15 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     }
 
     /**
+     * Set the score points count
+     *
+     * @param points the number of points to set the score to
+     */
+    public void setScore(int points) {
+        score.setScore(points);
+    }
+
+    /**
      * Add to the score points count
      *
      * @param points the number of points to add
@@ -417,8 +426,12 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      * Complete the level (called when the level is complete i.e. the final parcel is delivered)
      */
     public void complete() {
+        // multiply points by health (out of 100); max score is 500
+        setScore(Math.round(player.getHealth()) * score.getScore());
+        // save score
         score.saveScore();
 
+        // switch to LevelComplete screen
         try {
             director.switchScreen("LevelComplete");
         } catch (ScreenException ex) {
