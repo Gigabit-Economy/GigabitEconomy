@@ -151,8 +151,6 @@ public class TileManager implements Disposable {
      */
     public ArrayList<Tile> getSelectiveDir(int x, int y, MovingSprite.DIRECTION direction) {
         ArrayList<Tile> ret = new ArrayList<>();
-
-
         try {
             for (int i=0; i<=gridWidth; i++) {
                 Tile toAdd = tileArray[x][y];
@@ -206,7 +204,7 @@ public class TileManager implements Disposable {
     /**
      * Get adjacent tiles to a specific TiledObject
      * @param to TiledObject - can be multi-tiled
-     * @return
+     * @return ArrayList of adjacent tiles
      */
     public ArrayList<Tile> getAdjacentTiles(TiledObject to) {
         ArrayList<Tile> ret = new ArrayList<>();
@@ -270,8 +268,8 @@ public class TileManager implements Disposable {
 
         ArrayList<Tile> toCurrTiles = mo.getCurrentTiles();
         for (int i=0; i<toCurrTiles.size(); i++) {
-            Tile tileToAdd = getAdjacentTile(toCurrTiles.get(i), mo.getDirectionMoving(), distance);
-            if ((tileToAdd.getOccupiedBy() != mo && tileToAdd.getOccupiedBy() != null)) {
+            Tile tileToAdd = getAdjacentTile(toCurrTiles.get(i), dirIn, distance);
+            if (tileToAdd == null || (tileToAdd.getOccupiedBy() != mo && tileToAdd.getOccupiedBy() != null)) {
                 toSet.add(null);
             }
             toSet.add(tileToAdd);
@@ -291,8 +289,14 @@ public class TileManager implements Disposable {
         return toCheck.get(0).withinTile(mo);
     }
 
+    /**
+     * @return width of tile grid
+     */
     public int getWidth() { return gridWidth; }
 
+    /**
+     * @return height of tile grid
+     */
     public int getHeight() { return gridHeight; }
 
     /**
@@ -336,7 +340,7 @@ public class TileManager implements Disposable {
     }
 
     /**
-     *
+     * Return a clone of the row array to edit (changing sprite layers)
      * @return Array of TiledObject ArrayLists defining which Sprites are on which rows
      */
     public ArrayList<TiledObject>[] getRowArray() {
