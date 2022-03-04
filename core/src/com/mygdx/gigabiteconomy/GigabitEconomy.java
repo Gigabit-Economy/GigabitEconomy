@@ -143,7 +143,7 @@ public class GigabitEconomy extends Game {
                 }
                 break;
             case "LeveTwoPlotScreen":
-                toSwitch = new LevelOnePlotScreen(this);
+                toSwitch = new LevelTwoPlotScreen(this);
                 break;
             case "LevelTwoScreen":
                 if (fromPause != null) {

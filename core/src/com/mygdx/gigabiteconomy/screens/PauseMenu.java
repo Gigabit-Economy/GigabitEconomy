@@ -108,8 +108,11 @@ public class PauseMenu implements Screen, InputProcessor {
 
             pauseMenuTable.row();
 
-            TextButton levelResetButton = new TextButton("RESET LEVEL", style);
-            pauseMenuTable.add(levelResetButton);
+            TextButton levelResetButton = null;
+            if (director.getLastPlayedLevel() != null) {
+                levelResetButton = new TextButton("RESET LEVEL", style);
+                pauseMenuTable.add(levelResetButton);
+            }
 
             // Add click listeners for buttons
             ClickListener screenButtonsListener = new ClickListener() {
@@ -157,22 +160,24 @@ public class PauseMenu implements Screen, InputProcessor {
             res1366Button.addListener(resButtonsListener);
             res1920Button.addListener(resButtonsListener);
 
-            ClickListener resetButtonListener = new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                try {
-                    String tempLastPlayedLevel = director.getLastPlayedLevel();
-                    director.resetPausedLevel(); // resets the LevelScreen instance currently paused
-                    director.switchScreen(tempLastPlayedLevel);
-                } catch (Exception ex) {
-                    Gdx.app.error("Exception", String.format("Error resetting level"), ex);
-                }
+            if (levelResetButton != null) {
+                ClickListener resetButtonListener = new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        try {
+                            String tempLastPlayedLevel = director.getLastPlayedLevel();
+                            director.resetPausedLevel(); // resets the LevelScreen instance currently paused
+                            director.switchScreen(tempLastPlayedLevel);
+                        } catch (Exception ex) {
+                            Gdx.app.error("Exception", String.format("Error resetting level"), ex);
+                        }
 
-                stage.draw();
-                }
+                        stage.draw();
+                    }
 
-            };
-            levelResetButton.addListener(resetButtonListener);
+                };
+                levelResetButton.addListener(resetButtonListener);
+            }
 
             ClickListener audioButtonListener = new ClickListener() {
                 @Override
