@@ -51,7 +51,7 @@ public class LevelSelectScreen implements Screen {
         levelSelectTable = new Table();
         levelSelectTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        Label selectFirstLevelLabel = new Label("Record score: "+ score1.getHighestScore(), style);
+        Label selectFirstLevelLabel = new Label("High score: "+ score1.getHighestScore(), style);
         levelSelectTable.add(selectFirstLevelLabel).padLeft(-200);
 
         TextButton selectFirstLevelTextButton = new TextButton("Level 1", style);
@@ -60,7 +60,7 @@ public class LevelSelectScreen implements Screen {
 
         levelSelectTable.row();
 
-        Label selectSecondLevelLabel = new Label("Record score: "+ score2.getHighestScore(), style);
+        Label selectSecondLevelLabel = new Label("High score: "+ score2.getHighestScore(), style);
         levelSelectTable.add(selectSecondLevelLabel).padLeft(-200);
 
         TextButton selectSecondLevelTextButton = new TextButton("Level 2", style);
@@ -72,7 +72,7 @@ public class LevelSelectScreen implements Screen {
         
         levelSelectTable.row();
 
-        Label selectThirdLevelLabel = new Label("Record score: "+score3.getHighestScore(), style);
+        Label selectThirdLevelLabel = new Label("High score: "+score3.getHighestScore(), style);
         levelSelectTable.add(selectThirdLevelLabel).padLeft(-200);
 
         TextButton selectThirdLevelTextButton = new TextButton("Level 3", style);
