@@ -206,10 +206,10 @@ public abstract class LevelScreen implements Screen, InputProcessor {
             }
         }
 
-        String scoreText = String.format("score: %d", score.getScore());
-
+        String scoreText = String.format("Score: %d", score.getScore());
+        font.getData().setScale(3, 2);
         font.setColor(Color.CORAL);
-        font.draw(batch, scoreText, (cam.x - 900), 1040);
+        font.draw(batch, scoreText, cam.x+(director.getViewport().getScreenWidth()/100*38), cam.y+(director.getViewport().getScreenHeight()/100*47));
 
         // if one is set, display error message
         if (this.errorCountdown > 0 && this.errorText != null && this.errorText.length() != 0) {
