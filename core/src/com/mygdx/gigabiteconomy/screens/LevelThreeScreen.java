@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class LevelThreeScreen extends LevelScreen {
     // Level string
     private static final String LEVEL = "ratking";
-    // Level screen backgro1.5und texture
+    // Level screen background texture
     private static final String BACKGROUND_TEXTURE_PNG = "levels/level3.png";
 
     // Player character
