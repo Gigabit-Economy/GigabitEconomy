@@ -66,11 +66,11 @@ public class MenuScreen implements Screen {
         // add button images
         ta = new TextureAtlas("ui_elements/icons.txt");
         regions = ta.getRegions();
-        current = regions.get(6);
+        current = regions.get(7);
         Drawable drawable = new TextureRegionDrawable(current);
         current = regions.get(1);
         Drawable drawable2 = new TextureRegionDrawable(current);
-        current = regions.get(3);
+        current = regions.get(4);
         Drawable drawable3 = new TextureRegionDrawable(current);
 
         //add buttons

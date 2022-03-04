@@ -3,10 +3,16 @@ package com.mygdx.gigabiteconomy.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.ScoreSystem;
 
@@ -20,6 +26,10 @@ public class GameCompleteScreen implements Screen {
     private Table levelCompletedTable;
 
     private ScoreSystem levelScores;
+
+    private TextureAtlas ta;
+    private Array<TextureAtlas.AtlasRegion> regions;
+    private TextureRegion current;
 
     /**
      * Create a new game complete screen
@@ -46,40 +56,48 @@ public class GameCompleteScreen implements Screen {
         levelCompletedTable = new Table();
         levelCompletedTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
+        ta = new TextureAtlas("ui_elements/icons.txt");
+        regions = ta.getRegions();
+        current = regions.get(3);
+        Drawable drawable = new TextureRegionDrawable(current);
+        Button ratSkullLabel = new Button(drawable);
+        levelCompletedTable.add(ratSkullLabel).colspan(2).padRight(150);
+        levelCompletedTable.row();
+
         Label congratulationsLabel = new Label("CONGRATULATIONS!", style);
-        levelCompletedTable.add(congratulationsLabel).colspan(2);
+        levelCompletedTable.add(congratulationsLabel).colspan(2).padRight(150);
         levelCompletedTable.row();
 
         Label passedThisLevelLabel = new Label("YOU HAVE COMPLETED THE GAME!", style);
-        levelCompletedTable.add(passedThisLevelLabel).colspan(2).padBottom(50);
+        levelCompletedTable.add(passedThisLevelLabel).colspan(2).padBottom(50).padRight(150);
         levelCompletedTable.row();
 
         Label yourScoreWasLabel = new Label("YOUR SCORE FOR LEVEL THREE WAS: " + levelScores.getLatestScore(), style);
-        levelCompletedTable.add(yourScoreWasLabel).colspan(2).pad(30);
+        levelCompletedTable.add(yourScoreWasLabel).colspan(2).pad(30).padRight(150);
         levelCompletedTable.row();
 
         String highestScoreText = String.format("HIGHEST SCORE: %d", levelScores.getHighestScore());
         Label yourHighestScoreLabel = new Label(highestScoreText, style);
-        levelCompletedTable.add(yourHighestScoreLabel).colspan(2).padBottom(10);
+        levelCompletedTable.add(yourHighestScoreLabel).colspan(2).padBottom(10).padRight(150);
         levelCompletedTable.row();
 
         Label yourPastScoresLabel = new Label("PREVIOUS SCORES:", style);
-        levelCompletedTable.add(yourPastScoresLabel).colspan(2);
+        levelCompletedTable.add(yourPastScoresLabel).colspan(2).padRight(150);
         levelCompletedTable.row();
 
         String[] prevScores = levelScores.getAllScores();
         List<String> levelCompletedScoreList = new List(style);
         levelCompletedScoreList.setItems(prevScores);
-        levelCompletedTable.add(levelCompletedScoreList).colspan(2);
+        levelCompletedTable.add(levelCompletedScoreList).colspan(2).padRight(150);
         levelCompletedTable.row();
 
         TextButton levelCompletedMainMenuButton = new TextButton("MAIN MENU", style);
         levelCompletedMainMenuButton.setName("MenuScreen");
-        levelCompletedTable.add(levelCompletedMainMenuButton).bottom().padTop(50);
+        levelCompletedTable.add(levelCompletedMainMenuButton).bottom().padTop(50).padRight(150);
 
         TextButton levelCompletedNextLevelButton = new TextButton("NEXT LEVEL", style);
         levelCompletedNextLevelButton.setName(director.getNextLevel());
-        levelCompletedTable.add(levelCompletedNextLevelButton).bottom().padTop(50);
+        levelCompletedTable.add(levelCompletedNextLevelButton).bottom().padTop(50).padRight(150);
         levelCompletedTable.row();
 
         // Add click listener for buttons
