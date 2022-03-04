@@ -128,6 +128,10 @@ public class GigabitEconomy extends Game {
                 toSwitch = new LevelFailedScreen(this);
                 setMusic("Menu");
                 break;
+            case "GameComplete":
+                toSwitch = new GameCompleteScreen(this);
+                setMusic("Menu");
+                break;
 
             case "LevelOnePlotScreen":
                 toSwitch = new LevelOnePlotScreen(this);
