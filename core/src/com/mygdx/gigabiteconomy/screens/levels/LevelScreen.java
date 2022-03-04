@@ -208,7 +208,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         }
 
         // Add & draw score text in top-right corner
-        String scoreText = String.format("Score: %d", score.getScore());
+        String scoreText = String.format("Score: %d", (score.getScore() * Math.round(player.getHealth())));
         font.getData().setScale(3, 2);
         font.setColor(Color.CORAL);
         font.draw(batch, scoreText, cam.x+(director.getViewport().getScreenWidth()/100*38), cam.y+(director.getViewport().getScreenHeight()/100*47));
