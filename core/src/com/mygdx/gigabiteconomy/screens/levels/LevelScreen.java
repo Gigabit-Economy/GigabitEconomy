@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.ScoreSystem;
 import com.mygdx.gigabiteconomy.exceptions.ParcelException;
@@ -43,6 +45,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     private ScoreSystem score = new ScoreSystem(this.getClass().getSimpleName());
     private int parcels = 5;
 
+    private Stage stage;
     private BitmapFont font;
     private String errorText;
     private float errorCountdown;
@@ -56,6 +59,8 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      */
     public LevelScreen(GigabitEconomy director, String backgroundTexturePng) {
         this.director = director;
+
+        this.stage = new Stage(director.getViewport());
 
         this.backgroundTexturePng = backgroundTexturePng;
         // Add background
@@ -168,8 +173,10 @@ public abstract class LevelScreen implements Screen, InputProcessor {
     public void show() {
         Gdx.input.setInputProcessor(this);
 
-
         this.backgroundSprite = new Sprite(backgroundTexture);
+
+        // Import UI skin (commodore)
+        Skin style = new Skin(Gdx.files.internal("ui_elements/ui_skin/uiskin.json"));
 
         this.batch = new SpriteBatch();
         this.font = new BitmapFont();
@@ -205,6 +212,9 @@ public abstract class LevelScreen implements Screen, InputProcessor {
                 if (to!=null) to.drawOn(batch, delta);
             }
         }
+
+        // Add/draw score text in top-right corner
+        
 
         String scoreText = String.format("Score: %d", score.getScore());
         font.getData().setScale(3, 2);

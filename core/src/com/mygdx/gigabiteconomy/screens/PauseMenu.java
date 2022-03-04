@@ -47,8 +47,8 @@ public class PauseMenu implements Screen, InputProcessor {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(inputMulti);
-        
-        // Skin defined in UI skin (commodore - hopefully we can use, looks really cool)
+
+        // Import UI skin (commodore)
         Skin style = new Skin(Gdx.files.internal("ui_elements/ui_skin/uiskin.json"));
 
         if (pauseCount == 0) {
