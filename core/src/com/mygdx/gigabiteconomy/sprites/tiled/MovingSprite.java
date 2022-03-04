@@ -405,6 +405,10 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         return directionFacing;
     }
 
+    public DIRECTION getDirectionLat() {
+        return latitude;
+    }
+
     /**
      * Set the sprite's current weapon
      *
@@ -430,11 +434,7 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
                 if (adjacentSprite instanceof MovingSprite && adjacentSprite != this) {
 
                     if (this instanceof RatKing && adjacentSprite instanceof RatKingFort) {
-                        System.out.println("Not attacking fort");
                         continue;
-                    }
-                    if (this instanceof RatKing) {
-                        System.out.println("Attacking " + adjacentSprite.getClass().getName());
                     }
 
                     ((MovingSprite) adjacentSprite).attack(weapon);
@@ -489,8 +489,8 @@ public abstract class MovingSprite extends TiledObject implements Disposable {
         PIPE (4f),
         KATANA (5f),
         //Enemies
-        NONE (0.5f),
-        DOG (1.25f),
+        NONE (1f),
+        DOG (0.5f),
         BAT (1.5f),
         BOXFORT(0f),
         THROWBOX(6f),

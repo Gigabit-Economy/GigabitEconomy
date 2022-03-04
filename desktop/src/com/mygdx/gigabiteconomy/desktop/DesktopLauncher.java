@@ -13,4 +13,4 @@ public class DesktopLauncher {
 		System.out.println("Creating new GBit");
 		new LwjglApplication(new GigabitEconomy(), config);
 	}
-} 
+}  

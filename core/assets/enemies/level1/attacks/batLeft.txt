@@ -1,5 +1,5 @@
 batLeft.png
-size: 368, 1680
+size: 736, 1680
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -12,42 +12,91 @@ baseballLeftAttack1
   index: -1
 baseballLeftAttack2
   rotate: false
-  xy: 0, 240
+  xy: 368, 0
   size: 368, 240
   orig: 368, 240
   offset: 126, 0
   index: -1
 baseballLeftAttack3
   rotate: false
-  xy: 0, 480
+  xy: 0, 240
   size: 368, 240
   orig: 368, 240
   offset: 126, 0
   index: -1
 baseballLeftAttack4
   rotate: false
-  xy: 0, 720
+  xy: 368, 240
   size: 368, 240
   orig: 368, 240
   offset: 126, 0
   index: -1
 baseballLeftAttack5
   rotate: false
-  xy: 0, 960
+  xy: 0, 480
   size: 368, 240
   orig: 368, 240
   offset: 126, 0
   index: -1
 baseballLeftAttack6
   rotate: false
-  xy: 0, 1200
+  xy: 368, 480
   size: 368, 240
   orig: 368, 240
   offset: 126, 0
   index: -1
 baseballLeftAttack7
   rotate: false
+  xy: 0, 720
+  size: 368, 240
+  orig: 368, 240
+  offset: 126, 0
+  index: -1
+baseballLeftAttack8
+  rotate: false
+  xy: 368, 720
+  size: 368, 240
+  orig: 368, 240
+  offset: 126, 0
+  index: -1
+baseballLeftAttack9
+  rotate: false
+  xy: 0, 960
+  size: 368, 240
+  orig: 368, 240
+  offset: 126, 0
+  index: -1
+baseballLeftAttack10
+  rotate: false
+  xy: 368, 960
+  size: 368, 240
+  orig: 368, 240
+  offset: 126, 0
+  index: -1
+baseballLeftAttack11
+  rotate: false
+  xy: 0, 1200
+  size: 368, 240
+  orig: 368, 240
+  offset: 126, 0
+  index: -1
+baseballLeftAttack12
+  rotate: false
+  xy: 368, 1200
+  size: 368, 240
+  orig: 368, 240
+  offset: 126, 0
+  index: -1
+baseballLeftAttack13
+  rotate: false
   xy: 0, 1440
+  size: 368, 240
+  orig: 368, 240
+  offset: 126, 0
+  index: -1
+baseballLeftAttack14
+  rotate: false
+  xy: 368, 1440
   size: 368, 240
   orig: 368, 240
   offset: 126, 0

@@ -1,0 +1,9 @@
+You are a delivery driver aiming to do your round. Deliver to all the houses you can without falling victim to the dangers of suburbia.
+If worse comes to worst, you can always borrow whatever happens to lie inside your parcels for a helping hand.
+Just remember in the Gigabit Economy the deliveries you make (and the ones you don't) affect the score your company gives you at the end of the day.
+
+Controls:
+- move using W/A/S/D or the ARROW KEYS
+- attack enemies/collect parcels with SPACEBAR
+- open parcels with TAB
+- open the pause menu with ESC

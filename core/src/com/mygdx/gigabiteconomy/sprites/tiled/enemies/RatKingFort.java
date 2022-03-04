@@ -46,11 +46,11 @@ public class RatKingFort extends Enemy {
     public void setHealth(float health) {
         if ((Math.abs(health-(DEFAULT_HEALTH/2)) < 10) || (Math.abs(health-(DEFAULT_HEALTH/3)) < 10)) {
             //Ask rat king to spawn a minion
-            overlord.underAttack(getCurrentTiles().get(0).getPositionTile()[1]);
+            overlord.underAttack();
 
 
         } else if (health <= 0) {
-            for (int i=0; i<3; i++) overlord.underAttack(getCurrentTiles().get(0).getPositionTile()[1]);
+            for (int i=0; i<3; i++) overlord.underAttack();
         }
 
         super.setHealth(health);

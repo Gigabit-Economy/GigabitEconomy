@@ -191,11 +191,11 @@ public abstract class Enemy extends MovingSprite {
 
             //Ellipse is always centred over middle of texture
             pos = cam.project(new Vector3(
-                    getX() + (((TextureAtlas.AtlasRegion)getTextureRegion()).offsetX-getDimensions()[0])/2,
-                    getY() + (getTextureRegion().getRegionHeight())- getDimensions()[1],
+                    getX() + ((getTextureRegion().getRegionHeight()-((TextureAtlas.AtlasRegion)getTextureRegion()).offsetX)-getDimensions()[0])/2 ,
+                    getY() + (getTextureRegion().getRegionHeight()),
                     0
                     ));
-            getEllipse().ellipse(pos.x, pos.y, getDimensions()[0], getDimensions()[1]);
+            getEllipse().rect(pos.x, pos.y, getDimensions()[0], getDimensions()[1]);
             getEllipse().end();
 
             batch.begin();
@@ -330,9 +330,8 @@ public abstract class Enemy extends MovingSprite {
     public void destroy() {
         // remove the sprite from the level and clear its tile
         getTileManager().placeObject(null, getCurrentTiles());
+        if (getTargetTiles() != null) getTileManager().placeObject(null, getTargetTiles());
         getTileManager().removeFromRows(this);
 
-        // dispose of the sprite from memory
-        dispose();
     }
 }

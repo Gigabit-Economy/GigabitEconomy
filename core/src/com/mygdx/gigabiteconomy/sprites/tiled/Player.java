@@ -145,35 +145,21 @@ public class Player extends MovingSprite {
      */
     @Override
     public void launchAttack() {
-        // get Tile adjacent to Player
-        Tile adjacentTile = getTileManager().getAdjacentTile(getCurrentTiles().get(0), getDirectionFacing(), 1);
-        if (adjacentTile == null) return; // trying to attack invalid Tile
-
-        // if Player doesn't yet have a Parcel, check if next to a parcel van to collect one
-        if (this.parcel == null) {
-            // if adjacent tile is occupied by a parcel van, collect parcel
-            TiledObject adjacentSprite = adjacentTile.getOccupiedBy();
-            if (adjacentSprite instanceof ParcelVan) {
+        for (Tile t : getTileManager().getAdjacentTiles(this)) {
+            // if Player doesn't yet have a Parcel, check if next to a parcel van to collect one
+            if (t.getOccupiedBy() instanceof ParcelVan && this.parcel == null) {
                 level.getParcelVan().setInactive();
                 this.parcel = new Parcel();
                 return;
-            }
-        }
-        // if Player does have a Parcel, check if next to House to be delivered to
-        else {
-            // if current tile or adjacent tile is owned by a House (door), deliver parcel
-            TiledObject currentObject;
-            try {
-                currentObject = getCurrentTiles().get(0).getOwnedBy();
-            } catch (NullPointerException ex) {
-                currentObject = null;
-            }
-            TiledObject adjacentObject = adjacentTile.getOwnedBy();
-            if ((adjacentObject instanceof House) ||
-                    currentObject instanceof House) {
+            } else if (t.getOccupiedBy() instanceof House && getCurrentTiles().get(0).getOwnedBy() instanceof House) {
+                // if current tile or adjacent tile is owned by a House (door), deliver parcel
                 parcel.deliver();
+                System.out.println("Delivering!");
+                break;
             }
+            System.out.println(t);
         }
+
 
         super.launchAttack();
     }
@@ -200,7 +186,7 @@ public class Player extends MovingSprite {
 
         private static final float WIDTH = 318f;
         private static final float HEIGHT = 72f;
-        private boolean showParcels = false;
+        private boolean showParcels = true;
 
         private Vector3 cam;
         private Vector2 pos = new Vector2();
@@ -211,7 +197,7 @@ public class Player extends MovingSprite {
 
             this.director = director;
             this.cam = director.getCameraPos();
-            pos.set(cam.x-900, cam.y+370);
+            pos.set(cam.x-(director.getViewport().getScreenWidth()/100*50), cam.y+director.getViewport().getScreenHeight()/100*32);
         }
 
         @Override
@@ -224,11 +210,11 @@ public class Player extends MovingSprite {
             getEllipse().end();
 
             batch.begin();
-            batch.draw(HEALTH_BAR_TEXTURE, cam.x-(director.getViewport().getScreenWidth()/100*46), cam.y+director.getViewport().getScreenHeight()/100*35);
+            batch.draw(HEALTH_BAR_TEXTURE, cam.x-(director.getViewport().getScreenWidth()/100*50), cam.y+director.getViewport().getScreenHeight()/100*32);
 
             if (showParcels) {
                 for (int i=0; i<level.getParcels(); i++) {
-                    batch.draw(PARCEL_ICON, cam.x-900+100+(1.15f*i*(PARCEL_ICON.getWidth())), cam.y+370);
+                    batch.draw(PARCEL_ICON, cam.x-(director.getViewport().getScreenWidth()/100*50)+100+(1.15f*i*(PARCEL_ICON.getWidth())), cam.y+director.getViewport().getScreenHeight()/100*32);
                 }
             }
 

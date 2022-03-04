@@ -26,13 +26,16 @@ public class GigabitEconomy extends Game {
     private static final String MUSIC_BASE_PATH = "music/";
     private Music backgroundMusic;
 
-
+    /**
+     * Create the Game instance, setup the camera and set the starting screen to the menu (MenuScreen).
+     * Called by LibGDX when an instance of the Game is instantiated.
+     */
     @Override
     public void create() {
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new ScreenViewport(camera);
 
-        // Set initial active screen to main menu
+        // Set initial active screen to menu
         try {
             switchScreen("MenuScreen");
         } catch (ScreenException ex) {
@@ -41,10 +44,34 @@ public class GigabitEconomy extends Game {
         }
     }
 
+    /**
+     * Get the game's orthographic camera instance (which displays the game world)
+     *
+     * @return the game's OrthographicCamera instance
+     */
+    public OrthographicCamera getCamera() {
+        return camera;
+    }
+
+    /**
+     * Get the game camera's combined value
+     *
+     * @return the game camera's combined value
+     */
+    public Matrix4 getCameraCombined() {
+        return camera.combined;
+    }
+
     public Vector3 getCameraPos() {
         return camera.position;
     }
 
+    /**
+     * Update the position of the game's camera
+     *
+     * @param x the x coordinate to focus on
+     * @param y the y coordinate to focus on
+     */
     public void updateCameraPos(float x, float y) {
         // Map start and end locations
         float startX = viewport.getWorldWidth() / 2;
@@ -72,15 +99,12 @@ public class GigabitEconomy extends Game {
         camera.update();
     }
 
-    public Matrix4 getCameraCombined() {
-        // So batch can use camera coords
-        return camera.combined;
-    }
-
-    public OrthographicCamera getCamera() {
-        return camera;
-    }
-
+    /**
+     * Switch the game's currently showing screen
+     *
+     * @param name the name identifier of the screen to be switched to - usually matches class name (i.e. LevelOneScreen)
+     * @throws ScreenException if an invalid screen name is passed
+     */
     public void switchScreen(String name) throws ScreenException {
         Screen toSwitch;
         switch (name) {
@@ -107,6 +131,9 @@ public class GigabitEconomy extends Game {
                 setMusic("Menu");
                 break;
 
+            case "LevelOnePlotScreen":
+                toSwitch = new LevelOnePlotScreen(this);
+                break;
             case "LevelOneScreen":
                 if (fromPause != null) {
                     setScreen(fromPause);
@@ -116,6 +143,9 @@ public class GigabitEconomy extends Game {
                     toSwitch = new LevelOneScreen(this);
                     setMusic("LevelOne");
                 }
+                break;
+            case "LeveTwoPlotScreen":
+                toSwitch = new LevelOnePlotScreen(this);
                 break;
             case "LevelTwoScreen":
                 if (fromPause != null) {
@@ -127,13 +157,17 @@ public class GigabitEconomy extends Game {
                     setMusic("LevelTwo");
                 }
                 break;
-            case "LevelRatKing":
+            case "LevelThreePlotScreen":
+                toSwitch = new LevelRatKingPlotScreen(this);
+                break;
+            case "LevelThreeScreen":
                 if (fromPause != null) {
                     setScreen(fromPause);
                     this.fromPause = null;
                     return;
                 } else {
-                    toSwitch = new LevelRatKing(this);
+                    toSwitch = new LevelThreeScreen(this);
+                    setMusic("LevelThree");
                 }
                 break;
 
@@ -155,12 +189,18 @@ public class GigabitEconomy extends Game {
     }
 
     /**
+     * Reset the currently paused level instance (fromPause)
+     */
+    public void resetPausedLevel() {
+        this.fromPause = null;
+    }
+
+    /**
      * Set the playing background music
      *
      * @param name the music file name in "[MUSIC_BASE_PATH]/[...].wav"
      */
     public void setMusic(String name) {
-
         if (this.backgroundMusic != null) {
             this.backgroundMusic.stop();
         }
@@ -171,30 +211,33 @@ public class GigabitEconomy extends Game {
         enableMusic(true);
     }
 
+    /**
+     * Enable/disable the currently selected music
+     *
+     * @param enable if music should be enabled (true => enabled; false => disabled)
+     */
     public void enableMusic(boolean enable) {
         if (enable == true) {
-
             this.backgroundMusic.play();
-
         }
         if (enable == false) {
             this.backgroundMusic.stop();
-
         }
     }
 
+    /**
+     * Get if the music is playing
+     *
+     * @return if music is playing (true => is playing; false => not playing)
+     */
     public boolean isMusicPlaying() {
         try {
             return this.backgroundMusic.isPlaying();
         } catch (Exception ex) {
-                Gdx.app.error("Exception", String.format("Audio could not be found playing"), ex);
+            Gdx.app.error("Exception", String.format("Audio could not be found playing"), ex);
         }
-        return false;
-        
-    }
 
-    public ScreenViewport getViewport() {
-        return viewport;
+        return false;
     }
 
     /**
@@ -221,5 +264,14 @@ public class GigabitEconomy extends Game {
             default:
                 return "LevelSelectScreen";
         }
+    }
+
+    /**
+     * Get the screen viewport of the game
+     *
+     * @return the game's ScreenViewport instance
+     */
+    public ScreenViewport getViewport() {
+        return viewport;
     }
 }

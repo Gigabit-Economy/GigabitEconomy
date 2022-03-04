@@ -86,7 +86,7 @@ public class RatKing extends Enemy {
             int randy = rand.nextInt(100);
             if (randy < 15) {
                 if (parcelFalling == null || parcelFalling.getOwnedTile().getOwnedBy() == null) {
-                    for (int i=0; i<6; i++) {
+                    for (int i=0; i<((new Random()).nextInt(6)+3); i++) {
                         parcelFalling = new FallingParcel(rand.nextInt(20) + 5, rand.nextInt(6) + 2); //Spawn relative to player location
                         level.addSprite(parcelFalling);
                     }
@@ -108,33 +108,10 @@ public class RatKing extends Enemy {
          * If fort has been destroyed, charge
          */
         } else {
-            System.out.println("Box fort destroyed, setting to charging");
             if ((getPath() != getPaths().get("charge") && getPath().peek() != DIRECTION.EAST)  && !(getCurrentTiles().get(0).getPositionTile()[0] < initX)) {
                 setPath("charge");
             }
         }
-
-
-//        if ((new Random()).nextInt(10)%2 == 0) {
-//            //Charge
-//            /**
-//             * Set agro path to WEST WEST & deltaHoriz fucken high
-//             */
-//
-//        } else {
-//            //Throw
-//        }
-
-        /**
-         * If rat fort remains throw parcel
-         *
-         * Otherwise either:
-         *      -> Charge at the player, set agro path to WEST WEST & deltaHoriz fucken high
-         *      --> If reached player:
-         *              damage targetEntity
-         *      --> return back to fort (initX)
-         */
-
 
     }
 
@@ -157,6 +134,8 @@ public class RatKing extends Enemy {
          * Make sure we've arrived at the tile and we're not blocked
          */
         if (!ret) return false;
+
+        System.out.println(getTileManager().printOccupiedTiles());
 
 
         /**
@@ -192,10 +171,10 @@ public class RatKing extends Enemy {
         return true;
     }
 
-    public void underAttack(int y) {
+    public void underAttack() {
         //Spawn a minion in level
-            level.addEnemies(new ArrayList<Enemy>(Arrays.asList(
-            new BatGuy(24, (new Random()).nextInt(8), "level2", this.getTargetEntity(), 6f, 1.5f, 65f, new LinkedList<>(Arrays.asList(DIRECTION.WEST, DIRECTION.WEST)))
-        )));
+            level.addEnemies(new ArrayList<Enemy>(Collections.singletonList(
+                    new Dog(22, (new Random()).nextInt(8), "level2", this.getTargetEntity(), 8f, 3.5f, 5, 8, 60f, DIRECTION.randomPath(20))
+            )));
     }
 }

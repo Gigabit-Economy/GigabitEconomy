@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.ScoreSystem;
-import java.util.Arrays;
 
 /**
  * Class that represents the LevelCompleteScreen which is shown right after successfully completing a level.
@@ -47,7 +46,7 @@ public class LevelCompleteScreen implements Screen {
         this.levelScores = new ScoreSystem(director.getLastPlayedLevel());
 
         Gdx.input.setInputProcessor(stage);
-        // Skin defined in UI skin (commodore - hopefully we can use, looks really cool)
+    
         Skin style = new Skin(Gdx.files.internal("ui_elements/ui_skin/uiskin.json"));
 
         levelCompletedTable = new Table();
