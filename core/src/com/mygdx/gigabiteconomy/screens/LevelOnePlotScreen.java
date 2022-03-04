@@ -23,7 +23,9 @@ public class LevelOnePlotScreen extends PlotScreen {
 
         addTitle(title);
         addBody(body);
+        addControls(true);
         addButton(nextLevelName);
     }
     
 }
+

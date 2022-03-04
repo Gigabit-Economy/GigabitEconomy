@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.gigabiteconomy.GigabitEconomy;
 
@@ -21,6 +22,7 @@ public class PlotScreen implements Screen{
     private String titleText;
     private String bodyText;
     private String levelName;
+    private boolean enableControl = false;
 
     /**
      * A constructor for adding the details into a plotscreen.
@@ -97,11 +99,57 @@ public class PlotScreen implements Screen{
         
     }
 
+    /**
+     * Method to enable the controls to be loaded into the table
+     * @param enable boolean for choosing to enable or disable controls being displayed on a plotscreen
+     */
+    public void addControls(boolean enable) {
+        enableControl = enable;
+    }
+    
+    private void insertControls(Table table, Skin style) {
+        
+        Label headerControls = new Label("Controls", style);
+        Label ctrlMovement = new Label("Movement: ", style);
+        TextField ctrlMovementBind = new TextField(" W/A/S/D [-or-] arrow-keys", style);
+        ctrlMovementBind.setDisabled(true);
+        Label ctrlAttack = new Label("Attack: ", style);
+        TextField ctrlAttackBind = new TextField("space-bar", style);
+        ctrlAttackBind.setDisabled(true);
+        Label ctrlOpenParcel = new Label("Open Parcels: ", style);
+        TextField ctrlOpenParcelBind = new TextField("tab", style);
+        ctrlOpenParcelBind.setDisabled(true);
+        Label ctrlParcelDelivery = new Label("Parcel collection & delivery: ", style);
+        TextField ctrlParcelDeliveryBind = new TextField("space-bar", style);
+        ctrlParcelDeliveryBind.setDisabled(true);
+        Label ctrPauseGame = new Label("Pause Game: ", style);
+        TextField ctrlPauseGameBind = new TextField("esc", style);
+        ctrlPauseGameBind.setDisabled(true);
+
+        table.add(headerControls).center().top().pad(20);
+        table.row();
+        table.add(ctrlMovement).left();
+        table.add(ctrlMovementBind);
+        table.row();
+        table.add(ctrlAttack).left();
+        table.add(ctrlAttackBind);
+        table.row();
+        table.add(ctrlOpenParcel).left();
+        table.add(ctrlOpenParcelBind);
+        table.row();
+        table.add(ctrlParcelDelivery).left();
+        table.add(ctrlParcelDeliveryBind);
+        table.row();
+        table.add(ctrPauseGame).left();
+        table.add(ctrlPauseGameBind);
+        table.row();
+
+    }
+
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-        // Skin defined in UI skin (commodore - hopefully we can use, looks really cool)
-        Skin style = new Skin(Gdx.files.internal("uiskin.json"));
+        Skin style = new Skin(Gdx.files.internal("ui_elements/ui_skin/uiskin.json"));
 
         storyTable = new Table();
         storyTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -112,18 +160,17 @@ public class PlotScreen implements Screen{
 
         TextArea body = new TextArea(bodyText, style);
         body.setDisabled(true);
-        storyTable.add(body).width(Gdx.graphics.getWidth()-500).height(Gdx.graphics.getHeight()-500);
+        storyTable.add(body).width(Gdx.graphics.getWidth()-500).height(Gdx.graphics.getHeight()-700);
         storyTable.row();
+
+        if(enableControl == true) {
+            insertControls(storyTable, style);
+        }
 
         TextButton toLevelButton = new TextButton("Continue", style);
         toLevelButton.setName(levelName);
         storyTable.add(toLevelButton).bottom().padTop(50);
         storyTable.row();
-
-        TextButton tutorialButton = new TextButton("Controls", style);
-        tutorialButton.setName("TutorialScreen");
-        storyTable.add(tutorialButton).bottom().padTop(20);
-        tutorialButton.row();
 
         ClickListener buttonsListener = new ClickListener() {
             @Override
@@ -140,7 +187,6 @@ public class PlotScreen implements Screen{
             }
         };
         toLevelButton.addListener(buttonsListener);
-        tutorialButton.addListener(buttonsListener);
 
         stage.addActor(storyTable);
 
