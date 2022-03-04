@@ -1,4 +1,4 @@
-package com.mygdx.gigabiteconomy.screens;
+package com.mygdx.gigabiteconomy.screens.levels;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.audio.Music;
@@ -13,6 +13,7 @@ import com.mygdx.gigabiteconomy.GigabitEconomy;
 import com.mygdx.gigabiteconomy.ScoreSystem;
 import com.mygdx.gigabiteconomy.exceptions.ParcelException;
 import com.mygdx.gigabiteconomy.exceptions.ScreenException;
+import com.mygdx.gigabiteconomy.screens.TileManager;
 import com.mygdx.gigabiteconomy.sprites.tiled.*;
 import com.mygdx.gigabiteconomy.sprites.tiled.enemies.RatKing;
 

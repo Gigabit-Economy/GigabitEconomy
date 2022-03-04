@@ -10,6 +10,7 @@ import com.mygdx.gigabiteconomy.exceptions.ScreenException;
 import com.mygdx.gigabiteconomy.screens.*;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.Gdx;
+import com.mygdx.gigabiteconomy.screens.levels.*;
 
 import java.lang.String;
 
@@ -160,7 +161,7 @@ public class GigabitEconomy extends Game {
                 }
                 break;
             case "LevelThreePlotScreen":
-                toSwitch = new LevelRatKingPlotScreen(this);
+                toSwitch = new LevelThreePlotScreen(this);
                 break;
             case "LevelThreeScreen":
                 if (fromPause != null) {

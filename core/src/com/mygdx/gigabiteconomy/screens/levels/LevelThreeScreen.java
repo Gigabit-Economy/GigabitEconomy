@@ -1,4 +1,4 @@
-package com.mygdx.gigabiteconomy.screens;
+package com.mygdx.gigabiteconomy.screens.levels;
 
 import com.badlogic.gdx.Gdx;
 import com.mygdx.gigabiteconomy.GigabitEconomy;

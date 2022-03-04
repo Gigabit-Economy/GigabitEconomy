@@ -1,9 +1,8 @@
 package com.mygdx.gigabiteconomy.sprites.tiled.enemies;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.gigabiteconomy.exceptions.TileMovementException;
-import com.mygdx.gigabiteconomy.screens.LevelScreen;
+import com.mygdx.gigabiteconomy.screens.levels.LevelScreen;
 import com.mygdx.gigabiteconomy.screens.Tile;
 import com.mygdx.gigabiteconomy.screens.TileManager;
 import com.mygdx.gigabiteconomy.sprites.tiled.Enemy;

@@ -2,7 +2,6 @@ package com.mygdx.gigabiteconomy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.mygdx.gigabiteconomy.screens.LevelScreen;
 
 import java.util.Arrays;
 
