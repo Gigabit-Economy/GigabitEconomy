@@ -208,7 +208,7 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         }
 
         // Add & draw score text in top-right corner
-        String scoreText = String.format("Score: %d", (score.getScore() * Math.round(player.getHealth())));
+        String scoreText = String.format("Score: %d", score.getScore());
         font.getData().setScale(3, 2);
         font.setColor(Color.CORAL);
         font.draw(batch, scoreText, cam.x+(director.getViewport().getScreenWidth()/100*38), cam.y+(director.getViewport().getScreenHeight()/100*47));
@@ -429,8 +429,6 @@ public abstract class LevelScreen implements Screen, InputProcessor {
      * Complete the level (called when the level is complete i.e. the final parcel is delivered)
      */
     public void complete() {
-        // multiply points by health (out of 100); max score is 500
-        setScore(Math.round(player.getHealth()) * score.getScore());
         // save score
         score.saveScore();
 
