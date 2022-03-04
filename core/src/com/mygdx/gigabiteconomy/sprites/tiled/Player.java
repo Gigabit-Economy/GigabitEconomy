@@ -284,7 +284,7 @@ public class Player extends MovingSprite {
         public void deliver() {
             parcel = null;
 
-            level.addToScore(1);
+            level.addToScore(5);
 
             house.unmarkAsDeliveryLocation();
             if (level.getParcels() >= 1) {
