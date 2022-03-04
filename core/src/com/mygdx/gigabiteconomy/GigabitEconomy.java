@@ -146,7 +146,7 @@ public class GigabitEconomy extends Game {
                     setMusic("LevelOne");
                 }
                 break;
-            case "LeveTwoPlotScreen":
+            case "LevelTwoPlotScreen":
                 toSwitch = new LevelTwoPlotScreen(this);
                 break;
             case "LevelTwoScreen":
