@@ -32,7 +32,7 @@ public class TutorialScreen implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(stage);
 
-        // Skin defined in UI skin (Commodore)
+        // Import UI skin (commodore)
         Skin style = new Skin(Gdx.files.internal("ui_elements/ui_skin/uiskin.json"));
 
         informationScreenTable = new Table();
