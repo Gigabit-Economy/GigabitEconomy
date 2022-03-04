@@ -271,7 +271,7 @@ public class TileManager implements Disposable {
         ArrayList<Tile> toCurrTiles = mo.getCurrentTiles();
         for (int i=0; i<toCurrTiles.size(); i++) {
             Tile tileToAdd = getAdjacentTile(toCurrTiles.get(i), mo.getDirectionMoving(), distance);
-            if ((tileToAdd.getOccupiedBy() != mo && tileToAdd.getOccupiedBy() != null)) {
+            if (tileToAdd == null || (tileToAdd.getOccupiedBy() != mo && tileToAdd.getOccupiedBy() != null)) {
                 toSet.add(null);
             }
             toSet.add(tileToAdd);

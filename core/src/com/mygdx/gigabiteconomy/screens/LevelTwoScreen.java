@@ -25,14 +25,22 @@ public class LevelTwoScreen extends LevelScreen {
     /* ENEMIES */
     private final ArrayList<Enemy> enemies = new ArrayList<Enemy>(Arrays.asList(
         new BatGuy(50, 3, LEVEL, player),
-        new Fighter(15, 7, LEVEL, player, 3.4f, 2.8f, 7, new LinkedList<>(Arrays.asList(
+        new Fighter(15, 7, LEVEL, player, 3.4f, 2.8f, 60, new LinkedList<>(Arrays.asList(
                 MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST,
                 MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.NORTH, MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.SOUTH,
                 MovingSprite.DIRECTION.SOUTH, MovingSprite.DIRECTION.WEST, MovingSprite.DIRECTION.EAST, MovingSprite.DIRECTION.EAST
         ))),
         new Dog(25, 2, LEVEL, player),
+        new Dog(40, 5, LEVEL, player),
+        new Dog(35, 4, LEVEL, player),
+        new BatGuy(30, 5, LEVEL, player),
+        new BatGuy(34, 7, LEVEL, player),
+        new Fighter(32, 3, LEVEL, player),
         new BatGuy(20, 5, LEVEL, player),
-        new Fighter(30, 4, LEVEL, player)
+        new Fighter(25, 6, LEVEL, player),
+        new Fighter(16, 3, LEVEL, player),
+        new Fighter(22, 4, LEVEL, player)
+
     ));
 
     // Parcel van (for Player to collect parcels from)
@@ -41,20 +49,27 @@ public class LevelTwoScreen extends LevelScreen {
     /* STATIC SPRITES (HOUSES, FENCES ETC...) */
     private final House houseOne = new House(House.HouseType.FLATS1, 0);
     private final House houseTwo = new House(House.HouseType.FLATS2, 10);
-    private final House houseThree = new House(House.HouseType.OFFICES, 20);
-    private final House houseFour = new House(House.HouseType.FLATS2, 31);
-    private final House houseFive = new House(House.HouseType.FLATS2, 38);
+    private final House houseFour = new House(House.HouseType.OFFICES, 42);
+    private final House houseFive = new House(House.HouseType.OFFICES, 36);
+    private final House houseThree = new House(House.HouseType.OFFICES, 30);
+
+    //level ends at tile 54,8
 
     int[][] fenceCoords = {
-            {7,8}, {9,8}, {10,8}, {17,8}, {18,8}, {20,8}, {27,8}, {29,8}, {30,8}, {31,8}, {38,8},
+            {0,8},
+            {7,8}, {8,8},{9,8}, {10,8},
+            {17,8}, {18,8},{19,8}, {20,8}, {21,8}, {22,8}, {23,8},{24,8}, {25,8}, {26,8}, {27,8},{28,8}, {29,8}, {30,8},
+            {56,8}, {57,8}, {58,8},{59,8}, {60,8}, {61,8}, {62,8},{63,8}, {64,8}, {65,8}, {66,8},{67,8}, {68,8},
+            {49,8},{50,8}, {51,8},{52,8},{53,8}, {54,8},
 
             /* Stops the map a bit short - it's huge */
             {55,8}, {55,7}, {55,6}, {55,5}, {55,4}, {55,3}, {55,2}, {55,1}, {55,0}
     };
 
-    int[][] canCoords = {
+    int[][] lampCoords = {
             {8, 8}, {19, 8}, {28, 8}
     };
+    //static sprites in the middle of the map have clipping blocked tile is not where the image is
 
     private final ArrayList<StaticSprite> staticSprites = new ArrayList<StaticSprite>(Arrays.asList(houseOne, houseTwo, houseThree, houseFour, houseFive));
 
@@ -71,9 +86,10 @@ public class LevelTwoScreen extends LevelScreen {
             staticSprites.add(new StaticSprite(String.format("static_sprites/%s/fence.png", LEVEL), coords[0], coords[1], 1, 1));
         }
 
-        for (int[] coords : canCoords) {
-            staticSprites.add(new StaticSprite(String.format("static_sprites/%s/trashcan.png", LEVEL), coords[0], coords[1], 1, 1));
+        for (int[] coords : lampCoords) {
+            staticSprites.add(new StaticSprite(String.format("static_sprites/%s/lampost2.png", LEVEL), coords[0], coords[1], 1, 1));
         }
+
 
         player.addHealthBar(director);
         addPlayer(player);

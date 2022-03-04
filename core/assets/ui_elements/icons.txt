@@ -1,5 +1,5 @@
 icons.png
-size: 480, 436
+size: 480, 340
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -10,7 +10,7 @@ backSquare
   orig: 96, 96
   offset: 0, 0
   index: -1
-instructionSquare
+instructionSquare2
   rotate: false
   xy: 224, 0
   size: 96, 96
@@ -24,11 +24,11 @@ levelRectangle
   orig: 420, 148
   offset: 0, 0
   index: -1
-settingsbutton
+settingsbutton2
   rotate: false
-  xy: 0, 244
-  size: 480, 96
-  orig: 480, 96
+  xy: 320, 0
+  size: 96, 96
+  orig: 96, 96
   offset: 0, 0
   index: -1
 star1
@@ -47,7 +47,7 @@ star2
   index: -1
 startbutton
   rotate: false
-  xy: 0, 340
+  xy: 0, 244
   size: 480, 96
   orig: 480, 96
   offset: 0, 0

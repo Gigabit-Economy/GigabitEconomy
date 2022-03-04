@@ -52,7 +52,7 @@ public class MenuScreen implements Screen {
         //add background
         buttons.setBackground(new TextureRegionDrawable(new TextureRegion(BACKGROUND_TEXTURE)));
         buttons.setFillParent(true);
-        buttons.center();
+        buttons.bottom();
 
         // add button images
         ta = new TextureAtlas("ui_elements/icons.txt");
@@ -61,17 +61,25 @@ public class MenuScreen implements Screen {
         Drawable drawable = new TextureRegionDrawable(current);
         current = regions.get(1);
         Drawable drawable2 = new TextureRegionDrawable(current);
+        current = regions.get(3);
+        Drawable drawable3 = new TextureRegionDrawable(current);
 
         //add buttons
         ImageButton level1Button = new ImageButton(drawable);
         level1Button.setName("LevelSelectScreen");
-        buttons.add(level1Button);
+        buttons.add(level1Button).padBottom(100);
 
         
         // add tutorial button
         ImageButton tutorialButton = new ImageButton(drawable2);
         tutorialButton.setName("TutorialScreen");
-        buttons.add(tutorialButton);
+        buttons.add(tutorialButton).padBottom(100).padLeft(20);
+
+        // add settings button
+        ImageButton settingsButton = new ImageButton(drawable3);
+        settingsButton.setName("PauseMenu");
+        buttons.add(settingsButton).padBottom(100).padLeft(20);
+
 
         // Add click listener for buttons
         ClickListener buttonsListener = new ClickListener() {
@@ -90,6 +98,7 @@ public class MenuScreen implements Screen {
         };
         level1Button.addListener(buttonsListener);
         tutorialButton.addListener(buttonsListener);
+        settingsButton.addListener(buttonsListener);
 
         stage.addActor(buttons);
     }

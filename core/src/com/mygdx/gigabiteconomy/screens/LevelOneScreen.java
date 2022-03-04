@@ -48,15 +48,21 @@ public class LevelOneScreen extends LevelScreen {
     private final House houseFive = new House(House.HouseType.DETACHED, 38);
 
     int[][] fenceCoords = {
-            {7,8}, {9,8}, {10,8}, {17,8}, {18,8}, {20,8}, {27,8}, {29,8}, {30,8}, {31,8}, {38,8},
+            {7,8},{8,8}, {9,8}, {10,8}, {17,8}, {18,8}, {19,8},{20,8}, {27,8},{28,8}, {29,8}, {30,8}, {31,8}, {38,8},
 
             /* Stops the map a bit short - it's huge */
             {55,8}, {55,7}, {55,6}, {55,5}, {55,4}, {55,3}, {55,2}, {55,1}, {55,0}
     };
 
     int[][] canCoords = {
-            {8, 8}, {19, 8}, {28, 8}
+            {8, 8}, {19, 8},
     };
+
+
+    int[][] lampCoords = {
+            {28, 8}
+    };
+
 
     private final ArrayList<StaticSprite> staticSprites = new ArrayList<StaticSprite>(Arrays.asList(houseOne, houseTwo, houseThree, houseFour, houseFive));
 
@@ -75,6 +81,9 @@ public class LevelOneScreen extends LevelScreen {
 
         for (int[] coords : canCoords) {
             staticSprites.add(new StaticSprite(String.format("static_sprites/%s/trashcan.png", LEVEL), coords[0], coords[1], 1, 1));
+        }
+        for (int[] coords : lampCoords) {
+            staticSprites.add(new StaticSprite(String.format("static_sprites/%s/lampost.png", LEVEL), coords[0], coords[1], 1, 1));
         }
 
         addPlayer(player);
