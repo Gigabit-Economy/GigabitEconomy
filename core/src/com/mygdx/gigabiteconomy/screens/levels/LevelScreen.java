@@ -442,6 +442,5 @@ public abstract class LevelScreen implements Screen, InputProcessor {
         if (paused) {
             return;
         }
-
     }
 }
